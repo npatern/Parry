@@ -94,8 +94,7 @@ GameObject:
   - component: {fileID: 2772615992485516981}
   - component: {fileID: 8585286717432038434}
   - component: {fileID: 3141461396096647814}
-  - component: {fileID: 147891600503973207}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: Bed
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -110,10 +109,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1952829890789664243}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 1.25}
+  m_LocalPosition: {x: 0, y: 0.25, z: 1.25}
   m_LocalScale: {x: 2.7523, y: 0.5922, z: 1.2911}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 1687792250026310274}
+  - {fileID: 5625867587169424937}
   m_Father: {fileID: 2724689241672677060}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -167,19 +168,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &147891600503973207
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1952829890789664243}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &2530985698451189633
 GameObject:
   m_ObjectHideFlags: 0
@@ -203,15 +191,15 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2530985698451189633}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: -0.96816665}
+  m_LocalScale: {x: 0.36333248, y: 1.6886188, z: 0.77453333}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1293915853378089542}
   - {fileID: 670084772297697029}
-  m_Father: {fileID: 2724689241672677060}
-  m_RootOrder: 2
+  m_Father: {fileID: 2772615992485516981}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2724689241672677059
 GameObject:
@@ -225,7 +213,8 @@ GameObject:
   - component: {fileID: 2724689241672677063}
   - component: {fileID: 2724689241672677062}
   - component: {fileID: 2724689241672677061}
-  m_Layer: 0
+  - component: {fileID: 6091448232819165064}
+  m_Layer: 6
   m_Name: Bed
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -246,8 +235,6 @@ Transform:
   m_Children:
   - {fileID: 2400380281575971901}
   - {fileID: 2772615992485516981}
-  - {fileID: 1687792250026310274}
-  - {fileID: 5625867587169424937}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -266,7 +253,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2724689241672677059}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -323,6 +310,19 @@ MonoBehaviour:
   UserSpot: {fileID: 2400380281575971901}
   ShowIfUsed: {fileID: 2530985698451189633}
   HideIfUsed: {fileID: 3479943642758079777}
+--- !u!65 &6091448232819165064
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2724689241672677059}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 2.4058495, y: 1, z: 0.9062767}
+  m_Center: {x: 0.046860695, y: 0.39999998, z: 1.2652645}
 --- !u!1 &3479943642758079777
 GameObject:
   m_ObjectHideFlags: 0
@@ -346,15 +346,15 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3479943642758079777}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: -0.96816665}
+  m_LocalScale: {x: 0.36333248, y: 1.6886188, z: 0.77453333}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3913548734743251917}
   - {fileID: 3660781345197725838}
-  m_Father: {fileID: 2724689241672677060}
-  m_RootOrder: 3
+  m_Father: {fileID: 2772615992485516981}
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &4414726572376021195
 GameObject:
