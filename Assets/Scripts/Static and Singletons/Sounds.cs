@@ -6,6 +6,7 @@ public static class Sounds
 {
     public static void MakeSound(Sound sound)
     {
+        if (sound.range <= 0) return;
         //Gizmos.DrawSphere(sound.position, sound.range);
         Debug.DrawRay(sound.position+Vector3.forward,Vector3.up* sound.range  + Vector3.up);
 

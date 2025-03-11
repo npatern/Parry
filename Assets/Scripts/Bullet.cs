@@ -48,8 +48,8 @@ public class Bullet : MonoBehaviour
             Instantiate(ParticlesToSpawn, transform.position, transform.rotation, GameController.Instance.transform);
         }
         if (GetComponent<StatusController>() != null) if (GetComponent<StatusController>().IsDeaf()) return;
-
-        Sound sound = new Sound(transform.position, SoundRange, soundType);
+         
+        Sound sound = new Sound(GetComponent<StatusController>(), SoundRange, soundType);
         Sounds.MakeSound(sound);
     Destroy(gameObject);
     }

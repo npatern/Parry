@@ -16,4 +16,14 @@ public class Sound
         worldInfo = _worldInfo;
         type = _type;
     }
+    public Sound(StatusController _status, float _range, TYPES _type = TYPES.neutral, Transform _worldInfo = null)
+    {
+
+        range = _range;
+        position = _status.transform.position;
+        
+        worldInfo = _worldInfo;
+        type = _type;
+        if (_status.IsDeaf() && type != TYPES.cover) range = 0;
+    }
 }

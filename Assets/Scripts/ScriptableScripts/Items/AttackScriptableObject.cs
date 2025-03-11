@@ -52,7 +52,7 @@ public class AttackScriptableObject : ScriptableObject
             if (IsFiring==true) combat.FireBullet();
             float waitTime = WaitTime / combat.GetCombatSpeedMultiplier();
             if (SoundRange > 0) if (!combat.statusController.IsDeaf() || soundType ==Sound.TYPES.cover)
-                Sounds.MakeSound(new Sound(combat.transform.position, SoundRange, soundType));
+                Sounds.MakeSound(new Sound(combat.statusController, SoundRange, soundType));
 
             while (elapsedTime < waitTime)
             {

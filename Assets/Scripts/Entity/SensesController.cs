@@ -90,6 +90,7 @@ public class SensesController : MonoBehaviour, IHear
             else
                 Awareness -= maxAwareness * Time.fixedDeltaTime/ awarenessDownTime;
         }
+        
         Awareness = Mathf.Clamp(Awareness, 0, 100);
     }
     void LoadStatsFromScriptable(EntityStatsScriptableObject scriptable)
@@ -206,9 +207,10 @@ public class SensesController : MonoBehaviour, IHear
     public void ReactToSound(Sound sound)
     {
         if (Vector3.Distance(eyesSource.position, sound.position) > sound.range) return;
-        //if (sound.type == Sound.TYPES.cover)
-       //     GetComponent<StatusController>().MakeDeaf();
+        if (sound.type == Sound.TYPES.cover)
+            GetComponent<StatusController>().MakeDeaf();
         if (GetComponent<StatusController>().IsDeaf()) return;
+
         if (sound.type == Sound.TYPES.player)
             ApplyAwareness((100*Time.fixedDeltaTime)/2);
         if (sound.type == Sound.TYPES.danger)
@@ -216,6 +218,7 @@ public class SensesController : MonoBehaviour, IHear
         if (sound.type == Sound.TYPES.neutral)
             ApplyAwareness(1);
 
+        GetComponent<EntityController>().currentState.InvestigateSound(GetComponent<EntityController>(),sound.position);
         Debug.Log("senses reacted"+name);
     }
     public void Kill()

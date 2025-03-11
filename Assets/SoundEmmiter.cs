@@ -8,7 +8,7 @@ public class SoundEmmiter : MonoBehaviour
     public ParticleSystem particle;
     private void FixedUpdate()
     {
-        Sound sound = new Sound(transform.position, soundRange, Sound.TYPES.cover);
+        Sound sound = new Sound(GetComponent<StatusController>(), soundRange, Sound.TYPES.cover);
         Sounds.MakeSound(sound);
         particle.startLifetime = soundRange / particle.startSpeed;
     }

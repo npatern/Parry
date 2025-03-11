@@ -116,7 +116,7 @@ public class InputController : MonoBehaviour
         rb.AddForce(velocityChange, ForceMode.VelocityChange);
 
         float soundRange = 20f * rb.velocity.magnitude / movementSpeed;
-        Sound sound = new Sound(transform.position, soundRange,Sound.TYPES.player);
+        Sound sound = new Sound(statusController, soundRange,Sound.TYPES.player);
         Sounds.MakeSound(sound);
     }
     public void ApplyLookAt()

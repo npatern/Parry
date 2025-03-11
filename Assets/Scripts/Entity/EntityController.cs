@@ -32,7 +32,8 @@ public class EntityController : MonoBehaviour
     private GameObject selector;
 
     public bool isSearchingForNeeds = false;
-    State currentState;
+    public State currentState;
+    public Vector3 HomePosition;
     private void Awake()
     {
         if (GetComponent<NavMeshAgent>()!=null)
@@ -52,7 +53,9 @@ public class EntityController : MonoBehaviour
         while (ListOfNeeds.Count < 4)
             ListOfNeeds.Add(GameController.Instance.Needs[Random.Range(0, GameController.Instance.Needs.Length)]);
         LoadStatsFromScriptable(GameController.Instance.ListOfAssets.DefaultEntityStats);
+        HomePosition = transform.position;
         currentState = new Idle(this);
+
     }
     bool IsAwareOfPlayer()
     {
@@ -114,7 +117,7 @@ public class EntityController : MonoBehaviour
         if (Vector3.Distance(target.transform.position, transform.position) > combatController.attackDistance)
         {
             DisableNavmesh(false);
-            GoToTarget(statusObject.transform);
+            GoToTarget(statusObject.transform.position);
         }
         else if (sensesController.isAware)
         {
@@ -231,7 +234,7 @@ public class EntityController : MonoBehaviour
                 if (!fulfiller.Unreservable)
                 CurrentFulfiller.User = this;
                 AddToLog("Found object for fulfilling my " + CurrentNeed + " need - " + CurrentFulfiller.name + "!");
-                GoToTarget(CurrentFulfiller.transform);
+                GoToTarget(CurrentFulfiller.transform.position);
                 break;
             }
         if (CurrentFulfiller == null)
@@ -241,13 +244,14 @@ public class EntityController : MonoBehaviour
         }
         
     }
-    void GoToTarget(Transform targetTransform)
+    public void GoToTarget(Vector3 targetPosition)
     {
         if (agent == null) return;
         agent.isStopped = false;
-        agent.destination = targetTransform.position;
+        agent.destination = targetPosition;
         //AddToLog("Destination set. Going to " + targetTransform.name);
         IsAtTarget = false;
+
     }
     void DisableNavmesh( bool isDisabled)
     {
@@ -274,6 +278,12 @@ public class EntityController : MonoBehaviour
         Vector3 eulerAngleVelocity = new Vector3(0, angle, 0);
         Quaternion deltaRotation = Quaternion.Euler(eulerAngleVelocity * Time.deltaTime * rotationSpeed);
         rb.MoveRotation(rb.rotation * deltaRotation);
+    }
+    public void ResetFulfiller()
+    {
+        if (CurrentFulfiller != null)
+            CurrentFulfiller.ResetFulfiller();
+        CurrentFulfiller = null;
     }
     public void NeedFulfilled(bool success)
     {

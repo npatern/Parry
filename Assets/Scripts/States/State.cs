@@ -7,7 +7,7 @@ public class State
 {
     public enum STATE
     {
-        IDLE, USE, INVESTIGATE, PURSUE, COMBAT
+        IDLE, USE, INVESTIGATE, PURSUE, COMBAT, FLEE
     }
     public enum EVENT
     {
@@ -22,6 +22,13 @@ public class State
     private StatusController statusController;
     private SensesController sensesController;
 
+    public void InvestigateSound(EntityController _entity, Vector3 _position)
+    {
+        if (name == STATE.COMBAT || name == STATE.PURSUE || name == STATE.INVESTIGATE) return;
+        UIController.Instance.SpawnTextBubble("What was that?", entity.transform);
+        nextState = new Investigate(_entity, _position);
+        stage = EVENT.EXIT;
+    }
     public State(EntityController _entityController)
     {
         entity = _entityController;
@@ -30,7 +37,13 @@ public class State
         stage = EVENT.ENTER;
         //agent = entity.GetComponent<NavMeshAgent>();
     }
-    public virtual void Enter() { stage = EVENT.UPDATE; Debug.Log(stage + " stage, " + name); }
+    public virtual void Enter() 
+    { 
+        stage = EVENT.UPDATE; 
+        Debug.Log(stage + " stage, " + name); 
+        if (nextState == null) 
+            nextState = new Idle(entity); 
+    }
     public virtual void Update() { stage = EVENT.UPDATE; Debug.Log(stage + " stage, " + name); }
     public virtual void Exit() { stage = EVENT.EXIT; Debug.Log(stage + " stage, " + name); }
 
@@ -45,11 +58,11 @@ public class State
         }
         return this;
     }
-
-
 }
 public class Idle : State
 {
+    NeedFulfiller foundFulfiller;
+    bool resetOnExit = true;
     public Idle(EntityController _entity) : base(_entity)
     {
         name = STATE.IDLE;
@@ -85,7 +98,9 @@ public class Idle : State
         {
             entity.IsAtTarget = true;
             entity.AddToLog("Arrived to " + entity.CurrentFulfiller.name + ". Starting fulfilling the need of " + entity.CurrentNeed.Name);
-            nextState = new UseObject(entity, entity.CurrentFulfiller);
+            foundFulfiller = entity.CurrentFulfiller;
+            nextState = new UseObject(entity, foundFulfiller);
+            resetOnExit = false;
             stage = EVENT.EXIT;
         }
        
@@ -93,15 +108,22 @@ public class Idle : State
     }
     public override void Exit()
     {
+        if (resetOnExit)
+        {
+            entity.ResetFulfiller();
+            entity.CurrentNeed = null;
+        }
+        
+
         base.Exit();
     }
 }
-
 public class UseObject : State
 {
     NeedFulfiller fulfiller;
     Coroutine currentCoroutine;
     Vector3 startPosition;
+    
     public UseObject(EntityController _entity, NeedFulfiller _fulfiller) : base(_entity)
     {
         name = STATE.USE;
@@ -133,6 +155,49 @@ public class UseObject : State
     {
         entity.StopCoroutine(currentCoroutine);
         entity.transform.position = startPosition;
+        base.Exit();
+    }
+}
+public class Investigate : State
+{
+    Vector3 investigatedPosition;
+    bool isAtTarget = false;
+    float maxTime = 20;
+    public Investigate(EntityController _entity, Vector3 _investigatedPosition) : base(_entity)
+    {
+        name = STATE.INVESTIGATE;
+
+        investigatedPosition = _investigatedPosition;
+    }
+    public override void Enter()
+    {
+        base.Enter();
+    }
+
+    public override void Update()
+    {
+        base.Update();
+        maxTime -= Time.deltaTime;
+
+
+        entity.GoToTarget(investigatedPosition);
+
+        if (entity.IsTargetReached() && !isAtTarget)
+        {
+            isAtTarget = true;
+            maxTime = 2;
+        }
+
+        if (maxTime<=0)
+        {
+            UIController.Instance.SpawnTextBubble("Mus've been the wind...", entity.transform);
+            nextState = new Idle(entity);
+            stage = EVENT.EXIT;
+        }
+    }
+    public override void Exit()
+    {
+        
         base.Exit();
     }
 }

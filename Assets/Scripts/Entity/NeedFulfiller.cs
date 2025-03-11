@@ -40,4 +40,16 @@ public class NeedFulfiller : MonoBehaviour
         if (HideIfUsed != null)
             HideIfUsed.SetActive(!isUsed);
     }
+    public void ResetFulfiller()
+    {
+        ChangeGraphics(false);
+        if (User != null) 
+            if (User.CurrentFulfiller == this)
+            {
+                User.CurrentFulfiller = null;
+                Reserved = false;
+            }
+                
+        User = null;
+    }
 }
