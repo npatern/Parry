@@ -13,7 +13,7 @@ public class FulfillmentStepScriptableObject : ScriptableObject
         EndStep(entity);
         if (DestroyEntityAfter)
         {
-            //Debug.Log("Marking for destruction " + entity.gameObject.name);
+            Debug.Log("Marking for destruction " + entity.gameObject.name);
             entity.MarkedForDestruction = true;
         }
     }

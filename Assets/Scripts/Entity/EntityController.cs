@@ -31,8 +31,8 @@ public class EntityController : MonoBehaviour
     public List<string> Log;
     private GameObject selector;
 
-    private bool isSearchingForNeeds = false;
- 
+    public bool isSearchingForNeeds = false;
+    State currentState;
     private void Awake()
     {
         if (GetComponent<NavMeshAgent>()!=null)
@@ -52,6 +52,7 @@ public class EntityController : MonoBehaviour
         while (ListOfNeeds.Count < 4)
             ListOfNeeds.Add(GameController.Instance.Needs[Random.Range(0, GameController.Instance.Needs.Length)]);
         LoadStatsFromScriptable(GameController.Instance.ListOfAssets.DefaultEntityStats);
+        currentState = new Idle(this);
     }
     bool IsAwareOfPlayer()
     {
@@ -67,14 +68,14 @@ public class EntityController : MonoBehaviour
         ////
         //return (sensesController.IsTargetSeenTroughEyes(target.transform));
     }
+    
     void Update()
     {
+        currentState = currentState.Process();
+        return;
         if (sensesController.isAware) agent.speed = fastSpeed;
         else agent.speed = slowSpeed;
-        //jesli nie jestes blisko gracza i mozesz chodzic - idz do gracza
-        // jesli nie patrzysz na gracza - patrz na gracza
-        //jesli nie atakujesz gracza - atakuj gracza
-        //if (player != null && Vector3.Distance(transform.position, player.transform.position) < AwarnessDistance)
+      
         if (IsAwareOfPlayer())
         {
             CurrentFulfiller = null;
@@ -92,7 +93,12 @@ public class EntityController : MonoBehaviour
         
 
         AttackTarget(target);
-        
+
+
+        //jesli nie jestes blisko gracza i mozesz chodzic - idz do gracza
+        // jesli nie patrzysz na gracza - patrz na gracza
+        //jesli nie atakujesz gracza - atakuj gracza
+        //if (player != null && Vector3.Distance(transform.position, player.transform.position) < AwarnessDistance)
     }
     void LoadStatsFromScriptable(EntityStatsScriptableObject scriptable)
     {
@@ -147,8 +153,6 @@ public class EntityController : MonoBehaviour
             StartCoroutine(FindNeed(.1f));
             return;
         }
-
-        
         if (CurrentFulfiller == null)
         {
             FindFulfiller();
@@ -172,7 +176,7 @@ public class EntityController : MonoBehaviour
         if (positiveness < 0) log = "<color=red>" + log + "</color>";
         Log.Add(log);
     }
-    bool IsTargetReached()
+    public bool IsTargetReached()
     {
         
         if (agent == null) return false;
@@ -189,7 +193,7 @@ public class EntityController : MonoBehaviour
         }
         return false;
     }
-    private IEnumerator FindNeed(float waitTime)
+    public IEnumerator FindNeed(float waitTime)
     {
         isSearchingForNeeds = true;
         if (ListOfNeeds.Count > 0) CurrentNeed = ListOfNeeds[0];
@@ -201,7 +205,22 @@ public class EntityController : MonoBehaviour
         yield return new WaitForSeconds(waitTime);
         isSearchingForNeeds = false;
     }
-    void FindFulfiller()
+    public void FindNextNeed()
+    {
+        if (ListOfNeeds.Count <= 0) ListOfNeeds.Add(ExitNeed);
+        if (ListOfNeeds.Count > 0) CurrentNeed = ListOfNeeds[0];
+        if (CurrentNeed == null)
+            AddToLog("Couldn't find need :(", -1);
+        else
+            AddToLog("Next need: " + CurrentNeed.Name + " (" + CurrentNeed.Description + ")");
+ 
+ 
+    }
+    public void SetAvoidancePriority(int priority)
+    {
+        agent.avoidancePriority = priority;
+    }
+    public void FindFulfiller()
     {
         List<NeedFulfiller> fulfillersList = new List<NeedFulfiller>(GameController.Instance.NeedFulfillers);
         fulfillersList = fulfillersList.OrderBy(x => Random.value).ToList();
@@ -270,11 +289,11 @@ public class EntityController : MonoBehaviour
             Destroy(gameObject);
             return;
         }
-
+        ListOfNeeds.RemoveAt(0);
         CurrentNeed = null;
         if (CurrentFulfiller != null) CurrentFulfiller.User = null;
         CurrentFulfiller = null;
-        ListOfNeeds.RemoveAt(0);
+        
 
         //AddToLog("Only " + ListOfNeeds.Count + " needs left.");
         
