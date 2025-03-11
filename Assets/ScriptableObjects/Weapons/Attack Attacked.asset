@@ -1,0 +1,144 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a51aeb2ff14175d40a5629ed34ab58a3, type: 3}
+  m_Name: Attack Attacked
+  m_EditorClassIdentifier: 
+  ID: attacked
+  Name: Attacked
+  Description: 
+  DamageMultiplayer: 0
+  AttackStepss:
+  - StepName: 
+    LockMovement: 1
+    LockRotation: 1
+    TargetEnum: 7
+    WaitTime: 1
+    MovementCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 0
+        inSlope: 11.618517
+        outSlope: 11.618517
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0.09358803
+      - serializedVersion: 3
+        time: 0.124744505
+        value: 1.5964875
+        inSlope: 2.3486493
+        outSlope: -0.10987019
+        tangentMode: 1
+        weightedMode: 0
+        inWeight: 0.3309639
+        outWeight: 0.18430601
+      - serializedVersion: 3
+        time: 0.34235233
+        value: 0.974516
+        inSlope: -0.38113695
+        outSlope: -0.38113695
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 0.47452685
+        value: 1.2292023
+        inSlope: 0.010095077
+        outSlope: 0.010095077
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 0.66367555
+        value: 1.005706
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 0.8078437
+        value: 1.109522
+        inSlope: -0.023180498
+        outSlope: -0.023180498
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 1
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 0
+    StayTillGrounded: 0
+    OnlyIfGrounded: 0
+    SkipIfCanceled: 0
+    StayTillContextCanceled: 0
+    Interruptable: 0
+    IsParrying: 0
+    IsProtected: 0
+    IsDamaging: 0
+    IsFiring: 0
+    SkipIfPlayer: 0
+    MovementOffset: {x: 0, y: 0, z: 0}
+  - StepName: 
+    LockMovement: 0
+    LockRotation: 0
+    TargetEnum: 0
+    WaitTime: 0.3
+    MovementCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 1
+        value: 1
+        inSlope: 2
+        outSlope: 2
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 0
+    StayTillGrounded: 0
+    OnlyIfGrounded: 0
+    SkipIfCanceled: 0
+    StayTillContextCanceled: 0
+    Interruptable: 0
+    IsParrying: 0
+    IsProtected: 0
+    IsDamaging: 0
+    IsFiring: 0
+    SkipIfPlayer: 0
+    MovementOffset: {x: 0, y: 0, z: 0}

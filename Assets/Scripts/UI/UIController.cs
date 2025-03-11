@@ -1,0 +1,68 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.UI;
+using UnityEngine.InputSystem;
+
+public class UIController : MonoBehaviour
+{
+    public static UIController Instance { get; private set; }
+    public Canvas MainCanvas;
+    public RectTransform CharacterPanel;
+    public GameObject TextBubble;
+    public GameObject HealthBar;
+    public GameObject ArrowObject;
+    public RectTransform StartScreen;
+    public RectTransform UITrashParent;
+    private void Awake()
+    {
+        if (Instance != null && Instance != this)
+        {
+            Destroy(this);
+        }
+        else
+        {
+            Instance = this;
+        }
+    }
+    public void Update()
+    {
+        CharacterPanel.gameObject.SetActive(GameController.Instance.CurrentEntity != null);
+
+        
+    }
+    public void SpawnTextBubble(string speech, Transform transform)
+    {
+        UITextBubbleMovement newTextBubble = Instantiate(TextBubble,  MainCanvas.transform, false).GetComponent<UITextBubbleMovement>();
+        Vector3 screenPosition = Camera.main.WorldToScreenPoint(transform.position+Vector3.up*3);
+        newTextBubble.transform.position = screenPosition;
+        newTextBubble.transform.parent = UITrashParent;
+        newTextBubble.Speech = speech;
+        newTextBubble.target = transform.position;
+    }
+    public GameObject SpawnHealthBar(StatusController statusController)
+    {
+        GameObject overhead = Instantiate(HealthBar, MainCanvas.transform, false);
+        UIOverheadStatus bar = overhead.GetComponent<UIOverheadStatus>();
+        overhead.transform.parent = UITrashParent;
+        bar.statusController = statusController;
+        return overhead;
+    }
+    public GameObject SpawnAwarenessArrow(SensesController sensesController)
+    {
+        GameObject overhead = Instantiate(ArrowObject, MainCanvas.transform, false);
+        UIAwarenessArrow arrow = overhead.GetComponent<UIAwarenessArrow>();
+        overhead.transform.parent = UITrashParent;
+        arrow.sensesController = sensesController;
+        return overhead;
+    }
+    public void ShowEndScreen()
+    {
+        StartScreen.gameObject.SetActive(true);
+    }
+    public void HideEndScreen()
+    {
+        StartScreen.gameObject.SetActive(false);
+    }
+
+}
