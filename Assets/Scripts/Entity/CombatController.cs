@@ -3,13 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Events;
-public class CombatController : MonoBehaviour, IHear
+public class CombatController : MonoBehaviour
 {
-    public void ReactToSound(Sound sound)
-    {
-        Debug.Log("combat reacted" + name);
-
-    }
+    
     public LayerMask layerMask;
     public float ColliderSize = 1f;
     public InputController inputController;
@@ -201,9 +197,12 @@ public class CombatController : MonoBehaviour, IHear
         bool hitAnything = false;
         foreach (Collider enemy in hitEnemies)
         {
-            if (enemy.GetComponent<StatusController>()== null || enemy.GetComponent<CombatController>()==this) continue;
             StatusController enemyStatus = enemy.GetComponent<StatusController>();
-            enemyStatus.TryTakeDamage(GetComponent<StatusController>(), damage);
+            //if (enemyStatus == null) enemyStatus = enemy.attachedRigidbody.GetComponent<StatusController>();
+            if (enemyStatus == null) continue;
+            if (enemyStatus == statusController) continue;
+            if (statusController.Team == enemyStatus.Team) continue;
+            enemyStatus.TryTakeDamage(statusController, damage);
             if (!enemyStatus.IsKilled)
             hitAnything = true;
         }

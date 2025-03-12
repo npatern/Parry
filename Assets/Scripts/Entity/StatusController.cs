@@ -6,7 +6,7 @@ using UnityEngine.InputSystem;
 using UnityEngine.Events;
 public class StatusController : MonoBehaviour, IHear
 {
-    
+    public string Team = "";
     [SerializeField]
     private bool loadValuesInRealTime = false;
 
@@ -19,11 +19,14 @@ public class StatusController : MonoBehaviour, IHear
 
     public bool IsKilled = false;
     public bool IsStunned = false;
+    public bool DestroyOnKill = false;
 
     public UnityEvent IsAttackedEvent;
     public UnityEvent IsStunnedEvent;
     public UnityEvent OnKillEvent;
 
+    [SerializeField]
+    private bool scaleParticles = false;
     [SerializeField]
     private ParticleSystem DamageEffect;
     [SerializeField]
@@ -47,7 +50,6 @@ public class StatusController : MonoBehaviour, IHear
     public float deafTime = 1f;
 
     private GameObject healthBar;
-    // Start is called before the first frame update
     void Awake()
     {
         if (GetComponent<CombatController>() != null)
@@ -154,6 +156,7 @@ public class StatusController : MonoBehaviour, IHear
         
         UIController.Instance.SpawnTextBubble("Ouch!", transform);
         SpawnParticles(DamageEffect, transform);
+        
         if (MultiplyDamage(attacker)) damage *= attacker.CriticalMultiplier;
         Life -= damage;
         if (Life <= 0 && !IsKilled) Kill(attacker);
@@ -163,7 +166,7 @@ public class StatusController : MonoBehaviour, IHear
         
         if (IsPlayer) return false;
         if (IsStunned) return true;
-        if (sensesController != null) if(!sensesController.isAware) return true;
+        if (sensesController != null) if(!sensesController.IsAlerted) return true;
         return false;
     }
     public bool TakePosture(float damage, StatusController attacker)
@@ -184,6 +187,7 @@ public class StatusController : MonoBehaviour, IHear
     {
         if (particles == null) return;
         ParticleSystem newParticles = Instantiate(particles.gameObject, position).GetComponent<ParticleSystem>();
+        if (DestroyOnKill) newParticles.transform.parent = null;
         if (newLifetime>=0) 
         {
             newParticles.Stop();
@@ -191,7 +195,8 @@ public class StatusController : MonoBehaviour, IHear
             main.duration = newLifetime;
             newParticles.Play();
         }
-        
+        if (scaleParticles)
+            newParticles.transform.localScale = position.localScale;
         Destroy(newParticles.gameObject, destroyLength);
     }
     public bool IsDeaf()
@@ -216,7 +221,7 @@ public class StatusController : MonoBehaviour, IHear
     {
         IsKilled = true;
         
-        SpawnParticles(DamageEffect, transform);
+        SpawnParticles(DamageEffect, transform, 10, .2f);
         Life = 0;
         rb.isKinematic = false;
         rb.constraints = RigidbodyConstraints.None;
@@ -261,7 +266,8 @@ public class StatusController : MonoBehaviour, IHear
 
         if (IsPlayer) GameController.Instance.EndGame();
         OnKillEvent.Invoke();
-        //Destroy(gameObject,10);
+        if (DestroyOnKill)
+         Destroy(gameObject,.1f);
     }
 
 }

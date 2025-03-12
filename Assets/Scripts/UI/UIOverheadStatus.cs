@@ -105,7 +105,7 @@ public class UIOverheadStatus : MonoBehaviour
         if (sensesController == null) return false;
         if (sensesController.Awareness<=0) return false;
         float value = sensesController.Awareness;
-        bool recolor = sensesController.isAware;
+        bool recolor = sensesController.IsAlerted;
         if (recolor)
         {
             punctuationBold.sprite = screamerBold;

@@ -45,6 +45,8 @@ public class InputController : MonoBehaviour
     [SerializeField]
     private float dodgePostureCost = 20;
 
+    bool isSprinting = false;
+
     float WalkSoundAwarenessTime = 1;
     private void Awake()
     {
@@ -70,7 +72,11 @@ public class InputController : MonoBehaviour
         if (CanRotate())
             ApplyLookAt();
         if (!CanMove()) return;
-        if (movement.x == 0 && movement.y == 0) return;
+        if (movement.x == 0 && movement.y == 0)
+        {
+            isSprinting = false;
+            return;
+        }
         ApplyMovementForce();
         targetParent.transform.position = transform.position;
     }
@@ -101,10 +107,12 @@ public class InputController : MonoBehaviour
     }
     public void ApplyMovementForce() 
     {
-        //rb.AddForce(new Vector3(movement.x, 0, movement.y) * movementSpeed, forceMode);
         Vector3 currentVelocity = rb.velocity;
         Vector3 targetVelocity = new Vector3(movement.x, 0, movement.y);
-        targetVelocity *= movementSpeed;
+        if (isSprinting)
+            targetVelocity *= runSpeed;
+        else
+            targetVelocity *= movementSpeed;
 
         if (alignToCamera)
             targetVelocity = Camera.main.transform.TransformDirection(targetVelocity);
@@ -114,9 +122,9 @@ public class InputController : MonoBehaviour
         Vector3.ClampMagnitude(velocityChange, maxRunForce);
 
         rb.AddForce(velocityChange, ForceMode.VelocityChange);
-
+        //if (!isSprinting) return;
         float soundRange = 20f * rb.velocity.magnitude / movementSpeed;
-        Sound sound = new Sound(statusController, soundRange,Sound.TYPES.player);
+        Sound sound = new Sound(statusController, soundRange);
         Sounds.MakeSound(sound);
     }
     public void ApplyLookAt()
@@ -157,6 +165,11 @@ public class InputController : MonoBehaviour
         if (context.started)
             GetComponent<CombatController>().PerformParry(context);
     }
+    public void Sprint(InputAction.CallbackContext context)
+    {
+
+        isSprinting = context.performed;
+    }
     public void GetLookAtValue(InputAction.CallbackContext context)
     {
         lookAtValue = context.ReadValue<Vector2>();
@@ -187,7 +200,7 @@ public class InputController : MonoBehaviour
     public void Dodge(InputAction.CallbackContext context)
     {
         if (IsDodging) return;
-        if (!IsGrounded()) return;
+        //if (!IsGrounded()) return;
         if(context.started)
             ApplyDodge();
     }

@@ -32,6 +32,8 @@ public class EntityStatsScriptableObject : ScriptableObject
     public float AwarenessUpTime = 1;
     [Tooltip("How long it takes for awareness to drop to 0 (in seconds)")]
     public float AwarenessDownTime = 1;
+    [Tooltip("How long it takes for awareness to drop to 0 when is alerted (in seconds)")]
+    public float AlertedAwarenessDownTime = 5;
     [Tooltip("How long it takes for awareness to fill up while player run in range (in seconds)")]
     public float WalkSoundAwarenessTime = 1;
 

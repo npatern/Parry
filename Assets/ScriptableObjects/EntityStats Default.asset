@@ -21,3 +21,7 @@ MonoBehaviour:
   SlowmoValue: 0.5
   AwarenessUpTime: 0.5
   AwarenessDownTime: 1
+  AlertedAwarenessDownTime: 8
+  WalkSoundAwarenessTime: 1
+  NPCspeed: 4
+  NPCspeedChase: 8

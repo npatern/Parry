@@ -32,7 +32,7 @@ public class LightController : MonoBehaviour
             range = lightComponent.range;
         brightness = lightComponent.intensity/2;
         statusController = GetComponent<StatusController>();
-        layerMask = LayerMask.GetMask("Player", "Blockout");
+        layerMask = LayerMask.GetMask("Entity", "Blockout", "Bush");
         
     }
     public void Start()
@@ -109,15 +109,18 @@ public class LightController : MonoBehaviour
     {
         Vector3 direction = -lightComponent.transform.forward;
         RaycastHit hit;
-        LayerMask thisLayerMask = LayerMask.GetMask("Blockout");
-
+        LayerMask thisLayerMask = LayerMask.GetMask("Blockout", "Bush");
+        LayerMask bushLayerMask = LayerMask.GetMask("Bush");
         Debug.DrawRay(target.position + Vector3.up, direction*100,Color.yellow,1f);
-
-        if (Physics.Raycast(target.position + Vector3.up, direction, out hit, range, thisLayerMask))
+        Vector3 point1=target.position + Vector3.up;
+        Vector3 point2=target.position + Vector3.up*2;
+        if (Physics.CheckSphere(point1, .2f, bushLayerMask) && Physics.CheckSphere(point2, .2f, bushLayerMask))
             return true;
-        if (Physics.Raycast(target.position + Vector3.up * 2, direction, out hit, range, thisLayerMask))
-            return true;
-        return false;
+        if (!Physics.Raycast(point1, direction, out hit, range, thisLayerMask))
+            return false;
+        if (!Physics.Raycast(point2, direction, out hit, range, thisLayerMask))
+            return false;
+        return true;
     }
     public float GetLightValueOnObject(Transform target)
     {

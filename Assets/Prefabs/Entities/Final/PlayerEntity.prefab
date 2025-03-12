@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 193002233852398124}
   - component: {fileID: 118772920}
   - component: {fileID: 1362973198102939623}
-  m_Layer: 9
+  m_Layer: 8
   m_Name: PlayerEntity
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -232,6 +232,22 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: 894cc9f7-76f8-47a4-a4ac-061190665a28
     m_ActionName: InGame/Dodge[/DualSenseGamepadHID/buttonEast,/Keyboard/shift]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: 
+        m_MethodName: 
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 88a54b11-4c04-47ae-8355-4dec68ce08bd
+    m_ActionName: InGame/Sprint[/DualSenseGamepadHID/leftTrigger,/Keyboard/shift]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: Keyboard&Mouse
   m_DefaultActionMap: InGame
@@ -256,7 +272,7 @@ MonoBehaviour:
   alignToCamera: 0
   lookAtValue: {x: 0, y: 0}
   movementSpeed: 10
-  runSpeed: 8
+  runSpeed: 20
   jumpForce: 30
   maxRunForce: 4
   groundCheck: {x: 0, y: 0.5, z: 0}
@@ -281,7 +297,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   layerMask:
     serializedVersion: 2
-    m_Bits: 256
+    m_Bits: 2368
   ColliderSize: 1
   inputController: {fileID: 0}
   statusController: {fileID: 0}
@@ -311,6 +327,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cd7c774c27a4a1748a992000bcc3da8d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Team: player
   loadValuesInRealTime: 0
   IsPlayer: 0
   CriticalMultiplier: 10
@@ -319,6 +336,7 @@ MonoBehaviour:
   Posture: 100
   IsKilled: 0
   IsStunned: 0
+  DestroyOnKill: 0
   IsAttackedEvent:
     m_PersistentCalls:
       m_Calls: []
@@ -328,10 +346,12 @@ MonoBehaviour:
   OnKillEvent:
     m_PersistentCalls:
       m_Calls: []
+  scaleParticles: 0
   DamageEffect: {fileID: 1025925495283513676, guid: 6c885e1c2fbbaa84ebc9107d0af1a252, type: 3}
   ParryEffect: {fileID: 5829956603799595035, guid: c230284ada2da5c4d99f033287009091, type: 3}
   PostureEffect: {fileID: 6335604904681789282, guid: 2b39b28f00a0b0a4da4368fdba0f6a1c, type: 3}
   PostureLongEffect: {fileID: 6335604904681789282, guid: fec9fead045d1314abee087c3f8d377a, type: 3}
+  deafTime: 1
 --- !u!114 &1362973198102939623
 MonoBehaviour:
   m_ObjectHideFlags: 0

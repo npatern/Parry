@@ -23,7 +23,7 @@ public class UIAwarenessArrow : MonoBehaviour
         
         FollowTarget(player.transform);
         LookAtTarget(sensesController.transform);
-        if (sensesController.isAware)
+        if (sensesController.IsAlerted)
             ApplyValues(sensesController.Awareness);
         else
             ApplyValues(sensesController.Awareness, true);

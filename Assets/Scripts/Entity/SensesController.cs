@@ -13,7 +13,11 @@ public class SensesController : MonoBehaviour, IHear
     float playerHeight = 1.5f;
     
 
-    public bool isAware = false;
+    public bool IsAlerted = false;
+    public StatusController currentTarget;
+    public Vector3 currentTargetLastPosition;
+    public float currentTargetTimer = 0;
+    public bool isInvestigationOpen = false;
     public float Awareness = 0;
     [SerializeField]
     private float maxAwareness = 100;
@@ -21,6 +25,7 @@ public class SensesController : MonoBehaviour, IHear
     float awarenessUpTime = 1f;
     [SerializeField]
     float awarenessDownTime = 1f;
+    float alertedAwarenessDownTime = 1f;
 
     [Space(10), Header("Values")]
     [SerializeField]
@@ -45,7 +50,7 @@ public class SensesController : MonoBehaviour, IHear
     {
         if (eyesSource == null) eyesSource = this.transform;
         if (target == null) target = GameController.Instance.CurrentPlayer.transform;
-        layerMask = LayerMask.GetMask("Player", "Blockout");
+        layerMask = LayerMask.GetMask("Entity", "Blockout");
     }
     private void Start()
     {
@@ -60,43 +65,72 @@ public class SensesController : MonoBehaviour, IHear
     }
     private void FixedUpdate()
     {
+        if (currentTargetTimer > 0)
+            currentTargetTimer -= Time.fixedDeltaTime;
+        else
+            ResetTarget();
+        if (currentTarget != null) currentTargetLastPosition = currentTarget.transform.position;
+
+        if (currentTargetTimer<=0) 
         if (target == null) return;
-        ApplyAwareness(GetAwarenessValue(target));
+        ApplyAwareness(GetAwarenessValue(target), target.GetComponent<StatusController>());
          
     }
-    
-    void ApplyAwareness(float awarenessValue)
+    void ResetTarget()
     {
-        if (Awareness >= 100)
-        {
-            isAware = true;
-        }
-        if (Awareness <= 0)
-        {
-            isAware = false;
-        }
+        currentTarget = null;
+        currentTargetTimer = 0;
+    }
+    void SetTarget(StatusController _target)
+    {
+        if (_target == null) return;
+        currentTargetTimer = 1;
+        currentTarget = _target;
+    }
+    void ApplyAwareness(float awarenessValue, StatusController _target=null)
+    {
 
+        bool wasAlerted = IsAlerted;
         if (awarenessValue > 0)
         {
-            if (isAware)
+            if (_target!=null)
+                SetTarget(_target);
+            if (IsAlerted)
                 Awareness = maxAwareness;
             else
                 Awareness += awarenessValue * maxAwareness * Time.fixedDeltaTime/ awarenessUpTime;
         }
         else
         {
-            if (isAware)
-                Awareness -= maxAwareness * Time.fixedDeltaTime/ awarenessDownTime;
+            if (isInvestigationOpen)
+            {
+
+            }  
+            else if (IsAlerted)
+            {
+                if (currentTargetTimer <= 0) Awareness -= maxAwareness * Time.fixedDeltaTime / alertedAwarenessDownTime;
+            }
             else
-                Awareness -= maxAwareness * Time.fixedDeltaTime/ awarenessDownTime;
+            {
+                Awareness -= maxAwareness * Time.fixedDeltaTime / awarenessDownTime;
+            }
+                
         }
-        
+        if (Awareness >= 100)
+        {
+            IsAlerted = true;
+        }
+        if (Awareness <= 0)
+        {
+            IsAlerted = false;
+        }
         Awareness = Mathf.Clamp(Awareness, 0, 100);
     }
     void LoadStatsFromScriptable(EntityStatsScriptableObject scriptable)
     {
         awarenessUpTime = scriptable.AwarenessUpTime;
         awarenessDownTime = scriptable.AwarenessDownTime;
+        alertedAwarenessDownTime = scriptable.AlertedAwarenessDownTime;
     }
     float GetAwarenessValue(Transform destination)
     {
@@ -204,26 +238,42 @@ public class SensesController : MonoBehaviour, IHear
 
         return anglePercent;
     }
+
+    StatusController GetTargetFromSound(Sound sound)
+    {
+        if (sound.worldInfo != null)
+            if (sound.worldInfo.IsPlayer)
+                return sound.worldInfo;
+
+        if (sound.statusController != null)
+            if (sound.statusController.IsPlayer)
+                return sound.statusController;
+
+        return null;
+    }
     public void ReactToSound(Sound sound)
     {
+        
+        StatusController _target = GetTargetFromSound(sound);
+
         if (Vector3.Distance(eyesSource.position, sound.position) > sound.range) return;
         if (sound.type == Sound.TYPES.cover)
             GetComponent<StatusController>().MakeDeaf();
         if (GetComponent<StatusController>().IsDeaf()) return;
 
-        if (sound.type == Sound.TYPES.player)
-            ApplyAwareness((100*Time.fixedDeltaTime)/2);
         if (sound.type == Sound.TYPES.danger)
-            ApplyAwareness(100);
+            ApplyAwareness(100, _target);
         if (sound.type == Sound.TYPES.neutral)
-            ApplyAwareness(1);
+            ApplyAwareness((100 * Time.fixedDeltaTime) / 2, _target);
 
-        GetComponent<EntityController>().currentState.InvestigateSound(GetComponent<EntityController>(),sound.position);
+
+        //GetComponent<EntityController>().currentState.InvestigateSound(GetComponent<EntityController>(),sound.position);
         Debug.Log("senses reacted"+name);
     }
     public void Kill()
     {
         Destroy(UIarrow);
+        Destroy(GetComponent<SensesController>());
     }
     
 }

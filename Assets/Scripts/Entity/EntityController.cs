@@ -3,6 +3,7 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.AI;
 using System.Collections;
+using TMPro;
 public class EntityController : MonoBehaviour
 {
     float slowSpeed = 5;
@@ -10,10 +11,11 @@ public class EntityController : MonoBehaviour
 
     public float AwarnessDistance = 7f;
     public float rotationSpeed = 10;
-    private NavMeshAgent agent;
+    public NavMeshAgent agent;
     private StatusController statusController;
     private SensesController sensesController;
     private CombatController combatController;
+    private TMP_Text textMesh;
     public StatusController target;
 
     public List<NeedScriptableObject> ListOfNeeds;
@@ -46,6 +48,8 @@ public class EntityController : MonoBehaviour
             rb = GetComponent<Rigidbody>();
         if (GetComponent<SensesController>() != null)
             sensesController = GetComponent<SensesController>();
+        if (GetComponent<TMP_Text>() != null)
+            textMesh = GetComponent<TMP_Text>();
     }
     void Start()
     {
@@ -75,8 +79,9 @@ public class EntityController : MonoBehaviour
     void Update()
     {
         currentState = currentState.Process();
+        textMesh.text = ""+currentState.name;
         return;
-        if (sensesController.isAware) agent.speed = fastSpeed;
+        if (sensesController.IsAlerted) agent.speed = fastSpeed;
         else agent.speed = slowSpeed;
       
         if (IsAwareOfPlayer())
@@ -119,7 +124,7 @@ public class EntityController : MonoBehaviour
             DisableNavmesh(false);
             GoToTarget(statusObject.transform.position);
         }
-        else if (sensesController.isAware)
+        else if (sensesController.IsAlerted)
         {
             DisableNavmesh(true);
             LookAtTarget(target.transform);
@@ -253,7 +258,7 @@ public class EntityController : MonoBehaviour
         IsAtTarget = false;
 
     }
-    void DisableNavmesh( bool isDisabled)
+    public void DisableNavmesh( bool isDisabled)
     {
         if (agent == null) return;
         agent.isStopped = isDisabled;
