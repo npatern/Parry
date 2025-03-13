@@ -20,6 +20,7 @@ public class RoofController : MonoBehaviour
     {
        
         if (mesh == null) return;
+        if (gameController.CurrentPlayer == null) return;
         if (playerPosition == null) playerPosition = gameController.CurrentPlayer.transform;
         mesh.enabled = !IsConflictingWithPlayer();
     }

@@ -69,7 +69,7 @@ public class GameController : MonoBehaviour
     }
     void ApplyStunnedPostprocess()
     {
-        //if (CurrentPlayer.IsStunned) StunnedPostProcess.weight = 1;
+        if (CurrentPlayer == null) return;
         if (!CurrentPlayer.IsStunned) StunnedPostProcess.weight = 0;
         else StunnedPostProcess.weight = CurrentPlayer.GetStunndedTimerValue()*3;
     }
