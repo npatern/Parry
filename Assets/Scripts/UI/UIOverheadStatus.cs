@@ -66,11 +66,7 @@ public class UIOverheadStatus : MonoBehaviour
     public void ApplyValues(float health, float posture, bool isStunned = false)
     {
         HealthBar.SetBarValue(health);
-        if (isStunned)
-        PostureBar.SetBarValue(100-posture,100,0,true);
-        else
-        PostureBar.SetBarValue(100 - posture);
-
+        PostureBar.gameObject.SetActive(ApplyStunBar(posture, isStunned));
         LightBar.gameObject.SetActive(ApplyLightBar());
         AwarenessBar.gameObject.SetActive(ApplyAwarenessBar());
         SoundBar.gameObject.SetActive(ApplySoundBar());
@@ -80,6 +76,15 @@ public class UIOverheadStatus : MonoBehaviour
     {
         Vector3 screenPosition = Camera.main.WorldToScreenPoint(target.position + Vector3.up * 3);
         transform.position = screenPosition;
+    }
+    bool ApplyStunBar(float posture, bool isStunned)
+    {
+        if (posture > 99) return false;
+        if (isStunned)
+            PostureBar.SetBarValue(100 - posture, 100, 0, true);
+        else
+            PostureBar.SetBarValue(100 - posture);
+        return true;
     }
     bool ApplyLightBar()
     {
