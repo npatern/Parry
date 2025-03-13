@@ -18,10 +18,7 @@ public class SoundEmmiter : MonoBehaviour
         Sounds.MakeSound(sound);
         particle.startLifetime = soundRange / particle.startSpeed;
     }
-    private void OnDrawGizmosSelected()
-    {
-        Gizmos.DrawSphere(transform.position, soundRange);
-    }
+   
     public void SetEmiting(bool isPowered)
     {
         isEmiting = isPowered;

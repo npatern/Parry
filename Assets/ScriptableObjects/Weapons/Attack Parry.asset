@@ -21,7 +21,7 @@ MonoBehaviour:
     LockMovement: 1
     LockRotation: 0
     TargetEnum: 1
-    WaitTime: 0.3
+    WaitTime: 0.4
     MovementCurve:
       serializedVersion: 2
       m_Curve:
@@ -66,11 +66,13 @@ MonoBehaviour:
     IsFiring: 0
     SkipIfPlayer: 1
     MovementOffset: {x: 0, y: 0, z: 0}
+    SoundRange: 0
+    soundType: 0
   - StepName: parry player
     LockMovement: 1
     LockRotation: 0
     TargetEnum: 1
-    WaitTime: 0.3
+    WaitTime: 0.4
     MovementCurve:
       serializedVersion: 2
       m_Curve:
@@ -115,6 +117,8 @@ MonoBehaviour:
     IsFiring: 0
     SkipIfPlayer: 0
     MovementOffset: {x: 0, y: 0, z: 0}
+    SoundRange: 0
+    soundType: 0
   - StepName: 
     LockMovement: 1
     LockRotation: 0
@@ -155,6 +159,8 @@ MonoBehaviour:
     IsFiring: 0
     SkipIfPlayer: 0
     MovementOffset: {x: 0, y: 0, z: 0}
+    SoundRange: 0
+    soundType: 0
   - StepName: 
     LockMovement: 0
     LockRotation: 0
@@ -195,3 +201,5 @@ MonoBehaviour:
     IsFiring: 0
     SkipIfPlayer: 0
     MovementOffset: {x: 0, y: 0, z: 0}
+    SoundRange: 0
+    soundType: 0

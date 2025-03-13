@@ -10,7 +10,8 @@ public class UIBarController : MonoBehaviour
     float Value = 100;
     [SerializeField]
     float minScale = 0;
-
+    [SerializeField]
+    bool vertical = false;
     Color color;
     [SerializeField]
     Color specialColor;
@@ -27,7 +28,10 @@ public class UIBarController : MonoBehaviour
         float barCurrentLength = value - minValue;
         float barPercent = barCurrentLength/ barTotalLength;
         barPercent = minScale + (1f - minScale) * barPercent;
-        bar.localScale = new Vector3(barPercent,bar.localScale.y,bar.localScale.y);
+        if (vertical)
+            bar.localScale = new Vector3(bar.localScale.x, barPercent, bar.localScale.y);
+        else
+            bar.localScale = new Vector3(barPercent,bar.localScale.y,bar.localScale.y);
 
         if (bar.GetComponent<Image>() == null) return;
         
