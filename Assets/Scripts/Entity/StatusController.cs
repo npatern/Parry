@@ -73,6 +73,7 @@ public class StatusController : MonoBehaviour, IHear
         IsAttackedEvent.AddListener(Attacked);
         LoadStatsFromScriptable(GameController.Instance.ListOfAssets.DefaultEntityStats);
     }
+    
     private void FixedUpdate()
     {
         deafTimer -= Time.fixedDeltaTime;
@@ -151,15 +152,38 @@ public class StatusController : MonoBehaviour, IHear
         TakeDamage(damage, attacker);
         return true;
     }
+    public float GetStunndedTimerValue()
+    {
+        return stunnedTimer / postureStunnedRegenerationTime;
+    }
     public void TakeDamage(float damage, StatusController attacker)
     {
         
-        UIController.Instance.SpawnTextBubble("Ouch!", transform);
+        
         SpawnParticles(DamageEffect, transform);
         
         if (MultiplyDamage(attacker)) damage *= attacker.CriticalMultiplier;
         Life -= damage;
-        if (Life <= 0 && !IsKilled) Kill(attacker);
+        if (Life <= 0 && !IsKilled) 
+        {
+           
+            Kill(attacker);
+            Sound sound = new Sound(this, 2, Sound.TYPES.neutral);
+            Sounds.MakeSound(sound);
+        }
+        else
+        {
+            if (sensesController != null)
+            {
+                UIController.Instance.SpawnTextBubble("Ouch!", transform);
+                sensesController.Awareness = 100;
+                sensesController.SetCurrentTarget( attacker);
+                Sound sound = new Sound(this, 10, Sound.TYPES.neutral);
+                Sounds.MakeSound(sound);
+            }
+            
+        }
+        
     }
     bool MultiplyDamage(StatusController attacker)
     {
@@ -242,11 +266,13 @@ public class StatusController : MonoBehaviour, IHear
             combatController.enabled = false;
         }
         
-        if (GetComponent<EntityController>() != null)
+        if (TryGetComponent<EntityController>(out EntityController entityController))
         {
-            GameController.Instance.RemoveFromListOfEntities(GetComponent<EntityController>());
-            GetComponent<EntityController>().StopAllCoroutines();
-            GetComponent<EntityController>().enabled = false;
+            GameController.Instance.RemoveFromListOfEntities(entityController);
+            entityController.ResetFulfiller();
+            entityController.StopAllCoroutines();
+            entityController.enabled = false;
+            UIController.Instance.SpawnTextBubble("Argh..!", transform);
         }
             
         if (GetComponent<NavMeshAgent>() != null)

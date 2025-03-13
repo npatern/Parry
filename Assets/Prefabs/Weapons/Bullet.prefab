@@ -99,12 +99,13 @@ MonoBehaviour:
   Team: 
   loadValuesInRealTime: 0
   IsPlayer: 0
-  CriticalMultiplier: 4
+  CriticalMultiplier: 10
   SpeedMultiplier: 1
   Life: 5
   Posture: 100
   IsKilled: 0
   IsStunned: 0
+  DestroyOnKill: 0
   IsAttackedEvent:
     m_PersistentCalls:
       m_Calls: []
@@ -114,6 +115,7 @@ MonoBehaviour:
   OnKillEvent:
     m_PersistentCalls:
       m_Calls: []
+  scaleParticles: 0
   DamageEffect: {fileID: 0}
   ParryEffect: {fileID: 0}
   PostureEffect: {fileID: 0}

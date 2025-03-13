@@ -23,6 +23,7 @@ public class GameController : MonoBehaviour
     public NeedFulfiller[] NeedFulfillers;
     public GameObject PostProcess;
     public PostProcessVolume SlowmoPostProcess;
+    public PostProcessVolume StunnedPostProcess;
     public GameObject PlayerEntity;
     public Transform EntitiesParent;
     public GameObject EntitySelector;
@@ -59,23 +60,38 @@ public class GameController : MonoBehaviour
     }
     private void FixedUpdate()
     {
+        ApplySlowmoPostprocess();
+        ApplyStunnedPostprocess();
+    }
+    void CollectLevelElements()
+    {
+         //Level.GetComponentsInChildren(lightControllers);
+    }
+    void ApplyStunnedPostprocess()
+    {
+        //if (CurrentPlayer.IsStunned) StunnedPostProcess.weight = 1;
+        if (!CurrentPlayer.IsStunned) StunnedPostProcess.weight = 0;
+        else StunnedPostProcess.weight = CurrentPlayer.GetStunndedTimerValue()*3;
+    }
+    void ApplySlowmoPostprocess()
+    {
         float slowmospeed = .5f;
-        SlowmoPostProcess.weight = slowmoTimer*3;
-        if (Time.timeScale>0)
+        SlowmoPostProcess.weight = slowmoTimer * 3;
+        if (Time.timeScale > 0)
             if (slowmoTimer > 0)
             {
                 if (!slowmo)
                 {
-                    
+
                     SetTimeSpeed(slowmospeed);
                     CurrentPlayer.SpeedMultiplier = CurrentPlayer.SpeedMultiplier / slowmospeed;
                 }
                 slowmo = true;
-                slowmoTimer-= Time.fixedDeltaTime;
+                slowmoTimer -= Time.fixedDeltaTime;
             }
             else
             {
-                
+
                 if (slowmo)
                 {
                     SetTimeSpeed(1);
@@ -83,10 +99,6 @@ public class GameController : MonoBehaviour
                 }
                 slowmo = false;
             }
-    }
-    void CollectLevelElements()
-    {
-         //Level.GetComponentsInChildren(lightControllers);
     }
     public void IncreaseSlowmoTimer()
     {

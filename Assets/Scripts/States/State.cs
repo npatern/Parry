@@ -175,7 +175,7 @@ public class UseObject : State
     }
     public override void Exit()
     {
-        
+         
             entity.ResetFulfiller();
             entity.CurrentNeed = null;
          
@@ -258,9 +258,10 @@ public class Search : State
 
         if (entity.IsTargetReached() && !isAtTarget)
         {
-            Vector3 randomPositionOffset = new Vector3(Random.Range(-1, 2), 0, Random.Range(-1, 2));
+            Vector3 randomPositionOffset =2* new Vector3(Random.Range(-1, 2), 0, Random.Range(-1, 2));
             isAtTarget = true;
             investigatedPosition += randomPositionOffset;
+            isAtTarget = false;
         }
         if (sensesController.Awareness <= 0)
         {
@@ -289,7 +290,9 @@ public class Combat : State
     }
     public override void Enter()
     {
-        UIController.Instance.SpawnTextBubble("They're here!", entity.transform);
+        UIController.Instance.SpawnTextBubble("They're overthere!", entity.transform);
+        Sound sound = new Sound(statusController, 20, Sound.TYPES.danger,combatTarget);
+        Sounds.MakeSound(sound);
         base.Enter();
     }
 

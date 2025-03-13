@@ -69,14 +69,11 @@ public class LightController : MonoBehaviour
                 break;
             case LightType.Spot:
                 if (!IsInDistance(target)) return false;
-                if (IsAngleRight(target))
+                if (!IsAngleRight(target)) return false;
                 if (IsObscured(target)) return false;
                 break;
         }
-        
-        
         return true;
-
     }
     public bool IsObscured(Transform target)
     {
@@ -116,9 +113,9 @@ public class LightController : MonoBehaviour
         Vector3 point2=target.position + Vector3.up*2;
         if (Physics.CheckSphere(point1, .2f, bushLayerMask) && Physics.CheckSphere(point2, .2f, bushLayerMask))
             return true;
-        if (!Physics.Raycast(point1, direction, out hit, range, thisLayerMask))
+        if (!Physics.Raycast(point1, direction, out hit, 150, thisLayerMask))
             return false;
-        if (!Physics.Raycast(point2, direction, out hit, range, thisLayerMask))
+        if (!Physics.Raycast(point2, direction, out hit, 150, thisLayerMask))
             return false;
         return true;
     }

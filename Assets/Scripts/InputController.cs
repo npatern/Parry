@@ -8,7 +8,7 @@ public class InputController : MonoBehaviour
     [SerializeField]
     float gamepadDeadzone = .1f;
     [SerializeField]
-    Transform target;
+    public Transform target;
     [SerializeField]
     Transform targetParent;
     [SerializeField]
@@ -123,7 +123,7 @@ public class InputController : MonoBehaviour
 
         rb.AddForce(velocityChange, ForceMode.VelocityChange);
         //if (!isSprinting) return;
-        float soundRange = 20f * rb.velocity.magnitude / movementSpeed;
+        float soundRange = 8f * rb.velocity.magnitude / movementSpeed;
         Sound sound = new Sound(statusController, soundRange);
         Sounds.MakeSound(sound);
     }

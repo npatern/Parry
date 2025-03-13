@@ -12,7 +12,7 @@ public class NeedFulfiller : MonoBehaviour
     public Transform UserSpot;
     public GameObject ShowIfUsed;
     public GameObject HideIfUsed;
-
+    public FulfillmentStepScriptableObject currentStep;
     private void Awake()
     {
         ChangeGraphics(false);
@@ -24,7 +24,9 @@ public class NeedFulfiller : MonoBehaviour
         {
             //Debug.Log("Fulfilling step " + i + "of fulfilling the need of "+NeedToFulfill.Name);
             IEnumerator coroutine = StepsToFulfill[i].CountDown(entity);
+            currentStep = StepsToFulfill[i];
             yield return coroutine;
+            currentStep = null;
             //Debug.Log("Fulfilled step " + i + "of fulfilling the need of " + NeedToFulfill.Name);
         }
         ChangeGraphics(false);
@@ -43,13 +45,20 @@ public class NeedFulfiller : MonoBehaviour
     public void ResetFulfiller()
     {
         ChangeGraphics(false);
-        if (User != null) 
+          
+        if (User != null)
+        {
+            if (currentStep != null)
+            {
+                currentStep.EndStep(User);
+                currentStep = null;
+            }
             if (User.CurrentFulfiller == this)
             {
                 User.CurrentFulfiller = null;
                 Reserved = false;
             }
-                
+        }        
         User = null;
     }
 }

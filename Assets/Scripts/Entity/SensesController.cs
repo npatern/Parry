@@ -68,7 +68,7 @@ public class SensesController : MonoBehaviour, IHear
         if (currentTargetTimer > 0)
             currentTargetTimer -= Time.fixedDeltaTime;
         else
-            ResetTarget();
+            ResetCurrentTarget();
         if (currentTarget != null) currentTargetLastPosition = currentTarget.transform.position;
 
         if (currentTargetTimer<=0) 
@@ -76,16 +76,20 @@ public class SensesController : MonoBehaviour, IHear
         ApplyAwareness(GetAwarenessValue(target), target.GetComponent<StatusController>());
          
     }
-    void ResetTarget()
+    void ResetCurrentTarget()
     {
         currentTarget = null;
         currentTargetTimer = 0;
     }
-    void SetTarget(StatusController _target)
+    public void SetCurrentTarget(StatusController _target)
     {
         if (_target == null) return;
         currentTargetTimer = 1;
         currentTarget = _target;
+    }
+    public StatusController GetCurrentTarget()
+    {
+        return currentTarget;
     }
     void ApplyAwareness(float awarenessValue, StatusController _target=null)
     {
@@ -94,7 +98,7 @@ public class SensesController : MonoBehaviour, IHear
         if (awarenessValue > 0)
         {
             if (_target!=null)
-                SetTarget(_target);
+                SetCurrentTarget(_target);
             if (IsAlerted)
                 Awareness = maxAwareness;
             else
