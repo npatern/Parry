@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections;
 
-[CreateAssetMenu(fileName = "StepTextBubble", menuName = "ScriptableObjects/FulfillmentStepTextBubble", order = 1)]
+[CreateAssetMenu(fileName = "StepTextBubble", menuName = "ScriptableObjects/Needs/FulfillmentStepTextBubble", order = 1)]
 public class FulfillmentStepTextBubbleObject : FulfillmentStepScriptableObject
 {
     public string TextToSpawn = "Hello world!";

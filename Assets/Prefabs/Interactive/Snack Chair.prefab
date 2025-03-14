@@ -507,11 +507,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Team: 
+  size: {x: 1, y: 1, z: 1}
   loadValuesInRealTime: 0
   IsPlayer: 0
   CriticalMultiplier: 4
   SpeedMultiplier: 1
   Life: 1
+  MaxLife: 1
   Posture: 100
   IsKilled: 0
   IsStunned: 0

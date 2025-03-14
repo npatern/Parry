@@ -40,7 +40,10 @@ public class AttackScriptableObject : ScriptableObject
             combat.MovementLocked = LockMovement;
             combat.RotationLocked = LockRotation;
             Transform GoToTarget = combat.GetTargetFromEnum(TargetEnum);
-            Vector3 goToPosition = GoToTarget.localPosition;
+            Vector3 goToPosition = new Vector3(
+                GoToTarget.localPosition.x * combat.statusController.size.x, 
+                GoToTarget.localPosition.y * combat.statusController.size.y, 
+                GoToTarget.localPosition.z * combat.statusController.size.z);
             Quaternion goToRotation = GoToTarget.localRotation;
             StartStep(combat);
             float elapsedTime = 0;

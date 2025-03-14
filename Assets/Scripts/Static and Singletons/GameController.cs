@@ -23,6 +23,8 @@ public class GameController : MonoBehaviour
     public GameObject PostProcess;
     public PostProcessVolume SlowmoPostProcess;
     public PostProcessVolume StunnedPostProcess;
+    public PostProcessVolume NoctovisionPostProcess;
+    public bool NoctovisionOn = false;
     public GameObject PlayerEntity;
     public Transform EntitiesParent;
     public GameObject EntitySelector;
@@ -71,6 +73,17 @@ public class GameController : MonoBehaviour
         if (CurrentPlayer == null) return;
         if (!CurrentPlayer.IsStunned) StunnedPostProcess.weight = 0;
         else StunnedPostProcess.weight = CurrentPlayer.GetStunndedTimerValue()*3;
+    }
+    
+    public void SwitchNoctovision()
+    {
+        NoctovisionOn = !NoctovisionOn;
+        if (NoctovisionOn) 
+            NoctovisionPostProcess.weight = 1;
+        else
+            NoctovisionPostProcess.weight = 0;
+
+        
     }
     void ApplySlowmoPostprocess()
     {

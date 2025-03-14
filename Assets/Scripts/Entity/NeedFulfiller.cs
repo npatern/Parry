@@ -13,6 +13,8 @@ public class NeedFulfiller : MonoBehaviour
     public GameObject ShowIfUsed;
     public GameObject HideIfUsed;
     public FulfillmentStepScriptableObject currentStep;
+    public Vector3 maximumScale = Vector3.zero;
+    public Vector3 minimumScale = Vector3.zero;
     private void Awake()
     {
         ChangeGraphics(false);
@@ -41,6 +43,18 @@ public class NeedFulfiller : MonoBehaviour
             ShowIfUsed.SetActive(isUsed);
         if (HideIfUsed != null)
             HideIfUsed.SetActive(!isUsed);
+    }
+    public bool CanStatusUseIt(StatusController status)
+    {
+        return IsScaleOk(status.size);
+    }
+    public bool IsScaleOk(Vector3 scale)
+    {
+        if (maximumScale!=Vector3.zero)
+        if (maximumScale.x < scale.x || maximumScale.y < scale.y || maximumScale.z < scale.z) return false;
+
+        if (minimumScale.x > scale.x || minimumScale.y > scale.y || minimumScale.z > scale.z) return false;
+        return true;
     }
     public void ResetFulfiller()
     {

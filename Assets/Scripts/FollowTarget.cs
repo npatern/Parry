@@ -18,7 +18,7 @@ public class FollowTarget : MonoBehaviour
          
         if (target == null) return;
         //Rigidbody rb = target.GetComponent<Rigidbody>();
-        offset = Vector3.LerpUnclamped(offset, target.transform.forward * offsetSize, lerpSpeed);
+        offset = Vector3.LerpUnclamped(offset, target.transform.forward * offsetSize, offsetLerpSpeed);
         transform.position = Vector3.LerpUnclamped(transform.position, target.position+ offset, lerpSpeed);
          
         //transform.position = Vector3.Lerp(target.position, target.GetComponent<InputController>().target.position, .5f);

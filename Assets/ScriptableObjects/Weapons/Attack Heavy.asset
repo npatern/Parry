@@ -21,7 +21,7 @@ MonoBehaviour:
     LockMovement: 0
     LockRotation: 0
     TargetEnum: 2
-    WaitTime: 1
+    WaitTime: 0.7
     MovementCurve:
       serializedVersion: 2
       m_Curve:
@@ -162,7 +162,11 @@ MonoBehaviour:
     IsParrying: 0
     IsProtected: 0
     IsDamaging: 0
+    IsFiring: 0
+    SkipIfPlayer: 0
     MovementOffset: {x: 0, y: 0, z: 0}
+    SoundRange: 0
+    soundType: 0
   - StepName: 
     LockMovement: 1
     LockRotation: 1
@@ -200,7 +204,11 @@ MonoBehaviour:
     IsParrying: 0
     IsProtected: 0
     IsDamaging: 1
+    IsFiring: 0
+    SkipIfPlayer: 0
     MovementOffset: {x: 0, y: 0, z: 0}
+    SoundRange: 0
+    soundType: 0
   - StepName: 
     LockMovement: 1
     LockRotation: 1
@@ -238,7 +246,11 @@ MonoBehaviour:
     IsParrying: 0
     IsProtected: 0
     IsDamaging: 0
+    IsFiring: 0
+    SkipIfPlayer: 0
     MovementOffset: {x: 0, y: 0, z: 0}
+    SoundRange: 0
+    soundType: 0
   - StepName: 
     LockMovement: 0
     LockRotation: 0
@@ -276,4 +288,8 @@ MonoBehaviour:
     IsParrying: 0
     IsProtected: 0
     IsDamaging: 0
+    IsFiring: 0
+    SkipIfPlayer: 0
     MovementOffset: {x: 0, y: 0, z: 0}
+    SoundRange: 0
+    soundType: 0

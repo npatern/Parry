@@ -22,19 +22,27 @@ public class LightController : MonoBehaviour
     LayerMask layerMask;
     [SerializeField]
     StatusController statusController;
+    [SerializeField]
+    private bool realtime = false;
     private void Awake()
     {
         lightComponent = GetComponent<Light>();
+        statusController = GetComponent<StatusController>();
+        UpdateLight();
+    }
+    void UpdateLight()
+    {
         lightType = lightComponent.type;
         if (lightType == LightType.Directional)
             range = Mathf.Infinity;
         else
             range = lightComponent.range;
-        brightness = lightComponent.intensity/2;
-        statusController = GetComponent<StatusController>();
+        brightness = lightComponent.intensity / 2;
+
         layerMask = LayerMask.GetMask("Entity", "Blockout", "Bush");
-        
+
     }
+    
     public void Start()
     {
         if (statusController!=null)
@@ -46,6 +54,8 @@ public class LightController : MonoBehaviour
         if (GameController.Instance.CurrentPlayer !=null)
         if(IsInLight(GameController.Instance.CurrentPlayer.transform)&& textComponent!=null)
             textComponent.SetText("" + GetLightValueOnObject(GameController.Instance.CurrentPlayer.transform));
+
+        if (realtime) UpdateLight();
     }
     private bool IsInDistance(Transform target)
     {

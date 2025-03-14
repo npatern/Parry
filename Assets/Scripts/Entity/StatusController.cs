@@ -7,6 +7,7 @@ using UnityEngine.Events;
 public class StatusController : MonoBehaviour, IHear
 {
     public string Team = "";
+    public Vector3 size = Vector3.one;
     [SerializeField]
     private bool loadValuesInRealTime = false;
 
@@ -15,8 +16,9 @@ public class StatusController : MonoBehaviour, IHear
     public float CriticalMultiplier = 4;
     public float SpeedMultiplier = 1;
     public float Life = 100;
+    public float MaxLife = 100;
     public float Posture = 100;
-
+    public float movementSpeedMultiplier = 1;
     public bool IsKilled = false;
     public bool IsStunned = false;
     public bool DestroyOnKill = false;
@@ -52,6 +54,7 @@ public class StatusController : MonoBehaviour, IHear
     private GameObject healthBar;
     void Awake()
     {
+        if (Life > MaxLife) Life = MaxLife;
         if (GetComponent<CombatController>() != null)
             combatController = GetComponent<CombatController>();
         if (GetComponent<Rigidbody>() != null)
@@ -138,7 +141,7 @@ public class StatusController : MonoBehaviour, IHear
                 attacker.TakePosture(damage * CriticalMultiplier, attacker);
                 attacker.IsAttackedEvent.Invoke();
             }
-            UIController.Instance.SpawnTextBubble("Haha!", transform);
+            UIController.Instance.SpawnTextBubble(Barks.GetBark(Barks.BarkTypes.onParry), transform);
             if (IsPlayer) GameController.Instance.IncreaseSlowmoTimer();
             return false;
         }

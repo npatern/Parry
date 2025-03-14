@@ -129,14 +129,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cd7c774c27a4a1748a992000bcc3da8d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Team: 
+  size: {x: 1, y: 1, z: 1}
   loadValuesInRealTime: 0
   IsPlayer: 0
   CriticalMultiplier: 0
   SpeedMultiplier: 0
   Life: 10
+  MaxLife: 1
   Posture: 100
   IsKilled: 0
   IsStunned: 0
+  DestroyOnKill: 0
   IsAttackedEvent:
     m_PersistentCalls:
       m_Calls: []
@@ -146,10 +150,12 @@ MonoBehaviour:
   OnKillEvent:
     m_PersistentCalls:
       m_Calls: []
+  scaleParticles: 0
   DamageEffect: {fileID: 6335604904681789282, guid: 6cacfb41065cd1545af16f61fe42669c, type: 3}
   ParryEffect: {fileID: 0}
   PostureEffect: {fileID: 0}
   PostureLongEffect: {fileID: 0}
+  deafTime: 1
 --- !u!114 &1616799659364014222
 MonoBehaviour:
   m_ObjectHideFlags: 0

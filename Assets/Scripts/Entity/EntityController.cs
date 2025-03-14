@@ -79,7 +79,7 @@ public class EntityController : MonoBehaviour
     void Update()
     {
         currentState = currentState.Process();
-        textMesh.text = ""+currentState.name;
+         
         return;
     }
     void LoadStatsFromScriptable(EntityStatsScriptableObject scriptable)
@@ -89,10 +89,14 @@ public class EntityController : MonoBehaviour
     }
     public void AttackTarget(StatusController statusObject)
     {
-        isSearchingForNeeds = false;
-        
-
-        if (Vector3.Distance(target.transform.position, transform.position) > combatController.attackDistance)
+        float sizeDifferential = (1 + statusController.size.z) / 2;
+        if (Vector3.Distance(target.transform.position, transform.position) < combatController.attackDistance*2/3* sizeDifferential)
+        {
+            DisableNavmesh(false);
+            Vector3 direction = Vector3.Normalize(transform.position - statusObject.transform.position);
+            GoToTarget(transform.position+ direction);
+        }else
+        if (Vector3.Distance(target.transform.position, transform.position) > combatController.attackDistance * sizeDifferential)
         {
             DisableNavmesh(false);
             GoToTarget(statusObject.transform.position);
@@ -103,16 +107,6 @@ public class EntityController : MonoBehaviour
             LookAtTarget(target.transform);
             PlayRandomAttack();
         }
-
-        /*
-        //agent.stoppingDistance = 4f;
-        GoToTarget(statusObject.transform);
-        
-        if (IsTargetReached())
-        {
-            PlayRandomAttack();
-        }
-        */
     }
     void PlayRandomAttack()
     {
@@ -131,11 +125,11 @@ public class EntityController : MonoBehaviour
     }
     public void SetAgentSpeedChase()
     {
-        agent.speed = fastSpeed;
+        agent.speed = fastSpeed * statusController.movementSpeedMultiplier;
     }
     public void SetAgentSpeedWalk()
     {
-        agent.speed = slowSpeed;
+        agent.speed = slowSpeed*statusController.movementSpeedMultiplier;
     }
     public void StateFulfillingNeeds()
     {
@@ -227,7 +221,7 @@ public class EntityController : MonoBehaviour
         List<NeedFulfiller> fulfillersList = new List<NeedFulfiller>(GameController.Instance.NeedFulfillers);
         fulfillersList = fulfillersList.OrderBy(x => Random.value).ToList();
         foreach (NeedFulfiller fulfiller in fulfillersList)
-            if (fulfiller.NeedToFulfill == CurrentNeed && fulfiller.User == null)
+            if (fulfiller.NeedToFulfill == CurrentNeed && fulfiller.User == null && fulfiller.CanStatusUseIt(statusController))
             {
                 CurrentFulfiller = fulfiller;
                 if (!fulfiller.Unreservable)

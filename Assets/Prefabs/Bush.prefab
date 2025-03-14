@@ -132,12 +132,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Team: 
+  size: {x: 1, y: 1, z: 1}
   loadValuesInRealTime: 0
   IsPlayer: 0
   CriticalMultiplier: 4
   SpeedMultiplier: 1
   Life: 100
+  MaxLife: 100
   Posture: 100
+  movementSpeedMultiplier: 1
   IsKilled: 0
   IsStunned: 0
   DestroyOnKill: 1
@@ -183,7 +186,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 27860478745286753}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.246, y: -0.14600006, z: 0.294}
+  m_LocalPosition: {x: -0.246, y: 0.126, z: 0.294}
   m_LocalScale: {x: 0.74367, y: 0.74367, z: 0.74367}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -280,7 +283,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 27860478773905485}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.212, y: 0, z: -0.264}
+  m_LocalPosition: {x: -0.212, y: 0.134, z: -0.264}
   m_LocalScale: {x: 0.74367, y: 0.74367, z: 0.74367}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -377,7 +380,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 27860479342117098}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.157, y: -0.091, z: -0.46}
+  m_LocalPosition: {x: 0.157, y: 0.04300002, z: -0.46}
   m_LocalScale: {x: 0.74367, y: 0.74367, z: 0.74367}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -474,7 +477,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 27860479614014068}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.289, y: 0, z: 0.123}
+  m_LocalPosition: {x: 0.289, y: 0.13400002, z: 0.123}
   m_LocalScale: {x: 0.74367, y: 0.74367, z: 0.74367}
   m_ConstrainProportionsScale: 0
   m_Children: []

@@ -165,6 +165,11 @@ public class InputController : MonoBehaviour
         if (context.started)
             GetComponent<CombatController>().PerformParry(context);
     }
+    public void Noctovision(InputAction.CallbackContext context)
+    {
+        if (context.started)
+            GameController.Instance.SwitchNoctovision();
+    }
     public void Sprint(InputAction.CallbackContext context)
     {
 

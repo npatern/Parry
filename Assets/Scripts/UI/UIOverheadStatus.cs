@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 public class UIOverheadStatus : MonoBehaviour
 {
     [SerializeField]
@@ -14,6 +15,9 @@ public class UIOverheadStatus : MonoBehaviour
     private UIBarController AwarenessBar;
     [SerializeField]
     private UIBarController SoundBar;
+
+    [SerializeField]
+    private TMP_Text healthbarText;
 
     public StatusController statusController;
     [SerializeField]
@@ -58,20 +62,26 @@ public class UIOverheadStatus : MonoBehaviour
             Destroy(this.gameObject);
             return;
         }
-            
-         
         ApplyValues(statusController.Life, statusController.Posture, statusController.IsStunned);
         FollowTarget(statusController.transform);
     }
     public void ApplyValues(float health, float posture, bool isStunned = false)
     {
-        HealthBar.SetBarValue(health);
+        HealthBar.gameObject.SetActive(ApplyHealthBar(health));
         PostureBar.gameObject.SetActive(ApplyStunBar(posture, isStunned));
         LightBar.gameObject.SetActive(ApplyLightBar());
         AwarenessBar.gameObject.SetActive(ApplyAwarenessBar());
         SoundBar.gameObject.SetActive(ApplySoundBar());
     }
-
+    bool ApplyHealthBar(float health)
+    {
+        if (statusController.MaxLife <= 1) return false;
+        if (statusController.MaxLife <= 0) return false;
+        HealthBar.SetBarValue(health, statusController.MaxLife,0);
+        healthbarText.text = "";
+        
+        return true;
+    }
     void FollowTarget(Transform target)
     {
         Vector3 screenPosition = Camera.main.WorldToScreenPoint(target.position + Vector3.up * 3);

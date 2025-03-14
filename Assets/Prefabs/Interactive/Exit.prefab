@@ -209,6 +209,7 @@ MonoBehaviour:
   UserSpot: {fileID: 0}
   ShowIfUsed: {fileID: 0}
   HideIfUsed: {fileID: 0}
+  currentStep: {fileID: 0}
 --- !u!1 &2519731480974985874
 GameObject:
   m_ObjectHideFlags: 0
@@ -615,7 +616,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &4143879753783678186
 Transform:
   m_ObjectHideFlags: 0
@@ -805,3 +806,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   minDistance: 10
+  target: {fileID: 0}
+  offset: {x: 0, y: 0.5, z: 0}

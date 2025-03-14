@@ -18,6 +18,7 @@ public class ListOfAssetsScriptableObject : ScriptableObject
     public Bark[] random;
     public Bark[] onPain;
     public Bark[] onDeath;
+    public Bark[] onParry;
     public Bark[] onInvestigationStarted;
     public Bark[] onInvestigationEnded;
     public Bark[] inCombatNotice;
@@ -42,7 +43,7 @@ public class Bark
 }
 public static class Barks
 {
-    public enum BarkTypes { onPain, onDeath , onInvestigationStarted , onInvestigationEnded , inCombatNotice , onSearchStart , onSearchFail , inFleeEnterNotice , onFleeEnded };
+    public enum BarkTypes { onPain, onDeath, onParry , onInvestigationStarted , onInvestigationEnded , inCombatNotice , onSearchStart , onSearchFail , inFleeEnterNotice , onFleeEnded };
     public static string GetBark(BarkTypes barkType)
     {
         Bark[] barkList = GameController.Instance.ListOfAssets.random;
@@ -53,6 +54,9 @@ public static class Barks
                 break;
             case BarkTypes.onDeath:
                 barkList = GameController.Instance.ListOfAssets.onDeath;
+                break;
+            case BarkTypes.onParry:
+                barkList = GameController.Instance.ListOfAssets.onParry;
                 break;
             case BarkTypes.onInvestigationStarted:
                 barkList = GameController.Instance.ListOfAssets.onInvestigationStarted;
@@ -76,7 +80,9 @@ public static class Barks
                 barkList = GameController.Instance.ListOfAssets.onFleeEnded;
                 break;
         }
+        if (barkList.Length <= 0) return "Whatever...";
         int index = Random.Range(0, barkList.Length);
+        
         return barkList[index].name;
     }
 }

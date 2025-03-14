@@ -18,10 +18,10 @@ MonoBehaviour:
     value: 1
   colored:
     overrideState: 1
-    value: 1
+    value: 0
   intensity:
     overrideState: 1
-    value: 0.141
+    value: 0.525
   size:
     overrideState: 1
     value: 0.397
@@ -40,7 +40,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b3f6f3f7c722b4544b97e3c75840aa33, type: 3}
   m_Name: AutoExposure
   m_EditorClassIdentifier: 
-  active: 1
+  active: 0
   enabled:
     overrideState: 1
     value: 1
@@ -102,13 +102,13 @@ MonoBehaviour:
     value: 1
   focusDistance:
     overrideState: 1
-    value: 24
+    value: 17.1
   aperture:
     overrideState: 1
-    value: 0.1
+    value: 4.8
   focalLength:
     overrideState: 1
-    value: 50
+    value: 168
   kernelSize:
     overrideState: 1
     value: 3
@@ -171,20 +171,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: adb84e30e02715445aeb9959894e3b4d, type: 3}
   m_Name: ColorGrading
   m_EditorClassIdentifier: 
-  active: 0
+  active: 1
   enabled:
     overrideState: 1
     value: 1
   gradingMode:
-    overrideState: 0
+    overrideState: 1
     value: 1
   externalLut:
     overrideState: 0
     value: {fileID: 0}
     defaultState: 1
   tonemapper:
-    overrideState: 0
-    value: 0
+    overrideState: 1
+    value: 2
   toneCurveToeStrength:
     overrideState: 0
     value: 0
@@ -229,8 +229,8 @@ MonoBehaviour:
     overrideState: 0
     value: 0
   postExposure:
-    overrideState: 0
-    value: 0
+    overrideState: 1
+    value: 0.6
   contrast:
     overrideState: 0
     value: 0
@@ -269,7 +269,7 @@ MonoBehaviour:
     value: {x: 1, y: 1, z: 1, w: 0}
   gain:
     overrideState: 1
-    value: {x: 1, y: 0.77977717, z: 0, w: 0}
+    value: {x: 1, y: 0.80206656, z: 0.4361499, w: 0}
   masterCurve:
     overrideState: 0
     value:
@@ -1497,13 +1497,13 @@ MonoBehaviour:
     value: {x: 0.5, y: 0.5}
   intensity:
     overrideState: 1
-    value: 0.328
+    value: 0.665
   smoothness:
     overrideState: 1
-    value: 0.955
+    value: 0.143
   roundness:
     overrideState: 1
-    value: 0.926
+    value: 0.773
   rounded:
     overrideState: 0
     value: 0

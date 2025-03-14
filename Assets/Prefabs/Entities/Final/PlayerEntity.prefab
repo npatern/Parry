@@ -234,13 +234,13 @@ MonoBehaviour:
     m_ActionName: InGame/Dodge[/DualSenseGamepadHID/buttonEast,/Keyboard/shift]
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: 
-        m_Mode: 1
+      - m_Target: {fileID: 193002233852398125}
+        m_TargetAssemblyTypeName: InputController, Assembly-CSharp
+        m_MethodName: Sprint
+        m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: 
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -248,6 +248,22 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: 88a54b11-4c04-47ae-8355-4dec68ce08bd
     m_ActionName: InGame/Sprint[/DualSenseGamepadHID/leftTrigger,/Keyboard/shift]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 193002233852398125}
+        m_TargetAssemblyTypeName: InputController, Assembly-CSharp
+        m_MethodName: Noctovision
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 3a91b4c9-d224-4db2-888c-992da990d39e
+    m_ActionName: InGame/Noctovision[/Keyboard/n,/DualSenseGamepadHID/rightStickPress]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: Keyboard&Mouse
   m_DefaultActionMap: InGame
@@ -328,12 +344,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Team: player
+  size: {x: 1, y: 1, z: 1}
   loadValuesInRealTime: 0
   IsPlayer: 0
   CriticalMultiplier: 10
   SpeedMultiplier: 1
   Life: 100
+  MaxLife: 100
   Posture: 100
+  movementSpeedMultiplier: 1
   IsKilled: 0
   IsStunned: 0
   DestroyOnKill: 0
