@@ -15,7 +15,6 @@ public class GameController : MonoBehaviour
     float timer = 0;
     public Transform GarbageCollector;
     public static GameController Instance { get; private set; }
-    public GameObject[] Entities;
     public EntityController CurrentEntity = null;
     public Transform[] Spawners;
     public NeedScriptableObject[] Needs;
@@ -145,9 +144,10 @@ public class GameController : MonoBehaviour
     {
         if (Spawners.Length == 0) return;
         int spawnerNumber = Random.Range(0, Spawners.Length);
-        if (Entities.Length == 0) return;
-        int entityNumber = Random.Range(0, Entities.Length);
-        EntityController newEntity = Instantiate(Entities[entityNumber], Spawners[spawnerNumber].position, Quaternion.identity, EntitiesParent).GetComponent<EntityController>();
+        if (ListOfAssets == null) return;
+        if (ListOfAssets.enemies.Length == 0) return;
+        int entityNumber = Random.Range(0, ListOfAssets.enemies.Length);
+        EntityController newEntity = Instantiate(ListOfAssets.enemies[entityNumber], Spawners[spawnerNumber].position, Quaternion.identity, EntitiesParent).GetComponent<EntityController>();
         newEntity.target = CurrentPlayer;
         EntitiesInGame.Add(newEntity);
     }

@@ -8,6 +8,8 @@ public class RoofController : MonoBehaviour
     GameController gameController;
     MeshRenderer mesh;
     public float minDistance = 10;
+    public Transform target;
+    public Vector3 offset = Vector3.up / 2;
     void Start()
     {
         gameController = GameController.Instance;
@@ -18,16 +20,17 @@ public class RoofController : MonoBehaviour
 
     void Update()
     {
-       
-        if (mesh == null) return;
         if (gameController.CurrentPlayer == null) return;
         if (playerPosition == null) playerPosition = gameController.CurrentPlayer.transform;
-        mesh.enabled = !IsConflictingWithPlayer();
+        if (mesh == null)
+            target.gameObject.SetActive(!IsConflictingWithPlayer());
+        else
+            mesh.enabled = !IsConflictingWithPlayer();
     }
     bool IsConflictingWithPlayer()
     {
         if (Vector3.Distance(playerPosition.position, transform.position) < minDistance)
-            if (playerPosition.position.y < transform.position.y)
+            if (playerPosition.position.y+ offset.y < transform.position.y)
                 return true;
 
         return false;

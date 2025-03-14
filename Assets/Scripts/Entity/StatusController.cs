@@ -158,15 +158,12 @@ public class StatusController : MonoBehaviour, IHear
     }
     public void TakeDamage(float damage, StatusController attacker)
     {
-        
-        
         SpawnParticles(DamageEffect, transform);
         
         if (MultiplyDamage(attacker)) damage *= attacker.CriticalMultiplier;
         Life -= damage;
         if (Life <= 0 && !IsKilled) 
         {
-           
             Kill(attacker);
             Sound sound = new Sound(this, 2, Sound.TYPES.neutral);
             Sounds.MakeSound(sound);
@@ -175,7 +172,7 @@ public class StatusController : MonoBehaviour, IHear
         {
             if (sensesController != null)
             {
-                UIController.Instance.SpawnTextBubble("Ouch!", transform);
+                UIController.Instance.SpawnTextBubble(Barks.GetBark(Barks.BarkTypes.onPain), transform);
                 sensesController.Awareness = 100;
                 sensesController.SetCurrentTarget( attacker);
                 Sound sound = new Sound(this, 10, Sound.TYPES.neutral);
@@ -190,6 +187,10 @@ public class StatusController : MonoBehaviour, IHear
         
         if (IsPlayer) return false;
         if (IsStunned) return true;
+        if (GetComponent<EntityController>() != null)
+            if (!GetComponent<EntityController>().IsCombatReady())
+                return true;
+
         if (sensesController != null) if(!sensesController.IsAlerted) return true;
         return false;
     }
@@ -257,7 +258,9 @@ public class StatusController : MonoBehaviour, IHear
         
         GetComponent<Collider>().isTrigger = false;
         if (combatController != null)
+        if (combatController.CurrentWeapon != null)
         {
+             
             combatController.CurrentWeapon.GetComponent<Collider>().enabled = true;
             combatController.CurrentWeapon.GetComponent<Collider>().isTrigger = false;
             combatController.CurrentWeapon.GetComponent<Rigidbody>().isKinematic = false;
@@ -272,7 +275,7 @@ public class StatusController : MonoBehaviour, IHear
             entityController.ResetFulfiller();
             entityController.StopAllCoroutines();
             entityController.enabled = false;
-            UIController.Instance.SpawnTextBubble("Argh..!", transform);
+            UIController.Instance.SpawnTextBubble(Barks.GetBark(Barks.BarkTypes.onDeath), transform);
         }
             
         if (GetComponent<NavMeshAgent>() != null)

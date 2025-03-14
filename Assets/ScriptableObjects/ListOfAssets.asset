@@ -24,3 +24,64 @@ MonoBehaviour:
   - {fileID: 8799387768682952896, guid: e3190c55fdb9f514db6cf8472f36b72d, type: 3}
   - {fileID: 8799387768682952896, guid: bf8e8d43c61b59b4c9b1d69205eb7285, type: 3}
   - {fileID: 8799387768682952896, guid: 5d610cff41e9034478301694f7391ec5, type: 3}
+  - {fileID: 8799387768682952896, guid: fb2c57e5ed04760448d30688b89562d8, type: 3}
+  - {fileID: 193002233852398132, guid: b655d7d83c0abe148967a3c8fd0e18dc, type: 3}
+  random:
+  - name: Achoo!
+  - name: Burp.
+  - name: Bark.
+  - name: Snort.
+  - name: Yawn...
+  onPain:
+  - name: Auch!
+  - name: Ouch!
+  - name: Aaaay!
+  - name: Arrrr!
+  - name: '''Tis but a scratch!'
+  onDeath:
+  - name: Aargh...
+  - name: Ugh...
+  - name: Oh...
+  - name: ...
+  - name: Uh...
+  onInvestigationStarted:
+  - name: What was that?
+  - name: Huh..?
+  - name: Hello..?
+  - name: Is that you?
+  - name: Who's there?
+  onInvestigationEnded:
+  - name: Must've been the wind...
+  - name: Nothing here...
+  - name: That was a waste of time...
+  inCombatNotice:
+  - name: They're here!
+  - name: Get them!
+  - name: Attack!
+  - name: Here!
+  - name: I got you!
+  - name: En garde!
+  onSearchStart:
+  - name: Get them!
+  - name: Don't let them get away!
+  - name: I'll get you!
+  - name: You won't run far!
+  - name: Follow them!
+  - name: Catch them!
+  onSearchFail:
+  - name: They're probably gone by now...
+  - name: Lost them...
+  - name: They're gone...
+  - name: They ain't here...
+  - name: They got away...
+  inFleeEnterNotice:
+  - name: Aaaaaaaaaa!
+  - name: Help me!
+  - name: Heeeeeeelp!
+  - name: AAAA!
+  onFleeEnded:
+  - name: Pheeew...
+  - name: Whew...
+  - name: Made it!
+  - name: I'm safe now!
+  - name: Phew!

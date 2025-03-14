@@ -81,38 +81,11 @@ public class EntityController : MonoBehaviour
         currentState = currentState.Process();
         textMesh.text = ""+currentState.name;
         return;
-        if (sensesController.IsAlerted) agent.speed = fastSpeed;
-        else agent.speed = slowSpeed;
-      
-        if (IsAwareOfPlayer())
-        {
-            CurrentFulfiller = null;
-            agent.avoidancePriority = (int)Vector3.Distance(transform.position, target.transform.position);
-            if (!CanMove()) DisableNavmesh(true);
-            else DisableNavmesh(false);
-        }
-        else
-        {
-            
-            DisableNavmesh(false);
-            StateFulfillingNeeds();
-            return;
-        }
-        
-
-        AttackTarget(target);
-
-
-        //jesli nie jestes blisko gracza i mozesz chodzic - idz do gracza
-        // jesli nie patrzysz na gracza - patrz na gracza
-        //jesli nie atakujesz gracza - atakuj gracza
-        //if (player != null && Vector3.Distance(transform.position, player.transform.position) < AwarnessDistance)
     }
     void LoadStatsFromScriptable(EntityStatsScriptableObject scriptable)
     {
         slowSpeed = scriptable.NPCspeed;
         fastSpeed = scriptable.NPCspeedChase;
-        
     }
     public void AttackTarget(StatusController statusObject)
     {
@@ -151,6 +124,18 @@ public class EntityController : MonoBehaviour
             combatController.PerformAttack();
         else
             combatController.PerformHeavyAttack();
+    }
+    public void SetAgentSpeed(float speed)
+    {
+        agent.speed = speed;
+    }
+    public void SetAgentSpeedChase()
+    {
+        agent.speed = fastSpeed;
+    }
+    public void SetAgentSpeedWalk()
+    {
+        agent.speed = slowSpeed;
     }
     public void StateFulfillingNeeds()
     {
@@ -227,6 +212,15 @@ public class EntityController : MonoBehaviour
     public void SetAvoidancePriority(int priority)
     {
         agent.avoidancePriority = priority;
+    }
+    public void SetAvoidanceRadius(float radius)
+    {
+        return;
+        agent.radius = radius;
+        if (radius==0)
+            agent.obstacleAvoidanceType = ObstacleAvoidanceType.NoObstacleAvoidance;
+        else
+            agent.obstacleAvoidanceType = ObstacleAvoidanceType.HighQualityObstacleAvoidance;
     }
     public void FindFulfiller()
     {
@@ -329,7 +323,12 @@ public class EntityController : MonoBehaviour
             return false;
         else
             return true;
+    }
+    public bool IsCombatReady()
+    {
+        if (combatController == null) return false;
+        if (combatController.CurrentWeaponWrapper == null) return false;
 
-
+        return true;
     }
 }

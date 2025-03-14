@@ -50,6 +50,7 @@ public class CombatController : MonoBehaviour
         statusController.IsStunnedEvent.AddListener(PerformStunned);
         statusController.IsAttackedEvent.AddListener(PerformAttacked);
         //statusController.IsKilledEvent.AddListener(PerformAttacked);
+        if (TESTCurrentWeaponScriptable == null) return;
         if (CurrentWeaponWrapper==null)
         EquipWeapon(new ItemWeaponWrapper(TESTCurrentWeaponScriptable));
     }

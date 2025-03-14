@@ -63,6 +63,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7567830807840736554, guid: f06b9fd46a0787c4c8bafe2f8ac655ca, type: 3}
+      propertyPath: m_Color.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7567830807840736554, guid: f06b9fd46a0787c4c8bafe2f8ac655ca, type: 3}
+      propertyPath: m_Color.g
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7567830807840736554, guid: f06b9fd46a0787c4c8bafe2f8ac655ca, type: 3}
+      propertyPath: m_Color.r
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7567830807840736555, guid: f06b9fd46a0787c4c8bafe2f8ac655ca, type: 3}
       propertyPath: Team
       value: enemy
@@ -75,6 +87,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Lamp Spot Variant
       objectReference: {fileID: 0}
+    - target: {fileID: 7567830807840736558, guid: f06b9fd46a0787c4c8bafe2f8ac655ca, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 8fe83d6b028ec914da43b351bd3968a3, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f06b9fd46a0787c4c8bafe2f8ac655ca, type: 3}
 --- !u!1001 &8696479534945579764
@@ -152,6 +168,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: EnemyEntity Gun
       objectReference: {fileID: 0}
+    - target: {fileID: 1951965453646900291, guid: b655d7d83c0abe148967a3c8fd0e18dc, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 8fe83d6b028ec914da43b351bd3968a3, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b655d7d83c0abe148967a3c8fd0e18dc, type: 3}
 --- !u!224 &481780487048482831 stripped

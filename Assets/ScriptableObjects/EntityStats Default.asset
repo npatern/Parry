@@ -19,9 +19,9 @@ MonoBehaviour:
   PostureLongEffect: {fileID: 6335604904681789282, guid: fec9fead045d1314abee087c3f8d377a, type: 3}
   SlowmoTime: 1
   SlowmoValue: 0.5
-  AwarenessUpTime: 0.5
+  AwarenessUpTime: 1
   AwarenessDownTime: 1
-  AlertedAwarenessDownTime: 15
+  AlertedAwarenessDownTime: 10
   WalkSoundAwarenessTime: 1
   NPCspeed: 4
   NPCspeedChase: 8

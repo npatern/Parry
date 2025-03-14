@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
+[System.Serializable]
 public class State
 {
     public enum STATE
@@ -21,6 +22,15 @@ public class State
     protected EntityController entity;
     protected StatusController statusController;
     protected SensesController sensesController;
+
+    protected float timer = 0;
+    protected float time = 10;
+
+    protected void ResetTimer(float min = 3, float max = 10)
+    {
+        timer = 0;
+        time = Random.Range(min, max);
+    }
 
     public State(EntityController _entityController)
     {
@@ -47,18 +57,25 @@ public class State
         stage = EVENT.EXIT; 
         //Debug.Log(stage + " stage, " + name); 
     }
-
     public State Process()
     {
+        timer += Time.deltaTime;
+        entity.SetAvoidanceRadius(0);
+        //FLEE
+        if (name != STATE.FLEE && sensesController.IsAlerted && sensesController.Awareness > 0 && !entity.IsCombatReady())
+        {
+            nextState = new Flee(entity);
+            stage = EVENT.EXIT;
+        }
         //COMBAT
-        if (name!=STATE.COMBAT && sensesController.IsAlerted && sensesController.Awareness > 0 && sensesController.currentTarget!=null)
+        else if (name!=STATE.COMBAT && sensesController.IsAlerted && sensesController.Awareness > 0 && sensesController.currentTarget!=null && entity.IsCombatReady())
         {
             nextState = new Combat(entity, sensesController.currentTarget);
             stage = EVENT.EXIT;
         }
         
         //SEARCH
-        else if (name != STATE.SEARCH && sensesController.IsAlerted && sensesController.Awareness > 0 && sensesController.currentTarget == null)
+        else if (name != STATE.SEARCH && sensesController.IsAlerted && sensesController.Awareness > 0 && sensesController.currentTarget == null && entity.IsCombatReady())
         {
             nextState = new Search(entity, sensesController.currentTargetLastPosition);
             stage = EVENT.EXIT;
@@ -81,31 +98,31 @@ public class State
         return this;
     }
 }
+[System.Serializable]
 public class Idle : State
 {
     NeedFulfiller foundFulfiller;
     bool resetOnExit = true;
     public Idle(EntityController _entity) : base(_entity)
     {
+        entity.SetAvoidancePriority(Random.Range(80, 90));
         name = STATE.IDLE;
     }
     public override void Enter()
     {
+        entity.SetAgentSpeedWalk();
         base.Enter();
     }
 
     public override void Update()
     {
         base.Update();
-        //Debug.Log("Is updating");
-        //if (entity.isSearchingForNeeds) return;
         if (entity.CurrentNeed == null)
         {
             entity.FindNextNeed();
             return;
             
         }
-        //Debug.Log("found need");
         if (entity.CurrentFulfiller == null)
         {
             entity.FindFulfiller();
@@ -115,7 +132,6 @@ public class Idle : State
         {
             entity.SetAvoidancePriority((int)Vector3.Distance(entity.transform.position, entity.CurrentFulfiller.transform.position));
         }
-        
         if (entity.IsTargetReached() && !entity.IsAtTarget)
         {
             entity.IsAtTarget = true;
@@ -125,8 +141,6 @@ public class Idle : State
             resetOnExit = false;
             stage = EVENT.EXIT;
         }
-       
-        
     }
     public override void Exit()
     {
@@ -135,11 +149,10 @@ public class Idle : State
             entity.ResetFulfiller();
             entity.CurrentNeed = null;
         }
-        
-
         base.Exit();
     }
 }
+[System.Serializable]
 public class UseObject : State
 {
     NeedFulfiller fulfiller;
@@ -155,6 +168,7 @@ public class UseObject : State
     public override void Enter()
     {
         currentCoroutine = entity.StartCoroutine(fulfiller.ExecuteSteps(entity));
+        entity.SetAgentSpeedWalk();
         base.Enter();
     }
 
@@ -175,15 +189,13 @@ public class UseObject : State
     }
     public override void Exit()
     {
-         
             entity.ResetFulfiller();
             entity.CurrentNeed = null;
-         
-        
-        entity.transform.position = startPosition;
+            entity.transform.position = startPosition;
         base.Exit();
     }
 }
+[System.Serializable]
 public class Investigate : State
 {
     Vector3 investigatedPosition;
@@ -192,14 +204,14 @@ public class Investigate : State
     public Investigate(EntityController _entity, Vector3 _investigatedPosition) : base(_entity)
     {
         name = STATE.INVESTIGATE;
-
+        entity.SetAvoidancePriority(Random.Range(60, 70));
         investigatedPosition = _investigatedPosition;
     }
     public override void Enter()
     {
         sensesController.isInvestigationOpen = true;
-        UIController.Instance.SpawnTextBubble("What was that?", entity.transform);
-        
+        UIController.Instance.SpawnTextBubble(Barks.GetBark(Barks.BarkTypes.onInvestigationStarted), entity.transform);
+        entity.SetAgentSpeedWalk();
         base.Enter();
     }
 
@@ -220,7 +232,7 @@ public class Investigate : State
 
         if (sensesController.Awareness<=0)
         {
-            UIController.Instance.SpawnTextBubble("Mus've been the wind...", entity.transform);
+            UIController.Instance.SpawnTextBubble(Barks.GetBark(Barks.BarkTypes.onInvestigationEnded), entity.transform);
             nextState = new Idle(entity);
             stage = EVENT.EXIT;
         }
@@ -231,29 +243,40 @@ public class Investigate : State
         base.Exit();
     }
 }
+[System.Serializable]
 public class Search : State
 {
     Vector3 investigatedPosition;
     bool isAtTarget = false;
-    float timer = 10;
     public Search(EntityController _entity, Vector3 _investigatedPosition) : base(_entity)
     {
         name = STATE.SEARCH;
-
+        entity.SetAvoidancePriority(Random.Range(30, 60));
         investigatedPosition = _investigatedPosition;
     }
     public override void Enter()
     {
-        UIController.Instance.SpawnTextBubble("Where are they?", entity.transform);
+        UIController.Instance.SpawnTextBubble(Barks.GetBark(Barks.BarkTypes.onSearchStart), entity.transform);
+        Sound sound = new Sound(statusController, 10, Sound.TYPES.danger);
+        Sounds.MakeSound(sound);
         investigatedPosition = sensesController.currentTargetLastPosition;
+        entity.SetAgentSpeedChase();
+
+        
         base.Enter();
     }
 
     public override void Update()
     {
         base.Update();
-        
 
+        if (timer > time)
+        {
+            UIController.Instance.SpawnTextBubble(Barks.GetBark(Barks.BarkTypes.onSearchStart), entity.transform);
+            //Sound sound = new Sound(statusController, 10, Sound.TYPES.danger);
+            //Sounds.MakeSound(sound);
+            ResetTimer();
+        }
         entity.GoToTarget(investigatedPosition);
 
         if (entity.IsTargetReached() && !isAtTarget)
@@ -265,23 +288,23 @@ public class Search : State
         }
         if (sensesController.Awareness <= 0)
         {
-            UIController.Instance.SpawnTextBubble("They're gone by now...", entity.transform);
+            UIController.Instance.SpawnTextBubble(Barks.GetBark(Barks.BarkTypes.onSearchFail), entity.transform);
             nextState = new Idle(entity);
             stage = EVENT.EXIT;
         }
-
     }
     public override void Exit()
     {
-
         base.Exit();
     }
 }
+[System.Serializable]
 public class Combat : State
 {
     StatusController combatTarget;
     Vector3 investigatedPosition;
     bool isAtTarget = false;
+
     public Combat(EntityController _entity, StatusController _combatTarget) : base(_entity)
     {
         name = STATE.COMBAT;
@@ -290,27 +313,89 @@ public class Combat : State
     }
     public override void Enter()
     {
-        UIController.Instance.SpawnTextBubble("They're overthere!", entity.transform);
-        Sound sound = new Sound(statusController, 20, Sound.TYPES.danger,combatTarget);
+        UIController.Instance.SpawnTextBubble(Barks.GetBark(Barks.BarkTypes.inCombatNotice), entity.transform);
+        Sound sound = new Sound(statusController, 10, Sound.TYPES.danger,combatTarget);
         Sounds.MakeSound(sound);
+        entity.SetAgentSpeedChase();
         base.Enter();
     }
 
     public override void Update()
     {
         base.Update();
+        entity.SetAvoidanceRadius(1.5f);
         combatTarget = sensesController.currentTarget;
         if (combatTarget == null) return;
+        if (timer > time)
+        {
+            UIController.Instance.SpawnTextBubble(Barks.GetBark(Barks.BarkTypes.inCombatNotice), entity.transform);
+            Sound sound = new Sound(statusController, 10, Sound.TYPES.danger, combatTarget);
+            Sounds.MakeSound(sound);
+            ResetTimer();
+        }
 
- 
-        entity.agent.avoidancePriority = (int)Vector3.Distance(entity.transform.position, combatTarget.transform.position);
+        entity.agent.avoidancePriority = (int)Vector3.Distance(entity.transform.position, combatTarget.transform.position)/5;
         if (!entity.CanMove()) entity.DisableNavmesh(true);
         else entity.DisableNavmesh(false);
         entity.AttackTarget(combatTarget);
     }
     public override void Exit()
     {
+        base.Exit();
+    }
+}
+[System.Serializable]
+public class Flee : State
+{
+    Vector3 investigatedPosition;
+    bool isAtTarget = false;
 
+    public Flee(EntityController _entity) : base(_entity)
+    {
+        investigatedPosition = _entity.HomePosition;
+        name = STATE.FLEE;
+    }
+    public override void Enter()
+    {
+        UIController.Instance.SpawnTextBubble(Barks.GetBark(Barks.BarkTypes.inFleeEnterNotice), entity.transform);
+        Sound sound = new Sound(statusController, 20, Sound.TYPES.danger);
+        Sounds.MakeSound(sound);
+        entity.SetAgentSpeedChase();
+        entity.SetAvoidancePriority(Random.Range(50, 60));
+        base.Enter();
+    }
+
+    public override void Update()
+    {
+        base.Update();
+        
+        statusController.MakeDeaf(statusController.deafTime);
+        if (timer > time)
+        {
+            UIController.Instance.SpawnTextBubble(Barks.GetBark(Barks.BarkTypes.inFleeEnterNotice), entity.transform);
+            Sound sound = new Sound(statusController, 10, Sound.TYPES.danger);
+            Sounds.MakeSound(sound);
+            ResetTimer();
+        }
+        entity.GoToTarget(investigatedPosition);
+
+        if (entity.IsTargetReached() && !isAtTarget)
+        {
+
+            //Vector3 randomPositionOffset = 2 * new Vector3(Random.Range(-1, 2), 0, Random.Range(-1, 2));
+            isAtTarget = true;
+            //investigatedPosition += randomPositionOffset;
+            //isAtTarget = false;
+        }
+        if (sensesController.Awareness <= 0)
+        {
+            UIController.Instance.SpawnTextBubble(Barks.GetBark(Barks.BarkTypes.onFleeEnded), entity.transform);
+            nextState = new Idle(entity);
+            stage = EVENT.EXIT;
+        }
+    }
+    public override void Exit()
+    {
         base.Exit();
     }
 }

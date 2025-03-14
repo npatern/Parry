@@ -479,6 +479,7 @@ MonoBehaviour:
   UserSpot: {fileID: 4142443543926967567}
   ShowIfUsed: {fileID: 1428078995243931433}
   HideIfUsed: {fileID: 8818485310411395170}
+  currentStep: {fileID: 0}
 --- !u!136 &6330179326396745773
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -510,7 +511,7 @@ MonoBehaviour:
   IsPlayer: 0
   CriticalMultiplier: 4
   SpeedMultiplier: 1
-  Life: 100
+  Life: 1
   Posture: 100
   IsKilled: 0
   IsStunned: 0
