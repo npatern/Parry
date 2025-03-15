@@ -1,8 +1,10 @@
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "ListOfAssets", menuName = "ScriptableObjects/List of Assets", order = 1)]
-public class ListOfAssetsScriptableObject : ScriptableObject
+public class ListOfAssetsAndValuesScriptableObject : ScriptableObject
 {
+    [Space(10), Header("Level")]
+    public float ambientLightValue = .1f;
     [Space(10), Header("Weapons")]
     public ItemWeaponScriptableObject[] Weapons;
     public ItemWeaponScriptableObject GetRandomWeapon()

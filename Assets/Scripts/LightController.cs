@@ -37,7 +37,7 @@ public class LightController : MonoBehaviour
             range = Mathf.Infinity;
         else
             range = lightComponent.range;
-        brightness = lightComponent.intensity / 2;
+        brightness = lightComponent.intensity;
 
         layerMask = LayerMask.GetMask("Entity", "Blockout", "Bush");
 

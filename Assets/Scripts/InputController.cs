@@ -123,8 +123,8 @@ public class InputController : MonoBehaviour
 
         rb.AddForce(velocityChange, ForceMode.VelocityChange);
         //if (!isSprinting) return;
-        float soundRange = 8f * rb.velocity.magnitude / movementSpeed;
-        Sound sound = new Sound(statusController, soundRange);
+        float soundRange = 10f * rb.velocity.magnitude / movementSpeed;
+        Sound sound = new Sound(statusController, soundRange,Sound.TYPES.continous);
         Sounds.MakeSound(sound);
     }
     public void ApplyLookAt()

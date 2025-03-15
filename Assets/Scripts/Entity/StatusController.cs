@@ -168,7 +168,7 @@ public class StatusController : MonoBehaviour, IHear
         if (Life <= 0 && !IsKilled) 
         {
             Kill(attacker);
-            Sound sound = new Sound(this, 2, Sound.TYPES.neutral);
+            Sound sound = new Sound(this, 2, Sound.TYPES.danger);
             Sounds.MakeSound(sound);
         }
         else

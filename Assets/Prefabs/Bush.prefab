@@ -138,7 +138,7 @@ MonoBehaviour:
   CriticalMultiplier: 4
   SpeedMultiplier: 1
   Life: 100
-  MaxLife: 100
+  MaxLife: 1
   Posture: 100
   movementSpeedMultiplier: 1
   IsKilled: 0

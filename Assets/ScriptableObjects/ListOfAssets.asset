@@ -44,7 +44,12 @@ MonoBehaviour:
   - name: Oh...
   - name: ...
   - name: Uh...
-  onParry: []
+  onParry:
+  - name: Haha!
+  - name: Look at that!
+  - name: Ha!
+  - name: Back at you!
+  - name: I'm too fast!
   onInvestigationStarted:
   - name: What was that?
   - name: Huh..?

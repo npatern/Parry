@@ -7,7 +7,7 @@ public class GameController : MonoBehaviour
 {
     public Transform Level;
     public int MaxEntitiesNr = 10;
-    public ListOfAssetsScriptableObject ListOfAssets;
+    public ListOfAssetsAndValuesScriptableObject ListOfAssets;
     public FollowTarget cameraController;
     public bool StopTimeOnStart = false;
     public float TimeBetweenSpawns = 5;

@@ -8,7 +8,7 @@ public class Sound
     public readonly Vector3 position;
     public readonly StatusController statusController = null;
     public readonly StatusController worldInfo = null;
-    public enum TYPES { neutral, player, danger, cover}
+    public enum TYPES { neutral, player, danger, cover, continous}
     public TYPES type;
     public Sound (Vector3 _position, float _range, TYPES _type = TYPES.neutral, Transform _worldInfo = null)
     {

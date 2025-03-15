@@ -314,7 +314,7 @@ public class Combat : State
     public override void Enter()
     {
         UIController.Instance.SpawnTextBubble(Barks.GetBark(Barks.BarkTypes.inCombatNotice), entity.transform);
-        Sound sound = new Sound(statusController, 10, Sound.TYPES.danger,combatTarget);
+        Sound sound = new Sound(statusController, 15, Sound.TYPES.danger,combatTarget);
         Sounds.MakeSound(sound);
         entity.SetAgentSpeedChase();
         base.Enter();
@@ -329,7 +329,7 @@ public class Combat : State
         if (timer > time)
         {
             UIController.Instance.SpawnTextBubble(Barks.GetBark(Barks.BarkTypes.inCombatNotice), entity.transform);
-            Sound sound = new Sound(statusController, 10, Sound.TYPES.danger, combatTarget);
+            Sound sound = new Sound(statusController, 15, Sound.TYPES.danger, combatTarget);
             Sounds.MakeSound(sound);
             ResetTimer();
         }

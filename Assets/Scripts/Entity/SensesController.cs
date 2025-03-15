@@ -19,6 +19,7 @@ public class SensesController : MonoBehaviour, IHear
     public float currentTargetTimer = 0;
     public bool isInvestigationOpen = false;
     public float Awareness = 0;
+    public bool justHeardSmthng = false;
     [SerializeField]
     private float maxAwareness = 100;
     [SerializeField]
@@ -91,6 +92,50 @@ public class SensesController : MonoBehaviour, IHear
     {
         return currentTarget;
     }
+ 
+    void AddAwarenessOnce(float awarenessValue, StatusController _target = null)
+    {
+        if (awarenessValue > 0)
+            if (_target != null)
+                SetCurrentTarget(_target);
+
+        justHeardSmthng = true;
+        if (IsAlerted)
+            Awareness = maxAwareness;
+        else
+            Awareness += awarenessValue;
+
+        if (Awareness >= 100)
+        {
+            IsAlerted = true;
+        }
+        if (Awareness <= 0)
+        {
+            IsAlerted = false;
+        }
+        Awareness = Mathf.Clamp(Awareness, 0, 100);
+    }
+    void AddAwarenessContinous(float awarenessValue, StatusController _target = null)
+    {
+        if (awarenessValue > 0)
+            if (_target != null)
+                SetCurrentTarget(_target);
+        justHeardSmthng = true;
+        if (IsAlerted)
+            Awareness = maxAwareness;
+        else
+            Awareness += awarenessValue * maxAwareness * Time.fixedDeltaTime / awarenessUpTime;
+
+        if (Awareness >= 100)
+        {
+            IsAlerted = true;
+        }
+        if (Awareness <= 0)
+        {
+            IsAlerted = false;
+        }
+        Awareness = Mathf.Clamp(Awareness, 0, 100);
+    }
     void ApplyAwareness(float awarenessValue, StatusController _target=null)
     {
 
@@ -106,7 +151,7 @@ public class SensesController : MonoBehaviour, IHear
         }
         else
         {
-            if (isInvestigationOpen)
+            if (isInvestigationOpen || justHeardSmthng)
             {
 
             }  
@@ -120,6 +165,7 @@ public class SensesController : MonoBehaviour, IHear
             }
                 
         }
+        
         if (Awareness >= 100)
         {
             IsAlerted = true;
@@ -129,6 +175,7 @@ public class SensesController : MonoBehaviour, IHear
             IsAlerted = false;
         }
         Awareness = Mathf.Clamp(Awareness, 0, 100);
+        justHeardSmthng = false;
     }
     void LoadStatsFromScriptable(EntityStatsScriptableObject scriptable)
     {
@@ -266,13 +313,15 @@ public class SensesController : MonoBehaviour, IHear
         if (GetComponent<StatusController>().IsDeaf()) return;
 
         if (sound.type == Sound.TYPES.danger)
-            ApplyAwareness(100, _target);
+            AddAwarenessOnce(100, _target);
         if (sound.type == Sound.TYPES.neutral)
-            ApplyAwareness((100 * Time.fixedDeltaTime) / 2, _target);
+            AddAwarenessOnce(10, _target);
+        if (sound.type == Sound.TYPES.continous)
+            AddAwarenessContinous(1, _target);
 
 
         //GetComponent<EntityController>().currentState.InvestigateSound(GetComponent<EntityController>(),sound.position);
-        Debug.Log("senses reacted"+name);
+        //Debug.Log("senses reacted"+name);
     }
     public void Kill()
     {
