@@ -138,6 +138,7 @@ MonoBehaviour:
   Life: 10
   MaxLife: 1
   Posture: 100
+  movementSpeedMultiplier: 1
   IsKilled: 0
   IsStunned: 0
   DestroyOnKill: 0
@@ -156,6 +157,7 @@ MonoBehaviour:
   PostureEffect: {fileID: 0}
   PostureLongEffect: {fileID: 0}
   deafTime: 1
+  OverheadController: {fileID: 0}
 --- !u!114 &1616799659364014222
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -202,6 +204,9 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 0
   statusController: {fileID: 0}
+  realtime: 0
+  onMaterial: {fileID: 0}
+  offMaterial: {fileID: 2100000, guid: f5568b428dc55b942a2238aa8c96c1e0, type: 2}
 --- !u!108 &1616799659364014321
 Light:
   m_ObjectHideFlags: 0

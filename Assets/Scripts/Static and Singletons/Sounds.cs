@@ -18,8 +18,7 @@ public static class Sounds
                 for (int i =0; i<hearers.Length; i++)
                 {
                     hearers[i].ReactToSound(sound);
-                }
-                
+                }  
             }
     }
 }

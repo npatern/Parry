@@ -317,7 +317,7 @@ public class SensesController : MonoBehaviour, IHear
         if (sound.type == Sound.TYPES.neutral)
             AddAwarenessOnce(10, _target);
         if (sound.type == Sound.TYPES.continous)
-            AddAwarenessContinous(1, _target);
+            AddAwarenessContinous(1/2, _target);
 
 
         //GetComponent<EntityController>().currentState.InvestigateSound(GetComponent<EntityController>(),sound.position);

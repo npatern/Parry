@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: 193002233852398124}
   - component: {fileID: 118772920}
   - component: {fileID: 1362973198102939623}
+  - component: {fileID: 7386340357107363141}
   m_Layer: 8
   m_Name: PlayerEntity
   m_TagString: Untagged
@@ -264,6 +265,22 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: 3a91b4c9-d224-4db2-888c-992da990d39e
     m_ActionName: InGame/Noctovision[/Keyboard/n,/DualSenseGamepadHID/rightStickPress]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 193002233852398125}
+        m_TargetAssemblyTypeName: InputController, Assembly-CSharp
+        m_MethodName: Interaction
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 09f825cb-0e19-4031-872b-db53a02a64e9
+    m_ActionName: InGame/Interaction[/Keyboard/f]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: Keyboard&Mouse
   m_DefaultActionMap: InGame
@@ -371,6 +388,7 @@ MonoBehaviour:
   PostureEffect: {fileID: 6335604904681789282, guid: 2b39b28f00a0b0a4da4368fdba0f6a1c, type: 3}
   PostureLongEffect: {fileID: 6335604904681789282, guid: fec9fead045d1314abee087c3f8d377a, type: 3}
   deafTime: 1
+  OverheadController: {fileID: 0}
 --- !u!114 &1362973198102939623
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -385,6 +403,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   AffectedByLight: 1
   LightValue: 0
+--- !u!114 &7386340357107363141
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 193002233852398132}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 92078415f75c1fc4590f5636265e4d8f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Interactables: []
 --- !u!1 &193002234234486799
 GameObject:
   m_ObjectHideFlags: 0

@@ -51,7 +51,7 @@ public class StatusController : MonoBehaviour, IHear
     private float deafTimer = 0f;
     public float deafTime = 1f;
 
-    private GameObject healthBar;
+    public UIOverheadStatus OverheadController;
     void Awake()
     {
         if (Life > MaxLife) Life = MaxLife;
@@ -71,7 +71,7 @@ public class StatusController : MonoBehaviour, IHear
     void Start()
     {
         if (UIController.Instance == null) return;
-        healthBar = UIController.Instance.SpawnHealthBar(this);
+        OverheadController = UIController.Instance.SpawnHealthBar(this).GetComponent<UIOverheadStatus>() ;
         IsStunnedEvent.AddListener(Stunned);
         IsAttackedEvent.AddListener(Attacked);
         LoadStatsFromScriptable(GameController.Instance.ListOfAssets.DefaultEntityStats);

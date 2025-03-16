@@ -170,6 +170,11 @@ public class InputController : MonoBehaviour
         if (context.started)
             GameController.Instance.SwitchNoctovision();
     }
+    public void Interaction(InputAction.CallbackContext context)
+    {
+        if (context.started)
+            GetComponent<InteractionController>().Use();
+    }
     public void Sprint(InputAction.CallbackContext context)
     {
 

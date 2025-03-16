@@ -16,7 +16,7 @@ public class GameController : MonoBehaviour
     public Transform GarbageCollector;
     public static GameController Instance { get; private set; }
     public EntityController CurrentEntity = null;
-    public Transform[] Spawners;
+    public GameObject[] Spawners;
     public NeedScriptableObject[] Needs;
     public NeedScriptableObject ExitNeed;
     public NeedFulfiller[] NeedFulfillers;
@@ -44,7 +44,7 @@ public class GameController : MonoBehaviour
         {
             Instance = this;
         }
-        CollectNeedFulfillers();
+        
         if (StopTimeOnStart) StopTime();
         CollectLevelElements();
         lightControllers = new List<LightController>();
@@ -66,7 +66,9 @@ public class GameController : MonoBehaviour
     }
     void CollectLevelElements()
     {
-         //Level.GetComponentsInChildren(lightControllers);
+        Spawners = GameObject.FindGameObjectsWithTag("Spawn");
+        CollectNeedFulfillers();
+        //Level.GetComponentsInChildren(lightControllers);
     }
     void ApplyStunnedPostprocess()
     {
@@ -160,7 +162,7 @@ public class GameController : MonoBehaviour
         if (ListOfAssets == null) return;
         if (ListOfAssets.enemies.Length == 0) return;
         int entityNumber = Random.Range(0, ListOfAssets.enemies.Length);
-        EntityController newEntity = Instantiate(ListOfAssets.enemies[entityNumber], Spawners[spawnerNumber].position, Quaternion.identity, EntitiesParent).GetComponent<EntityController>();
+        EntityController newEntity = Instantiate(ListOfAssets.enemies[entityNumber], Spawners[spawnerNumber].transform.position, Quaternion.identity, EntitiesParent).GetComponent<EntityController>();
         newEntity.target = CurrentPlayer;
         EntitiesInGame.Add(newEntity);
     }

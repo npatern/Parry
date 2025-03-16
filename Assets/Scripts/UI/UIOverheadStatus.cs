@@ -37,6 +37,10 @@ public class UIOverheadStatus : MonoBehaviour
     private Image punctuationStroke;
     [SerializeField]
     private Image punctuationBold;
+
+    private float InfoTextTimer = 0;
+    [SerializeField]
+    private TextMeshProUGUI InfoText;
     private void Awake()
     {
         //fast fix so that it doesnt spawn in the middle of the screen for 1 frame
@@ -64,6 +68,17 @@ public class UIOverheadStatus : MonoBehaviour
         }
         ApplyValues(statusController.Life, statusController.Posture, statusController.IsStunned);
         FollowTarget(statusController.transform);
+
+        InfoTextTimer -= Time.deltaTime;
+        if (InfoTextTimer < 0) InfoText.gameObject.SetActive(false);
+    }
+    public void ShowInfoText(string text = "")
+    {
+       // if (InfoText == null) return;
+        InfoText.gameObject.SetActive(true);
+        InfoTextTimer = .1f;
+        InfoText.text = text;
+        
     }
     public void ApplyValues(float health, float posture, bool isStunned = false)
     {

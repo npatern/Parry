@@ -24,10 +24,23 @@ public class LightController : MonoBehaviour
     StatusController statusController;
     [SerializeField]
     private bool realtime = false;
+
+    [SerializeField]
+    Material onMaterial;
+    [SerializeField]
+    Material offMaterial;
+
+    MeshRenderer meshRenderer;
     private void Awake()
     {
         lightComponent = GetComponent<Light>();
         statusController = GetComponent<StatusController>();
+        if (GetComponent<MeshRenderer>() != null)
+        {
+            meshRenderer = GetComponent<MeshRenderer>();
+            onMaterial = meshRenderer.material;
+        }
+        
         UpdateLight();
     }
     void UpdateLight()
@@ -37,7 +50,7 @@ public class LightController : MonoBehaviour
             range = Mathf.Infinity;
         else
             range = lightComponent.range;
-        brightness = lightComponent.intensity;
+        brightness = lightComponent.intensity/2;
 
         layerMask = LayerMask.GetMask("Entity", "Blockout", "Bush");
 
@@ -142,6 +155,13 @@ public class LightController : MonoBehaviour
     {
         isOn = onOff;
         lightComponent.enabled = isOn;
+        if (GetComponent<MeshRenderer>() == null) return;
+        if (isOn) meshRenderer.material = onMaterial;
+        else if (offMaterial!=null) meshRenderer.material = offMaterial;
+    }
+    public void SwitchLight()
+    {
+        SwitchLight(!isOn);
     }
     public void KillLight()
     {
