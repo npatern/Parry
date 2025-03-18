@@ -6,19 +6,29 @@ public class Pickable : MonoBehaviour
 {
      
     public ItemWeaponWrapper weaponWrapper;
+    public string wrapperName = "";
     [SerializeField]
     ItemWeaponScriptableObject scriptableObject;
     [SerializeField]
-    GameObject weaponObject;
-
+    public GameObject weaponObject;
     public UnityEvent<StatusController> PickEvent;
 
     private void Awake()
     {
+        
+
         if (PickEvent == null)
             PickEvent = new UnityEvent<StatusController>();
+    }
+    
+    private void Start()
+    {
         if (weaponWrapper == null) weaponWrapper = new ItemWeaponWrapper(scriptableObject);
-        if (weaponObject == null) weaponObject = Instantiate(weaponWrapper.itemType.weaponObject, transform);
+        ApplyWeaponWrapper(weaponWrapper);
+    }
+    private void Update()
+    {
+        wrapperName = weaponWrapper.ItemName;
     }
     private void OnTriggerEnter(Collider other)
     {
@@ -34,4 +44,19 @@ public class Pickable : MonoBehaviour
             interaction.RemoveFromPicks(this);
         }
     }
+    public void ApplyWeaponWrapper(ItemWeaponWrapper wrapper)
+    {
+        if (weaponWrapper == null) weaponWrapper = wrapper;
+        if (weaponObject == null)
+        {
+            if (weaponWrapper.CurrentWeaponObject == null)
+                weaponObject = weaponWrapper.SpawnWeaponObject(transform).gameObject;
+            else
+                weaponObject = weaponWrapper.CurrentWeaponObject.gameObject;
+        }
+        weaponWrapper.pickable = this;
+        gameObject.name = weaponWrapper.itemType.ItemName;
+    }
+     
+    
 }

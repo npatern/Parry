@@ -70,11 +70,12 @@ public class UIOverheadStatus : MonoBehaviour
         FollowTarget(statusController.transform);
 
         InfoTextTimer -= Time.deltaTime;
+        if (InfoText == null) return;
         if (InfoTextTimer < 0) InfoText.gameObject.SetActive(false);
     }
     public void ShowInfoText(string text = "")
     {
-       // if (InfoText == null) return;
+        if (InfoText == null) return;
         InfoText.gameObject.SetActive(true);
         InfoTextTimer = .1f;
         InfoText.text = text;

@@ -5,7 +5,9 @@ public class ListOfAssetsAndValuesScriptableObject : ScriptableObject
 {
     [Space(10), Header("Level")]
     public float ambientLightValue = .1f;
+
     [Space(10), Header("Weapons")]
+    public GameObject PickableTemplate;
     public ItemWeaponScriptableObject[] Weapons;
     public ItemWeaponScriptableObject GetRandomWeapon()
     {

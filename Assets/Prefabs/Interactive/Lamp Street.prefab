@@ -436,7 +436,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 5532784257875219234, guid: 57db80ac8f8590a43af60cb1ed81d55f, type: 3}
       propertyPath: m_Name
-      value: Interactable
+      value: Light Switch
       objectReference: {fileID: 0}
     - target: {fileID: 5532784257875219241, guid: 57db80ac8f8590a43af60cb1ed81d55f, type: 3}
       propertyPath: m_RootOrder
@@ -613,7 +613,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7567830807840736557, guid: f06b9fd46a0787c4c8bafe2f8ac655ca, type: 3}
       propertyPath: m_Name
-      value: Lamp Spot Variant
+      value: Light Switch
       objectReference: {fileID: 0}
     - target: {fileID: 7567830807840736557, guid: f06b9fd46a0787c4c8bafe2f8ac655ca, type: 3}
       propertyPath: m_IsActive

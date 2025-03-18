@@ -143,7 +143,7 @@ public class GameController : MonoBehaviour
     {
         EntitiesInGame = new List<EntityController>();
         CurrentPlayer = Instantiate(PlayerEntity, Vector3.zero, Quaternion.identity, EntitiesParent).GetComponent<StatusController>() ;
-        CurrentPlayer.GetComponent<CombatController>().EquipWeapon(new ItemWeaponWrapper(ListOfAssets.GetRandomWeapon()));
+        CurrentPlayer.GetComponent<ToolsController>().EquipWeapon(new ItemWeaponWrapper(ListOfAssets.GetRandomWeapon()));
         cameraController.ApplyTarget(CurrentPlayer.transform);
     }
     public void RestartGame()

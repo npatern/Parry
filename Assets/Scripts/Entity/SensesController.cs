@@ -292,9 +292,9 @@ public class SensesController : MonoBehaviour, IHear
 
     StatusController GetTargetFromSound(Sound sound)
     {
-        if (sound.worldInfo != null)
-            if (sound.worldInfo.IsPlayer)
-                return sound.worldInfo;
+        if (sound.EntityInfo != null)
+            if (sound.EntityInfo.IsPlayer)
+                return sound.EntityInfo;
 
         if (sound.statusController != null)
             if (sound.statusController.IsPlayer)

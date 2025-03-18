@@ -3,19 +3,17 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Events;
-public class CombatController : MonoBehaviour
+public class ToolsController : MonoBehaviour
 {
     
     public LayerMask layerMask;
     public float ColliderSize = 1f;
     public InputController inputController;
     public StatusController statusController;
+    public InventoryController inventoryController;
 
     public ItemWeaponWrapper CurrentWeaponWrapper;
     public ItemWeaponScriptableObject TESTCurrentWeaponScriptable;
-    public ItemWeaponWrapper DequippedWeaponWrapper;
-    public ItemWeaponScriptableObject TESTDequippedWeaponScriptable;
-    public Transform CurrentWeapon;
     public Transform DequippedWeapon;
     public enum targets { IdlePoint, ParryPoint, HeavyAttack, HeavyAttackEnd, Attack, AttackEnd, Unequipped, Disarmed };
 
@@ -35,6 +33,7 @@ public class CombatController : MonoBehaviour
     {
         inputController = GetComponent<InputController>();
         statusController = GetComponent<StatusController>();
+        inventoryController = GetComponent<InventoryController>();
         if (StopMovingEvent == null)
         {
             StopMovingEvent = new UnityEvent<bool>();
@@ -68,15 +67,45 @@ public class CombatController : MonoBehaviour
     }
     public void EquipWeapon(ItemWeaponWrapper weaponWrapper)
     {
+        if (CurrentWeaponWrapper != null)
+            DequipWeapon();
         CurrentWeaponWrapper = weaponWrapper;
-        CurrentWeapon = Instantiate(CurrentWeaponWrapper.itemType.weaponObject, transform).transform;
-        attackDistance = CurrentWeaponWrapper.itemType.AttackDistance;
+        if (CurrentWeaponWrapper.CurrentWeaponObject == null)
+            CurrentWeaponWrapper.CurrentWeaponObject = CurrentWeaponWrapper.SpawnWeaponObject(transform);
 
+        attackDistance = CurrentWeaponWrapper.itemType.AttackDistance;
         StartCoroutine(PlayAttackSteps(CurrentWeaponWrapper.itemType.Equip));
     }
-    public void DequipWeapon(ItemWeaponWrapper weaponWrapper)
+    public void EquipWeapon(Pickable pickable)
     {
+        if (CurrentWeaponWrapper!=null)
+            DequipWeapon();
+        CurrentWeaponWrapper = pickable.weaponWrapper;
+        
+        CurrentWeaponWrapper.RemovePickable(transform);
+        if (CurrentWeaponWrapper.CurrentWeaponObject == null)
+            CurrentWeaponWrapper.CurrentWeaponObject = CurrentWeaponWrapper.SpawnWeaponObject(transform);
 
+        attackDistance = CurrentWeaponWrapper.itemType.AttackDistance;
+        StartCoroutine(PlayAttackSteps(CurrentWeaponWrapper.itemType.Equip));
+    }
+    public void DequipWeapon()
+    {
+        if (CurrentWeaponWrapper == null) return;
+        //if (HideItem(CurrentWeaponWrapper)) 
+        //{
+        //    CurrentWeaponWrapper = null;
+        //    return;
+       // }
+        
+        CurrentWeaponWrapper.MakePickable();
+        CurrentWeaponWrapper = null;
+    }
+    public bool HideItem(ItemWeaponWrapper item)
+    {
+        if (item == null) return false;
+        if (inventoryController == null) return false;
+        return inventoryController.AddToInventory(item);
     }
     public bool CanPerform()
     {
@@ -105,7 +134,7 @@ public class CombatController : MonoBehaviour
             case targets.Disarmed:
                 return CurrentWeaponWrapper.itemType.attackPattern.Disarmed;
         }
-        return CurrentWeapon;
+        return CurrentWeaponWrapper.CurrentWeaponObject;
     }
     
     public void PerformAttack(InputAction.CallbackContext context = new InputAction.CallbackContext())
@@ -188,11 +217,11 @@ public class CombatController : MonoBehaviour
     {
         
         if (!IsDamaging) return;
-        if (CurrentWeapon == null) return;
-        if (CurrentWeapon.GetComponent<WeaponModel>() == null) return;
+        if (CurrentWeaponWrapper.CurrentWeaponObject == null) return;
+        if (CurrentWeaponWrapper.CurrentWeaponObject.GetComponent<WeaponModel>() == null) return;
 
         //Vector3 weaponEnd = CurrentWeapon.transform.position + CurrentWeapon.transform.up * 2;
-        WeaponModel weaponModel = CurrentWeapon.GetComponent<WeaponModel>();
+        WeaponModel weaponModel = CurrentWeaponWrapper.CurrentWeaponObject.GetComponent<WeaponModel>();
 
         Collider[] hitEnemies = Physics.OverlapCapsule(weaponModel.StartPoint.position, weaponModel.EndPoint.position, ColliderSize, layerMask);
         bool hitAnything = false;
@@ -212,16 +241,17 @@ public class CombatController : MonoBehaviour
     }
     private void OnDrawGizmosSelected()
     {
-        if (CurrentWeapon == null) return;
-        if (CurrentWeapon.GetComponent<WeaponModel>() == null) return;
-        WeaponModel weaponModel = CurrentWeapon.GetComponent<WeaponModel>();
+        if (CurrentWeaponWrapper == null) return;
+        if (CurrentWeaponWrapper.CurrentWeaponObject == null) return;
+        if (CurrentWeaponWrapper.CurrentWeaponObject.GetComponent<WeaponModel>() == null) return;
+        WeaponModel weaponModel = CurrentWeaponWrapper.CurrentWeaponObject.GetComponent<WeaponModel>();
         Gizmos.DrawWireSphere(weaponModel.StartPoint.position, ColliderSize);
         Gizmos.DrawWireSphere(weaponModel.EndPoint.position, ColliderSize);
     }
     public void FireBullet()
     {
-        WeaponModel weaponModel = CurrentWeapon.GetComponent<WeaponModel>();
-        Bullet bullet = Instantiate(CurrentWeaponWrapper.itemType.bullet, weaponModel.StartPoint.position, CurrentWeapon.transform.rotation, GameController.Instance.GarbageCollector.transform).GetComponent<Bullet>();
+        WeaponModel weaponModel = CurrentWeaponWrapper.CurrentWeaponObject.GetComponent<WeaponModel>();
+        Bullet bullet = Instantiate(CurrentWeaponWrapper.itemType.bullet, weaponModel.StartPoint.position, CurrentWeaponWrapper.CurrentWeaponObject.transform.rotation, GameController.Instance.GarbageCollector.transform).GetComponent<Bullet>();
         bullet.Damage = CurrentWeaponWrapper.itemType.Damage;
         Rigidbody bulletRB = bullet.GetComponent<Rigidbody>();
         bulletRB.AddRelativeForce(Vector3.forward * 1000,ForceMode.Acceleration);

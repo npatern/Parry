@@ -17,6 +17,7 @@ GameObject:
   - component: {fileID: 118772920}
   - component: {fileID: 1362973198102939623}
   - component: {fileID: 7386340357107363141}
+  - component: {fileID: 5231433897117505524}
   m_Layer: 8
   m_Name: PlayerEntity
   m_TagString: Untagged
@@ -69,7 +70,7 @@ Rigidbody:
   m_AngularDrag: 0.05
   m_UseGravity: 1
   m_IsKinematic: 0
-  m_Interpolate: 0
+  m_Interpolate: 1
   m_Constraints: 112
   m_CollisionDetection: 0
 --- !u!114 &193002233852398123
@@ -281,6 +282,38 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: 09f825cb-0e19-4031-872b-db53a02a64e9
     m_ActionName: InGame/Interaction[/Keyboard/f]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 193002233852398125}
+        m_TargetAssemblyTypeName: InputController, Assembly-CSharp
+        m_MethodName: Pick
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: ba3670f8-09bd-4f2d-b6c2-001bd7299b65
+    m_ActionName: InGame/Pick[/DualSenseGamepadHID/buttonNorth,/Keyboard/e]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 193002233852398125}
+        m_TargetAssemblyTypeName: InputController, Assembly-CSharp
+        m_MethodName: WeaponScroll
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 86414ee1-63c7-46ef-ae74-cb7956578bc9
+    m_ActionName: InGame/WeaponSelect[/Mouse/scroll]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: Keyboard&Mouse
   m_DefaultActionMap: InGame
@@ -314,7 +347,7 @@ MonoBehaviour:
   IsDodging: 0
   dodgeTime: 0.2
   dodgeTimer: 0
-  dodgeForce: 20
+  dodgeForce: 30
   dodgePostureCost: 20
 --- !u!114 &193002233852398124
 MonoBehaviour:
@@ -334,9 +367,8 @@ MonoBehaviour:
   ColliderSize: 1
   inputController: {fileID: 0}
   statusController: {fileID: 0}
-  TESTCurrentWeaponScriptable: {fileID: 11400000, guid: 0c9792609d327fe48a15eb39b6aee771, type: 2}
-  TESTDequippedWeaponScriptable: {fileID: 11400000, guid: c0e191147ed6a0a458e627a6b2f9cfb3, type: 2}
-  CurrentWeapon: {fileID: 0}
+  inventoryController: {fileID: 0}
+  TESTCurrentWeaponScriptable: {fileID: 0}
   DequippedWeapon: {fileID: 0}
   MovementLocked: 0
   RotationLocked: 0
@@ -416,6 +448,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Interactables: []
+  Pickables: []
+--- !u!114 &5231433897117505524
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 193002233852398132}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a882363e8f1891b4a88c465ddac5c07b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxSlotsNr: 2147483647
+  maxBigSlotsNr: 1
+  toolsController: {fileID: 0}
 --- !u!1 &193002234234486799
 GameObject:
   m_ObjectHideFlags: 0

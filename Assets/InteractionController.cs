@@ -2,16 +2,21 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
+using UnityEngine.InputSystem;
 public class InteractionController : MonoBehaviour
 {
     public List<Interactable> Interactables = new List<Interactable>();
     public List<Pickable> Pickables = new List<Pickable>();
     StatusController statusController;
-    // EntitiesInGame = new List<EntityController>();
+    PlayerInput playerInput;
+
     private void Awake()
     {
         if (GetComponent<StatusController>()!=null)
         statusController = GetComponent<StatusController>();
+
+        playerInput = GetComponent<PlayerInput>();
+        //Debug.Log(playerInput.currentActionMap.FindAction("Jump").GetBindingDisplayString();
     }
     private void Update()
     {
@@ -42,30 +47,34 @@ public class InteractionController : MonoBehaviour
     }
     public void Use()
     {
-        Debug.Log("USE function");
         GetBestInteraction().InteractionEvent.Invoke(statusController);
+    }
+    public void Pick(Pickable pick)
+    {
+        if (pick == null) return;
+        Debug.Log("PICK HAPPENS "+ pick.name);
+        
+        GetComponent<ToolsController>().EquipWeapon(pick);
+        RemoveFromPicks(pick);
+        Destroy(pick.gameObject);
     }
     public void Pick()
     {
-        Debug.Log("PICK function");
-        GetBestPick().PickEvent.Invoke(statusController);
+        Pickable pick = GetBestPick();
+        Pick(pick);
     }
     public Interactable GetBestInteraction()
     {
         if (Interactables.Count <= 0) return null;
         Interactables.Sort((a, b) => Vector3.Distance(a.transform.position, transform.position).CompareTo(Vector3.Distance(b.transform.position, transform.position)));
-        if (statusController != null && statusController.IsPlayer) statusController.OverheadController.ShowInfoText("Press USE button to interact with " + Interactables[0].gameObject.name);
+        if (GetComponent<InputController>() != null && statusController.IsPlayer) GetComponent<InputController>().ShowBindingsText("Interaction", " to use " + Interactables[0].gameObject.name);
         return Interactables[0];
     }
     public Pickable GetBestPick()
     {
         if (Pickables.Count <= 0) return null;
         Pickables.Sort((a, b) => Vector3.Distance(a.transform.position, transform.position).CompareTo(Vector3.Distance(b.transform.position, transform.position)));
-        if (statusController != null && statusController.IsPlayer) statusController.OverheadController.ShowInfoText("Press PICK button to pick " + Pickables[0].gameObject.name);
+        if (GetComponent<InputController>() != null && statusController.IsPlayer) GetComponent<InputController>().ShowBindingsText("Pick", " to pick " + Pickables[0].gameObject.name);
         return Pickables[0];
-    }
-    public ItemWeaponWrapper PickItem()
-    {
-        return GetBestPick().weaponWrapper;
     }
 }

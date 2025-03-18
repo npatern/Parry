@@ -287,11 +287,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8b9a305e18de0c04dbd257a21cd47087, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sharedProfile: {fileID: 11400000, guid: e713a0706c7d8b040906c0b33fb6f6fa, type: 2}
+  sharedProfile: {fileID: 11400000, guid: 2f6edd839e2e06f4786e7f6274d47600, type: 2}
   isGlobal: 1
   blendDistance: 0
-  weight: 1
-  priority: 5
+  weight: 0
+  priority: 3
 --- !u!1 &6410340561125416054
 GameObject:
   m_ObjectHideFlags: 0
@@ -365,7 +365,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6410340561425525570}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 20.316866, y: 2.2657127, z: -15.791482}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0

@@ -10,6 +10,7 @@ public class Bullet : MonoBehaviour
     public GameObject ParticlesToSpawn;
     public StatusController ownerStatusController;
     private Rigidbody rb;
+    private Vector3 ShooterPosition;
 
     public float SoundRange = 2;
     public Sound.TYPES soundType = Sound.TYPES.danger;
@@ -18,13 +19,17 @@ public class Bullet : MonoBehaviour
     {
         rb = GetComponent<Rigidbody>();
     }
+    private void Start()
+    {
+        ShooterPosition = transform.position;
+    }
     private void OnTriggerEnter(Collider collision)
     {
         bool bounced = false;
         if (collision.gameObject.GetComponent<StatusController>() != null)
         {
             StatusController statusController = collision.gameObject.GetComponent<StatusController>();
-            bounced = !statusController.TryTakeDamage(this.GetComponent<StatusController>(),Damage);
+            bounced = !statusController.TryTakeDamage(GetComponent<StatusController>(),Damage,ShooterPosition);
         }
         if (bounced)
         {
@@ -48,9 +53,9 @@ public class Bullet : MonoBehaviour
             Instantiate(ParticlesToSpawn, transform.position, transform.rotation, GameController.Instance.transform);
         }
         if (GetComponent<StatusController>() != null) if (GetComponent<StatusController>().IsDeaf()) return;
-         
+        
         Sound sound = new Sound(GetComponent<StatusController>(), SoundRange, soundType);
         Sounds.MakeSound(sound);
-    Destroy(gameObject);
+        Destroy(gameObject);
     }
 }

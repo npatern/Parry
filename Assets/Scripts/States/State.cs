@@ -247,6 +247,7 @@ public class Investigate : State
 public class Search : State
 {
     Vector3 investigatedPosition;
+    Vector3 lastSeenPosition;
     bool isAtTarget = false;
     public Search(EntityController _entity, Vector3 _investigatedPosition) : base(_entity)
     {
@@ -259,7 +260,8 @@ public class Search : State
         UIController.Instance.SpawnTextBubble(Barks.GetBark(Barks.BarkTypes.onSearchStart), entity.transform);
         Sound sound = new Sound(statusController, 10, Sound.TYPES.danger);
         Sounds.MakeSound(sound);
-        investigatedPosition = sensesController.currentTargetLastPosition;
+        lastSeenPosition = sensesController.currentTargetLastPosition;
+        investigatedPosition = lastSeenPosition;
         entity.SetAgentSpeedChase();
 
         
@@ -278,6 +280,12 @@ public class Search : State
             ResetTimer();
         }
         entity.GoToTarget(investigatedPosition);
+        if ( lastSeenPosition != sensesController.currentTargetLastPosition)
+        {
+            lastSeenPosition = sensesController.currentTargetLastPosition;
+            investigatedPosition = lastSeenPosition;
+        }
+            
 
         if (entity.IsTargetReached() && !isAtTarget)
         {

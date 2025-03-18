@@ -14,7 +14,7 @@ public class EntityController : MonoBehaviour
     public NavMeshAgent agent;
     private StatusController statusController;
     private SensesController sensesController;
-    private CombatController combatController;
+    private ToolsController toolsController;
     private TMP_Text textMesh;
     public StatusController target;
 
@@ -42,8 +42,8 @@ public class EntityController : MonoBehaviour
         agent = GetComponent<NavMeshAgent>();
         if (GetComponent<StatusController>() != null)
             statusController = GetComponent<StatusController>();
-        if (GetComponent<CombatController>() != null)
-            combatController = GetComponent<CombatController>();
+        if (GetComponent<ToolsController>() != null)
+            toolsController = GetComponent<ToolsController>();
         if (GetComponent<Rigidbody>() != null)
             rb = GetComponent<Rigidbody>();
         if (GetComponent<SensesController>() != null)
@@ -90,13 +90,13 @@ public class EntityController : MonoBehaviour
     public void AttackTarget(StatusController statusObject)
     {
         float sizeDifferential = (1 + statusController.size.z) / 2;
-        if (Vector3.Distance(target.transform.position, transform.position) < combatController.attackDistance*2/3* sizeDifferential)
+        if (Vector3.Distance(target.transform.position, transform.position) < toolsController.attackDistance*2/3* sizeDifferential)
         {
             DisableNavmesh(false);
             Vector3 direction = Vector3.Normalize(transform.position - statusObject.transform.position);
             GoToTarget(transform.position+ direction);
         }else
-        if (Vector3.Distance(target.transform.position, transform.position) > combatController.attackDistance * sizeDifferential)
+        if (Vector3.Distance(target.transform.position, transform.position) > toolsController.attackDistance * sizeDifferential)
         {
             DisableNavmesh(false);
             GoToTarget(statusObject.transform.position);
@@ -110,14 +110,14 @@ public class EntityController : MonoBehaviour
     }
     void PlayRandomAttack()
     {
-        if (combatController == null) return;
+        if (toolsController == null) return;
         int randomizer = Random.Range(0, 11);
-        if (randomizer < 6 && combatController.CurrentWeaponWrapper.itemType.bullet ==null)
-            combatController.PerformParry();
+        if (randomizer < 6 && toolsController.CurrentWeaponWrapper.itemType.bullet ==null)
+            toolsController.PerformParry();
         else if (randomizer < 10)
-            combatController.PerformAttack();
+            toolsController.PerformAttack();
         else
-            combatController.PerformHeavyAttack();
+            toolsController.PerformHeavyAttack();
     }
     public void SetAgentSpeed(float speed)
     {
@@ -312,16 +312,16 @@ public class EntityController : MonoBehaviour
     }
     public bool CanMove()
     {
-        if (combatController == null) return true;
-        if (combatController.MovementLocked || combatController.RotationLocked)
+        if (toolsController == null) return true;
+        if (toolsController.MovementLocked || toolsController.RotationLocked)
             return false;
         else
             return true;
     }
     public bool IsCombatReady()
     {
-        if (combatController == null) return false;
-        if (combatController.CurrentWeaponWrapper == null) return false;
+        if (toolsController == null) return false;
+        if (toolsController.CurrentWeaponWrapper == null) return false;
 
         return true;
     }

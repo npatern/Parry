@@ -10,15 +10,19 @@ public class SoundEmmiter : MonoBehaviour
     private float soundRange = 20;
     [SerializeField]
     public ParticleSystem particle;
+    private void Start()
+    {
+        SetEmiting(isEmiting);
+    }
     private void FixedUpdate()
     {
-      
+
         if (!isEmiting) return;
         Sound sound = new Sound(GetComponent<StatusController>(), soundRange, Sound.TYPES.cover);
         Sounds.MakeSound(sound);
         particle.startLifetime = soundRange / particle.startSpeed;
     }
-   
+
     public void SetEmiting(bool isPowered)
     {
         isEmiting = isPowered;
@@ -27,5 +31,8 @@ public class SoundEmmiter : MonoBehaviour
         else
             particle.Stop();
     }
-
+    public void SwitchEmiting()
+    {
+        SetEmiting(!isEmiting);
+    }
 }

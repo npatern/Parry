@@ -33,7 +33,7 @@ public class InputController : MonoBehaviour
     private float groundDistance = 0.5f;
     [SerializeField]
     private float rotationSpeed = 1f;
-    CombatController combatController;
+    ToolsController toolsController;
     [SerializeField]
     private bool IsDodging = false;
     [SerializeField]
@@ -46,21 +46,25 @@ public class InputController : MonoBehaviour
     private float dodgePostureCost = 20;
 
     bool isSprinting = false;
-
+    PlayerInput playerInput;
     float WalkSoundAwarenessTime = 1;
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
          
-        combatController = GetComponent<CombatController>();
+        toolsController = GetComponent<ToolsController>();
         targetParent.parent = null;
         statusController = GetComponent<StatusController>();
         GetStatsFromScriptable(GameController.Instance.ListOfAssets.DefaultEntityStats);
-        
+        playerInput = GetComponent<PlayerInput>();
     }
     void GetStatsFromScriptable(EntityStatsScriptableObject scriptable)
     {
         WalkSoundAwarenessTime = scriptable.WalkSoundAwarenessTime;
+    }
+    public void ShowBindingsText(string actionName, string text)
+    {
+        statusController.OverheadController.ShowInfoText("<b>"+GetKeyBinding(actionName).ToUpper()+"</b>" + text);
     }
     private void FixedUpdate()
     {
@@ -103,7 +107,7 @@ public class InputController : MonoBehaviour
         if (IsDodging == false)
             rb.velocity *= .1f;
 
-        combatController.IsDodging = IsDodging;
+        toolsController.IsDodging = IsDodging;
     }
     public void ApplyMovementForce() 
     {
@@ -150,20 +154,30 @@ public class InputController : MonoBehaviour
     {
         movement = context.ReadValue<Vector2>();
     }
+    public void WeaponScroll(InputAction.CallbackContext context)
+    {
+        Vector2 weaponScroll = context.ReadValue<Vector2>();
+        //Debug.Log(weaponScroll + " Weapon scroll");
+        if (GetComponent<InventoryController>() == null) return;
+        InventoryController inventoryController = GetComponent<InventoryController>();
+        if (weaponScroll.y < 0) inventoryController.Equip(inventoryController.GetNextWeapon());
+        if (weaponScroll.y > 0) inventoryController.Equip(inventoryController.GetNextWeapon());
+        
+    }
     public void Attack(InputAction.CallbackContext context)
     {
         if (context.started)
-            GetComponent<CombatController>().PerformAttack(context);
+            GetComponent<ToolsController>().PerformAttack(context);
     }
     public void HeavyAttack(InputAction.CallbackContext context)
     {
         if (context.started)
-            GetComponent<CombatController>().PerformHeavyAttack(context);
+            GetComponent<ToolsController>().PerformHeavyAttack(context);
     }
     public void Parry(InputAction.CallbackContext context)
     {
         if (context.started)
-            GetComponent<CombatController>().PerformParry(context);
+            GetComponent<ToolsController>().PerformParry(context);
     }
     public void Noctovision(InputAction.CallbackContext context)
     {
@@ -175,10 +189,24 @@ public class InputController : MonoBehaviour
         if (context.started)
             GetComponent<InteractionController>().Use();
     }
+    public void Pick(InputAction.CallbackContext context)
+    {
+        if (context.started)
+            GetComponent<InteractionController>().Pick();
+    }
     public void Sprint(InputAction.CallbackContext context)
     {
 
         isSprinting = context.performed;
+    }
+    public string GetKeyBinding(string actionName)
+    {
+        InputAction action;
+        action = playerInput.actions.FindAction(actionName);
+        if (action == null) return actionName + "NULL";
+        int bindingIndex = action.GetBindingIndex(group: playerInput.currentControlScheme);
+        string displayString = action.GetBindingDisplayString(bindingIndex, out string deviceLayoutName, out string controlPath);
+        return displayString;
     }
     public void GetLookAtValue(InputAction.CallbackContext context)
     {
@@ -242,10 +270,10 @@ public class InputController : MonoBehaviour
     }
     public bool CanMove()
     {
-        return !combatController.MovementLocked;
+        return !toolsController.MovementLocked;
     }
     public bool CanRotate()
     {
-        return !combatController.RotationLocked;
+        return !toolsController.RotationLocked;
     }
 }

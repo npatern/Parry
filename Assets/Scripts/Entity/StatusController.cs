@@ -39,7 +39,7 @@ public class StatusController : MonoBehaviour, IHear
     private ParticleSystem PostureLongEffect;
 
     private Rigidbody rb;
-    private CombatController combatController;
+    private ToolsController toolsController;
     private SensesController sensesController;
 
     private float postureRegenerationDelayTime = 1f;
@@ -55,8 +55,8 @@ public class StatusController : MonoBehaviour, IHear
     void Awake()
     {
         if (Life > MaxLife) Life = MaxLife;
-        if (GetComponent<CombatController>() != null)
-            combatController = GetComponent<CombatController>();
+        if (GetComponent<ToolsController>() != null)
+            toolsController = GetComponent<ToolsController>();
         if (GetComponent<Rigidbody>() != null)
             rb = GetComponent<Rigidbody>();
         if (IsStunnedEvent == null)
@@ -118,20 +118,24 @@ public class StatusController : MonoBehaviour, IHear
     public void Attacked()
     {
     }
-    public bool TryTakeDamage(StatusController attacker, float damage = 10)
+    public bool TryTakeDamage(StatusController attacker, float damage)
+    {
+        return TryTakeDamage(attacker, damage, Vector3.zero);
+    }
+    public bool TryTakeDamage(StatusController attacker, float damage, Vector3 damageSource)
     {
         if (IsKilled) return true;
         
-        if (combatController == null)
+        if (toolsController == null)
         {
             TakeDamage(damage, attacker);
             return true;
         }
-        if (combatController.IsDodging) return false;
+        if (toolsController.IsDodging) return false;
         bool isFromBullet = attacker.GetComponent<Bullet>();
-        if (combatController.IsParrying)
+        if (toolsController.IsParrying)
         {
-            SpawnParticles(ParryEffect, combatController.CurrentWeapon);
+            SpawnParticles(ParryEffect, toolsController.CurrentWeaponWrapper.CurrentWeaponObject);
             if (isFromBullet)
             {
 
@@ -142,24 +146,25 @@ public class StatusController : MonoBehaviour, IHear
                 attacker.IsAttackedEvent.Invoke();
             }
             UIController.Instance.SpawnTextBubble(Barks.GetBark(Barks.BarkTypes.onParry), transform);
+            if (isFromBullet && sensesController.IsAlerted) sensesController.currentTargetLastPosition = damageSource;
             if (IsPlayer) GameController.Instance.IncreaseSlowmoTimer();
             return false;
         }
-        if (combatController.IsProtected)
+        if (toolsController.IsProtected)
         {
-            
             TakePosture( damage, attacker);
+            attacker.TakePosture(damage, this);
             return true;
         }
         
-        TakeDamage(damage, attacker);
+        TakeDamage(damage, attacker, isFromBullet);
         return true;
     }
     public float GetStunndedTimerValue()
     {
         return stunnedTimer / postureStunnedRegenerationTime;
     }
-    public void TakeDamage(float damage, StatusController attacker)
+    public void TakeDamage(float damage, StatusController attacker, bool isFromBullet = false)
     {
         SpawnParticles(DamageEffect, transform);
         
@@ -177,13 +182,12 @@ public class StatusController : MonoBehaviour, IHear
             {
                 UIController.Instance.SpawnTextBubble(Barks.GetBark(Barks.BarkTypes.onPain), transform);
                 sensesController.Awareness = 100;
-                sensesController.SetCurrentTarget( attacker);
+                if (!isFromBullet)
+                    sensesController.SetCurrentTarget( attacker);
                 Sound sound = new Sound(this, 10, Sound.TYPES.neutral);
                 Sounds.MakeSound(sound);
             }
-            
         }
-        
     }
     bool MultiplyDamage(StatusController attacker)
     {
@@ -260,16 +264,13 @@ public class StatusController : MonoBehaviour, IHear
         }
         
         GetComponent<Collider>().isTrigger = false;
-        if (combatController != null)
-        if (combatController.CurrentWeapon != null)
+        if (toolsController != null)
+        if (toolsController.CurrentWeaponWrapper!=null)
         {
-             
-            combatController.CurrentWeapon.GetComponent<Collider>().enabled = true;
-            combatController.CurrentWeapon.GetComponent<Collider>().isTrigger = false;
-            combatController.CurrentWeapon.GetComponent<Rigidbody>().isKinematic = false;
-            combatController.StopAllCoroutines();
-            if (combatController.inputController != null) combatController.inputController.enabled = false;
-            combatController.enabled = false;
+            toolsController.DequipWeapon();
+            toolsController.StopAllCoroutines();
+            if (toolsController.inputController != null) toolsController.inputController.enabled = false;
+            toolsController.enabled = false;
         }
         
         if (TryGetComponent<EntityController>(out EntityController entityController))
