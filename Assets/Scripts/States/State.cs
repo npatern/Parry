@@ -221,7 +221,7 @@ public class Investigate : State
         maxTime -= Time.deltaTime;
         investigatedPosition = sensesController.currentTargetLastPosition;
 
-        entity.GoToTarget(investigatedPosition);
+        entity.GoToTarget(investigatedPosition,2);
 
         if (entity.IsTargetReached() && !isAtTarget)
         {
@@ -289,7 +289,7 @@ public class Search : State
 
         if (entity.IsTargetReached() && !isAtTarget)
         {
-            Vector3 randomPositionOffset =2* new Vector3(Random.Range(-1, 2), 0, Random.Range(-1, 2));
+            Vector3 randomPositionOffset =2* new Vector3(Random.Range(-2, 3), 0, Random.Range(-2, 3));
             isAtTarget = true;
             investigatedPosition += randomPositionOffset;
             isAtTarget = false;

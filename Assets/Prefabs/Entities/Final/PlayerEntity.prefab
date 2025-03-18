@@ -396,7 +396,7 @@ MonoBehaviour:
   size: {x: 1, y: 1, z: 1}
   loadValuesInRealTime: 0
   IsPlayer: 0
-  CriticalMultiplier: 10
+  CriticalMultiplier: 4
   SpeedMultiplier: 1
   Life: 100
   MaxLife: 100

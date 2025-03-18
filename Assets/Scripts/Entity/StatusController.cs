@@ -146,6 +146,7 @@ public class StatusController : MonoBehaviour, IHear
                 attacker.IsAttackedEvent.Invoke();
             }
             UIController.Instance.SpawnTextBubble(Barks.GetBark(Barks.BarkTypes.onParry), transform);
+            if (sensesController!=null)
             if (isFromBullet && sensesController.IsAlerted) sensesController.currentTargetLastPosition = damageSource;
             if (IsPlayer) GameController.Instance.IncreaseSlowmoTimer();
             return false;
@@ -249,7 +250,11 @@ public class StatusController : MonoBehaviour, IHear
         if (sound.type == Sound.TYPES.cover) MakeDeaf();
 
     }
-    public void Kill(StatusController attacker, float damage = 10)
+    public void Kill()
+    {
+        Kill(null, 0);
+    }
+    public void Kill(StatusController attacker=null, float damage = 10)
     {
         IsKilled = true;
         

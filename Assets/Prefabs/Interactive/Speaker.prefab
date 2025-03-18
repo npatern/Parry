@@ -131,6 +131,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 8854315264262662572}
+        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   scaleParticles: 0
   DamageEffect: {fileID: 5829956603799595035, guid: c230284ada2da5c4d99f033287009091, type: 3}
   ParryEffect: {fileID: 0}
@@ -728,5 +740,10 @@ PrefabInstance:
 --- !u!4 &8854315264262662567 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5532784257875219241, guid: 57db80ac8f8590a43af60cb1ed81d55f, type: 3}
+  m_PrefabInstance: {fileID: 3902577047523261070}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &8854315264262662572 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5532784257875219234, guid: 57db80ac8f8590a43af60cb1ed81d55f, type: 3}
   m_PrefabInstance: {fileID: 3902577047523261070}
   m_PrefabAsset: {fileID: 0}

@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 82b1f5da0ed607c449bb0266c4ced8a4, type: 3}
-  m_Name: ListOfAssets
+  m_Name: ListOfAssetsAndValues
   m_EditorClassIdentifier: 
   ambientLightValue: 0.1
   PickableTemplate: {fileID: 6644133888316450086, guid: ba4c80c0bd79ea845bd79e0cfdb60398, type: 3}
@@ -22,12 +22,11 @@ MonoBehaviour:
   - {fileID: 11400000, guid: fd69bf0d8e8ff534d8879fe1060b7556, type: 2}
   DefaultEntityStats: {fileID: 11400000, guid: 664b86df3a2e0d74b862701ca2fdce47, type: 2}
   enemies:
-  - {fileID: 193002233852398132, guid: b655d7d83c0abe148967a3c8fd0e18dc, type: 3}
-  - {fileID: 8799387768682952896, guid: e3190c55fdb9f514db6cf8472f36b72d, type: 3}
+  - {fileID: 8799387768682952896, guid: a0ae99d5a5341c441873358d634c2e1a, type: 3}
+  - {fileID: 8799387768682952896, guid: 4f635c42499732c49b07fea74a04f6ad, type: 3}
   - {fileID: 8799387768682952896, guid: bf8e8d43c61b59b4c9b1d69205eb7285, type: 3}
   - {fileID: 8799387768682952896, guid: 5d610cff41e9034478301694f7391ec5, type: 3}
   - {fileID: 8799387768682952896, guid: fb2c57e5ed04760448d30688b89562d8, type: 3}
-  - {fileID: 8799387768682952896, guid: 4f635c42499732c49b07fea74a04f6ad, type: 3}
   random:
   - name: Achoo!
   - name: Burp.

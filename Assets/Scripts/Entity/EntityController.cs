@@ -237,9 +237,10 @@ public class EntityController : MonoBehaviour
         }
         
     }
-    public void GoToTarget(Vector3 targetPosition)
+    public void GoToTarget(Vector3 targetPosition, float stoppingDistance = 0f)
     {
         if (agent == null) return;
+        agent.stoppingDistance = stoppingDistance;
         agent.isStopped = false;
         agent.destination = targetPosition;
         //AddToLog("Destination set. Going to " + targetTransform.name);
