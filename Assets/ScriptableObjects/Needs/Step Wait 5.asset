@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aebbfa40cedc7ae419b6dfbdf96092a2, type: 3}
   m_Name: Step Wait 5
   m_EditorClassIdentifier: 
-  WaitTime: 5
+  WaitTime: 15
   DestroyEntityAfter: 0

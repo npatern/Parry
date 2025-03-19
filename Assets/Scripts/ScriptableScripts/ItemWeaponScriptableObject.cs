@@ -30,9 +30,10 @@ public class ItemWeaponScriptableObject : ScriptableObject
     public AttackScriptableObject Stunned;
     public AttackScriptableObject Attacked;
 }
- 
+[System.Serializable]
 public class ItemWeaponWrapper
 {
+    public string name;
     public ItemWeaponScriptableObject itemType;
     public string ItemName;
     public string ID;
@@ -52,12 +53,13 @@ public class ItemWeaponWrapper
     public float BulletDamage = 10;
     public Bullet Bullet;
     
-    
+ 
     public ItemWeaponWrapper(ItemWeaponScriptableObject scriptableObject)
     {
         itemType = scriptableObject;
         Damage = scriptableObject.Damage;
         ItemName = scriptableObject.ItemName;
+        name = scriptableObject.ItemName;
         ID = scriptableObject.ID;
         Description = scriptableObject.Description;
         Stackable = scriptableObject.Stackable;

@@ -45,6 +45,7 @@ public class InputController : MonoBehaviour
     [SerializeField]
     private float dodgePostureCost = 20;
 
+    private float switchWeapon = 0;
     bool isSprinting = false;
     PlayerInput playerInput;
     float WalkSoundAwarenessTime = 1;
@@ -156,13 +157,13 @@ public class InputController : MonoBehaviour
     }
     public void WeaponScroll(InputAction.CallbackContext context)
     {
+        if (toolsController.IsUsingTool) return;
         Vector2 weaponScroll = context.ReadValue<Vector2>();
         //Debug.Log(weaponScroll + " Weapon scroll");
         if (GetComponent<InventoryController>() == null) return;
         InventoryController inventoryController = GetComponent<InventoryController>();
         if (weaponScroll.y < 0) inventoryController.Equip(inventoryController.GetNextWeapon());
-        if (weaponScroll.y > 0) inventoryController.Equip(inventoryController.GetNextWeapon());
-        
+        else if (weaponScroll.y > 0) inventoryController.Equip(inventoryController.GetNextWeapon());
     }
     public void Attack(InputAction.CallbackContext context)
     {
@@ -266,7 +267,7 @@ public class InputController : MonoBehaviour
     }
     void OnDrawGizmos()
     { 
-        Gizmos.DrawSphere(transform.position + groundCheck, groundDistance);
+       // Gizmos.DrawSphere(transform.position + groundCheck, groundDistance);
     }
     public bool CanMove()
     {

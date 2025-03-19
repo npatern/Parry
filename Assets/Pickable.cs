@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.Events;
 public class Pickable : MonoBehaviour
 {
-     
+    [SerializeReference]
     public ItemWeaponWrapper weaponWrapper;
     public string wrapperName = "";
     [SerializeField]
@@ -28,7 +28,7 @@ public class Pickable : MonoBehaviour
     }
     private void Update()
     {
-        wrapperName = weaponWrapper.ItemName;
+        wrapperName = weaponWrapper.name;
     }
     private void OnTriggerEnter(Collider other)
     {

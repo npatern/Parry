@@ -29,7 +29,7 @@ public class Bullet : MonoBehaviour
         if (collision.gameObject.GetComponent<StatusController>() != null)
         {
             StatusController statusController = collision.gameObject.GetComponent<StatusController>();
-            bounced = !statusController.TryTakeDamage(GetComponent<StatusController>(),Damage,ShooterPosition);
+            bounced = !statusController.TryTakeDamage(Damage, GetComponent<StatusController>(),ShooterPosition);
         }
         if (bounced)
         {

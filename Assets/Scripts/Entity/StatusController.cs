@@ -118,11 +118,11 @@ public class StatusController : MonoBehaviour, IHear
     public void Attacked()
     {
     }
-    public bool TryTakeDamage(StatusController attacker, float damage)
+    public bool TryTakeDamage(float damage,StatusController attacker = null )
     {
-        return TryTakeDamage(attacker, damage, Vector3.zero);
+        return TryTakeDamage(damage, attacker,  Vector3.zero);
     }
-    public bool TryTakeDamage(StatusController attacker, float damage, Vector3 damageSource)
+    public bool TryTakeDamage(float damage, StatusController attacker,  Vector3 damageSource)
     {
         if (IsKilled) return true;
         

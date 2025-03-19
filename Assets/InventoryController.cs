@@ -8,7 +8,7 @@ public class InventoryController : MonoBehaviour
     int maxSlotsNr = int.MaxValue;
     [SerializeField]
     int maxBigSlotsNr = 1;
-
+    [SerializeReference]
     public List<ItemWeaponWrapper> slots = new List<ItemWeaponWrapper>();
     public List<ItemWeaponWrapper> bigSlots = new List<ItemWeaponWrapper>();
     public ToolsController toolsController;
@@ -26,6 +26,8 @@ public class InventoryController : MonoBehaviour
         if (item == null) return false;
         List<ItemWeaponWrapper> list;
         int maxNr = maxSlotsNr;
+        list = slots;
+        /*
         if (item.Big)
         {
             maxNr = maxBigSlotsNr;
@@ -35,16 +37,11 @@ public class InventoryController : MonoBehaviour
         {
             list = slots;
         }
-        if (list == null)
-        {
-            Debug.Log("LIST IS NULL DUDE!");
-
-        }
+         
         if (list.Contains(item))
         {
             if (item.Stackable)
             {
-
                 int index = list.IndexOf(item);
                 list[index].stack += item.stack;
                 return true;
@@ -55,6 +52,7 @@ public class InventoryController : MonoBehaviour
             }       
         }  
         if (list.Count >= maxSlotsNr) return false;
+        */
         list.Add(item);
         item.DestroyPhysicalPresence();
         Debug.Log("End Add to inventory");
@@ -70,19 +68,11 @@ public class InventoryController : MonoBehaviour
     }
     public void Equip(ItemWeaponWrapper item)
     {
-        Debug.Log("is item null in equip?");
         if (item == null) return;
-        Debug.Log("start equip  " + item.ItemName+" << nazwa!");
-        ListInventory();
         if (toolsController == null) return;
-        
         List<ItemWeaponWrapper> list = GetProperList(item);
-        toolsController.EquipWeapon(item);
         if (list.Contains(item)) RemoveFromList(list, item);
-        Debug.Log("end equip");
-        ListInventory();
-        
-
+        toolsController.EquipWeapon(item);
     }
     void RemoveFromList(List<ItemWeaponWrapper> list, ItemWeaponWrapper item)
     {
@@ -92,8 +82,7 @@ public class InventoryController : MonoBehaviour
     {
         if (slots.Count <= 0) return null;
         ItemWeaponWrapper itemToReturn = slots[0];
-         //slots.RemoveAt(0);
-        Debug.Log("nextweapon: " + itemToReturn.ItemName);
+        Debug.Log("nextweapon: " + itemToReturn.name);
         return itemToReturn;
     }
     public ItemWeaponWrapper GetPreviousWeapon()
@@ -101,8 +90,7 @@ public class InventoryController : MonoBehaviour
         if (slots.Count <= 0) return null;
         int slotNr = slots.Count-1;
         ItemWeaponWrapper itemToReturn = slots[slotNr];
-        Debug.Log("prev weapon: " + itemToReturn.ItemName);
-         // slots.RemoveAt(slotNr);
+        Debug.Log("prev weapon: " + itemToReturn.name);
         return itemToReturn;
     }
     public void ListInventory()
@@ -111,7 +99,7 @@ public class InventoryController : MonoBehaviour
         
         foreach (var item in slots)
         {
-            currentInventory+=item.ItemName+", ";
+            currentInventory+=item.name+", ";
         }
         Debug.Log(currentInventory);
     }

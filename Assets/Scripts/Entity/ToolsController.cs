@@ -11,7 +11,7 @@ public class ToolsController : MonoBehaviour
     public InputController inputController;
     public StatusController statusController;
     public InventoryController inventoryController;
-
+    [SerializeReference]
     public ItemWeaponWrapper CurrentWeaponWrapper;
     public ItemWeaponScriptableObject TESTCurrentWeaponScriptable;
     public Transform DequippedWeapon;
@@ -20,7 +20,7 @@ public class ToolsController : MonoBehaviour
     public bool MovementLocked = false;
     public bool RotationLocked = false;
     
-    bool duringAttack = false;
+    public bool IsUsingTool = false;
     public bool IsProtected = false;
     public bool IsParrying = false;
     public bool IsDamaging = false;
@@ -78,6 +78,7 @@ public class ToolsController : MonoBehaviour
     }
     public void EquipWeapon(Pickable pickable)
     {
+        
         if (CurrentWeaponWrapper!=null)
             DequipWeapon();
         CurrentWeaponWrapper = pickable.weaponWrapper;
@@ -91,17 +92,25 @@ public class ToolsController : MonoBehaviour
     }
     public void DequipWeapon()
     {
-        if (CurrentWeaponWrapper == null) return;
-        //if (HideItem(CurrentWeaponWrapper)) 
-        //{
-        //    CurrentWeaponWrapper = null;
-        //    return;
-       // }
-        
+        DequipWeapon(CurrentWeaponWrapper);
+    }
+    public void DequipWeapon(ItemWeaponWrapper item)
+    {
+        if (item == null) return;
+        if (TryHideItem(item)) 
+        {
+            CurrentWeaponWrapper = null;
+            return;
+        }
+        DropWeapon(item);
+       
+    }
+    public void DropWeapon(ItemWeaponWrapper item)
+    {
         CurrentWeaponWrapper.MakePickable();
         CurrentWeaponWrapper = null;
     }
-    public bool HideItem(ItemWeaponWrapper item)
+    public bool TryHideItem(ItemWeaponWrapper item)
     {
         if (item == null) return false;
         if (inventoryController == null) return false;
@@ -109,7 +118,7 @@ public class ToolsController : MonoBehaviour
     }
     public bool CanPerform()
     {
-        if (duringAttack) return false;
+        if (IsUsingTool) return false;
         if (statusController.IsStunned) return false;
         return true;
     }
@@ -185,7 +194,7 @@ public class ToolsController : MonoBehaviour
     public IEnumerator PlayAttackSteps(AttackScriptableObject attack, InputAction.CallbackContext context = new InputAction.CallbackContext())
     {
         if (attack == null) yield break;
-        duringAttack = true;
+        IsUsingTool = true;
         
 
         int totalSteps = attack.AttackStepss.Length;
@@ -199,13 +208,13 @@ public class ToolsController : MonoBehaviour
             if (attack.AttackStepss[i].SkipIfPlayer)
                 if (statusController.IsPlayer) continue;
             if (attack.AttackStepss[i].Interruptable)
-                duringAttack = false;
+                IsUsingTool = false;
             else
-                duringAttack = true;
+                IsUsingTool = true;
 
             yield return attack.AttackStepss[i].PerformStep(this, attack, context);
         }
-        duringAttack = false;
+        IsUsingTool = false;
     }
     private void ClearStateEffects()
     {
@@ -232,7 +241,7 @@ public class ToolsController : MonoBehaviour
             if (enemyStatus == null) continue;
             if (enemyStatus == statusController) continue;
             if (statusController.Team == enemyStatus.Team) continue;
-            enemyStatus.TryTakeDamage(statusController, damage);
+            enemyStatus.TryTakeDamage( damage, statusController);
             if (!enemyStatus.IsKilled)
             hitAnything = true;
         }
