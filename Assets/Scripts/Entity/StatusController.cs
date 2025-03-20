@@ -167,10 +167,14 @@ public class StatusController : MonoBehaviour, IHear
     }
     public void TakeDamage(float damage, StatusController attacker, bool isFromBullet = false)
     {
+        bool isCritical = false;
+        isCritical = MultiplyDamage(attacker);
         SpawnParticles(DamageEffect, transform);
         
-        if (MultiplyDamage(attacker)) damage *= attacker.CriticalMultiplier;
+        if (isCritical) damage *= attacker.CriticalMultiplier;
         Life -= damage;
+
+        UIController.Instance.SpawnDamageNr("" + damage, transform, isCritical);
         if (Life <= 0 && !IsKilled) 
         {
             Kill(attacker);

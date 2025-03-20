@@ -19,7 +19,7 @@ public class ToolsController : MonoBehaviour
 
     public bool MovementLocked = false;
     public bool RotationLocked = false;
-    
+    Coroutine attack = null;
     public bool IsUsingTool = false;
     public bool IsProtected = false;
     public bool IsParrying = false;
@@ -29,6 +29,7 @@ public class ToolsController : MonoBehaviour
     public UnityEvent<bool> StopMovingEvent;
     public float attackDistance = 3f;
 
+    
     public void Awake()
     {
         inputController = GetComponent<InputController>();
@@ -53,11 +54,6 @@ public class ToolsController : MonoBehaviour
         if (CurrentWeaponWrapper==null)
         EquipWeapon(new ItemWeaponWrapper(TESTCurrentWeaponScriptable));
     }
-    public void Update()
-    {
-        //if (IsDamaging)
-        //CastDamage();
-    }
     public float GetCombatSpeedMultiplier()
     {
         float multiplier = 1;
@@ -65,56 +61,54 @@ public class ToolsController : MonoBehaviour
         //dodac mnoznik z broni i roznych efektow jak freeze
         return multiplier;
     }
-    public void EquipWeapon(ItemWeaponWrapper weaponWrapper)
+    public void EquipWeaponFromPickable(Pickable pickable)
     {
+        ItemWeaponWrapper weaponWrapper = pickable.weaponWrapper;
+        weaponWrapper.RemovePickable(transform);
+        EquipWeapon(weaponWrapper);
+    }
+    public bool EquipWeapon(ItemWeaponWrapper weaponWrapper)
+    {
+        if (weaponWrapper == null) return false;
         if (CurrentWeaponWrapper != null)
             DequipWeapon();
+
         CurrentWeaponWrapper = weaponWrapper;
         if (CurrentWeaponWrapper.CurrentWeaponObject == null)
             CurrentWeaponWrapper.CurrentWeaponObject = CurrentWeaponWrapper.SpawnWeaponObject(transform);
 
         attackDistance = CurrentWeaponWrapper.itemType.AttackDistance;
-        StartCoroutine(PlayAttackSteps(CurrentWeaponWrapper.itemType.Equip));
+        BreakAttackCoroutines();
+        attack =StartCoroutine(PlayAttackSteps(CurrentWeaponWrapper.itemType.Equip));
+        return true;
     }
-    public void EquipWeapon(Pickable pickable)
+    public void BreakAttackCoroutines()
     {
-        
-        if (CurrentWeaponWrapper!=null)
-            DequipWeapon();
-        CurrentWeaponWrapper = pickable.weaponWrapper;
-        
-        CurrentWeaponWrapper.RemovePickable(transform);
-        if (CurrentWeaponWrapper.CurrentWeaponObject == null)
-            CurrentWeaponWrapper.CurrentWeaponObject = CurrentWeaponWrapper.SpawnWeaponObject(transform);
-
-        attackDistance = CurrentWeaponWrapper.itemType.AttackDistance;
-        StartCoroutine(PlayAttackSteps(CurrentWeaponWrapper.itemType.Equip));
+        if (attack != null)
+            StopCoroutine(attack);
+        StopAllCoroutines();
+        IsUsingTool = false;
+        ClearStateEffects();
     }
     public void DequipWeapon()
     {
-        DequipWeapon(CurrentWeaponWrapper);
-    }
-    public void DequipWeapon(ItemWeaponWrapper item)
-    {
-        if (item == null) return;
-        if (TryHideItem(item)) 
+       
+        if (TryHideItemFromHands()) 
         {
             CurrentWeaponWrapper = null;
             return;
         }
-        DropWeapon(item);
-       
+        DropWeaponFromHands();
     }
-    public void DropWeapon(ItemWeaponWrapper item)
+    public void DropWeaponFromHands()
     {
         CurrentWeaponWrapper.MakePickable();
         CurrentWeaponWrapper = null;
     }
-    public bool TryHideItem(ItemWeaponWrapper item)
+    public bool TryHideItemFromHands()
     {
-        if (item == null) return false;
         if (inventoryController == null) return false;
-        return inventoryController.AddToInventory(item);
+        return inventoryController.AddToInventory(CurrentWeaponWrapper);
     }
     public bool CanPerform()
     {
@@ -152,8 +146,9 @@ public class ToolsController : MonoBehaviour
         { 
             return;
         }
-        StopAllCoroutines();
-        StartCoroutine(PlayAttackSteps(CurrentWeaponWrapper.itemType.LightAttack, context));
+
+        BreakAttackCoroutines();
+        attack = StartCoroutine(PlayAttackSteps(CurrentWeaponWrapper.itemType.LightAttack, context));
     }
     public void PerformHeavyAttack(InputAction.CallbackContext context = new InputAction.CallbackContext())
     {
@@ -162,8 +157,8 @@ public class ToolsController : MonoBehaviour
         {
             return;
         }
-        StopAllCoroutines();
-        StartCoroutine(PlayAttackSteps(CurrentWeaponWrapper.itemType.HeavyAttack, context));
+        BreakAttackCoroutines();
+        attack = StartCoroutine(PlayAttackSteps(CurrentWeaponWrapper.itemType.HeavyAttack, context));
     }
     public void PerformParry(InputAction.CallbackContext context = new InputAction.CallbackContext())
     {
@@ -172,18 +167,18 @@ public class ToolsController : MonoBehaviour
         {
             return;
         }
-        StopAllCoroutines();
-        StartCoroutine(PlayAttackSteps(CurrentWeaponWrapper.itemType.Parry, context));
+        BreakAttackCoroutines();
+        attack = StartCoroutine(PlayAttackSteps(CurrentWeaponWrapper.itemType.Parry, context));
     }
     public void PerformStunned()
     {
-        StopAllCoroutines();
-        StartCoroutine(PlayAttackSteps(CurrentWeaponWrapper.itemType.Stunned));
+        BreakAttackCoroutines();
+        attack = StartCoroutine(PlayAttackSteps(CurrentWeaponWrapper.itemType.Stunned));
     }
     public void PerformAttacked()
     {
-        StopAllCoroutines();
-        StartCoroutine(PlayAttackSteps(CurrentWeaponWrapper.itemType.Attacked));
+        BreakAttackCoroutines();
+        attack = StartCoroutine(PlayAttackSteps(CurrentWeaponWrapper.itemType.Attacked));
     }
     public bool IsGrounded()
     {

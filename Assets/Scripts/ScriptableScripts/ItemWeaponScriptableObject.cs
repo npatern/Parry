@@ -80,7 +80,7 @@ public class ItemWeaponWrapper
     }
     public void MakePickable()
     {
-        if (CurrentWeaponObject == null) return;
+        if (CurrentWeaponObject == null) SpawnWeaponObject();
 
         CurrentWeaponObject.GetComponent<Collider>().enabled = true;
         CurrentWeaponObject.GetComponent<Collider>().isTrigger = false;

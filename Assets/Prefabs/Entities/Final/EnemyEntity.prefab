@@ -93,10 +93,13 @@ MonoBehaviour:
   inputController: {fileID: 0}
   statusController: {fileID: 0}
   inventoryController: {fileID: 0}
+  CurrentWeaponWrapper:
+    rid: -2
   TESTCurrentWeaponScriptable: {fileID: 0}
   DequippedWeapon: {fileID: 0}
   MovementLocked: 0
   RotationLocked: 0
+  IsUsingTool: 0
   IsProtected: 0
   IsParrying: 0
   IsDamaging: 0
@@ -105,6 +108,11 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   attackDistance: 3
+  references:
+    version: 2
+    RefIds:
+    - rid: -2
+      type: {class: , ns: , asm: }
 --- !u!114 &118772920
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -290,10 +298,10 @@ MonoBehaviour:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0
+      value: 1
       inSlope: 0
       outSlope: 0
-      tangentMode: 0
+      tangentMode: 34
       weightedMode: 0
       inWeight: 0
       outWeight: 0
@@ -302,7 +310,7 @@ MonoBehaviour:
       value: 1
       inSlope: 0
       outSlope: 0
-      tangentMode: 0
+      tangentMode: 34
       weightedMode: 0
       inWeight: 0
       outWeight: 0

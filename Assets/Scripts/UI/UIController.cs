@@ -10,6 +10,7 @@ public class UIController : MonoBehaviour
     public Canvas MainCanvas;
     public RectTransform CharacterPanel;
     public GameObject TextBubble;
+    public GameObject TextBubbleDamageNumber;
     public GameObject HealthBar;
     public GameObject ArrowObject;
     public RectTransform StartScreen;
@@ -37,6 +38,17 @@ public class UIController : MonoBehaviour
         Vector3 screenPosition = Camera.main.WorldToScreenPoint(transform.position+Vector3.up*3);
         newTextBubble.transform.position = screenPosition;
         newTextBubble.transform.parent = UITrashParent;
+        newTextBubble.Speech = speech;
+        newTextBubble.target = transform.position;
+    }
+    public void SpawnDamageNr(string speech, Transform transform, bool critical = false)
+    {
+        UITextBubbleMovement newTextBubble = Instantiate(TextBubbleDamageNumber, MainCanvas.transform, false).GetComponent<UITextBubbleMovement>();
+        Vector3 screenPosition = Camera.main.WorldToScreenPoint(transform.position - Vector3.up * 3);
+        newTextBubble.transform.position = screenPosition;
+        newTextBubble.transform.parent = UITrashParent;
+        speech = "<color=red>"+ speech+"</color>";    
+        if (critical) speech = "<b>" + speech + " CRITICAL!</b>";
         newTextBubble.Speech = speech;
         newTextBubble.target = transform.position;
     }

@@ -13,10 +13,14 @@ public class InventoryController : MonoBehaviour
     public List<ItemWeaponWrapper> bigSlots = new List<ItemWeaponWrapper>();
     public ToolsController toolsController;
 
-
+   
     private void Awake()
     {
         toolsController = GetComponent<ToolsController>();
+    }
+    private void FixedUpdate()
+    {
+        
     }
     //public ItemWeaponWrapper handSlot;
     public bool AddToInventory(ItemWeaponWrapper item)
@@ -59,6 +63,14 @@ public class InventoryController : MonoBehaviour
         ListInventory();
         return true;
     }
+    public ItemWeaponWrapper RemoveFromInventory(int index = 0)
+    {
+        if (slots.Count <= index) return null;
+        ItemWeaponWrapper itemToReturn = slots[index];
+        slots.RemoveAt(index);
+        itemToReturn.MakePickable();
+        return itemToReturn;
+    }
     public List<ItemWeaponWrapper> GetProperList(ItemWeaponWrapper item)
     {
         if (item.Big)
@@ -70,9 +82,8 @@ public class InventoryController : MonoBehaviour
     {
         if (item == null) return;
         if (toolsController == null) return;
-        List<ItemWeaponWrapper> list = GetProperList(item);
-        if (list.Contains(item)) RemoveFromList(list, item);
-        toolsController.EquipWeapon(item);
+        if (toolsController.EquipWeapon(item))
+            if (slots.Contains(item)) slots.Remove(item);
     }
     void RemoveFromList(List<ItemWeaponWrapper> list, ItemWeaponWrapper item)
     {

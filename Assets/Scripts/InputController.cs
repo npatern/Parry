@@ -45,7 +45,7 @@ public class InputController : MonoBehaviour
     [SerializeField]
     private float dodgePostureCost = 20;
 
-    private float switchWeapon = 0;
+    private bool switchWeapon = false;
     bool isSprinting = false;
     PlayerInput playerInput;
     float WalkSoundAwarenessTime = 1;
@@ -69,6 +69,7 @@ public class InputController : MonoBehaviour
     }
     private void FixedUpdate()
     {
+        switchWeapon = true;
         if (IsDodging)
         {
             ApplyDodge();
@@ -157,13 +158,16 @@ public class InputController : MonoBehaviour
     }
     public void WeaponScroll(InputAction.CallbackContext context)
     {
-        if (toolsController.IsUsingTool) return;
+        if (!switchWeapon) return;
+        //if (toolsController.IsUsingTool) return;
         Vector2 weaponScroll = context.ReadValue<Vector2>();
-        //Debug.Log(weaponScroll + " Weapon scroll");
+
         if (GetComponent<InventoryController>() == null) return;
         InventoryController inventoryController = GetComponent<InventoryController>();
+       // if  (weaponScroll.y > 0) inventoryController.RemoveFromInventory();
         if (weaponScroll.y < 0) inventoryController.Equip(inventoryController.GetNextWeapon());
         else if (weaponScroll.y > 0) inventoryController.Equip(inventoryController.GetNextWeapon());
+        switchWeapon = false;
     }
     public void Attack(InputAction.CallbackContext context)
     {
