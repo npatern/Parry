@@ -6798,11 +6798,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Level: {fileID: 1599597424}
-  MaxEntitiesNr: 8
+  MaxEntitiesNr: 6
   ListOfAssets: {fileID: 11400000, guid: 88ed08f0f6d213a4aa3c602946f83c8c, type: 2}
   cameraController: {fileID: 1413531547}
   StopTimeOnStart: 1
-  TimeBetweenSpawns: 3
+  TimeBetweenSpawns: 4
   timer: 3
   GarbageCollector: {fileID: 1226751232}
   CurrentEntity: {fileID: 0}
