@@ -13,9 +13,11 @@ public class ToolsController : MonoBehaviour
     public InventoryController inventoryController;
     [SerializeReference]
     public ItemWeaponWrapper CurrentWeaponWrapper;
+    [SerializeReference]
+    public ItemWeaponWrapper DefaultWeaponWrapper;
     public ItemWeaponScriptableObject TESTCurrentWeaponScriptable;
     public Transform DequippedWeapon;
-    public enum targets { IdlePoint, ParryPoint, HeavyAttack, HeavyAttackEnd, Attack, AttackEnd, Unequipped, Disarmed };
+    public enum targets { IdlePoint, ParryPoint, HeavyAttack, HeavyAttackEnd, Attack, AttackEnd, Unequipped, Disarmed, Throw };
 
     public bool MovementLocked = false;
     public bool RotationLocked = false;
@@ -64,19 +66,20 @@ public class ToolsController : MonoBehaviour
     public void EquipWeaponFromPickable(Pickable pickable)
     {
         ItemWeaponWrapper weaponWrapper = pickable.weaponWrapper;
-        weaponWrapper.RemovePickable(transform);
+        weaponWrapper.RemovePickable(transform, true);
         EquipWeapon(weaponWrapper);
     }
+    
     public bool EquipWeapon(ItemWeaponWrapper weaponWrapper)
     {
         if (weaponWrapper == null) return false;
         if (CurrentWeaponWrapper != null)
-            DequipWeapon();
+            DequipOrReplaceWeaponInHands(weaponWrapper);
 
         CurrentWeaponWrapper = weaponWrapper;
         if (CurrentWeaponWrapper.CurrentWeaponObject == null)
-            CurrentWeaponWrapper.CurrentWeaponObject = CurrentWeaponWrapper.SpawnWeaponObject(transform);
-
+            CurrentWeaponWrapper.CurrentWeaponObject = CurrentWeaponWrapper.SpawnWeaponObjectAsCurrentObject(transform);
+        CurrentWeaponWrapper.RemoveRigidBody();
         attackDistance = CurrentWeaponWrapper.itemType.AttackDistance;
         BreakAttackCoroutines();
         attack =StartCoroutine(PlayAttackSteps(CurrentWeaponWrapper.itemType.Equip));
@@ -90,7 +93,22 @@ public class ToolsController : MonoBehaviour
         IsUsingTool = false;
         ClearStateEffects();
     }
-    public void DequipWeapon()
+    public void DequipOrReplaceWeaponInHands(ItemWeaponWrapper itemToReplaceWith)
+    {
+        if (itemToReplaceWith.ID == CurrentWeaponWrapper.ID)
+            if (CurrentWeaponWrapper.Stackable)
+            {
+                itemToReplaceWith.MergeToMe(CurrentWeaponWrapper);
+                return;
+            }
+            else
+            {
+                CurrentWeaponWrapper.DestroyPhysicalPresence();
+                return;
+            }
+        DequipWeaponFromHands();
+    }
+    public void DequipWeaponFromHands()
     {
        
         if (TryHideItemFromHands()) 
@@ -136,6 +154,8 @@ public class ToolsController : MonoBehaviour
                 return CurrentWeaponWrapper.itemType.attackPattern.Unequipped;
             case targets.Disarmed:
                 return CurrentWeaponWrapper.itemType.attackPattern.Disarmed;
+            case targets.Throw:
+                return CurrentWeaponWrapper.itemType.attackPattern.Throw;
         }
         return CurrentWeaponWrapper.CurrentWeaponObject;
     }
@@ -159,6 +179,16 @@ public class ToolsController : MonoBehaviour
         }
         BreakAttackCoroutines();
         attack = StartCoroutine(PlayAttackSteps(CurrentWeaponWrapper.itemType.HeavyAttack, context));
+    }
+    public void PerformThrow(InputAction.CallbackContext context = new InputAction.CallbackContext())
+    {
+
+        if (!CanPerform())
+        {
+            return;
+        }
+        BreakAttackCoroutines();
+        attack = StartCoroutine(PlayAttackSteps(CurrentWeaponWrapper.itemType.Throw, context));
     }
     public void PerformParry(InputAction.CallbackContext context = new InputAction.CallbackContext())
     {
@@ -258,8 +288,50 @@ public class ToolsController : MonoBehaviour
         Bullet bullet = Instantiate(CurrentWeaponWrapper.itemType.bullet, weaponModel.StartPoint.position, CurrentWeaponWrapper.CurrentWeaponObject.transform.rotation, GameController.Instance.GarbageCollector.transform).GetComponent<Bullet>();
         bullet.Damage = CurrentWeaponWrapper.itemType.Damage;
         Rigidbody bulletRB = bullet.GetComponent<Rigidbody>();
-        bulletRB.AddRelativeForce(Vector3.forward * 1000,ForceMode.Acceleration);
+        bulletRB.AddRelativeForce(Vector3.forward * 1000, ForceMode.Acceleration);
         Debug.Log("bullet fired!");
+
+    }
+    public void OBSOLETEThrow()
+    {
+        WeaponModel weaponModel = CurrentWeaponWrapper.CurrentWeaponObject.GetComponent<WeaponModel>();
+        Bullet bullet = Instantiate(GameController.Instance.ListOfAssets.BulletThrowTemplate.gameObject, weaponModel.StartPoint.position, CurrentWeaponWrapper.CurrentWeaponObject.transform.rotation, GameController.Instance.GarbageCollector.transform).GetComponent<Bullet>();
+        bullet.Damage = CurrentWeaponWrapper.itemType.Damage;
+        Rigidbody bulletRB = bullet.GetComponent<Rigidbody>();
+        bullet.item = CurrentWeaponWrapper;
+        Vector3 throwDirection = new Vector3 (CurrentWeaponWrapper.CurrentWeaponObject.position.x - transform.position.x, 0, CurrentWeaponWrapper.CurrentWeaponObject.position.z - transform.position.z);
+        CurrentWeaponWrapper.CurrentWeaponObject.parent = bullet.transform;
+        CurrentWeaponWrapper.CurrentWeaponObject.GetComponent<Collider>().enabled = true;
+        CurrentWeaponWrapper.CurrentWeaponObject.GetComponent<Collider>().isTrigger = false;
+        CurrentWeaponWrapper = null;
         
+        bulletRB.AddForce(throwDirection * 1000, ForceMode.Acceleration);
+        BreakAttackCoroutines();
+        Debug.Log("bullet fired!");
+
+    }
+    public void Throw()
+    {
+        WeaponModel weaponModel = CurrentWeaponWrapper.CurrentWeaponObject.GetComponent<WeaponModel>();
+
+        Bullet bullet = CurrentWeaponWrapper.CurrentWeaponObject.gameObject.AddComponent<Bullet>();
+        bullet.Damage = CurrentWeaponWrapper.Damage*100;
+        bullet.soundType = Sound.TYPES.neutral;
+        bullet.SoundRange = 15;
+
+        CurrentWeaponWrapper.MakePickable();
+        Rigidbody bulletRB = bullet.GetComponent<Rigidbody>();
+        bullet.item = CurrentWeaponWrapper;
+        Vector3 throwDirection = new Vector3(CurrentWeaponWrapper.CurrentWeaponObject.position.x - transform.position.x, 0, CurrentWeaponWrapper.CurrentWeaponObject.position.z - transform.position.z);
+        bullet.DestroyAfterDamage = false;
+       
+        //CurrentWeaponWrapper.CurrentWeaponObject.GetComponent<Collider>().enabled = true;
+        //CurrentWeaponWrapper.CurrentWeaponObject.GetComponent<Collider>().isTrigger = false;
+        CurrentWeaponWrapper = null;
+
+        bulletRB.AddForce(throwDirection * 1000, ForceMode.Acceleration);
+        BreakAttackCoroutines();
+        Debug.Log("bullet fired!");
+
     }
 }

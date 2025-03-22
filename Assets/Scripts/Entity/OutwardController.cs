@@ -16,6 +16,8 @@ public class OutwardController : MonoBehaviour
     {
         if (AffectedByLight)
             LightValue = GetLightValue(transform);
+        else
+            LightValue = 1;
     }
     float GetLightValue(Transform target)
     {
@@ -25,6 +27,6 @@ public class OutwardController : MonoBehaviour
                 value += light.GetLightValueOnObject(target);
 
         value = Mathf.Clamp01(value);
-        return value;   
+        return value;
     }
 }

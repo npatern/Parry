@@ -78,10 +78,28 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Damage: 1
-  ParticlesToKill: {fileID: 0}
   DestroyAfterDamage: 1
+  ParticlesToKill: {fileID: 0}
   ParticlesToSpawn: {fileID: 0}
   ownerStatusController: {fileID: 0}
+  item:
+    name: 
+    icon: {fileID: 0}
+    itemType: {fileID: 0}
+    ItemName: 
+    ID: 
+    Description: 
+    Stackable: 0
+    stack: 0
+    Big: 0
+    weaponObject: {fileID: 0}
+    CurrentWeaponObject: {fileID: 0}
+    pickable: {fileID: 0}
+    attackPattern: {fileID: 0}
+    AttackDistance: 0
+    Damage: 0
+    BulletDamage: 0
+    Bullet: {fileID: 0}
   SoundRange: 2
   soundType: 2
 --- !u!114 &-685507454934128269
@@ -361,7 +379,6 @@ GameObject:
   - component: {fileID: 779815730311812647}
   - component: {fileID: 340745594883720019}
   - component: {fileID: 3759345605931193893}
-  - component: {fileID: 8434231418120303968}
   m_Layer: 0
   m_Name: er
   m_TagString: Untagged
@@ -434,17 +451,3 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!136 &8434231418120303968
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5113058903868907540}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  m_Radius: 0.5000001
-  m_Height: 2
-  m_Direction: 1
-  m_Center: {x: 0.000000059604645, y: 0, z: -0.00000008940697}

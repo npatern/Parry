@@ -4,5 +4,5 @@ using UnityEngine;
 
 public class AttackPattern : MonoBehaviour
 {
-    public Transform IdlePoint, ParryPoint, HeavyAttack, HeavyAttackEnd, Attack, AttackEnd, Unequipped, Disarmed;
+    public Transform IdlePoint, ParryPoint, HeavyAttack, HeavyAttackEnd, Attack, AttackEnd, Unequipped, Disarmed, Throw;
 }

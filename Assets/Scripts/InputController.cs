@@ -165,8 +165,8 @@ public class InputController : MonoBehaviour
         if (GetComponent<InventoryController>() == null) return;
         InventoryController inventoryController = GetComponent<InventoryController>();
        // if  (weaponScroll.y > 0) inventoryController.RemoveFromInventory();
-        if (weaponScroll.y < 0) inventoryController.Equip(inventoryController.GetNextWeapon());
-        else if (weaponScroll.y > 0) inventoryController.Equip(inventoryController.GetNextWeapon());
+        if (weaponScroll.y < 0) inventoryController.EquipFromInventory(inventoryController.GetNextWeapon(), inventoryController.slots);
+        else if (weaponScroll.y > 0) inventoryController.EquipFromInventory(inventoryController.GetNextWeapon(), inventoryController.slots);
         switchWeapon = false;
     }
     public void Attack(InputAction.CallbackContext context)
@@ -178,6 +178,11 @@ public class InputController : MonoBehaviour
     {
         if (context.started)
             GetComponent<ToolsController>().PerformHeavyAttack(context);
+    }
+    public void ThrowAttack(InputAction.CallbackContext context)
+    {
+        if (context.started)
+            GetComponent<ToolsController>().PerformThrow(context);
     }
     public void Parry(InputAction.CallbackContext context)
     {

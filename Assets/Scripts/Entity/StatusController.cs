@@ -132,7 +132,9 @@ public class StatusController : MonoBehaviour, IHear
             return true;
         }
         if (toolsController.IsDodging) return false;
-        bool isFromBullet = attacker.GetComponent<Bullet>();
+
+        bool isFromBullet = true;
+        if (attacker!=null) isFromBullet= attacker.GetComponent<Bullet>();
         if (toolsController.IsParrying)
         {
             SpawnParticles(ParryEffect, toolsController.CurrentWeaponWrapper.CurrentWeaponObject);
@@ -170,7 +172,7 @@ public class StatusController : MonoBehaviour, IHear
         bool isCritical = false;
         isCritical = MultiplyDamage(attacker);
         SpawnParticles(DamageEffect, transform);
-        
+        if (attacker!=null)
         if (isCritical) damage *= attacker.CriticalMultiplier;
         Life -= damage;
 
@@ -276,7 +278,7 @@ public class StatusController : MonoBehaviour, IHear
         if (toolsController != null)
         if (toolsController.CurrentWeaponWrapper!=null)
         {
-            toolsController.DequipWeapon();
+            toolsController.DequipWeaponFromHands();
             toolsController.StopAllCoroutines();
             if (toolsController.inputController != null) toolsController.inputController.enabled = false;
             toolsController.enabled = false;

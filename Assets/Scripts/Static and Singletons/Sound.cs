@@ -22,9 +22,9 @@ public class Sound
         type = _type;
         if (_status.IsDeaf() && type != TYPES.cover) range = 0;
     }
+
     public Sound(StatusController _status, float _range, TYPES _type = TYPES.neutral, StatusController _targetStatus = null)
     {
-
         range = _range;
         position = _status.transform.position;
         statusController = _status;

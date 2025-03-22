@@ -7,18 +7,19 @@ public class Pickable : MonoBehaviour
     [SerializeReference]
     public ItemWeaponWrapper weaponWrapper;
     public string wrapperName = "";
-    [SerializeField]
-    ItemWeaponScriptableObject scriptableObject;
-    [SerializeField]
+    [SerializeReference]
+    public ItemWeaponScriptableObject scriptableObject;
+    public SphereCollider trigger;
     public GameObject weaponObject;
     public UnityEvent<StatusController> PickEvent;
 
     private void Awake()
     {
-        
-
         if (PickEvent == null)
             PickEvent = new UnityEvent<StatusController>();
+        trigger = gameObject.AddComponent<SphereCollider>();
+        trigger.isTrigger = true;
+        trigger.radius = 1f;
     }
     
     private void Start()
@@ -50,7 +51,7 @@ public class Pickable : MonoBehaviour
         if (weaponObject == null)
         {
             if (weaponWrapper.CurrentWeaponObject == null)
-                weaponObject = weaponWrapper.SpawnWeaponObject(transform).gameObject;
+                weaponObject = weaponWrapper.SpawnWeaponObjectAsCurrentObject(transform).gameObject;
             else
                 weaponObject = weaponWrapper.CurrentWeaponObject.gameObject;
         }

@@ -15,10 +15,16 @@ MonoBehaviour:
   ItemName: Spear
   ID: spear
   Description: You can pearce
-  attackPattern: {fileID: 8930655107102755286, guid: ddce2a24f3bd0c04e97ebcf7b2440133, type: 3}
+  Stackable: 0
+  Big: 0
   weaponObject: {fileID: 1943478088437736670, guid: 0c61d4435720b4b4fb326f7b9c2dca7d, type: 3}
+  icon: {fileID: 0}
+  attackPattern: {fileID: 8930655107102755286, guid: ddce2a24f3bd0c04e97ebcf7b2440133, type: 3}
   AttackDistance: 5.5
   Damage: 25
+  BulletDamage: 10
+  bullet: {fileID: 0}
+  stack: 0
   LightAttack: {fileID: 11400000, guid: b66173f87d084944cadb992fbb36a86a, type: 2}
   HeavyAttack: {fileID: 11400000, guid: 0bbed5ff86454f9459e5b8c368317b6a, type: 2}
   Parry: {fileID: 11400000, guid: 5b2d68fd282092941ae729c5b1fd085a, type: 2}
@@ -26,3 +32,4 @@ MonoBehaviour:
   Dequip: {fileID: 11400000, guid: 46bb0d0e09ae2f441b3301bf798d2e1f, type: 2}
   Stunned: {fileID: 11400000, guid: e78a3d5511337714b8b637bd5d48f480, type: 2}
   Attacked: {fileID: 11400000, guid: bee5c7644232e244f839957c7fbe88ae, type: 2}
+  Throw: {fileID: 11400000, guid: 73c3b1492e4534d478dca3c714daee1a, type: 2}

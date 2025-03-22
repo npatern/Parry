@@ -5,13 +5,15 @@ using UnityEngine;
 public class Bullet : MonoBehaviour
 {
     public float Damage = 1;
-    public ParticleSystem ParticlesToKill;
     public bool DestroyAfterDamage = true;
+
+    public ParticleSystem ParticlesToKill;
     public GameObject ParticlesToSpawn;
     public StatusController ownerStatusController;
     private Rigidbody rb;
     private Vector3 ShooterPosition;
-
+    [SerializeReference]
+    public ItemWeaponWrapper item;
     public float SoundRange = 2;
     public Sound.TYPES soundType = Sound.TYPES.danger;
 
@@ -23,23 +25,54 @@ public class Bullet : MonoBehaviour
     {
         ShooterPosition = transform.position;
     }
-    private void OnTriggerEnter(Collider collision)
+    void HandleHit(Collider collision)
     {
         bool bounced = false;
         if (collision.gameObject.GetComponent<StatusController>() != null)
         {
             StatusController statusController = collision.gameObject.GetComponent<StatusController>();
-            bounced = !statusController.TryTakeDamage(Damage, GetComponent<StatusController>(),ShooterPosition);
+             
+            bounced = !statusController.TryTakeDamage(Damage, GetComponent<StatusController>(), ShooterPosition);
         }
         if (bounced)
         {
             rb.velocity *= -1;
-            transform.localScale *= 1.5f;
+            //transform.localScale *= 1.5f;
             Damage *= 2;
         }
         else if (DestroyAfterDamage)
+        {
             DestroyBullet();
+        }
+
+        else
+        {
+            if (item != null)
+            {
+                //item.CurrentWeaponObject.transform.parent = null;
+                //item.MakePickable();
+                //item.pickable.GetComponent<Rigidbody>().velocity = rb.velocity;
+                if (this.TryGetComponent<StatusController>(out StatusController status)){
+                    Sound sound = new Sound(status, SoundRange, soundType);
+                    Sounds.MakeSound(sound);
+                }
+                Destroy(GetComponent<Bullet>());
+            }
+            else
+            {
+                Destroy(this);
+            }
+        }
     }
+    private void OnTriggerEnter(Collider collision)
+    {
+        HandleHit(collision);
+    }
+    private void OnColliderEnter(Collider collision)
+    {
+        HandleHit(collision);
+    }
+    
     public void DestroyBullet()
     {
         Debug.Log("bullet destroyed");

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 public class InventoryController : MonoBehaviour
 {
@@ -31,7 +32,7 @@ public class InventoryController : MonoBehaviour
         List<ItemWeaponWrapper> list;
         int maxNr = maxSlotsNr;
         list = slots;
-        /*
+        
         if (item.Big)
         {
             maxNr = maxBigSlotsNr;
@@ -42,7 +43,7 @@ public class InventoryController : MonoBehaviour
             list = slots;
         }
          
-        if (list.Contains(item))
+        if (IsAlreadyInInventory(item,list))
         {
             if (item.Stackable)
             {
@@ -52,16 +53,27 @@ public class InventoryController : MonoBehaviour
             }
             else
             {
-                return false;
+                item.DestroyPhysicalPresence();
+                return true;
             }       
         }  
+       
         if (list.Count >= maxSlotsNr) return false;
-        */
+        
         list.Add(item);
+
+
         item.DestroyPhysicalPresence();
         Debug.Log("End Add to inventory");
         ListInventory();
         return true;
+    }
+    bool IsAlreadyInInventory(ItemWeaponWrapper item, List<ItemWeaponWrapper> list)
+    {
+        if (list.Any(n => n.ID == item.ID))
+            return true;
+        else
+            return false;
     }
     public ItemWeaponWrapper RemoveFromInventory(int index = 0)
     {
@@ -78,12 +90,12 @@ public class InventoryController : MonoBehaviour
         else
             return slots;
     }
-    public void Equip(ItemWeaponWrapper item)
+    public void EquipFromInventory(ItemWeaponWrapper item, List<ItemWeaponWrapper> list)
     {
         if (item == null) return;
         if (toolsController == null) return;
-        if (toolsController.EquipWeapon(item))
-            if (slots.Contains(item)) slots.Remove(item);
+        if (slots.Contains(item)) slots.Remove(item);
+        toolsController.EquipWeapon(item);
     }
     void RemoveFromList(List<ItemWeaponWrapper> list, ItemWeaponWrapper item)
     {

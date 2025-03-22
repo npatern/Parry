@@ -8,6 +8,7 @@ public class ListOfAssetsAndValuesScriptableObject : ScriptableObject
 
     [Space(10), Header("Weapons")]
     public GameObject PickableTemplate;
+    public Bullet BulletThrowTemplate;
     public ItemWeaponScriptableObject[] Weapons;
     public ItemWeaponScriptableObject GetRandomWeapon()
     {

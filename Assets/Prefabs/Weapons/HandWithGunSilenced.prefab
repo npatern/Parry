@@ -737,6 +737,7 @@ GameObject:
   - component: {fileID: 3823714102769063788}
   - component: {fileID: 251317040423813644}
   - component: {fileID: -8977894861679477025}
+  - component: {fileID: -3164723355511475163}
   m_Layer: 10
   m_Name: HandWithGunSilenced
   m_TagString: Untagged
@@ -801,6 +802,22 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.25, y: 0.85367155, z: 1.7879591}
   m_Center: {x: 0, y: 0.053741217, z: 0.6547775}
+--- !u!54 &-3164723355511475163
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3823714102769063789}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 1
+  m_IsKinematic: 1
+  m_Interpolate: 1
+  m_Constraints: 0
+  m_CollisionDetection: 2
 --- !u!1 &5589573821624330672
 GameObject:
   m_ObjectHideFlags: 0

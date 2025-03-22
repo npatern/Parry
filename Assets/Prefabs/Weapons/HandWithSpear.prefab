@@ -317,6 +317,7 @@ GameObject:
   - component: {fileID: 1943478088437736671}
   - component: {fileID: 7117353078071218595}
   - component: {fileID: 4343103429044673762}
+  - component: {fileID: 8594547354797668328}
   m_Layer: 10
   m_Name: HandWithSpear
   m_TagString: Untagged
@@ -376,9 +377,25 @@ CapsuleCollider:
   m_IsTrigger: 1
   m_Enabled: 0
   m_Radius: 0.13
-  m_Height: 6.66
+  m_Height: 5.305369
   m_Direction: 1
-  m_Center: {x: 0, y: 1.31, z: 0}
+  m_Center: {x: 0, y: 1.2755601, z: 0}
+--- !u!54 &8594547354797668328
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1943478088437736670}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 1
+  m_IsKinematic: 1
+  m_Interpolate: 1
+  m_Constraints: 0
+  m_CollisionDetection: 2
 --- !u!1 &1943478088884699118
 GameObject:
   m_ObjectHideFlags: 0
@@ -741,7 +758,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4883459336401009818}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 3.75, z: 0.00000061094755}
+  m_LocalPosition: {x: 0, y: 0.5, z: 0.00000061094755}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -912,7 +929,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6435365911891605518}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.9, z: 0.00000061094755}
+  m_LocalPosition: {x: 0, y: 3.6, z: 0.00000061094755}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ambientLightValue: 0.1
   PickableTemplate: {fileID: 6644133888316450086, guid: ba4c80c0bd79ea845bd79e0cfdb60398, type: 3}
+  BulletThrowTemplate: {fileID: 7333040839881901861, guid: e73eefcbadd56d14a887363914feb1ac, type: 3}
   Weapons:
   - {fileID: 11400000, guid: 9a1e12c216e21614491af7de6da103f3, type: 2}
   - {fileID: 11400000, guid: c0e191147ed6a0a458e627a6b2f9cfb3, type: 2}

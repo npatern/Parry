@@ -30,6 +30,7 @@ public class AttackScriptableObject : ScriptableObject
         public bool IsProtected = false;
         public bool IsDamaging = false;
         public bool IsFiring = false;
+        public bool IsThrowing = false;
         public bool SkipIfPlayer = false;
         public Vector3 MovementOffset = Vector3.zero;
         public float SoundRange = 0;
@@ -57,10 +58,11 @@ public class AttackScriptableObject : ScriptableObject
             if (SoundRange > 0) if (!toolsController.statusController.IsDeaf() || soundType ==Sound.TYPES.cover)
                 Sounds.MakeSound(new Sound(toolsController.statusController, SoundRange, soundType));
 
+            goToPosition += MovementOffset;
             while (elapsedTime < waitTime)
             {
                 //combat.CurrentWeapon.localPosition += Vector3.Lerp(Vector3.zero, combat.WeaponVelocity, Time.deltaTime);
-                toolsController.CurrentWeaponWrapper.CurrentWeaponObject.localPosition = Vector3.LerpUnclamped(currentPos+ MovementOffset, goToPosition, MovementCurve.Evaluate(elapsedTime / WaitTime));
+                toolsController.CurrentWeaponWrapper.CurrentWeaponObject.localPosition = Vector3.LerpUnclamped(currentPos, goToPosition, MovementCurve.Evaluate(elapsedTime / WaitTime));
                 toolsController.CurrentWeaponWrapper.CurrentWeaponObject.localRotation = Quaternion.LerpUnclamped(currentRot, goToRotation, MovementCurve.Evaluate(elapsedTime / WaitTime));
                 elapsedTime += Time.deltaTime;
 
@@ -79,8 +81,9 @@ public class AttackScriptableObject : ScriptableObject
             // Make sure we got there
             //combat.CurrentWeapon.localPosition = goToPosition;
             //combat.CurrentWeapon.localRotation = goToRotation;
-            toolsController.CurrentWeaponWrapper.CurrentWeaponObject.localPosition = Vector3.LerpUnclamped(currentPos + MovementOffset, goToPosition, MovementCurve.Evaluate(1));
+            toolsController.CurrentWeaponWrapper.CurrentWeaponObject.localPosition = Vector3.LerpUnclamped(currentPos, goToPosition, MovementCurve.Evaluate(1));
             toolsController.CurrentWeaponWrapper.CurrentWeaponObject.localRotation = Quaternion.LerpUnclamped(currentRot, goToRotation, MovementCurve.Evaluate(1));
+            if (IsThrowing) toolsController.Throw();
             EndStep(toolsController);
             toolsController.MovementLocked = false;
             toolsController.RotationLocked = false;

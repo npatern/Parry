@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
+using UnityEngine.UI;
 [CreateAssetMenu(fileName = "Weapon Item ", menuName = "ScriptableObjects/Items", order = 2)]
 public class ItemWeaponScriptableObject : ScriptableObject
 {
@@ -10,7 +11,7 @@ public class ItemWeaponScriptableObject : ScriptableObject
     public bool Stackable = false;
     public bool Big = false;
     public GameObject weaponObject;
-
+    public Image icon;
 
     //weapon specific>>
     public AttackPattern attackPattern;
@@ -29,17 +30,19 @@ public class ItemWeaponScriptableObject : ScriptableObject
     public AttackScriptableObject Dequip;
     public AttackScriptableObject Stunned;
     public AttackScriptableObject Attacked;
+    public AttackScriptableObject Throw;
 }
 [System.Serializable]
 public class ItemWeaponWrapper
 {
     public string name;
+    public Sprite icon;
     public ItemWeaponScriptableObject itemType;
     public string ItemName;
     public string ID;
     public string Description;
     public bool Stackable;
-    public int stack;
+    public int stack = 1;
     public bool Big;
     public GameObject weaponObject;
     public Transform CurrentWeaponObject = null;
@@ -57,8 +60,10 @@ public class ItemWeaponWrapper
     public ItemWeaponWrapper(ItemWeaponScriptableObject scriptableObject)
     {
         itemType = scriptableObject;
+        
         Damage = scriptableObject.Damage;
         ItemName = scriptableObject.ItemName;
+        
         name = scriptableObject.ItemName;
         ID = scriptableObject.ID;
         Description = scriptableObject.Description;
@@ -71,16 +76,20 @@ public class ItemWeaponWrapper
         Damage = scriptableObject.Damage;
         BulletDamage = scriptableObject.BulletDamage;
         Bullet = scriptableObject.bullet;
-        
+         RefreshIcon();
+    }
+    public Transform SpawnWeaponObjectAsCurrentObject(Transform parentTransform = null)
+    {
+        CurrentWeaponObject = SpawnWeaponObject(parentTransform);
+        return CurrentWeaponObject;
     }
     public Transform SpawnWeaponObject(Transform parentTransform = null)
     {
-        CurrentWeaponObject = GameObject.Instantiate(weaponObject, parentTransform).transform;
-        return CurrentWeaponObject;
+        return GameObject.Instantiate(weaponObject, parentTransform).transform;
     }
-    public void MakePickable()
+    public void OBSOLETEMakePickable()
     {
-        if (CurrentWeaponObject == null) SpawnWeaponObject();
+        if (CurrentWeaponObject == null) SpawnWeaponObjectAsCurrentObject();
 
         CurrentWeaponObject.GetComponent<Collider>().enabled = true;
         CurrentWeaponObject.GetComponent<Collider>().isTrigger = false;
@@ -89,7 +98,8 @@ public class ItemWeaponWrapper
         pickable.weaponObject = CurrentWeaponObject.gameObject;
         pickable.weaponWrapper = this;
     }
-    public void RemovePickable(Transform newParent = null)
+    
+    public void OBSOLETERemovePickable(Transform newParent = null)
     {
         if (CurrentWeaponObject == null) return;
         if (pickable == null) return;
@@ -99,10 +109,98 @@ public class ItemWeaponWrapper
 
         GameObject.Destroy(pickable.gameObject);
     }
+    public void RemovePickable(Transform newParent = null, bool removeRigidBody = false)
+    {
+        if (CurrentWeaponObject == null) return;
+        if (pickable == null) return;
+        
+        CurrentWeaponObject.transform.parent = newParent;
+        //GameObject.Destroy(CurrentWeaponObject.GetComponent<Rigidbody>());
+        GameObject.Destroy(pickable.trigger);
+        GameObject.Destroy(pickable);
+        CurrentWeaponObject.GetComponent<Collider>().enabled = false;
+        CurrentWeaponObject.GetComponent<Collider>().isTrigger = true;
+        CurrentWeaponObject.GetComponent<Rigidbody>().isKinematic = true;
+        if (removeRigidBody) RemoveRigidBody();
+    }
+    public void AddRigidBody()
+    {
+        if (CurrentWeaponObject == null) return;
+        if (CurrentWeaponObject.GetComponent<Rigidbody>() != null) return;
+        Rigidbody rb = CurrentWeaponObject.gameObject.AddComponent<Rigidbody>();
+        rb.interpolation = RigidbodyInterpolation.Interpolate;
+        rb.collisionDetectionMode = CollisionDetectionMode.ContinuousDynamic;
+    }
+    public void RemoveRigidBody()
+    {
+        if (CurrentWeaponObject == null) return;
+        GameObject.Destroy(CurrentWeaponObject.GetComponent<Rigidbody>());
+    }
+    public void MakePickable()
+    {
+        if (CurrentWeaponObject == null) SpawnWeaponObjectAsCurrentObject();
+        if (CurrentWeaponObject.GetComponent<Pickable>() != null) return;
+
+        CurrentWeaponObject.GetComponent<Collider>().enabled = true;
+        CurrentWeaponObject.GetComponent<Collider>().isTrigger = false;
+        pickable = CurrentWeaponObject.gameObject.AddComponent<Pickable>();
+        CurrentWeaponObject.transform.parent = null;
+        pickable.weaponObject = CurrentWeaponObject.gameObject;
+        pickable.weaponWrapper = this;
+        AddRigidBody();
+    }
+    
+    
     public void DestroyPhysicalPresence()
     {
         if (CurrentWeaponObject != null) CurrentWeaponObject.parent = null;
         if (pickable != null) GameObject.Destroy(pickable.gameObject);
         if (CurrentWeaponObject != null) GameObject.Destroy(CurrentWeaponObject.gameObject);
+    }
+    public void MergeToMe(ItemWeaponWrapper otherObject)
+    {
+        stack += otherObject.stack;
+        otherObject.DestroyPhysicalPresence();
+    }
+    public void RefreshIcon()
+    {
+
+        Transform model = SpawnWeaponObject(IconMaker.Instance.transform);
+        model.localPosition = Vector3.zero;
+        float size = Vector3.Magnitude( model.GetComponent<WeaponModel>().StartPoint.localPosition);
+        icon = GetIcon(size);
+        model.gameObject.SetActive(false);
+        GameObject.Destroy(model.gameObject);
+    }
+    public Sprite GetIcon(float size = 1f)
+    {
+        Camera cam = IconMaker.Instance.iconCamera;
+        cam.orthographicSize = size+.3f;
+        int resX = Screen.width;
+        int resY = Screen.height;
+
+        int clipX = 0;
+        int clipY = 0;
+        if (resX > resY) clipX = resX - resY;
+        else if (resX < resY) clipY = resY - resX;
+
+        //Initialize
+        Texture2D texture = new Texture2D(resX-clipX, resY-clipY, TextureFormat.RGBA32, false);
+        RenderTexture rt = new RenderTexture(resX, resY, 24);
+        
+        cam.targetTexture = rt;
+        RenderTexture.active = rt;
+
+        //Grab icon and make texture
+        cam.Render();
+        texture.ReadPixels(new Rect(clipX/2,clipY/2,resX,resY),0,0);
+        texture.Apply();
+
+        //cleanup:
+        cam.targetTexture = null;
+        RenderTexture.active = null;
+        GameObject.Destroy(rt);
+
+        return Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(0,0));
     }
 }
