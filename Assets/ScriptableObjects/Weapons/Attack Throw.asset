@@ -208,6 +208,6 @@ MonoBehaviour:
     IsFiring: 0
     IsThrowing: 1
     SkipIfPlayer: 0
-    MovementOffset: {x: 0, y: 0.25, z: 1}
+    MovementOffset: {x: 0, y: 0, z: 0.5}
     SoundRange: 0
     soundType: 0

@@ -135,6 +135,20 @@ public class StatusController : MonoBehaviour, IHear
 
         bool isFromBullet = true;
         if (attacker!=null) isFromBullet= attacker.GetComponent<Bullet>();
+        if (toolsController.IsDisarming)
+        {
+            Pickable toEquip = attacker.toolsController.DropWeaponFromHands();
+            if (toEquip != null)
+            {
+                
+
+                toolsController.EquipWeaponFromPickable(toEquip);
+                attacker.TakePosture(damage * CriticalMultiplier, attacker);
+                attacker.IsAttackedEvent.Invoke();
+                return false;
+            }
+            
+        }
         if (toolsController.IsParrying)
         {
             SpawnParticles(ParryEffect, toolsController.CurrentWeaponWrapper.CurrentWeaponObject);

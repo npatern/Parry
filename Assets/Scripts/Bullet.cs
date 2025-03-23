@@ -52,6 +52,8 @@ public class Bullet : MonoBehaviour
                 //item.CurrentWeaponObject.transform.parent = null;
                 //item.MakePickable();
                 //item.pickable.GetComponent<Rigidbody>().velocity = rb.velocity;
+                //transform.parent = collision.transform.parent;
+                //item.RemoveRigidBody();
                 if (this.TryGetComponent<StatusController>(out StatusController status)){
                     Sound sound = new Sound(status, SoundRange, soundType);
                     Sounds.MakeSound(sound);

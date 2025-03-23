@@ -31,6 +31,7 @@ public class AttackScriptableObject : ScriptableObject
         public bool IsDamaging = false;
         public bool IsFiring = false;
         public bool IsThrowing = false;
+        public bool IsDisarming = false;
         public bool SkipIfPlayer = false;
         public Vector3 MovementOffset = Vector3.zero;
         public float SoundRange = 0;
@@ -53,6 +54,9 @@ public class AttackScriptableObject : ScriptableObject
             if (IsProtected) toolsController.IsProtected = true;
             if (IsParrying) toolsController.IsParrying = true;
             if (IsDamaging) toolsController.IsDamaging = true;
+            if (IsDisarming) toolsController.IsDisarming = true;
+            
+
             if (IsFiring==true) toolsController.FireBullet();
             float waitTime = WaitTime / toolsController.GetCombatSpeedMultiplier();
             if (SoundRange > 0) if (!toolsController.statusController.IsDeaf() || soundType ==Sound.TYPES.cover)

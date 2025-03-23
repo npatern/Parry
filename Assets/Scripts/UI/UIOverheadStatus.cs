@@ -41,6 +41,9 @@ public class UIOverheadStatus : MonoBehaviour
     private float InfoTextTimer = 0;
     [SerializeField]
     private TextMeshProUGUI InfoText;
+    private float lastHealth;
+    private float visibilityTime = 10;
+    private float visibilityTimer = 0;
     private void Awake()
     {
         //fast fix so that it doesnt spawn in the middle of the screen for 1 frame
@@ -56,11 +59,12 @@ public class UIOverheadStatus : MonoBehaviour
         {
             sensesController = statusController.GetComponent<SensesController>();
         }
-
+        lastHealth = statusController.Life;
     }
     
     private void Update()
     {
+        visibilityTimer -= Time.deltaTime;
         if (statusController == null || statusController.IsKilled)
         {
             Destroy(this.gameObject);
@@ -91,6 +95,12 @@ public class UIOverheadStatus : MonoBehaviour
     }
     bool ApplyHealthBar(float health)
     {
+        if (health != lastHealth)
+        {
+            visibilityTimer = visibilityTime;
+            lastHealth = health;
+        }
+        if (visibilityTimer <= 0) return false;
         if (statusController.MaxLife <= 1) return false;
         if (statusController.MaxLife <= 0) return false;
         HealthBar.SetBarValue(health, statusController.MaxLife,0);

@@ -266,6 +266,7 @@ GameObject:
   - component: {fileID: 251317040423813644}
   - component: {fileID: -8977894861679477025}
   - component: {fileID: -4826044969244063561}
+  - component: {fileID: 7112834835469527494}
   m_Layer: 10
   m_Name: HandWithHand
   m_TagString: Untagged
@@ -315,7 +316,7 @@ BoxCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3823714102769063789}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: 71c9786c359036647bc92cc7d797d5f1, type: 2}
   m_IsTrigger: 1
   m_Enabled: 0
   serializedVersion: 2
@@ -337,6 +338,47 @@ Rigidbody:
   m_Interpolate: 1
   m_Constraints: 0
   m_CollisionDetection: 2
+--- !u!114 &7112834835469527494
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3823714102769063789}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cd7c774c27a4a1748a992000bcc3da8d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Team: 
+  size: {x: 1, y: 1, z: 1}
+  loadValuesInRealTime: 0
+  IsPlayer: 0
+  CriticalMultiplier: 4
+  SpeedMultiplier: 1
+  Life: 100
+  MaxLife: 100
+  Posture: 100
+  movementSpeedMultiplier: 1
+  IsKilled: 0
+  IsStunned: 0
+  DestroyOnKill: 0
+  IsAttackedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  IsStunnedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  OnKillEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  scaleParticles: 0
+  DamageEffect: {fileID: 0}
+  ParryEffect: {fileID: 0}
+  PostureEffect: {fileID: 0}
+  PostureLongEffect: {fileID: 0}
+  deafTime: 1
+  OverheadController: {fileID: 0}
 --- !u!1 &7166633269644498428
 GameObject:
   m_ObjectHideFlags: 0

@@ -12,7 +12,7 @@ public class ItemWeaponScriptableObject : ScriptableObject
     public bool Big = false;
     public GameObject weaponObject;
     public Image icon;
-
+    public bool emptyhanded = false;
     //weapon specific>>
     public AttackPattern attackPattern;
 
@@ -49,14 +49,12 @@ public class ItemWeaponWrapper
     public Pickable pickable = null; 
     //weapon specific>>
     public AttackPattern attackPattern;
-
-
     public float AttackDistance = 3f;
     public float Damage = 10;
     public float BulletDamage = 10;
     public Bullet Bullet;
-    
- 
+
+    public bool emptyhanded = false;
     public ItemWeaponWrapper(ItemWeaponScriptableObject scriptableObject)
     {
         itemType = scriptableObject;
@@ -76,7 +74,8 @@ public class ItemWeaponWrapper
         Damage = scriptableObject.Damage;
         BulletDamage = scriptableObject.BulletDamage;
         Bullet = scriptableObject.bullet;
-         RefreshIcon();
+         emptyhanded = scriptableObject.emptyhanded;
+        RefreshIcon();
     }
     public Transform SpawnWeaponObjectAsCurrentObject(Transform parentTransform = null)
     {
@@ -120,7 +119,8 @@ public class ItemWeaponWrapper
         GameObject.Destroy(pickable);
         CurrentWeaponObject.GetComponent<Collider>().enabled = false;
         CurrentWeaponObject.GetComponent<Collider>().isTrigger = true;
-        CurrentWeaponObject.GetComponent<Rigidbody>().isKinematic = true;
+        
+        //CurrentWeaponObject.GetComponent<Rigidbody>().isKinematic = true;
         if (removeRigidBody) RemoveRigidBody();
     }
     public void AddRigidBody()
@@ -136,10 +136,10 @@ public class ItemWeaponWrapper
         if (CurrentWeaponObject == null) return;
         GameObject.Destroy(CurrentWeaponObject.GetComponent<Rigidbody>());
     }
-    public void MakePickable()
+    public Pickable MakePickable()
     {
         if (CurrentWeaponObject == null) SpawnWeaponObjectAsCurrentObject();
-        if (CurrentWeaponObject.GetComponent<Pickable>() != null) return;
+        if (CurrentWeaponObject.GetComponent<Pickable>() != null) return CurrentWeaponObject.GetComponent<Pickable>();
 
         CurrentWeaponObject.GetComponent<Collider>().enabled = true;
         CurrentWeaponObject.GetComponent<Collider>().isTrigger = false;
@@ -148,6 +148,7 @@ public class ItemWeaponWrapper
         pickable.weaponObject = CurrentWeaponObject.gameObject;
         pickable.weaponWrapper = this;
         AddRigidBody();
+        return pickable;
     }
     
     

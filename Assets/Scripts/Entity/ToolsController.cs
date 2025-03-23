@@ -14,7 +14,7 @@ public class ToolsController : MonoBehaviour
     [SerializeReference]
     public ItemWeaponWrapper CurrentWeaponWrapper;
     [SerializeReference]
-    public ItemWeaponWrapper DefaultWeaponWrapper;
+    public ItemWeaponWrapper EmptyWeaponWrapper;
     public ItemWeaponScriptableObject TESTCurrentWeaponScriptable;
     public Transform DequippedWeapon;
     public enum targets { IdlePoint, ParryPoint, HeavyAttack, HeavyAttackEnd, Attack, AttackEnd, Unequipped, Disarmed, Throw };
@@ -27,7 +27,7 @@ public class ToolsController : MonoBehaviour
     public bool IsParrying = false;
     public bool IsDamaging = false;
     public bool IsDodging = false;
-
+    public bool IsDisarming = false;
     public UnityEvent<bool> StopMovingEvent;
     public float attackDistance = 3f;
 
@@ -41,12 +41,13 @@ public class ToolsController : MonoBehaviour
         {
             StopMovingEvent = new UnityEvent<bool>();
         }
-
+        EmptyWeaponWrapper = new ItemWeaponWrapper(GameController.Instance.ListOfAssets.EmptyWeapon);
 
         //if (DequippedWeaponWrapper == null) DequippedWeaponWrapper = new ItemWeaponWrapper(TESTDequippedWeaponScriptable);
         //if (DequippedWeapon == null) DequippedWeapon = Instantiate(DequippedWeaponWrapper.itemType.weaponObject, transform).transform;
     }
-    public void Start()
+
+    private void Start()
     {
 
         statusController.IsStunnedEvent.AddListener(PerformStunned);
@@ -55,6 +56,10 @@ public class ToolsController : MonoBehaviour
         if (TESTCurrentWeaponScriptable == null) return;
         if (CurrentWeaponWrapper==null)
         EquipWeapon(new ItemWeaponWrapper(TESTCurrentWeaponScriptable));
+    }
+    private void FixedUpdate()
+    {
+        if (CurrentWeaponWrapper == null) EquipWeapon(EmptyWeaponWrapper);
     }
     public float GetCombatSpeedMultiplier()
     {
@@ -95,6 +100,12 @@ public class ToolsController : MonoBehaviour
     }
     public void DequipOrReplaceWeaponInHands(ItemWeaponWrapper itemToReplaceWith)
     {
+        if (CurrentWeaponWrapper.emptyhanded)
+        {
+            CurrentWeaponWrapper.DestroyPhysicalPresence();
+            CurrentWeaponWrapper = null;
+            return;
+        }
         if (itemToReplaceWith.ID == CurrentWeaponWrapper.ID)
             if (CurrentWeaponWrapper.Stackable)
             {
@@ -110,7 +121,7 @@ public class ToolsController : MonoBehaviour
     }
     public void DequipWeaponFromHands()
     {
-       
+        if (CurrentWeaponWrapper.emptyhanded) return;
         if (TryHideItemFromHands()) 
         {
             CurrentWeaponWrapper = null;
@@ -118,13 +129,16 @@ public class ToolsController : MonoBehaviour
         }
         DropWeaponFromHands();
     }
-    public void DropWeaponFromHands()
+    public Pickable DropWeaponFromHands()
     {
-        CurrentWeaponWrapper.MakePickable();
+        if (CurrentWeaponWrapper.emptyhanded) return null;
+        Pickable pickableToReturn = CurrentWeaponWrapper.MakePickable();
         CurrentWeaponWrapper = null;
+        return pickableToReturn;
     }
     public bool TryHideItemFromHands()
     {
+        if (CurrentWeaponWrapper.emptyhanded) return false;
         if (inventoryController == null) return false;
         return inventoryController.AddToInventory(CurrentWeaponWrapper);
     }
@@ -246,6 +260,7 @@ public class ToolsController : MonoBehaviour
         IsParrying = false; 
         IsProtected = false;
         IsDamaging = false;
+        IsDisarming = false;
     }
     public void CastDamage(float damage)
     {
