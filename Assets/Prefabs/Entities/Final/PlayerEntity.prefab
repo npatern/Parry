@@ -206,7 +206,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 193002233852398125}
         m_TargetAssemblyTypeName: InputController, Assembly-CSharp
-        m_MethodName: ThrowAttack
+        m_MethodName: HeavyAttack
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -314,6 +314,22 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: 86414ee1-63c7-46ef-ae74-cb7956578bc9
     m_ActionName: InGame/WeaponSelect[/Mouse/scroll]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 193002233852398125}
+        m_TargetAssemblyTypeName: InputController, Assembly-CSharp
+        m_MethodName: ThrowAttack
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 1a249502-a215-4e13-9b5c-cdb250a787c8
+    m_ActionName: InGame/Throw[/Mouse/middleButton]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: Keyboard&Mouse
   m_DefaultActionMap: InGame
@@ -370,6 +386,8 @@ MonoBehaviour:
   inventoryController: {fileID: 0}
   CurrentWeaponWrapper:
     rid: -2
+  EmptyWeaponWrapper:
+    rid: -2
   TESTCurrentWeaponScriptable: {fileID: 0}
   DequippedWeapon: {fileID: 0}
   MovementLocked: 0
@@ -379,6 +397,7 @@ MonoBehaviour:
   IsParrying: 0
   IsDamaging: 0
   IsDodging: 0
+  IsDisarming: 0
   StopMovingEvent:
     m_PersistentCalls:
       m_Calls: []

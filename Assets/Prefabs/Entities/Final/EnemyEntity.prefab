@@ -95,6 +95,8 @@ MonoBehaviour:
   inventoryController: {fileID: 0}
   CurrentWeaponWrapper:
     rid: -2
+  EmptyWeaponWrapper:
+    rid: -2
   TESTCurrentWeaponScriptable: {fileID: 0}
   DequippedWeapon: {fileID: 0}
   MovementLocked: 0
@@ -104,6 +106,7 @@ MonoBehaviour:
   IsParrying: 0
   IsDamaging: 0
   IsDodging: 0
+  IsDisarming: 0
   StopMovingEvent:
     m_PersistentCalls:
       m_Calls: []
@@ -299,12 +302,21 @@ MonoBehaviour:
     - serializedVersion: 3
       time: 0
       value: 0
-      inSlope: 2
-      outSlope: 2
+      inSlope: 22.000751
+      outSlope: 22.000751
       tangentMode: 0
       weightedMode: 0
-      inWeight: 0
-      outWeight: 0
+      inWeight: 0.33333334
+      outWeight: 0.13442393
+    - serializedVersion: 3
+      time: 0.086602464
+      value: 0.9290967
+      inSlope: 0.2836132
+      outSlope: 0.2836132
+      tangentMode: 136
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
     - serializedVersion: 3
       time: 1
       value: 1

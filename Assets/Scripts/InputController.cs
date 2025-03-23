@@ -171,12 +171,13 @@ public class InputController : MonoBehaviour
     }
     public void Attack(InputAction.CallbackContext context)
     {
-        if (context.started)
+        
+          if (context.performed)
             GetComponent<ToolsController>().PerformAttack(context);
     }
     public void HeavyAttack(InputAction.CallbackContext context)
     {
-        if (context.started)
+          if (context.performed)
             GetComponent<ToolsController>().PerformHeavyAttack(context);
     }
     public void ThrowAttack(InputAction.CallbackContext context)
