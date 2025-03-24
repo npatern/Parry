@@ -19,6 +19,7 @@ MonoBehaviour:
   Big: 0
   weaponObject: {fileID: 3823714102769063789, guid: d6505c315b1827b45b3bc77c4f7717b5, type: 3}
   icon: {fileID: 0}
+  emptyhanded: 0
   attackPattern: {fileID: 8930655107102755286, guid: 9fff009433f6c5043906c1e3ce808b93, type: 3}
   AttackDistance: 15
   Damage: 30

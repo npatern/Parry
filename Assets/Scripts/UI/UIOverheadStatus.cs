@@ -98,13 +98,13 @@ public class UIOverheadStatus : MonoBehaviour
         if (health != lastHealth)
         {
             visibilityTimer = visibilityTime;
-            lastHealth = health;
+            lastHealth = health;    
         }
         if (visibilityTimer <= 0) return false;
         if (statusController.MaxLife <= 1) return false;
         if (statusController.MaxLife <= 0) return false;
         HealthBar.SetBarValue(health, statusController.MaxLife,0);
-        healthbarText.text = "";
+        healthbarText.text = statusController.Life +"";
         
         return true;
     }

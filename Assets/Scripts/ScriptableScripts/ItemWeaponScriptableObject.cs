@@ -47,13 +47,14 @@ public class ItemWeaponWrapper
     public GameObject weaponObject;
     public Transform CurrentWeaponObject = null;
     public Pickable pickable = null; 
+
     //weapon specific>>
     public AttackPattern attackPattern;
     public float AttackDistance = 3f;
     public float Damage = 10;
     public float BulletDamage = 10;
     public Bullet Bullet;
-
+    public float ColliderSize = 1;
     public bool emptyhanded = false;
     public ItemWeaponWrapper(ItemWeaponScriptableObject scriptableObject)
     {
@@ -172,6 +173,45 @@ public class ItemWeaponWrapper
         icon = GetIcon(size);
         model.gameObject.SetActive(false);
         GameObject.Destroy(model.gameObject);
+    }
+    public bool CastDamage(float damage, StatusController statusController = null)
+    {
+        Debug.Log("Trying to cast damage!");
+        if (CurrentWeaponObject == null) return false;
+        if (CurrentWeaponObject.GetComponent<WeaponModel>() == null) return false;
+        LayerMask layerMask = LayerMask.GetMask("Entity", "Blockout", "Bush");
+        WeaponModel weaponModel = CurrentWeaponObject.GetComponent<WeaponModel>();
+        Collider[] hitEnemies = Physics.OverlapCapsule(weaponModel.StartPoint.position, weaponModel.EndPoint.position, ColliderSize, layerMask);
+        bool hitAnything = false;
+        Debug.Log("Found colliders: "+hitEnemies.Length);
+        int tempColliders = 1;
+        foreach (Collider enemy in hitEnemies)
+        {
+            Debug.Log("Checking collider " + tempColliders);
+            tempColliders++;
+            StatusController enemyStatus = enemy.GetComponent<StatusController>();
+
+            Debug.Log("Checking for status controller on a new collider...");
+            if (enemyStatus == null) continue;
+            Debug.Log("StatusContr confirmed on potential enemy: " + enemyStatus.name);
+            
+            if (statusController != null)
+            {
+                Debug.Log("checking if i have same controller as enemy");
+                if (enemyStatus == statusController) continue;
+                Debug.Log("checking if i have same team as enemy");
+                if (statusController.Team == enemyStatus.Team) continue;
+                if (!enemyStatus.IsKilled) hitAnything = true;
+                enemyStatus.TryTakeDamage(damage, statusController);
+            }
+            else
+            {
+                if (!enemyStatus.IsKilled) hitAnything = true;
+                enemyStatus.TryTakeDamage(damage);
+            }
+        }
+        
+        return hitAnything;
     }
     public Sprite GetIcon(float size = 1f)
     {

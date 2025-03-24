@@ -6,7 +6,7 @@ public class Bullet : MonoBehaviour
 {
     public float Damage = 1;
     public bool DestroyAfterDamage = true;
-
+    public bool isDamaging = true;
     public ParticleSystem ParticlesToKill;
     public GameObject ParticlesToSpawn;
     public StatusController ownerStatusController;
@@ -24,6 +24,20 @@ public class Bullet : MonoBehaviour
     private void Start()
     {
         ShooterPosition = transform.position;
+    }
+    private void FixedUpdate()
+    {
+        if (item == null || isDamaging==false) return;
+        if (item.CastDamage(Damage))
+        {
+            if (this.TryGetComponent<StatusController>(out StatusController status))
+            {
+                Sound sound = new Sound(status, SoundRange, soundType);
+                Sounds.MakeSound(sound);
+            }
+            isDamaging = false;
+            Destroy(GetComponent<Bullet>());
+        }
     }
     void HandleHit(Collider collision)
     {
@@ -68,11 +82,15 @@ public class Bullet : MonoBehaviour
     }
     private void OnTriggerEnter(Collider collision)
     {
+        if (item != null) return;
         HandleHit(collision);
     }
     private void OnColliderEnter(Collider collision)
     {
-        HandleHit(collision);
+        if (item == null) 
+            HandleHit(collision);
+        else
+            Destroy(GetComponent<Bullet>());
     }
     
     public void DestroyBullet()

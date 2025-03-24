@@ -305,30 +305,13 @@ public class ToolsController : MonoBehaviour
         bulletRB.AddRelativeForce(Vector3.forward * 1000, ForceMode.Acceleration);
         Debug.Log("bullet fired!");
 
-    }
-    public void OBSOLETEThrow()
-    {
-        WeaponModel weaponModel = CurrentWeaponWrapper.CurrentWeaponObject.GetComponent<WeaponModel>();
-        Bullet bullet = Instantiate(GameController.Instance.ListOfAssets.BulletThrowTemplate.gameObject, weaponModel.StartPoint.position, CurrentWeaponWrapper.CurrentWeaponObject.transform.rotation, GameController.Instance.GarbageCollector.transform).GetComponent<Bullet>();
-        bullet.Damage = CurrentWeaponWrapper.itemType.Damage;
-        Rigidbody bulletRB = bullet.GetComponent<Rigidbody>();
-        bullet.item = CurrentWeaponWrapper;
-        Vector3 throwDirection = new Vector3 (CurrentWeaponWrapper.CurrentWeaponObject.position.x - transform.position.x, 0, CurrentWeaponWrapper.CurrentWeaponObject.position.z - transform.position.z);
-        CurrentWeaponWrapper.CurrentWeaponObject.parent = bullet.transform;
-        CurrentWeaponWrapper.CurrentWeaponObject.GetComponent<Collider>().enabled = true;
-        CurrentWeaponWrapper.CurrentWeaponObject.GetComponent<Collider>().isTrigger = false;
-        CurrentWeaponWrapper = null;
-        
-        bulletRB.AddForce(throwDirection * 1000, ForceMode.Acceleration);
-        BreakAttackCoroutines();
-        Debug.Log("bullet fired!");
-
-    }
+    }   
     public void Throw()
     {
         WeaponModel weaponModel = CurrentWeaponWrapper.CurrentWeaponObject.GetComponent<WeaponModel>();
 
         Bullet bullet = CurrentWeaponWrapper.CurrentWeaponObject.gameObject.AddComponent<Bullet>();
+        bullet.isDamaging = true;
         bullet.Damage = CurrentWeaponWrapper.Damage*100;
         bullet.soundType = Sound.TYPES.neutral;
         bullet.SoundRange = 15;
