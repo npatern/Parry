@@ -210,6 +210,18 @@ public class InputController : MonoBehaviour
 
         isSprinting = context.performed;
     }
+    public void HideWeapon(InputAction.CallbackContext context)
+    {
+
+        if (context.performed)
+            GetComponent<ToolsController>().DequipWeaponFromHands();
+    }
+    public void DropWeapon(InputAction.CallbackContext context)
+    {
+
+        if (context.performed)
+            GetComponent<ToolsController>().DropWeaponFromHands();
+    }
     public string GetKeyBinding(string actionName)
     {
         InputAction action;

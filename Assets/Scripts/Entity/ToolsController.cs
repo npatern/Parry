@@ -122,11 +122,7 @@ public class ToolsController : MonoBehaviour
     public void DequipWeaponFromHands()
     {
         if (CurrentWeaponWrapper.emptyhanded) return;
-        if (TryHideItemFromHands()) 
-        {
-            CurrentWeaponWrapper = null;
-            return;
-        }
+        if (TryHideItemFromHands()) return;
         DropWeaponFromHands();
     }
     public Pickable DropWeaponFromHands()
@@ -140,7 +136,9 @@ public class ToolsController : MonoBehaviour
     {
         if (CurrentWeaponWrapper.emptyhanded) return false;
         if (inventoryController == null) return false;
-        return inventoryController.AddToInventory(CurrentWeaponWrapper);
+        bool isInInventory = inventoryController.AddToInventory(CurrentWeaponWrapper);
+        if (isInInventory) CurrentWeaponWrapper = null;
+        return isInInventory;
     }
     public bool CanPerform()
     {
@@ -214,6 +212,7 @@ public class ToolsController : MonoBehaviour
         BreakAttackCoroutines();
         attack = StartCoroutine(PlayAttackSteps(CurrentWeaponWrapper.itemType.Parry, context));
     }
+
     public void PerformStunned()
     {
         BreakAttackCoroutines();

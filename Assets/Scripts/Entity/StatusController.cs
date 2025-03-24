@@ -135,16 +135,22 @@ public class StatusController : MonoBehaviour, IHear
 
         bool isFromBullet = true;
         if (attacker!=null) isFromBullet= attacker.GetComponent<Bullet>();
+
+        if (sensesController != null)
+            if (isFromBullet && sensesController.IsAlerted) sensesController.currentTargetLastPosition = damageSource;
+
         if (toolsController.IsDisarming)
         {
+
             Pickable toEquip = attacker.toolsController.DropWeaponFromHands();
             if (toEquip != null)
             {
-                
-
+                UIController.Instance.SpawnTextBubble(Barks.GetBark(Barks.BarkTypes.onParry), transform);
+                if (IsPlayer) GameController.Instance.IncreaseSlowmoTimer();
                 toolsController.EquipWeaponFromPickable(toEquip);
                 attacker.TakePosture(damage * CriticalMultiplier, attacker);
                 attacker.IsAttackedEvent.Invoke();
+                
                 return false;
             }
             
@@ -162,11 +168,11 @@ public class StatusController : MonoBehaviour, IHear
                 attacker.IsAttackedEvent.Invoke();
             }
             UIController.Instance.SpawnTextBubble(Barks.GetBark(Barks.BarkTypes.onParry), transform);
-            if (sensesController!=null)
-            if (isFromBullet && sensesController.IsAlerted) sensesController.currentTargetLastPosition = damageSource;
+            
             if (IsPlayer) GameController.Instance.IncreaseSlowmoTimer();
             return false;
         }
+
         if (toolsController.IsProtected)
         {
             TakePosture( damage, attacker);

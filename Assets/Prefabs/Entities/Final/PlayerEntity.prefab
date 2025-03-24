@@ -50,7 +50,7 @@ CapsuleCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 193002233852398132}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: 969534955f5fa254a914d53ce20d7b25, type: 2}
   m_IsTrigger: 0
   m_Enabled: 1
   m_Radius: 0.5
@@ -330,6 +330,38 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: 1a249502-a215-4e13-9b5c-cdb250a787c8
     m_ActionName: InGame/Throw[/Mouse/middleButton]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 193002233852398125}
+        m_TargetAssemblyTypeName: InputController, Assembly-CSharp
+        m_MethodName: HideWeapon
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: c200bd9f-8dc9-4605-9c9f-d11d7489515d
+    m_ActionName: InGame/HideWeapon[/Keyboard/h,/DualSenseGamepadHID/dpad/up]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 193002233852398125}
+        m_TargetAssemblyTypeName: InputController, Assembly-CSharp
+        m_MethodName: DropWeapon
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 082b6b5b-2fbc-48de-83ae-bac839a278e3
+    m_ActionName: InGame/DropWeapon[/DualSenseGamepadHID/dpad/down,/Keyboard/j]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: Keyboard&Mouse
   m_DefaultActionMap: InGame

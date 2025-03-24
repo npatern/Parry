@@ -27,6 +27,14 @@ PrefabInstance:
       propertyPath: m_LocalPosition.y
       value: 1.5
       objectReference: {fileID: 0}
+    - target: {fileID: 193002233852398121, guid: b655d7d83c0abe148967a3c8fd0e18dc, type: 3}
+      propertyPath: m_Height
+      value: 2.9593997
+      objectReference: {fileID: 0}
+    - target: {fileID: 193002233852398121, guid: b655d7d83c0abe148967a3c8fd0e18dc, type: 3}
+      propertyPath: m_Center.y
+      value: 1.4796999
+      objectReference: {fileID: 0}
     - target: {fileID: 193002233852398124, guid: b655d7d83c0abe148967a3c8fd0e18dc, type: 3}
       propertyPath: ColliderSize
       value: 1
@@ -81,7 +89,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 193002233852398132, guid: b655d7d83c0abe148967a3c8fd0e18dc, type: 3}
       propertyPath: m_Name
-      value: EnemyEntity Spear
+      value: EnemyEntity Slim Spear
       objectReference: {fileID: 0}
     - target: {fileID: 249626885749807537, guid: b655d7d83c0abe148967a3c8fd0e18dc, type: 3}
       propertyPath: m_LocalScale.y
