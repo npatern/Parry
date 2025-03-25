@@ -100,10 +100,31 @@ MonoBehaviour:
   Team: 
   size: {x: 1, y: 1, z: 1}
   loadValuesInRealTime: 0
+  statsSource: {fileID: 0}
+  stats:
+    stats: []
   IsPlayer: 0
   CriticalMultiplier: 4
   SpeedMultiplier: 1
   Life: 100
+  HealthStat:
+    name: 
+    type: 0
+    minPoints: 0
+    maxPoints: 100
+    Points: 100
+    defaultSpeed: 0
+    timer: 1
+    time: 0
+  StunStat:
+    name: 
+    type: 0
+    minPoints: 0
+    maxPoints: 100
+    Points: 100
+    defaultSpeed: 0
+    timer: 1
+    time: 0
   MaxLife: 20
   Posture: 100
   movementSpeedMultiplier: 1
@@ -588,6 +609,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1907393573100811630}
     m_Modifications:
+    - target: {fileID: 2981786518515918913, guid: 9e0ab81b39324894ba117807b257fbb2, type: 3}
+      propertyPath: prewarm
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2981786518515918913, guid: 9e0ab81b39324894ba117807b257fbb2, type: 3}
       propertyPath: NoiseModule.enabled
       value: 0

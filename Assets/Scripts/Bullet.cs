@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
-    public float Damage = 1;
+    public float obsoleteDamage = 1;
+    public DamageEffects damage;
     public bool DestroyAfterDamage = true;
     public bool isDamaging = true;
     public ParticleSystem ParticlesToKill;
@@ -28,7 +29,8 @@ public class Bullet : MonoBehaviour
     private void FixedUpdate()
     {
         if (item == null || isDamaging==false) return;
-        if (item.CastDamage(Damage))
+         
+        if (item.CastDamage(damage))
         {
             if (this.TryGetComponent<StatusController>(out StatusController status))
             {
@@ -46,13 +48,13 @@ public class Bullet : MonoBehaviour
         {
             StatusController statusController = collision.gameObject.GetComponent<StatusController>();
              
-            bounced = !statusController.TryTakeDamage(Damage, GetComponent<StatusController>(), ShooterPosition);
+            bounced = !statusController.TryTakeDamage(damage, GetComponent<StatusController>(), ShooterPosition);
         }
         if (bounced)
         {
             rb.velocity *= -1;
             //transform.localScale *= 1.5f;
-            Damage *= 2;
+            obsoleteDamage *= 2;
         }
         else if (DestroyAfterDamage)
         {
@@ -82,6 +84,7 @@ public class Bullet : MonoBehaviour
     }
     private void OnTriggerEnter(Collider collision)
     {
+        isDamaging = false;
         if (item != null) return;
         HandleHit(collision);
     }
@@ -90,7 +93,11 @@ public class Bullet : MonoBehaviour
         if (item == null) 
             HandleHit(collision);
         else
+        {
+            isDamaging = false;
             Destroy(GetComponent<Bullet>());
+        }
+            
     }
     
     public void DestroyBullet()

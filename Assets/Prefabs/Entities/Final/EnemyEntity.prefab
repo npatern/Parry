@@ -131,10 +131,31 @@ MonoBehaviour:
   Team: enemy
   size: {x: 1, y: 1, z: 1}
   loadValuesInRealTime: 0
+  statsSource: {fileID: 11400000, guid: 16439299c17ce0540b8a6c59e2797a4e, type: 2}
+  stats:
+    stats: []
   IsPlayer: 0
   CriticalMultiplier: 1
   SpeedMultiplier: 1
   Life: 100
+  HealthStat:
+    name: 
+    type: 0
+    minPoints: 0
+    maxPoints: 100
+    Points: 100
+    defaultSpeed: 0
+    timer: 0
+    time: 1
+  StunStat:
+    name: 
+    type: 0
+    minPoints: 0
+    maxPoints: 100
+    Points: 100
+    defaultSpeed: 0
+    timer: 0
+    time: 1
   MaxLife: 100
   Posture: 100
   movementSpeedMultiplier: 1

@@ -13,10 +13,10 @@ NavMeshProjectSettings:
     cost: 2
   - name: Teleport
     cost: 1
-  - name: 
-    cost: 1
-  - name: 
-    cost: 1
+  - name: Bush
+    cost: 3
+  - name: Damage
+    cost: 999
   - name: 
     cost: 1
   - name: 

@@ -261,7 +261,7 @@ public class ToolsController : MonoBehaviour
         IsDamaging = false;
         IsDisarming = false;
     }
-    public void CastDamage(float damage)
+    public void CastDamage(DamageEffects damage)
     {
         
         if (!IsDamaging) return;
@@ -300,7 +300,8 @@ public class ToolsController : MonoBehaviour
     {
         WeaponModel weaponModel = CurrentWeaponWrapper.CurrentWeaponObject.GetComponent<WeaponModel>();
         Bullet bullet = Instantiate(CurrentWeaponWrapper.itemType.bullet, weaponModel.StartPoint.position, CurrentWeaponWrapper.CurrentWeaponObject.transform.rotation, GameController.Instance.GarbageCollector.transform).GetComponent<Bullet>();
-        bullet.Damage = CurrentWeaponWrapper.itemType.Damage;
+        bullet.obsoleteDamage = CurrentWeaponWrapper.itemType.Damage;
+        bullet.damage = CurrentWeaponWrapper.Effects;
         Rigidbody bulletRB = bullet.GetComponent<Rigidbody>();
         bulletRB.AddRelativeForce(Vector3.forward * 1000, ForceMode.Acceleration);
         Debug.Log("bullet fired!");
@@ -312,7 +313,8 @@ public class ToolsController : MonoBehaviour
 
         Bullet bullet = CurrentWeaponWrapper.CurrentWeaponObject.gameObject.AddComponent<Bullet>();
         bullet.isDamaging = true;
-        bullet.Damage = CurrentWeaponWrapper.Damage*100;
+        bullet.obsoleteDamage = CurrentWeaponWrapper.Damage*100;
+        bullet.damage = CurrentWeaponWrapper.Effects;
         bullet.soundType = Sound.TYPES.neutral;
         bullet.SoundRange = 15;
 

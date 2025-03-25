@@ -10,7 +10,7 @@ public class AttackScriptableObject : ScriptableObject
     public string Description;
     public float DamageMultiplayer = 0;
     public AttackStep[] AttackStepss;
-    
+   
 
     [System.Serializable]
     public class AttackStep
@@ -72,8 +72,9 @@ public class AttackScriptableObject : ScriptableObject
 
                 if (toolsController.IsDamaging)
                 {
+                    
                     //toolsController.CastDamage(toolsController.CurrentWeaponWrapper.Damage* attackScriptableObject.DamageMultiplayer);
-                    toolsController.IsDamaging = !toolsController.CurrentWeaponWrapper.CastDamage(toolsController.CurrentWeaponWrapper.Damage * attackScriptableObject.DamageMultiplayer,toolsController.statusController);
+                    toolsController.IsDamaging = !toolsController.CurrentWeaponWrapper.CastDamage(toolsController.CurrentWeaponWrapper.Effects, toolsController.statusController);
 
                 }
                 //combat.WeaponVelocity = goToPosition-combat.CurrentWeapon.localPosition/Time.deltaTime;

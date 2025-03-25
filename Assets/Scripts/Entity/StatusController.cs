@@ -10,12 +10,17 @@ public class StatusController : MonoBehaviour, IHear
     public Vector3 size = Vector3.one;
     [SerializeField]
     private bool loadValuesInRealTime = false;
-
+    public StatsScriptable statsSource;
+    [SerializeField]
+    public Stats stats;
     public bool IsPlayer = false;
 
     public float CriticalMultiplier = 4;
     public float SpeedMultiplier = 1;
     public float Life = 100;
+    public Stat HealthStat;
+    public Stat StunStat;
+
     public float MaxLife = 100;
     public float Posture = 100;
     public float movementSpeedMultiplier = 1;
@@ -67,6 +72,7 @@ public class StatusController : MonoBehaviour, IHear
             OnKillEvent = new UnityEvent();
         if (GetComponent<SensesController>() != null)
             sensesController = GetComponent<SensesController>();
+        if (statsSource != null) stats = new Stats(statsSource);
     }
     void Start()
     {
@@ -79,6 +85,7 @@ public class StatusController : MonoBehaviour, IHear
     
     private void FixedUpdate()
     {
+        stats.ApplyTick();
         deafTimer -= Time.fixedDeltaTime;
         if (IsStunned)
         {
@@ -113,16 +120,18 @@ public class StatusController : MonoBehaviour, IHear
         IsStunned = true;
         stunnedTimer = postureStunnedRegenerationTime;
 
-        SpawnParticles(PostureLongEffect, transform, 10,postureStunnedRegenerationTime);
+        SpawnParticles(PostureLongEffect, transform, 10, postureStunnedRegenerationTime);
     }
     public void Attacked()
     {
     }
-    public bool TryTakeDamage(float damage,StatusController attacker = null )
+    public bool TryTakeDamage(DamageEffects damage,StatusController attacker = null )
     {
-        return TryTakeDamage(damage, attacker,  Vector3.zero);
+        Vector3 pos = Vector3.zero;
+        if (attacker != null) pos = attacker.transform.position;
+        return TryTakeDamage(damage, attacker, pos);
     }
-    public bool TryTakeDamage(float damage, StatusController attacker,  Vector3 damageSource)
+    public bool TryTakeDamage(DamageEffects damage, StatusController attacker,  Vector3 damageSource)
     {
         if (IsKilled) return true;
         
@@ -141,20 +150,19 @@ public class StatusController : MonoBehaviour, IHear
 
         if (toolsController.IsDisarming)
         {
-
             Pickable toEquip = attacker.toolsController.DropWeaponFromHands();
             if (toEquip != null)
             {
                 UIController.Instance.SpawnTextBubble(Barks.GetBark(Barks.BarkTypes.onParry), transform);
                 if (IsPlayer) GameController.Instance.IncreaseSlowmoTimer();
                 toolsController.EquipWeaponFromPickable(toEquip);
-                attacker.TakePosture(damage * CriticalMultiplier, attacker);
+                attacker.TakePosture(damage.Damage * CriticalMultiplier, attacker);
                 attacker.IsAttackedEvent.Invoke();
                 
                 return false;
             }
-            
         }
+
         if (toolsController.IsParrying)
         {
             SpawnParticles(ParryEffect, toolsController.CurrentWeaponWrapper.CurrentWeaponObject);
@@ -164,7 +172,7 @@ public class StatusController : MonoBehaviour, IHear
             }
             else
             {
-                attacker.TakePosture(damage * CriticalMultiplier, attacker);
+                attacker.TakePosture(damage.Damage * CriticalMultiplier, attacker);
                 attacker.IsAttackedEvent.Invoke();
             }
             UIController.Instance.SpawnTextBubble(Barks.GetBark(Barks.BarkTypes.onParry), transform);
@@ -175,8 +183,8 @@ public class StatusController : MonoBehaviour, IHear
 
         if (toolsController.IsProtected)
         {
-            TakePosture( damage, attacker);
-            attacker.TakePosture(damage, this);
+            TakePosture(damage.Damage, attacker);
+            attacker.TakePosture(damage.Damage, this);
             return true;
         }
         
@@ -187,16 +195,24 @@ public class StatusController : MonoBehaviour, IHear
     {
         return stunnedTimer / postureStunnedRegenerationTime;
     }
-    public void TakeDamage(float damage, StatusController attacker, bool isFromBullet = false)
+    public void TakeDamage(DamageEffects damage, StatusController attacker, bool isFromBullet = false)
     {
+        float _damage = damage.Damage;
         bool isCritical = false;
         isCritical = MultiplyDamage(attacker);
         SpawnParticles(DamageEffect, transform);
+        float multiplyer = 1;
+        if (isCritical)
+        {
+            if (attacker != null) multiplyer = attacker.CriticalMultiplier;
+            else multiplyer = 2;
+        }
         if (attacker!=null)
-        if (isCritical) damage *= attacker.CriticalMultiplier;
-        Life -= damage;
+       
+        damage.ApplyEffects(stats, multiplyer);
+        Life -= _damage*multiplyer;
 
-        UIController.Instance.SpawnDamageNr("" + damage, transform, isCritical);
+        UIController.Instance.SpawnDamageNr("" + _damage, transform, isCritical);
         if (Life <= 0 && !IsKilled) 
         {
             Kill(attacker);

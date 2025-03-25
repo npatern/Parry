@@ -65,7 +65,7 @@ MonoBehaviour:
     IsDamaging: 0
     IsFiring: 0
     IsThrowing: 0
-    IsDisarming: 1
+    IsDisarming: 0
     SkipIfPlayer: 1
     MovementOffset: {x: 0, y: 0, z: 0}
     SoundRange: 0

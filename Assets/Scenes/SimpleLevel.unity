@@ -5286,10 +5286,33 @@ MonoBehaviour:
   Team: 
   size: {x: 1, y: 1, z: 1}
   loadValuesInRealTime: 0
+  statsSource: {fileID: 0}
+  stats:
+    stats: []
   IsPlayer: 0
   CriticalMultiplier: 4
   SpeedMultiplier: 1
   Life: 100
+  HealthStat:
+    name: 
+    type: 0
+    minPoints: 0
+    maxPoints: 100
+    Points: 100
+    defaultSpeed: 0
+    defalutPoints: 0
+    timer: 1
+    time: 0
+  StunStat:
+    name: 
+    type: 0
+    minPoints: 0
+    maxPoints: 100
+    Points: 100
+    defaultSpeed: 0
+    defalutPoints: 0
+    timer: 1
+    time: 0
   MaxLife: 100
   Posture: 100
   movementSpeedMultiplier: 1

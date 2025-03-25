@@ -15,7 +15,7 @@ public class ItemWeaponScriptableObject : ScriptableObject
     public bool emptyhanded = false;
     //weapon specific>>
     public AttackPattern attackPattern;
-
+    public DamageEffects Effects;
 
     public float AttackDistance = 3f;
     public float Damage = 10;
@@ -46,9 +46,10 @@ public class ItemWeaponWrapper
     public bool Big;
     public GameObject weaponObject;
     public Transform CurrentWeaponObject = null;
-    public Pickable pickable = null; 
+    public Pickable pickable = null;
 
     //weapon specific>>
+    public DamageEffects Effects;
     public AttackPattern attackPattern;
     public float AttackDistance = 3f;
     public float Damage = 10;
@@ -62,7 +63,7 @@ public class ItemWeaponWrapper
         
         Damage = scriptableObject.Damage;
         ItemName = scriptableObject.ItemName;
-        
+        Effects = scriptableObject.Effects;
         name = scriptableObject.ItemName;
         ID = scriptableObject.ID;
         Description = scriptableObject.Description;
@@ -87,28 +88,7 @@ public class ItemWeaponWrapper
     {
         return GameObject.Instantiate(weaponObject, parentTransform).transform;
     }
-    public void OBSOLETEMakePickable()
-    {
-        if (CurrentWeaponObject == null) SpawnWeaponObjectAsCurrentObject();
-
-        CurrentWeaponObject.GetComponent<Collider>().enabled = true;
-        CurrentWeaponObject.GetComponent<Collider>().isTrigger = false;
-        pickable = GameObject.Instantiate(GameController.Instance.ListOfAssets.PickableTemplate, CurrentWeaponObject.position, CurrentWeaponObject.rotation).GetComponent<Pickable>();
-        CurrentWeaponObject.transform.parent = pickable.transform;
-        pickable.weaponObject = CurrentWeaponObject.gameObject;
-        pickable.weaponWrapper = this;
-    }
     
-    public void OBSOLETERemovePickable(Transform newParent = null)
-    {
-        if (CurrentWeaponObject == null) return;
-        if (pickable == null) return;
-        CurrentWeaponObject.GetComponent<Collider>().enabled = false;
-        CurrentWeaponObject.GetComponent<Collider>().isTrigger = true;
-        CurrentWeaponObject.transform.parent = newParent;
-
-        GameObject.Destroy(pickable.gameObject);
-    }
     public void RemovePickable(Transform newParent = null, bool removeRigidBody = false)
     {
         if (CurrentWeaponObject == null) return;
@@ -174,8 +154,9 @@ public class ItemWeaponWrapper
         model.gameObject.SetActive(false);
         GameObject.Destroy(model.gameObject);
     }
-    public bool CastDamage(float damage, StatusController statusController = null)
+    public bool CastDamage(DamageEffects damage, StatusController statusController = null)
     {
+
         Debug.Log("Trying to cast damage!");
         if (CurrentWeaponObject == null) return false;
         if (CurrentWeaponObject.GetComponent<WeaponModel>() == null) return false;
