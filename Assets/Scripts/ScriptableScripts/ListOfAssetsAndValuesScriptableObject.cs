@@ -11,6 +11,8 @@ public class ListOfAssetsAndValuesScriptableObject : ScriptableObject
     public Bullet BulletThrowTemplate;
     public ItemWeaponScriptableObject EmptyWeapon;
     public ItemWeaponScriptableObject[] Weapons;
+    
+    public EffectVisuals[] EffectVisuals;
     public ItemWeaponScriptableObject GetRandomWeapon()
     {
         return Weapons[Random.Range(0,Weapons.Length)];
@@ -46,6 +48,17 @@ public class Bark
     {
         name = _name;
     }
+}
+[System.Serializable]
+public class EffectVisuals
+{
+    public string name;
+    public Stat.Types type;
+    public Sprite sprite;
+    public Color iconColor = Color.white;
+    public Color color = Color.white;
+    public Color activeColor = Color.white;
+
 }
 public static class Barks
 {

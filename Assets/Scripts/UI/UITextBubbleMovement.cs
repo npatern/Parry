@@ -4,6 +4,7 @@ using UnityEngine;
 using TMPro;
 public class UITextBubbleMovement : MonoBehaviour
 {
+    public Color color = Color.white;
     public string Speech = "Hello world!";
     public float LerpTime = 1f;
     public AnimationCurve MovementCurve;
@@ -20,9 +21,11 @@ public class UITextBubbleMovement : MonoBehaviour
     Vector3 RandomOffset= Vector3.zero;
     protected void Start()
     {
+        
         startPos = transform.position;
         endPos = transform.position + transform.up * MoveDistance;
         Text = GetComponent<TextMeshProUGUI>();
+        if (color != null) Text.color = color;
         RandomOffset = new Vector3(
             RandomOffset.x / 2 - Random.Range(0, RandomOffset.x), 
             RandomOffset.y / 2 - Random.Range(0, RandomOffset.y), 

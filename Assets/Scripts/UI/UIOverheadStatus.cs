@@ -15,6 +15,8 @@ public class UIOverheadStatus : MonoBehaviour
     private UIBarController AwarenessBar;
     [SerializeField]
     private UIBarController SoundBar;
+    [SerializeField]
+    private UIBarController[] CircleBars;
 
     [SerializeField]
     private TMP_Text healthbarText;
@@ -38,6 +40,13 @@ public class UIOverheadStatus : MonoBehaviour
     [SerializeField]
     private Image punctuationBold;
 
+    
+
+    [SerializeField]
+    private RectTransform CircleBarsParent;
+    [SerializeField]
+    private GameObject CircleBarTemplate;
+
     private float InfoTextTimer = 0;
     [SerializeField]
     private TextMeshProUGUI InfoText;
@@ -60,17 +69,31 @@ public class UIOverheadStatus : MonoBehaviour
             sensesController = statusController.GetComponent<SensesController>();
         }
         lastHealth = statusController.Life;
+        SpawnCircles();
     }
-    
+    public void SpawnCircles()
+    {
+        CircleBars = new UIBarController[statusController.stats.stats.Length];
+        for (int i = 0; i < CircleBars.Length; i++)
+        {
+            CircleBars[i] = Instantiate(CircleBarTemplate, CircleBarsParent).GetComponent<UIBarController>();
+            CircleBars[i].stat = statusController.stats.stats[i];
+            CircleBars[i].ApplyStatVisuals();
+        }
+    }
     private void Update()
     {
+        foreach (UIBarController bar in CircleBars)
+        {
+            bar.gameObject.SetActive(bar.SetCircleBar());
+        }
         visibilityTimer -= Time.deltaTime;
         if (statusController == null || statusController.IsKilled)
         {
             Destroy(this.gameObject);
             return;
         }
-        ApplyValues(statusController.Life, statusController.Posture, statusController.IsStunned);
+        ApplyValues(statusController.Life, statusController.Posture, statusController.IsStunnedOBSOLETE);
         FollowTarget(statusController.transform);
 
         InfoTextTimer -= Time.deltaTime;

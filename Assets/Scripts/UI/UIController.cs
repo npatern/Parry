@@ -41,15 +41,16 @@ public class UIController : MonoBehaviour
         newTextBubble.Speech = speech;
         newTextBubble.target = transform.position;
     }
-    public void SpawnDamageNr(string speech, Transform transform, bool critical = false)
+    public void SpawnDamageNr(string speech, Transform transform, Color color, bool critical = false)
     {
         UITextBubbleMovement newTextBubble = Instantiate(TextBubbleDamageNumber, MainCanvas.transform, false).GetComponent<UITextBubbleMovement>();
         Vector3 screenPosition = Camera.main.WorldToScreenPoint(transform.position - Vector3.up * 3);
         newTextBubble.transform.position = screenPosition;
         newTextBubble.transform.parent = UITrashParent;
-        
+        if (color == null) color = Color.red;
+        newTextBubble.color = color;
         if (critical) speech = "<b>" + speech + " CRITICAL!</b>";
-        speech = "<color=red>" + speech + "</color>";
+        //speech = "<color=red>" + speech + "</color>";
         newTextBubble.Speech = speech;
         newTextBubble.target = transform.position;
     }

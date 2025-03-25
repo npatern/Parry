@@ -294,15 +294,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5a7755d708fd1524b9dd4feeada5201e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  stat:
+    rid: -2
+  visuals:
+    rid: -2
   bar: {fileID: 7207673844871925370}
   Value: 100
   minScale: 0
   vertical: 0
   specialColor: {r: 0, g: 0, b: 0, a: 0}
+  timeValue: 100
+  timeBar: {fileID: 0}
   haveSeparators: 1
   separatedValue: 100
   separatorParent: {fileID: 7563827827701703624}
   separatorObject: {fileID: 692098199886123064, guid: f8325fd86ec9a90438d76759ad3d7874, type: 3}
+  EffectIcon: {fileID: 0}
+  references:
+    version: 2
+    RefIds:
+    - rid: -2
+      type: {class: , ns: , asm: }
 --- !u!1 &4287387390151992556
 GameObject:
   m_ObjectHideFlags: 0
@@ -732,6 +744,7 @@ MonoBehaviour:
   LightBar: {fileID: 8067831130997605053}
   AwarenessBar: {fileID: 2273847966020561948}
   SoundBar: {fileID: 5419673894887082038}
+  CircleBars: []
   healthbarText: {fileID: 4452628115570433716}
   statusController: {fileID: 0}
   outwardController: {fileID: 0}
@@ -742,6 +755,8 @@ MonoBehaviour:
   questionStroke: {fileID: 21300000, guid: 1e1312666c8becc46b04dfe959c68371, type: 3}
   punctuationStroke: {fileID: 7803114587169827801}
   punctuationBold: {fileID: 3097192027209652058}
+  CircleBarsParent: {fileID: 2476862179908099977}
+  CircleBarTemplate: {fileID: 7599201383731331564, guid: 97e4fe552b0e5044ea9b3c883cb8d6ce, type: 3}
   InfoText: {fileID: 328768285763368561}
 --- !u!1 &8337980059325548668
 GameObject:

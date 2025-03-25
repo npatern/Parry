@@ -21,6 +21,11 @@ MonoBehaviour:
   icon: {fileID: 0}
   emptyhanded: 0
   attackPattern: {fileID: 8930655107102755286, guid: 6d072b84b4f8f1c459da72f6947d84af, type: 3}
+  Effects:
+    Damage: 30
+    effects:
+    - type: 1
+      points: 10
   AttackDistance: 3
   Damage: 30
   BulletDamage: 10

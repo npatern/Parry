@@ -143,7 +143,7 @@ public class ToolsController : MonoBehaviour
     public bool CanPerform()
     {
         if (IsUsingTool) return false;
-        if (statusController.IsStunned) return false;
+        if (statusController.IsStunned()) return false;
         return true;
     }
     public Transform GetTargetFromEnum(targets target)
@@ -221,6 +221,7 @@ public class ToolsController : MonoBehaviour
     public void PerformAttacked()
     {
         BreakAttackCoroutines();
+        if (CurrentWeaponWrapper == null) return;
         attack = StartCoroutine(PlayAttackSteps(CurrentWeaponWrapper.itemType.Attacked));
     }
     public bool IsGrounded()

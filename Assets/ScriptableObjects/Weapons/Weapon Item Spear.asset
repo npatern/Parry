@@ -23,7 +23,9 @@ MonoBehaviour:
   attackPattern: {fileID: 8930655107102755286, guid: ddce2a24f3bd0c04e97ebcf7b2440133, type: 3}
   Effects:
     Damage: 25
-    effects: []
+    effects:
+    - type: 6
+      points: 15
   AttackDistance: 5.5
   Damage: 25
   BulletDamage: 10

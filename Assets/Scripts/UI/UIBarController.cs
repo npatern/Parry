@@ -4,6 +4,10 @@ using UnityEngine;
 using UnityEngine.UI;
 public class UIBarController : MonoBehaviour
 {
+    [SerializeReference]
+    public Stat stat;
+    [SerializeReference]
+    EffectVisuals visuals;
     [SerializeField]
     private RectTransform bar;
     [SerializeField]
@@ -15,7 +19,10 @@ public class UIBarController : MonoBehaviour
     Color color;
     [SerializeField]
     Color specialColor;
-
+    [SerializeField]
+    float timeValue = 100;
+    [SerializeField]
+    Image timeBar;
     [SerializeField]
     private bool haveSeparators = false;
     [SerializeField]
@@ -24,12 +31,47 @@ public class UIBarController : MonoBehaviour
     private RectTransform separatorParent;
     [SerializeField]
     private GameObject separatorObject;
+    [SerializeField]
+    private Image EffectIcon;
     private void Start()
     {
         if (bar == null) return;
         if (bar.GetComponent<Image>() == null) return;
+        if (stat == null)
         color = bar.GetComponent<Image>().color;
         
+    }
+    public void ApplyStatVisuals()
+    {
+        if (stat == null) return;
+        foreach (EffectVisuals _visuals in GameController.Instance.ListOfAssets.EffectVisuals)
+        {
+            if (stat.type == _visuals.type) 
+            {
+                visuals = _visuals;
+            }
+            
+        }
+        if (visuals == null)
+        {
+            Debug.LogError("Visuals not found!");
+            return;
+        }
+        color = visuals.color;
+        specialColor = visuals.activeColor;
+        EffectIcon.sprite = visuals.sprite;
+    }
+    public bool SetCircleBar()
+    {
+        //if (stat.Points == stat.minPoints) return false;
+        bar.localScale = new Vector3(bar.localScale.x, stat.GetValue(), bar.localScale.y);
+        timeValue = stat.GetTimerValue();
+        timeBar.fillAmount = timeValue;
+        if (stat.IsActive())
+            bar.GetComponent<Image>().color = specialColor;
+        else
+            bar.GetComponent<Image>().color = color;
+        return true;
     }
     public void SetBarValue(float value, float maxValue = 100, float minValue = 0, bool recolor = false)
     {

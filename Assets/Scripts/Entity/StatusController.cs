@@ -25,7 +25,7 @@ public class StatusController : MonoBehaviour, IHear
     public float Posture = 100;
     public float movementSpeedMultiplier = 1;
     public bool IsKilled = false;
-    public bool IsStunned = false;
+    public bool IsStunnedOBSOLETE = false;
     public bool DestroyOnKill = false;
 
     public UnityEvent IsAttackedEvent;
@@ -72,7 +72,7 @@ public class StatusController : MonoBehaviour, IHear
             OnKillEvent = new UnityEvent();
         if (GetComponent<SensesController>() != null)
             sensesController = GetComponent<SensesController>();
-        if (statsSource != null) stats = new Stats(statsSource);
+        if (statsSource != null) stats = new Stats(statsSource, this);
     }
     void Start()
     {
@@ -87,25 +87,20 @@ public class StatusController : MonoBehaviour, IHear
     {
         stats.ApplyTick();
         deafTimer -= Time.fixedDeltaTime;
-        if (IsStunned)
-        {
-            
-            stunnedTimer -= Time.fixedDeltaTime;
-            Posture = Mathf.Lerp(0, 100, 1-(stunnedTimer/ postureStunnedRegenerationTime));
-            if (stunnedTimer <= 0)
-            {
-                IsStunned = false;
-                Posture = 100;
-            }
-        }
-        else if (Posture<100)
-        {
-            if (postureDelayTimer > 0)
-                postureDelayTimer -= Time.fixedDeltaTime;
-            else
-                Posture += postureRegenerationSpeed * Time.fixedDeltaTime;
-        }
+        
         if (loadValuesInRealTime) LoadStatsFromScriptable(GameController.Instance.ListOfAssets.DefaultEntityStats);
+    }
+    bool CanBeStunned()
+    {
+        if (stats.GetStat(Stat.Types.STUN) != null) return true;
+        else return false;
+    }
+    public bool IsStunned()
+    {
+        if (CanBeStunned())
+            return stats.GetStat(Stat.Types.STUN).IsActive();
+
+        return false;
     }
     void LoadStatsFromScriptable(EntityStatsScriptableObject scriptable)
     {
@@ -117,7 +112,7 @@ public class StatusController : MonoBehaviour, IHear
     }
     public void Stunned()
     {
-        IsStunned = true;
+        IsStunnedOBSOLETE = true;
         stunnedTimer = postureStunnedRegenerationTime;
 
         SpawnParticles(PostureLongEffect, transform, 10, postureStunnedRegenerationTime);
@@ -125,6 +120,7 @@ public class StatusController : MonoBehaviour, IHear
     public void Attacked()
     {
     }
+    
     public bool TryTakeDamage(DamageEffects damage,StatusController attacker = null )
     {
         Vector3 pos = Vector3.zero;
@@ -156,7 +152,7 @@ public class StatusController : MonoBehaviour, IHear
                 UIController.Instance.SpawnTextBubble(Barks.GetBark(Barks.BarkTypes.onParry), transform);
                 if (IsPlayer) GameController.Instance.IncreaseSlowmoTimer();
                 toolsController.EquipWeaponFromPickable(toEquip);
-                attacker.TakePosture(damage.Damage * CriticalMultiplier, attacker);
+                //attacker.TakePosture(damage.Damage * CriticalMultiplier, attacker);
                 attacker.IsAttackedEvent.Invoke();
                 
                 return false;
@@ -172,7 +168,10 @@ public class StatusController : MonoBehaviour, IHear
             }
             else
             {
-                attacker.TakePosture(damage.Damage * CriticalMultiplier, attacker);
+                //attacker.TakePosture(damage.Damage * CriticalMultiplier, attacker);
+                float stunDamage = damage.Damage * CriticalMultiplier;
+                attacker.ApplyEffect(stunDamage, Stat.Types.STUN);
+                
                 attacker.IsAttackedEvent.Invoke();
             }
             UIController.Instance.SpawnTextBubble(Barks.GetBark(Barks.BarkTypes.onParry), transform);
@@ -212,7 +211,8 @@ public class StatusController : MonoBehaviour, IHear
         damage.ApplyEffects(stats, multiplyer);
         Life -= _damage*multiplyer;
 
-        UIController.Instance.SpawnDamageNr("" + _damage, transform, isCritical);
+
+        UIController.Instance.SpawnDamageNr("" + _damage, transform,Color.red, isCritical);
         if (Life <= 0 && !IsKilled) 
         {
             Kill(attacker);
@@ -236,7 +236,7 @@ public class StatusController : MonoBehaviour, IHear
     {
         
         if (IsPlayer) return false;
-        if (IsStunned) return true;
+        if (IsStunnedOBSOLETE) return true;
         if (GetComponent<EntityController>() != null)
             if (!GetComponent<EntityController>().IsCombatReady())
                 return true;
@@ -244,9 +244,23 @@ public class StatusController : MonoBehaviour, IHear
         if (sensesController != null) if(!sensesController.IsAlerted) return true;
         return false;
     }
+    public void  ApplyEffect(float damage, Stat.Types type) 
+    {
+        Effect effect = new Effect(damage, type);
+        ApplyEffect(effect);
+    }
+    public void ApplyEffect(Effect effect)
+    {
+        stats.ApplyEffect(effect);
+    }
     public bool TakePosture(float damage, StatusController attacker)
     {
-        if (IsStunned) return false;
+        if (IsStunned()) return false;
+        Effect effect = new Effect(damage, Stat.Types.STUN);
+
+
+
+        if (IsStunnedOBSOLETE) return false;
         postureDelayTimer = postureRegenerationDelayTime;
         if(this != attacker)
             SpawnParticles(PostureEffect, transform);
@@ -258,6 +272,7 @@ public class StatusController : MonoBehaviour, IHear
         }
         return true;
     }
+    
     void SpawnParticles(ParticleSystem particles, Transform position,float destroyLength = 10, float newLifetime = -1)
     {
         if (particles == null) return;

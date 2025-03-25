@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1ea5dd123d6c3344986f4d254d27bda1, type: 3}
   m_Name: Weapon Item Hammer
   m_EditorClassIdentifier: 
-  ItemName: Axe
-  ID: axe
+  ItemName: Hammer
+  ID: hammer
   Description: You can hack'n slash with it.
   Stackable: 0
   Big: 0
@@ -26,6 +26,8 @@ MonoBehaviour:
     effects:
     - type: 4
       points: 40
+    - type: 2
+      points: 20
   AttackDistance: 3
   Damage: 30
   BulletDamage: 10

@@ -17,55 +17,69 @@ MonoBehaviour:
     type: 0
     minPoints: 0
     maxPoints: 100
-    Points: 100
+    Points: 0
     defaultSpeed: 0
+    defalutPoints: 0
     timer: 0
     time: 0
+    status: {fileID: 0}
   - name: Fire
     type: 1
     minPoints: 0
     maxPoints: 100
     Points: 0
     defaultSpeed: -1
+    defalutPoints: 0
     timer: 0
     time: 10
+    status: {fileID: 0}
   - name: Electric
     type: 2
     minPoints: 0
     maxPoints: 1
-    Points: 1
+    Points: 0
     defaultSpeed: 0
+    defalutPoints: 0
     timer: 0
     time: 5
+    status: {fileID: 0}
   - name: Stun
     type: 4
     minPoints: 0
     maxPoints: 100
     Points: 0
     defaultSpeed: -1
+    defalutPoints: 0
     timer: 0
     time: 5
+    status: {fileID: 0}
   - name: Stun
     type: 5
     minPoints: 0
     maxPoints: 100
     Points: 0
     defaultSpeed: -1
+    defalutPoints: 0
     timer: 0
     time: 5
+    status: {fileID: 0}
   - name: Stun
     type: 3
     minPoints: 0
     maxPoints: 100
-    Points: 0
-    defaultSpeed: -1
-    timer: 0
-    time: 5
+    Points: 100
+    defaultSpeed: -10
+    defalutPoints: 0
+    timer: 20
+    time: 20
+    status: {fileID: 0}
   - name: Poison
     type: 6
     minPoints: 0
     maxPoints: 100
     Points: 0
     defaultSpeed: -1
+    defalutPoints: 0
     timer: 0
     time: 5
+    status: {fileID: 0}
