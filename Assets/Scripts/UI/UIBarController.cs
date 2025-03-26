@@ -33,13 +33,15 @@ public class UIBarController : MonoBehaviour
     private GameObject separatorObject;
     [SerializeField]
     private Image EffectIcon;
+
+    Vector3 scale;
     private void Start()
     {
         if (bar == null) return;
         if (bar.GetComponent<Image>() == null) return;
         if (stat == null)
         color = bar.GetComponent<Image>().color;
-        
+        scale = transform.localScale;
     }
     public void ApplyStatVisuals()
     {
@@ -67,6 +69,7 @@ public class UIBarController : MonoBehaviour
         bar.localScale = new Vector3(bar.localScale.x, stat.GetValue(), bar.localScale.y);
         timeValue = stat.GetTimerValue();
         timeBar.fillAmount = timeValue;
+        transform.localScale = scale + scale *.5f* (stat.waitTimer/stat.waitTime);
         if (stat.IsActive())
             bar.GetComponent<Image>().color = specialColor;
         else

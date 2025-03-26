@@ -88,14 +88,27 @@ public class Stats
     }
 }
 [System.Serializable]
+public class StartEffectModifier
+{
+    public Stat.Types type;
+    public enum StartEffectTypes { KILL, FULLTARGET, EMPTYTARGET, EMPTYME}
+    public StartEffectTypes startEffectType;
+    public Stat.Types target;
+}
+[System.Serializable]
+public class DamageEffectMultiplier
+{
+    public Stat.Types type;
+    public float multiplier = 1;
+}
+[System.Serializable]
 public class Stat
 {
     public enum Types { BLEEDING, FIRE, ELECTRIC, FREEZE, STUN, DEAF, POISON, WATER }
-
-    
     public string name;
     public Types type;
     public bool isActive = false;
+    public bool canBeAppliedIfActive = false;
     public float minPoints = 0;
     public float maxPoints = 100;
     public float Points = 100;
@@ -105,8 +118,11 @@ public class Stat
     public float activeTime = 10;
     public float waitTimer = 0;
     public float waitTime = 1;
+    public StartEffectModifier[] StartModifiers;
+    public DamageEffectMultiplier[] DamageModifiers;
     public StatusController status = null;
     public EffectVisuals visuals = null;
+   
     //public List<DamageEffect> effects;
     public void ApplyEffect(Effect effect, float multiplier = 1)
     {
@@ -134,6 +150,7 @@ public class Stat
     public Stat()
     {
         isActive = false;
+        canBeAppliedIfActive = false;
         minPoints = 0;
         maxPoints = 100;
         Points = 100;
@@ -152,6 +169,7 @@ public class Stat
         name = cloned.name;
         type = cloned.type;
         isActive = cloned.isActive;
+        canBeAppliedIfActive = cloned.canBeAppliedIfActive;
         minPoints = cloned.minPoints;
         maxPoints = cloned.maxPoints;
         Points = cloned.Points;
@@ -180,7 +198,8 @@ public class Stat
         return activeTimer / activeTime;
     }
     public float AddPoints(float _points, bool stopDefaulting = true)
-    {
+    {   
+
         Points += _points;
         if (stopDefaulting)
             waitTimer = waitTime;
@@ -188,10 +207,11 @@ public class Stat
     }
     public void ApplyFullEffect(float _timer = 0)
     {
-        AddPoints(maxPoints);
+        //AddPoints(maxPoints);
+        Points = maxPoints;
         if (_timer == 0) _timer = activeTime;
         if (_timer > activeTimer) activeTimer = _timer;
-        isActive = true;
+        
         if (!isActive) OnActiveStart();
     }
     public bool IsWaiting()
@@ -217,26 +237,31 @@ public class Stat
     }
     public void OnActiveStart()
     {
+        isActive = true;
         switch (type)
         {
             case Types.ELECTRIC:
-                if (status.stats.IsStatActive(Stat.Types.WATER)) status.stats.GetStat(Types.STUN).ApplyFullEffect();
+                status.stats.GetStat(Types.STUN).ApplyFullEffect();
                 if (status.stats.IsStatActive(Stat.Types.WATER)) status.Kill();
                 if (status.stats.IsStatActive(Stat.Types.FREEZE)) ResetEffect();
                 break;
             case Types.FIRE:
-                if (status.stats.IsStatActive(Stat.Types.WATER)) ResetEffect();
-                if (status.stats.IsStatActive(Stat.Types.FREEZE)) ResetEffect();
+                if (status.stats.IsStatActive(Stat.Types.WATER)) status.stats.GetStat(Stat.Types.WATER).ResetEffect();
+                if (status.stats.IsStatActive(Stat.Types.FREEZE)) status.stats.GetStat(Stat.Types.FREEZE).ResetEffect();
                 break;
             case Types.WATER:
-                if (status.stats.IsStatActive(Stat.Types.FIRE)) ResetEffect();
+                if (status.stats.IsStatActive(Stat.Types.FIRE)) status.stats.GetStat(Stat.Types.FIRE).ResetEffect();
                 if (status.stats.IsStatActive(Stat.Types.ELECTRIC)) status.Kill();
                 break;
             case Types.FREEZE:
-                if (status.stats.IsStatActive(Stat.Types.FIRE)) ResetEffect();
-                if (status.stats.IsStatActive(Stat.Types.STUN)) status.Kill();
+                if (status.stats.IsStatActive(Stat.Types.FIRE)) status.stats.GetStat(Stat.Types.FIRE).ResetEffect();
+                if (status.stats.IsStatActive(Stat.Types.WATER)) status.stats.GetStat(Stat.Types.WATER).ResetEffect();
+                break;
+            case Types.STUN:
+                if (status.stats.IsStatActive(Stat.Types.FREEZE)) status.Kill();
                 break;
         }
+        
     }
     public void OnActiveTick()
     {
@@ -267,7 +292,8 @@ public class Stat
     }
     public void RefreshEffect()
     {
-        if (!isActive && Points >= maxPoints)
+
+        if (!isActive && Points >= maxPoints || canBeAppliedIfActive && Points > maxPoints)
         {
             ApplyFullEffect();
         }

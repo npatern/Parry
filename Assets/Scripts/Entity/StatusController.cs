@@ -121,19 +121,19 @@ public class StatusController : MonoBehaviour, IHear
     {
     }
     
-    public bool TryTakeDamage(DamageEffects damage,StatusController attacker = null )
+    public bool TryTakeDamage(DamageEffects damage, float multiplier = 1, StatusController attacker = null)
     {
         Vector3 pos = Vector3.zero;
         if (attacker != null) pos = attacker.transform.position;
-        return TryTakeDamage(damage, attacker, pos);
+        return TryTakeDamage(damage, pos, multiplier,  attacker);
     }
-    public bool TryTakeDamage(DamageEffects damage, StatusController attacker,  Vector3 damageSource)
+    public bool TryTakeDamage(DamageEffects damage, Vector3 damageSource, float multiplier = 1, StatusController attacker=null)
     {
         if (IsKilled) return true;
         
         if (toolsController == null)
         {
-            TakeDamage(damage, attacker);
+            TakeDamage(damage, multiplier, attacker);
             return true;
         }
         if (toolsController.IsDodging) return false;
@@ -168,7 +168,7 @@ public class StatusController : MonoBehaviour, IHear
             }
             else
             {
-                attacker.TakePosture(damage.Damage * CriticalMultiplier, attacker);
+                attacker.TakePosture(damage.Damage * CriticalMultiplier*multiplier, attacker);
       
                 
                 attacker.IsAttackedEvent.Invoke();
@@ -186,32 +186,30 @@ public class StatusController : MonoBehaviour, IHear
             return true;
         }
         
-        TakeDamage(damage, attacker, isFromBullet);
+        TakeDamage(damage, multiplier, attacker, isFromBullet);
         return true;
     }
     public float GetStunndedTimerValue()
     {
         return stunnedTimer / postureStunnedRegenerationTime;
     }
-    public void TakeDamage(DamageEffects damage, StatusController attacker, bool isFromBullet = false)
+    public void TakeDamage(DamageEffects damage,float multiplier=1, StatusController attacker = null, bool isFromBullet = false)
     {
         float _damage = damage.Damage;
         bool isCritical = false;
         isCritical = MultiplyDamage(attacker);
         SpawnParticles(DamageEffect, transform);
-        float multiplyer = 1;
         if (isCritical)
-        {
-            if (attacker != null) multiplyer = attacker.CriticalMultiplier;
-            else multiplyer = 2;
-        }
+            if (attacker != null) multiplier *= attacker.CriticalMultiplier;
+           
+   
         if (attacker!=null)
        
-        damage.ApplyEffects(stats, multiplyer);
-        Life -= _damage*multiplyer;
+        damage.ApplyEffects(stats, multiplier);
+        Life -= _damage* multiplier;
 
 
-        UIController.Instance.SpawnDamageNr("" + _damage, transform,Color.red, isCritical);
+        UIController.Instance.SpawnDamageNr("" + _damage* multiplier, transform,Color.red, isCritical);
         if (Life <= 0 && !IsKilled) 
         {
             Kill(attacker);

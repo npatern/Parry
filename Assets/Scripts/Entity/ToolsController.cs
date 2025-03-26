@@ -261,32 +261,7 @@ public class ToolsController : MonoBehaviour
         IsDamaging = false;
         IsDisarming = false;
     }
-    public void CastDamage(DamageEffects damage)
-    {
-        
-        if (!IsDamaging) return;
-        if (CurrentWeaponWrapper.CurrentWeaponObject == null) return;
-        if (CurrentWeaponWrapper.CurrentWeaponObject.GetComponent<WeaponModel>() == null) return;
-
-        //Vector3 weaponEnd = CurrentWeapon.transform.position + CurrentWeapon.transform.up * 2;
-        WeaponModel weaponModel = CurrentWeaponWrapper.CurrentWeaponObject.GetComponent<WeaponModel>();
-
-        Collider[] hitEnemies = Physics.OverlapCapsule(weaponModel.StartPoint.position, weaponModel.EndPoint.position, ColliderSize, layerMask);
-        bool hitAnything = false;
-        foreach (Collider enemy in hitEnemies)
-        {
-            StatusController enemyStatus = enemy.GetComponent<StatusController>();
-            //if (enemyStatus == null) enemyStatus = enemy.attachedRigidbody.GetComponent<StatusController>();
-            if (enemyStatus == null) continue;
-            if (enemyStatus == statusController) continue;
-            if (statusController.Team == enemyStatus.Team) continue;
-            enemyStatus.TryTakeDamage( damage, statusController);
-            if (!enemyStatus.IsKilled)
-            hitAnything = true;
-        }
-        if (hitAnything)
-            IsDamaging = false;    
-    }
+    
     private void OnDrawGizmosSelected()
     {
         if (CurrentWeaponWrapper == null) return;
@@ -314,6 +289,7 @@ public class ToolsController : MonoBehaviour
         Bullet bullet = CurrentWeaponWrapper.CurrentWeaponObject.gameObject.AddComponent<Bullet>();
         bullet.isDamaging = true;
         bullet.obsoleteDamage = CurrentWeaponWrapper.Damage*100;
+        bullet.multiplier *= 100;
         bullet.damage = CurrentWeaponWrapper.Effects;
         bullet.soundType = Sound.TYPES.neutral;
         bullet.SoundRange = 15;

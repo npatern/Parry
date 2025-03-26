@@ -15,6 +15,8 @@ MonoBehaviour:
   stats:
   - name: Health
     type: 0
+    isActive: 0
+    canBeAppliedIfActive: 0
     minPoints: 0
     maxPoints: 100
     Points: 0
@@ -24,6 +26,8 @@ MonoBehaviour:
     activeTime: 10
     waitTimer: 0
     waitTime: 1
+    StartModifiers: []
+    DamageModifiers: []
     status: {fileID: 0}
     visuals:
       name: 
@@ -34,6 +38,8 @@ MonoBehaviour:
       activeColor: {r: 1, g: 1, b: 1, a: 1}
   - name: Fire
     type: 1
+    isActive: 0
+    canBeAppliedIfActive: 0
     minPoints: 0
     maxPoints: 100
     Points: 0
@@ -43,6 +49,8 @@ MonoBehaviour:
     activeTime: 10
     waitTimer: 0
     waitTime: 1
+    StartModifiers: []
+    DamageModifiers: []
     status: {fileID: 0}
     visuals:
       name: 
@@ -53,15 +61,32 @@ MonoBehaviour:
       activeColor: {r: 1, g: 1, b: 1, a: 1}
   - name: Electric
     type: 2
+    isActive: 0
+    canBeAppliedIfActive: 0
     minPoints: 0
     maxPoints: 100
     Points: 0
-    defaultSpeed: 50
+    defaultSpeed: 10
     defalutPoints: 0
     activeTimer: 0
     activeTime: 1
     waitTimer: 0
-    waitTime: 1
+    waitTime: 5
+    StartModifiers:
+    - type: 7
+      startEffectType: 0
+      target: 0
+    - type: 2
+      startEffectType: 1
+      target: 4
+    - type: 6
+      startEffectType: 3
+      target: 0
+    DamageModifiers:
+    - type: 7
+      multiplier: 100
+    - type: 3
+      multiplier: 0.1
     status: {fileID: 0}
     visuals:
       name: 
@@ -72,15 +97,25 @@ MonoBehaviour:
       activeColor: {r: 1, g: 1, b: 1, a: 1}
   - name: Stun
     type: 4
+    isActive: 0
+    canBeAppliedIfActive: 0
     minPoints: 0
     maxPoints: 100
     Points: 0
-    defaultSpeed: 10
+    defaultSpeed: 50
     defalutPoints: 0
     activeTimer: 0
-    activeTime: 5
+    activeTime: 3
     waitTimer: 0
     waitTime: 1
+    StartModifiers:
+    - type: 3
+      startEffectType: 0
+      target: 0
+    - type: 4
+      startEffectType: 1
+      target: 5
+    DamageModifiers: []
     status: {fileID: 0}
     visuals:
       name: 
@@ -91,6 +126,8 @@ MonoBehaviour:
       activeColor: {r: 1, g: 1, b: 1, a: 1}
   - name: Deaf
     type: 5
+    isActive: 0
+    canBeAppliedIfActive: 1
     minPoints: 0
     maxPoints: 100
     Points: 0
@@ -100,6 +137,8 @@ MonoBehaviour:
     activeTime: 1
     waitTimer: 0
     waitTime: 1
+    StartModifiers: []
+    DamageModifiers: []
     status: {fileID: 0}
     visuals:
       name: 
@@ -110,6 +149,8 @@ MonoBehaviour:
       activeColor: {r: 1, g: 1, b: 1, a: 1}
   - name: Freeze
     type: 3
+    isActive: 0
+    canBeAppliedIfActive: 0
     minPoints: 0
     maxPoints: 100
     Points: 100
@@ -119,6 +160,14 @@ MonoBehaviour:
     activeTime: 10
     waitTimer: 0
     waitTime: 1
+    StartModifiers:
+    - type: 1
+      startEffectType: 2
+      target: 1
+    - type: 7
+      startEffectType: 2
+      target: 7
+    DamageModifiers: []
     status: {fileID: 0}
     visuals:
       name: 
@@ -129,6 +178,8 @@ MonoBehaviour:
       activeColor: {r: 1, g: 1, b: 1, a: 1}
   - name: Poison
     type: 6
+    isActive: 0
+    canBeAppliedIfActive: 0
     minPoints: 0
     maxPoints: 100
     Points: 0
@@ -138,6 +189,10 @@ MonoBehaviour:
     activeTime: 10
     waitTimer: 0
     waitTime: 1
+    StartModifiers: []
+    DamageModifiers:
+    - type: 0
+      multiplier: 2
     status: {fileID: 0}
     visuals:
       name: 
@@ -148,6 +203,8 @@ MonoBehaviour:
       activeColor: {r: 1, g: 1, b: 1, a: 1}
   - name: Water
     type: 7
+    isActive: 0
+    canBeAppliedIfActive: 1
     minPoints: 0
     maxPoints: 100
     Points: 0
@@ -157,6 +214,11 @@ MonoBehaviour:
     activeTime: 10
     waitTimer: 0
     waitTime: 1
+    StartModifiers:
+    - type: 1
+      startEffectType: 2
+      target: 1
+    DamageModifiers: []
     status: {fileID: 0}
     visuals:
       name: 

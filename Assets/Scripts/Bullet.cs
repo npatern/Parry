@@ -6,6 +6,7 @@ public class Bullet : MonoBehaviour
 {
     public float obsoleteDamage = 1;
     public DamageEffects damage;
+    public float multiplier = 1;
     public bool DestroyAfterDamage = true;
     public bool isDamaging = true;
     public ParticleSystem ParticlesToKill;
@@ -30,7 +31,7 @@ public class Bullet : MonoBehaviour
     {
         if (item == null || isDamaging==false) return;
          
-        if (item.CastDamage(damage))
+        if (item.CastDamage(damage, multiplier))
         {
             if (this.TryGetComponent<StatusController>(out StatusController status))
             {
@@ -48,13 +49,13 @@ public class Bullet : MonoBehaviour
         {
             StatusController statusController = collision.gameObject.GetComponent<StatusController>();
              
-            bounced = !statusController.TryTakeDamage(damage, GetComponent<StatusController>(), ShooterPosition);
+            bounced = !statusController.TryTakeDamage(damage,  ShooterPosition, multiplier, GetComponent<StatusController>());
         }
         if (bounced)
         {
             rb.velocity *= -1;
             //transform.localScale *= 1.5f;
-            obsoleteDamage *= 2;
+            multiplier *= 2;
         }
         else if (DestroyAfterDamage)
         {

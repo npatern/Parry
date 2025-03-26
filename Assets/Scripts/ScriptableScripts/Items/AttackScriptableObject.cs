@@ -74,7 +74,7 @@ public class AttackScriptableObject : ScriptableObject
                 {
                     
                     //toolsController.CastDamage(toolsController.CurrentWeaponWrapper.Damage* attackScriptableObject.DamageMultiplayer);
-                    toolsController.IsDamaging = !toolsController.CurrentWeaponWrapper.CastDamage(toolsController.CurrentWeaponWrapper.Effects, toolsController.statusController);
+                    toolsController.IsDamaging = !toolsController.CurrentWeaponWrapper.CastDamage(toolsController.CurrentWeaponWrapper.Effects, attackScriptableObject.DamageMultiplayer, toolsController.statusController);
 
                 }
                 //combat.WeaponVelocity = goToPosition-combat.CurrentWeapon.localPosition/Time.deltaTime;

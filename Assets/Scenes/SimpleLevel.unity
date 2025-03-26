@@ -20054,6 +20054,7 @@ MonoBehaviour:
     name: 
     type: 0
     isActive: 0
+    canBeAppliedIfActive: 0
     minPoints: 0
     maxPoints: 100
     Points: 100
@@ -20075,6 +20076,7 @@ MonoBehaviour:
     name: 
     type: 0
     isActive: 0
+    canBeAppliedIfActive: 0
     minPoints: 0
     maxPoints: 100
     Points: 100
