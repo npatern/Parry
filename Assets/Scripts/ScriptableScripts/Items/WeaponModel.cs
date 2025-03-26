@@ -9,13 +9,16 @@ public class WeaponModel : MonoBehaviour
     public Transform EndPoint;
     //public Collider collider;
     public TrailRenderer[] trails;
+    public ParticleSystem[] particles;
     private void Awake()
     {
         trails = GetComponentsInChildren<TrailRenderer>();
+        particles = GetComponentsInChildren<ParticleSystem>();
     }
     public void SetWeapon(bool state)
     {
         SetTrail(state);
+        SetParticles(state);
     }
     public void SetTrail(bool state)
     {
@@ -24,5 +27,14 @@ public class WeaponModel : MonoBehaviour
             trail.emitting = state;
         }
     }
-     
+    public void SetParticles(bool state)
+    {
+        foreach (ParticleSystem particle in particles)
+        {
+            if (state)
+                particle.Play();
+            else
+                particle.Stop();
+        }
+    }
 }

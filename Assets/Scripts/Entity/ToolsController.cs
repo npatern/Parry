@@ -54,7 +54,6 @@ public class ToolsController : MonoBehaviour
         statusController.IsAttackedEvent.AddListener(PerformAttacked);
         //statusController.IsKilledEvent.AddListener(PerformAttacked);
         if (TESTCurrentWeaponScriptable == null) return;
-        if (CurrentWeaponWrapper==null)
         EquipWeapon(new ItemWeaponWrapper(TESTCurrentWeaponScriptable));
     }
     private void FixedUpdate()

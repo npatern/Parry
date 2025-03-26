@@ -63,7 +63,7 @@ public class UIBarController : MonoBehaviour
     }
     public bool SetCircleBar()
     {
-        //if (stat.Points == stat.minPoints) return false;
+        if (stat.Points == stat.minPoints) return false;
         bar.localScale = new Vector3(bar.localScale.x, stat.GetValue(), bar.localScale.y);
         timeValue = stat.GetTimerValue();
         timeBar.fillAmount = timeValue;

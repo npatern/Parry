@@ -74,11 +74,23 @@ public class Stats
 
         return null;
     }
+    public bool IsStatActive(Stat.Types _type)
+    {
+        Stat _stat = GetStat(_type);
+        if (_stat == null) return false;
+        return _stat.IsActive();
+    }
+    public void MakeActive(Stat.Types _type)
+    {
+        Stat _stat = GetStat(_type);
+        if (_stat == null) return;
+        _stat.ApplyFullEffect();
+    }
 }
 [System.Serializable]
 public class Stat
 {
-    public enum Types { BLEEDING, FIRE, ELECTRIC, FREEZE, STUN, DEAF, POISON }
+    public enum Types { BLEEDING, FIRE, ELECTRIC, FREEZE, STUN, DEAF, POISON, WATER }
 
     
     public string name;
@@ -89,8 +101,10 @@ public class Stat
     public float Points = 100;
     public float defaultSpeed = 0;
     public float defalutPoints = 0;
-    public float timer = 0;
-    public float time = 10;
+    public float activeTimer = 0;
+    public float activeTime = 10;
+    public float waitTimer = 0;
+    public float waitTime = 1;
     public StatusController status = null;
     public EffectVisuals visuals = null;
     //public List<DamageEffect> effects;
@@ -98,7 +112,7 @@ public class Stat
     {
         if (effect.type != type) return;
         float _damage = effect.points * multiplier;
-        Points += effect.points*multiplier;
+        AddPoints(effect.points*multiplier);
          Color color = Color.white;
         if (visuals == null) GetVisuals();
         color = visuals.color;
@@ -125,12 +139,14 @@ public class Stat
         Points = 100;
         defaultSpeed = 0;
         defalutPoints = 0;
-        timer = 0;
-        time = 10;
+        activeTimer = 0;
+        activeTime = 10;
         status = null;
+        waitTimer = 0;
+        waitTime = 1;
 
-        //effects = new List<DamageEffect>();
-    }
+    //effects = new List<DamageEffect>();
+}
     public Stat(Stat cloned)
     {
         name = cloned.name;
@@ -141,8 +157,8 @@ public class Stat
         Points = cloned.Points;
         defaultSpeed = cloned.defaultSpeed;
         defalutPoints = cloned.defalutPoints;
-        timer = cloned.timer;
-        time = cloned.time;
+        activeTimer = cloned.activeTimer;
+        activeTime = cloned.activeTime;
         status = cloned.status;
 
         //effects = new List<DamageEffect>();
@@ -153,7 +169,7 @@ public class Stat
     }
     public bool IsActive()
     {
-        return timer > 0;
+        return isActive;
     }
     public float GetValue()
     {
@@ -161,31 +177,93 @@ public class Stat
     }
     public float GetTimerValue()
     {
-        return timer / time;
+        return activeTimer / activeTime;
+    }
+    public float AddPoints(float _points, bool stopDefaulting = true)
+    {
+        Points += _points;
+        if (stopDefaulting)
+            waitTimer = waitTime;
+        return _points;
     }
     public void ApplyFullEffect(float _timer = 0)
     {
-        Points = maxPoints;
-        if (_timer == 0) _timer = time;
-        if (_timer > timer) timer = _timer;
+        AddPoints(maxPoints - Points);
+        if (_timer == 0) _timer = activeTime;
+        if (_timer > activeTimer) activeTimer = _timer;
+        if (!isActive) OnActiveStart();
         isActive = true;
+    }
+    public bool IsWaiting()
+    {
+        if (waitTimer > 0) return true;
+        else return false;
     }
     public void Tick()
     {
         RefreshEffect();
-        if (timer > 0) 
+        if (activeTimer > 0) 
         {
-            timer -= Time.fixedDeltaTime;
-            if (timer <= 0) ResetEffect();
+            activeTimer -= Time.fixedDeltaTime;
+            if (activeTimer <= 0) ResetEffect();
         }
-
-        if (!isActive)
+        if (waitTimer > 0)
+        {
+            waitTimer -= Time.fixedDeltaTime;
+            if (waitTimer <= 0) waitTimer = 0;
+        }
+        if (!isActive && !IsWaiting())  
             MakeDefault();
+
+        if (isActive)
+            OnActiveTick();
+      
+    }
+    public void OnActiveStart()
+    {
+        switch (type)
+        {
+            case Types.ELECTRIC:
+                if (status.stats.IsStatActive(Stat.Types.WATER)) status.stats.GetStat(Types.STUN).ApplyFullEffect();
+                if (status.stats.IsStatActive(Stat.Types.WATER)) status.Kill();
+                if (status.stats.IsStatActive(Stat.Types.FREEZE)) ResetEffect();
+                break;
+            case Types.FIRE:
+                if (status.stats.IsStatActive(Stat.Types.WATER)) ResetEffect();
+                if (status.stats.IsStatActive(Stat.Types.FREEZE)) ResetEffect();
+                break;
+            case Types.WATER:
+                if (status.stats.IsStatActive(Stat.Types.FIRE)) ResetEffect();
+                if (status.stats.IsStatActive(Stat.Types.ELECTRIC)) status.Kill();
+                break;
+            case Types.FREEZE:
+                if (status.stats.IsStatActive(Stat.Types.FIRE)) ResetEffect();
+                if (status.stats.IsStatActive(Stat.Types.ELECTRIC)) ResetEffect();
+                break;
+        }
+    }
+    public void OnActiveTick()
+    {
+
+    }
+    public void OnActiveEnd()
+    {
+
     }
     public void MakeDefault()
     {
-        if (Points > defalutPoints) defalutPoints -= defaultSpeed * Time.fixedDeltaTime;
-        if (Points < defalutPoints) defalutPoints += defaultSpeed * Time.fixedDeltaTime;
+        if (Points > defalutPoints) 
+        { 
+            Points -= defaultSpeed * Time.fixedDeltaTime;
+            if (Points < defalutPoints)
+                Points = defalutPoints;
+        }
+        if (Points < defalutPoints) 
+        {
+            Points += defaultSpeed * Time.fixedDeltaTime;
+            if (Points > defalutPoints)
+                Points = defalutPoints;
+        } 
     }
     public void RefreshEffect()
     {
@@ -196,7 +274,8 @@ public class Stat
     }
     public void ResetEffect()
     {
-        timer = 0;
+        activeTimer = 0;
+        OnActiveEnd();
         isActive = false;
         Points = defalutPoints;
     }

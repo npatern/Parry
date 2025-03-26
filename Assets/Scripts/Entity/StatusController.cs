@@ -168,9 +168,8 @@ public class StatusController : MonoBehaviour, IHear
             }
             else
             {
-                //attacker.TakePosture(damage.Damage * CriticalMultiplier, attacker);
-                float stunDamage = damage.Damage * CriticalMultiplier;
-                attacker.ApplyEffect(stunDamage, Stat.Types.STUN);
+                attacker.TakePosture(damage.Damage * CriticalMultiplier, attacker);
+      
                 
                 attacker.IsAttackedEvent.Invoke();
             }
@@ -256,10 +255,10 @@ public class StatusController : MonoBehaviour, IHear
     public bool TakePosture(float damage, StatusController attacker)
     {
         if (IsStunned()) return false;
-        Effect effect = new Effect(damage, Stat.Types.STUN);
-
-
-
+        ApplyEffect(damage, Stat.Types.STUN);
+        
+        
+        /*
         if (IsStunnedOBSOLETE) return false;
         postureDelayTimer = postureRegenerationDelayTime;
         if(this != attacker)
@@ -270,6 +269,7 @@ public class StatusController : MonoBehaviour, IHear
             Posture = 0;
             IsStunnedEvent.Invoke();
         }
+        */
         return true;
     }
     

@@ -18,68 +18,150 @@ MonoBehaviour:
     minPoints: 0
     maxPoints: 100
     Points: 0
-    defaultSpeed: 0
+    defaultSpeed: 50
     defalutPoints: 0
-    timer: 0
-    time: 0
+    activeTimer: 0
+    activeTime: 10
+    waitTimer: 0
+    waitTime: 1
     status: {fileID: 0}
+    visuals:
+      name: 
+      type: 0
+      sprite: {fileID: 0}
+      iconColor: {r: 1, g: 1, b: 1, a: 1}
+      color: {r: 1, g: 1, b: 1, a: 1}
+      activeColor: {r: 1, g: 1, b: 1, a: 1}
   - name: Fire
     type: 1
     minPoints: 0
     maxPoints: 100
     Points: 0
-    defaultSpeed: -1
+    defaultSpeed: 10
     defalutPoints: 0
-    timer: 0
-    time: 10
+    activeTimer: 0
+    activeTime: 10
+    waitTimer: 0
+    waitTime: 1
     status: {fileID: 0}
+    visuals:
+      name: 
+      type: 0
+      sprite: {fileID: 0}
+      iconColor: {r: 1, g: 1, b: 1, a: 1}
+      color: {r: 1, g: 1, b: 1, a: 1}
+      activeColor: {r: 1, g: 1, b: 1, a: 1}
   - name: Electric
     type: 2
     minPoints: 0
-    maxPoints: 1
+    maxPoints: 100
     Points: 0
-    defaultSpeed: 0
+    defaultSpeed: 50
     defalutPoints: 0
-    timer: 0
-    time: 5
+    activeTimer: 0
+    activeTime: 1
+    waitTimer: 0
+    waitTime: 1
     status: {fileID: 0}
+    visuals:
+      name: 
+      type: 0
+      sprite: {fileID: 0}
+      iconColor: {r: 1, g: 1, b: 1, a: 1}
+      color: {r: 1, g: 1, b: 1, a: 1}
+      activeColor: {r: 1, g: 1, b: 1, a: 1}
   - name: Stun
     type: 4
     minPoints: 0
     maxPoints: 100
     Points: 0
-    defaultSpeed: -1
+    defaultSpeed: 10
     defalutPoints: 0
-    timer: 0
-    time: 5
+    activeTimer: 0
+    activeTime: 10
+    waitTimer: 0
+    waitTime: 1
     status: {fileID: 0}
-  - name: Stun
+    visuals:
+      name: 
+      type: 0
+      sprite: {fileID: 0}
+      iconColor: {r: 1, g: 1, b: 1, a: 1}
+      color: {r: 1, g: 1, b: 1, a: 1}
+      activeColor: {r: 1, g: 1, b: 1, a: 1}
+  - name: Deaf
     type: 5
     minPoints: 0
     maxPoints: 100
     Points: 0
-    defaultSpeed: -1
+    defaultSpeed: 100
     defalutPoints: 0
-    timer: 0
-    time: 5
+    activeTimer: 0
+    activeTime: 10
+    waitTimer: 0
+    waitTime: 1
     status: {fileID: 0}
-  - name: Stun
+    visuals:
+      name: 
+      type: 0
+      sprite: {fileID: 0}
+      iconColor: {r: 1, g: 1, b: 1, a: 1}
+      color: {r: 1, g: 1, b: 1, a: 1}
+      activeColor: {r: 1, g: 1, b: 1, a: 1}
+  - name: Freeze
     type: 3
     minPoints: 0
     maxPoints: 100
     Points: 100
-    defaultSpeed: -10
+    defaultSpeed: 10
     defalutPoints: 0
-    timer: 20
-    time: 20
+    activeTimer: 0
+    activeTime: 10
+    waitTimer: 0
+    waitTime: 1
     status: {fileID: 0}
+    visuals:
+      name: 
+      type: 0
+      sprite: {fileID: 0}
+      iconColor: {r: 1, g: 1, b: 1, a: 1}
+      color: {r: 1, g: 1, b: 1, a: 1}
+      activeColor: {r: 1, g: 1, b: 1, a: 1}
   - name: Poison
     type: 6
     minPoints: 0
     maxPoints: 100
     Points: 0
-    defaultSpeed: -1
+    defaultSpeed: 10
     defalutPoints: 0
-    timer: 0
-    time: 5
+    activeTimer: 0
+    activeTime: 10
+    waitTimer: 0
+    waitTime: 1
     status: {fileID: 0}
+    visuals:
+      name: 
+      type: 0
+      sprite: {fileID: 0}
+      iconColor: {r: 1, g: 1, b: 1, a: 1}
+      color: {r: 1, g: 1, b: 1, a: 1}
+      activeColor: {r: 1, g: 1, b: 1, a: 1}
+  - name: Water
+    type: 7
+    minPoints: 0
+    maxPoints: 100
+    Points: 0
+    defaultSpeed: 10
+    defalutPoints: 0
+    activeTimer: 0
+    activeTime: 10
+    waitTimer: 0
+    waitTime: 1
+    status: {fileID: 0}
+    visuals:
+      name: 
+      type: 0
+      sprite: {fileID: 0}
+      iconColor: {r: 1, g: 1, b: 1, a: 1}
+      color: {r: 1, g: 1, b: 1, a: 1}
+      activeColor: {r: 1, g: 1, b: 1, a: 1}
