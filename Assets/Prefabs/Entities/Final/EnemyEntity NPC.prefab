@@ -19,10 +19,6 @@ PrefabInstance:
       propertyPath: ColliderSize
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 193002233852398124, guid: b655d7d83c0abe148967a3c8fd0e18dc, type: 3}
-      propertyPath: TESTCurrentWeaponScriptable
-      value: 
-      objectReference: {fileID: 11400000, guid: c0e191147ed6a0a458e627a6b2f9cfb3, type: 2}
     - target: {fileID: 193002233852398126, guid: b655d7d83c0abe148967a3c8fd0e18dc, type: 3}
       propertyPath: m_RootOrder
       value: 0

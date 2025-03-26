@@ -78,7 +78,7 @@ MonoBehaviour:
     defaultSpeed: 10
     defalutPoints: 0
     activeTimer: 0
-    activeTime: 10
+    activeTime: 5
     waitTimer: 0
     waitTime: 1
     status: {fileID: 0}
@@ -97,7 +97,7 @@ MonoBehaviour:
     defaultSpeed: 100
     defalutPoints: 0
     activeTimer: 0
-    activeTime: 10
+    activeTime: 1
     waitTimer: 0
     waitTime: 1
     status: {fileID: 0}

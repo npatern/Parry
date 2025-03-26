@@ -25,7 +25,7 @@ MonoBehaviour:
     Damage: 25
     effects:
     - type: 6
-      points: 15
+      points: 35
   AttackDistance: 5.5
   Damage: 25
   BulletDamage: 10

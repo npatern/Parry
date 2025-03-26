@@ -20053,6 +20053,7 @@ MonoBehaviour:
   HealthStat:
     name: 
     type: 0
+    isActive: 0
     minPoints: 0
     maxPoints: 100
     Points: 100
@@ -20073,6 +20074,7 @@ MonoBehaviour:
   StunStat:
     name: 
     type: 0
+    isActive: 0
     minPoints: 0
     maxPoints: 100
     Points: 100
@@ -27307,7 +27309,7 @@ MonoBehaviour:
     Damage: 0
     effects:
     - type: 7
-      points: 10
+      points: 50
   TickTime: 0.25
 --- !u!65 &1587842706
 BoxCollider:
@@ -27342,7 +27344,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: c3f94f152f1b3e94191961251bb306c2, type: 2}
+  - {fileID: 2100000, guid: 4fda748d983c0bf47ac8f3b6c3d0e939, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -27380,7 +27382,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1587842704}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.23, y: 0.35, z: -27.2}
+  m_LocalPosition: {x: 8.32, y: -0.12, z: -26.19}
   m_LocalScale: {x: 4, y: 0.63426, z: 4}
   m_ConstrainProportionsScale: 0
   m_Children:

@@ -95,7 +95,7 @@ public class Stat
     
     public string name;
     public Types type;
-    bool isActive = false;
+    public bool isActive = false;
     public float minPoints = 0;
     public float maxPoints = 100;
     public float Points = 100;
@@ -188,11 +188,11 @@ public class Stat
     }
     public void ApplyFullEffect(float _timer = 0)
     {
-        AddPoints(maxPoints - Points);
+        AddPoints(maxPoints);
         if (_timer == 0) _timer = activeTime;
         if (_timer > activeTimer) activeTimer = _timer;
-        if (!isActive) OnActiveStart();
         isActive = true;
+        if (!isActive) OnActiveStart();
     }
     public bool IsWaiting()
     {
@@ -202,11 +202,7 @@ public class Stat
     public void Tick()
     {
         RefreshEffect();
-        if (activeTimer > 0) 
-        {
-            activeTimer -= Time.fixedDeltaTime;
-            if (activeTimer <= 0) ResetEffect();
-        }
+        
         if (waitTimer > 0)
         {
             waitTimer -= Time.fixedDeltaTime;
@@ -238,13 +234,17 @@ public class Stat
                 break;
             case Types.FREEZE:
                 if (status.stats.IsStatActive(Stat.Types.FIRE)) ResetEffect();
-                if (status.stats.IsStatActive(Stat.Types.ELECTRIC)) ResetEffect();
+                if (status.stats.IsStatActive(Stat.Types.STUN)) status.Kill();
                 break;
         }
     }
     public void OnActiveTick()
     {
-
+        if (activeTimer > 0)
+        {
+            activeTimer -= Time.fixedDeltaTime;
+            if (activeTimer <= 0) ResetEffect();
+        }
     }
     public void OnActiveEnd()
     {
