@@ -36,7 +36,7 @@ MonoBehaviour:
   BulletDamage: 10
   bullet: {fileID: 1011653268010487846, guid: 5020f73af13002c47b5e06d859c540c0, type: 3}
   stack: 0
-  LightAttack: {fileID: 11400000, guid: 17a22128a5063be4696eee155d611cfe, type: 2}
+  LightAttack: {fileID: 11400000, guid: f4bf4512d4d56154f84d22f0af0428b5, type: 2}
   HeavyAttack: {fileID: 11400000, guid: 442da46444774f7488ccb73a573b2d98, type: 2}
   Parry: {fileID: 11400000, guid: 5b2d68fd282092941ae729c5b1fd085a, type: 2}
   Equip: {fileID: 11400000, guid: 65fe576159b855647a81ba2e79d21c37, type: 2}

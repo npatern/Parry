@@ -58,7 +58,7 @@ public class EffectVisuals
     public Color iconColor = Color.white;
     public Color color = Color.white;
     public Color activeColor = Color.white;
-
+    public ParticleSystem particles;
 }
 public static class Barks
 {

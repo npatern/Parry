@@ -687,7 +687,6 @@ Transform:
   - {fileID: 734144062334620488}
   - {fileID: 6411344441041869775}
   - {fileID: 1281280053344928154}
-  - {fileID: 8142663263417017452}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1249,65 +1248,3 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!1001 &7715544974899318127
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 3823714102769063788}
-    m_Modifications:
-    - target: {fileID: 1879006402118461699, guid: 6398f0fdfe5e30f46a9e654dff7db756, type: 3}
-      propertyPath: m_RootOrder
-      value: 12
-      objectReference: {fileID: 0}
-    - target: {fileID: 1879006402118461699, guid: 6398f0fdfe5e30f46a9e654dff7db756, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1879006402118461699, guid: 6398f0fdfe5e30f46a9e654dff7db756, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0.385
-      objectReference: {fileID: 0}
-    - target: {fileID: 1879006402118461699, guid: 6398f0fdfe5e30f46a9e654dff7db756, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0.861
-      objectReference: {fileID: 0}
-    - target: {fileID: 1879006402118461699, guid: 6398f0fdfe5e30f46a9e654dff7db756, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 0.50000024
-      objectReference: {fileID: 0}
-    - target: {fileID: 1879006402118461699, guid: 6398f0fdfe5e30f46a9e654dff7db756, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: -0.5000003
-      objectReference: {fileID: 0}
-    - target: {fileID: 1879006402118461699, guid: 6398f0fdfe5e30f46a9e654dff7db756, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: -0.49999973
-      objectReference: {fileID: 0}
-    - target: {fileID: 1879006402118461699, guid: 6398f0fdfe5e30f46a9e654dff7db756, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0.49999985
-      objectReference: {fileID: 0}
-    - target: {fileID: 1879006402118461699, guid: 6398f0fdfe5e30f46a9e654dff7db756, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1879006402118461699, guid: 6398f0fdfe5e30f46a9e654dff7db756, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: -90
-      objectReference: {fileID: 0}
-    - target: {fileID: 1879006402118461699, guid: 6398f0fdfe5e30f46a9e654dff7db756, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 90
-      objectReference: {fileID: 0}
-    - target: {fileID: 8984319716663259600, guid: 6398f0fdfe5e30f46a9e654dff7db756, type: 3}
-      propertyPath: m_Name
-      value: Particle System Electric
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 6398f0fdfe5e30f46a9e654dff7db756, type: 3}
---- !u!4 &8142663263417017452 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 1879006402118461699, guid: 6398f0fdfe5e30f46a9e654dff7db756, type: 3}
-  m_PrefabInstance: {fileID: 7715544974899318127}
-  m_PrefabAsset: {fileID: 0}

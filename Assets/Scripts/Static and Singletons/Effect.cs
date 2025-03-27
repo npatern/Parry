@@ -164,9 +164,12 @@ public class Stat
         if (effect.type != type) return;
         multiplier *= GetMultiplierFromModifiers();
         float _damage = effect.points * multiplier;
-        AddPoints(effect.points*multiplier);
-         Color color = Color.white;
+        if (_damage == 0) return;
         if (visuals == null) GetVisuals();
+        status.SpawnParticles(visuals.particles, status.bodyTransform, 2, .2f );
+        AddPoints(effect.points*multiplier);
+        Color color = Color.white;
+        
         color = visuals.color;
         UIController.Instance.SpawnDamageNr("" + _damage, status.transform, color, multiplier>1);
         RefreshEffect();

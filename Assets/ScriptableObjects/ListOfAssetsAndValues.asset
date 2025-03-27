@@ -34,48 +34,56 @@ MonoBehaviour:
     iconColor: {r: 0, g: 0, b: 0, a: 1}
     color: {r: 1, g: 0.5226415, b: 0.69486505, a: 1}
     activeColor: {r: 1, g: 0, b: 0.36078432, a: 1}
+    particles: {fileID: 109076319348595970, guid: fee6cfb4b2e208a4b9c502bdee8cd89c, type: 3}
   - name: Fire
     type: 1
     sprite: {fileID: 21300000, guid: eb1230397392f2a4bb0e439089bec23f, type: 3}
     iconColor: {r: 0, g: 0, b: 0, a: 1}
     color: {r: 1, g: 0.8146726, b: 0.5226415, a: 1}
     activeColor: {r: 1, g: 0.6117647, b: 0, a: 1}
+    particles: {fileID: 8855710220419540035, guid: 9be527214d8c71a42843b361c05d6429, type: 3}
   - name: Electric
     type: 2
     sprite: {fileID: 21300000, guid: abbfd37cafbbdbe4ea4807eb4d357125, type: 3}
     iconColor: {r: 0, g: 0, b: 0, a: 1}
     color: {r: 0.3339622, g: 0.42173466, b: 1, a: 1}
     activeColor: {r: 0, g: 0.13178301, b: 1, a: 1}
+    particles: {fileID: 4363768245524065656, guid: 6398f0fdfe5e30f46a9e654dff7db756, type: 3}
   - name: Freeze
     type: 3
     sprite: {fileID: 21300000, guid: d87773b0a8a45b34988470a94acc5025, type: 3}
     iconColor: {r: 0, g: 0, b: 0, a: 1}
     color: {r: 0.45660377, g: 0.944595, b: 1, a: 1}
     activeColor: {r: 0, g: 0.8980392, b: 1, a: 1}
+    particles: {fileID: 3945553010265667219, guid: 523c8803dc44ee34bbcb7be6796e4f8d, type: 3}
   - name: Stun
     type: 4
     sprite: {fileID: 21300000, guid: 93b915f9514fc9d42a31829019c9e4b5, type: 3}
     iconColor: {r: 0, g: 0, b: 0, a: 1}
     color: {r: 1, g: 1, b: 0.57924527, a: 1}
     activeColor: {r: 0.994719, g: 1, b: 0, a: 1}
+    particles: {fileID: 3945553010265667219, guid: dab8157cfa1131544b12da1c8b6f6b98, type: 3}
   - name: Deaf
     type: 5
     sprite: {fileID: 21300000, guid: 6e7d7992a67cf484aa7b66b00a534c05, type: 3}
     iconColor: {r: 0, g: 0, b: 0, a: 1}
     color: {r: 0.84595764, g: 0.4943396, b: 1, a: 1}
     activeColor: {r: 0.69411767, g: 0, b: 1, a: 1}
+    particles: {fileID: 3945553010265667219, guid: ea0f9580b965ecc4a85660de31055bdc, type: 3}
   - name: Poison
     type: 6
     sprite: {fileID: 21300000, guid: 60f7fde062f588b4eba194115da59494, type: 3}
     iconColor: {r: 0, g: 0, b: 0, a: 1}
     color: {r: 0.7057196, g: 1, b: 0.6924528, a: 1}
     activeColor: {r: 0.04143238, g: 1, b: 0, a: 1}
+    particles: {fileID: 109076319348595970, guid: 6c2db40fd68caab4eb0ed5c4d5a89c20, type: 3}
   - name: Water
     type: 7
     sprite: {fileID: 21300000, guid: d561b39a7038fb746a405fe185f8dfa6, type: 3}
     iconColor: {r: 0, g: 0, b: 0, a: 1}
     color: {r: 0, g: 0.6784314, b: 0.7647059, a: 1}
     activeColor: {r: 0, g: 0.8871794, b: 1, a: 1}
+    particles: {fileID: 109076319348595970, guid: 3f782619aaee8f34fbd752a65080276e, type: 3}
   DefaultEntityStats: {fileID: 11400000, guid: 664b86df3a2e0d74b862701ca2fdce47, type: 2}
   enemies:
   - {fileID: 8799387768682952896, guid: a0ae99d5a5341c441873358d634c2e1a, type: 3}

@@ -41,6 +41,8 @@ Transform:
   - {fileID: 182294722932965200}
   - {fileID: 4358339908198517929}
   - {fileID: 7223868770192980540}
+  - {fileID: 455268600605076333}
+  - {fileID: 1621136739020263911}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -134,6 +136,7 @@ MonoBehaviour:
   statsSource: {fileID: 11400000, guid: 16439299c17ce0540b8a6c59e2797a4e, type: 2}
   stats:
     stats: []
+    status: {fileID: 0}
   IsPlayer: 0
   CriticalMultiplier: 1
   SpeedMultiplier: 1
@@ -141,26 +144,58 @@ MonoBehaviour:
   HealthStat:
     name: 
     type: 0
+    isActive: 0
+    canBeAppliedIfActive: 0
     minPoints: 0
     maxPoints: 100
     Points: 100
     defaultSpeed: 0
-    timer: 0
-    time: 1
+    defalutPoints: 0
+    activeTimer: 0
+    activeTime: 10
+    waitTimer: 0
+    waitTime: 1
+    StartModifiers: []
+    DamageModifiers: []
+    status: {fileID: 0}
+    visuals:
+      name: 
+      type: 0
+      sprite: {fileID: 0}
+      iconColor: {r: 1, g: 1, b: 1, a: 1}
+      color: {r: 1, g: 1, b: 1, a: 1}
+      activeColor: {r: 1, g: 1, b: 1, a: 1}
+      particles: {fileID: 0}
   StunStat:
     name: 
     type: 0
+    isActive: 0
+    canBeAppliedIfActive: 0
     minPoints: 0
     maxPoints: 100
     Points: 100
     defaultSpeed: 0
-    timer: 0
-    time: 1
+    defalutPoints: 0
+    activeTimer: 0
+    activeTime: 10
+    waitTimer: 0
+    waitTime: 1
+    StartModifiers: []
+    DamageModifiers: []
+    status: {fileID: 0}
+    visuals:
+      name: 
+      type: 0
+      sprite: {fileID: 0}
+      iconColor: {r: 1, g: 1, b: 1, a: 1}
+      color: {r: 1, g: 1, b: 1, a: 1}
+      activeColor: {r: 1, g: 1, b: 1, a: 1}
+      particles: {fileID: 0}
   MaxLife: 100
   Posture: 100
   movementSpeedMultiplier: 1
   IsKilled: 0
-  IsStunned: 0
+  IsStunnedOBSOLETE: 0
   DestroyOnKill: 0
   IsAttackedEvent:
     m_PersistentCalls:
@@ -171,6 +206,8 @@ MonoBehaviour:
   OnKillEvent:
     m_PersistentCalls:
       m_Calls: []
+  headTransform: {fileID: 455268600605076333}
+  bodyTransform: {fileID: 1621136739020263911}
   scaleParticles: 0
   DamageEffect: {fileID: 1025925495283513676, guid: 6c885e1c2fbbaa84ebc9107d0af1a252, type: 3}
   ParryEffect: {fileID: 5829956603799595035, guid: c230284ada2da5c4d99f033287009091, type: 3}
@@ -563,6 +600,37 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!1 &810139978345535019
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1621136739020263911}
+  m_Layer: 8
+  m_Name: BodyTransform
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1621136739020263911
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 810139978345535019}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 1, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4513487943860601247}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1711511227801431317
 GameObject:
   m_ObjectHideFlags: 0
@@ -760,6 +828,37 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!1 &6359199381254828963
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 455268600605076333}
+  m_Layer: 8
+  m_Name: HeadTransform
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &455268600605076333
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6359199381254828963}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 1.5, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4513487943860601247}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7844577734792278103
 GameObject:
   m_ObjectHideFlags: 0

@@ -55,6 +55,8 @@ MonoBehaviour:
     IsProtected: 0
     IsDamaging: 0
     IsFiring: 0
+    IsThrowing: 0
+    IsDisarming: 0
     SkipIfPlayer: 0
     MovementOffset: {x: 0, y: 0, z: 0}
     SoundRange: 0
@@ -106,9 +108,11 @@ MonoBehaviour:
     IsProtected: 0
     IsDamaging: 0
     IsFiring: 1
+    IsThrowing: 0
+    IsDisarming: 0
     SkipIfPlayer: 0
     MovementOffset: {x: 0, y: 0, z: 0}
-    SoundRange: 2
+    SoundRange: 1
     soundType: 0
   - StepName: AI ONLY
     LockMovement: 1
@@ -157,6 +161,8 @@ MonoBehaviour:
     IsProtected: 0
     IsDamaging: 0
     IsFiring: 0
+    IsThrowing: 0
+    IsDisarming: 0
     SkipIfPlayer: 1
     MovementOffset: {x: 0, y: 0, z: 0}
     SoundRange: 0
@@ -199,6 +205,8 @@ MonoBehaviour:
     IsProtected: 0
     IsDamaging: 0
     IsFiring: 0
+    IsThrowing: 0
+    IsDisarming: 0
     SkipIfPlayer: 0
     MovementOffset: {x: 0, y: 0, z: 0}
     SoundRange: 0
@@ -250,6 +258,8 @@ MonoBehaviour:
     IsProtected: 0
     IsDamaging: 0
     IsFiring: 0
+    IsThrowing: 0
+    IsDisarming: 0
     SkipIfPlayer: 0
     MovementOffset: {x: 0, y: 0, z: 0}
     SoundRange: 0

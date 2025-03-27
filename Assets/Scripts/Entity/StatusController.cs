@@ -32,6 +32,9 @@ public class StatusController : MonoBehaviour, IHear
     public UnityEvent IsStunnedEvent;
     public UnityEvent OnKillEvent;
 
+    public Transform headTransform;
+    public Transform bodyTransform;
+
     [SerializeField]
     private bool scaleParticles = false;
     [SerializeField]
@@ -198,6 +201,7 @@ public class StatusController : MonoBehaviour, IHear
         float _damage = damage.Damage;
         bool isCritical = false;
         isCritical = MultiplyDamage(attacker);
+        if (_damage>0)
         SpawnParticles(DamageEffect, transform);
         if (isCritical)
             if (attacker != null) multiplier *= attacker.CriticalMultiplier;
@@ -271,10 +275,11 @@ public class StatusController : MonoBehaviour, IHear
         return true;
     }
     
-    void SpawnParticles(ParticleSystem particles, Transform position,float destroyLength = 10, float newLifetime = -1)
+    public void SpawnParticles(ParticleSystem particles, Transform position,float destroyLength = 10, float newLifetime = -1)
     {
         if (particles == null) return;
         ParticleSystem newParticles = Instantiate(particles.gameObject, position).GetComponent<ParticleSystem>();
+         
         if (DestroyOnKill) newParticles.transform.parent = null;
         if (newLifetime>=0) 
         {
