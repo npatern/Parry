@@ -276,7 +276,7 @@ public class ToolsController : MonoBehaviour
         WeaponModel weaponModel = CurrentWeaponWrapper.CurrentWeaponObject.GetComponent<WeaponModel>();
         Bullet bullet = Instantiate(CurrentWeaponWrapper.itemType.bullet, weaponModel.StartPoint.position, CurrentWeaponWrapper.CurrentWeaponObject.transform.rotation, GameController.Instance.GarbageCollector.transform).GetComponent<Bullet>();
         bullet.obsoleteDamage = CurrentWeaponWrapper.itemType.Damage;
-        bullet.damage = CurrentWeaponWrapper.Effects;
+        bullet.damage = CurrentWeaponWrapper.bulletEffects;
         Rigidbody bulletRB = bullet.GetComponent<Rigidbody>();
         bulletRB.AddRelativeForce(Vector3.forward * 1000, ForceMode.Acceleration);
         Debug.Log("bullet fired!");

@@ -10,31 +10,31 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1ea5dd123d6c3344986f4d254d27bda1, type: 3}
-  m_Name: Weapon Item Gun
+  m_Name: Weapon Item StunGun
   m_EditorClassIdentifier: 
-  ItemName: Gun
-  ID: gun
-  Description: Shoots.
+  ItemName: StunGun
+  ID: stunGun
+  Description: Shoots electric
   Stackable: 0
   Big: 0
-  weaponObject: {fileID: 3823714102769063789, guid: d6505c315b1827b45b3bc77c4f7717b5, type: 3}
+  weaponObject: {fileID: 3823714102769063789, guid: 30941a8b55d69f343922a88650a6a89c, type: 3}
   icon: {fileID: 0}
   emptyhanded: 0
   attackPattern: {fileID: 8930655107102755286, guid: 9fff009433f6c5043906c1e3ce808b93, type: 3}
   Effects:
-    Damage: 10
+    Damage: 5
     effects:
     - type: 4
-      points: 60
+      points: 25
   bulletEffects:
-    Damage: 25
+    Damage: 0
     effects:
-    - type: 0
-      points: 60
+    - type: 2
+      points: 55
   AttackDistance: 15
   Damage: 30
   BulletDamage: 10
-  bullet: {fileID: 7333040839881901861, guid: 638fc67caf9cfa2489d6fbff0cde7216, type: 3}
+  bullet: {fileID: 1011653268010487846, guid: 5020f73af13002c47b5e06d859c540c0, type: 3}
   stack: 0
   LightAttack: {fileID: 11400000, guid: 17a22128a5063be4696eee155d611cfe, type: 2}
   HeavyAttack: {fileID: 11400000, guid: 442da46444774f7488ccb73a573b2d98, type: 2}

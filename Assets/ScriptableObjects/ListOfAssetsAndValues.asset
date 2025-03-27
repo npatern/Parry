@@ -23,6 +23,10 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 0c9792609d327fe48a15eb39b6aee771, type: 2}
   - {fileID: 11400000, guid: fd69bf0d8e8ff534d8879fe1060b7556, type: 2}
   - {fileID: 11400000, guid: 38b021a3c0d2d8b4a88e9cc76ec6e461, type: 2}
+  - {fileID: 11400000, guid: 4b72f790b56247446b1ee66b07f2922a, type: 2}
+  - {fileID: 11400000, guid: 4b72f790b56247446b1ee66b07f2922a, type: 2}
+  - {fileID: 11400000, guid: 25c2569e3d4805d4c834210e3eec3986, type: 2}
+  - {fileID: 11400000, guid: 25c2569e3d4805d4c834210e3eec3986, type: 2}
   EffectVisuals:
   - name: Bleeding
     type: 0

@@ -22,6 +22,11 @@ MonoBehaviour:
   emptyhanded: 0
   attackPattern: {fileID: 8930655107102755286, guid: 9fff009433f6c5043906c1e3ce808b93, type: 3}
   Effects:
+    Damage: 10
+    effects:
+    - type: 4
+      points: 60
+  bulletEffects:
     Damage: 20
     effects:
     - type: 0

@@ -93,13 +93,40 @@ public class StartEffectModifier
     public Stat.Types type;
     public enum StartEffectTypes { KILL, FULLTARGET, EMPTYTARGET, EMPTYME}
     public StartEffectTypes startEffectType;
-    public Stat.Types target;
+    public Stat.Types targetType;
+    public void ApplyStartEffect(StatusController _status)
+    {
+        Stat _typeToCheck = _status.stats.GetStat(type);
+        if (_typeToCheck == null) return;
+        if (!_typeToCheck.IsActive()) return;
+        Stat _target = _status.stats.GetStat(targetType);
+        switch (startEffectType)
+        {
+            case StartEffectTypes.KILL:
+                _status.Kill();
+                break;
+            case StartEffectTypes.FULLTARGET:
+                if (_target != null) _target.ApplyFullEffect();
+                break;
+            case StartEffectTypes.EMPTYTARGET:
+                if (_target != null) _target.ResetEffect();
+                break;
+            case StartEffectTypes.EMPTYME:
+                if (_target != null) _typeToCheck.ResetEffect();
+                break;
+        }
+    }
 }
 [System.Serializable]
 public class DamageEffectMultiplier
 {
-    public Stat.Types type;
+    public Stat.Types typeThatIsActive;
     public float multiplier = 1;
+    public float GetMultiplayer(Stats _stats)
+    {
+        if (_stats.IsStatActive(typeThatIsActive)) return multiplier;
+        else return 1;
+    }
 }
 [System.Serializable]
 public class Stat
@@ -124,15 +151,24 @@ public class Stat
     public EffectVisuals visuals = null;
    
     //public List<DamageEffect> effects;
+    public float GetMultiplierFromModifiers()
+    {
+        float _multiplier = 1;
+        foreach (DamageEffectMultiplier damageEffect in DamageModifiers) 
+            _multiplier*=damageEffect.GetMultiplayer(status.stats);
+
+        return _multiplier;
+    }
     public void ApplyEffect(Effect effect, float multiplier = 1)
     {
         if (effect.type != type) return;
+        multiplier *= GetMultiplierFromModifiers();
         float _damage = effect.points * multiplier;
         AddPoints(effect.points*multiplier);
          Color color = Color.white;
         if (visuals == null) GetVisuals();
         color = visuals.color;
-        UIController.Instance.SpawnDamageNr("" + _damage, status.transform, color, multiplier!=1);
+        UIController.Instance.SpawnDamageNr("" + _damage, status.transform, color, multiplier>1);
         RefreshEffect();
 
     }
@@ -144,7 +180,6 @@ public class Stat
             {
                 visuals = _visuals;
             }
-
         }
     }
     public Stat()
@@ -161,9 +196,10 @@ public class Stat
         status = null;
         waitTimer = 0;
         waitTime = 1;
+        DamageModifiers = new DamageEffectMultiplier[0];
 
     //effects = new List<DamageEffect>();
-}
+    }
     public Stat(Stat cloned)
     {
         name = cloned.name;
@@ -178,7 +214,8 @@ public class Stat
         activeTimer = cloned.activeTimer;
         activeTime = cloned.activeTime;
         status = cloned.status;
-
+        StartModifiers = cloned.StartModifiers;
+        DamageModifiers = cloned.DamageModifiers;
         //effects = new List<DamageEffect>();
     }
     public Stat(Types _type)
@@ -238,6 +275,11 @@ public class Stat
     public void OnActiveStart()
     {
         isActive = true;
+        foreach (StartEffectModifier startEffect in StartModifiers)
+        {
+            startEffect.ApplyStartEffect(status);
+        }
+        /*
         switch (type)
         {
             case Types.ELECTRIC:
@@ -261,6 +303,7 @@ public class Stat
                 if (status.stats.IsStatActive(Stat.Types.FREEZE)) status.Kill();
                 break;
         }
+        */
         
     }
     public void OnActiveTick()

@@ -16,7 +16,7 @@ public class ItemWeaponScriptableObject : ScriptableObject
     //weapon specific>>
     public AttackPattern attackPattern;
     public DamageEffects Effects;
-
+    public DamageEffects bulletEffects;
     public float AttackDistance = 3f;
     public float Damage = 10;
     public float BulletDamage = 10;
@@ -50,6 +50,7 @@ public class ItemWeaponWrapper
 
     //weapon specific>>
     public DamageEffects Effects;
+    public DamageEffects bulletEffects;
     public AttackPattern attackPattern;
     public float AttackDistance = 3f;
     public float Damage = 10;
@@ -64,6 +65,7 @@ public class ItemWeaponWrapper
         Damage = scriptableObject.Damage;
         ItemName = scriptableObject.ItemName;
         Effects = scriptableObject.Effects;
+        bulletEffects = scriptableObject.bulletEffects;
         name = scriptableObject.ItemName;
         ID = scriptableObject.ID;
         Description = scriptableObject.Description;
@@ -76,7 +78,7 @@ public class ItemWeaponWrapper
         Damage = scriptableObject.Damage;
         BulletDamage = scriptableObject.BulletDamage;
         Bullet = scriptableObject.bullet;
-         emptyhanded = scriptableObject.emptyhanded;
+        emptyhanded = scriptableObject.emptyhanded;
         RefreshIcon();
     }
     public Transform SpawnWeaponObjectAsCurrentObject(Transform parentTransform = null)
