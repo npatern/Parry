@@ -790,6 +790,7 @@ MonoBehaviour:
   StartPoint: {fileID: 6389846705603920431}
   EndPoint: {fileID: 3632829108608922379}
   trails: []
+  particles: []
 --- !u!65 &-8977894861679477025
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -834,15 +835,69 @@ MonoBehaviour:
   Team: 
   size: {x: 1, y: 1, z: 1}
   loadValuesInRealTime: 0
+  statsSource: {fileID: 0}
+  stats:
+    stats: []
+    status: {fileID: 0}
   IsPlayer: 0
   CriticalMultiplier: 4
   SpeedMultiplier: 1
   Life: 100
+  HealthStat:
+    name: 
+    type: 0
+    isActive: 0
+    canBeAppliedIfActive: 0
+    minPoints: 0
+    maxPoints: 100
+    Points: 100
+    defaultSpeed: 0
+    defalutPoints: 0
+    activeTimer: 0
+    activeTime: 10
+    waitTimer: 0
+    waitTime: 1
+    StartModifiers: []
+    DamageModifiers: []
+    status: {fileID: 0}
+    visuals:
+      name: 
+      type: 0
+      sprite: {fileID: 0}
+      iconColor: {r: 1, g: 1, b: 1, a: 1}
+      color: {r: 1, g: 1, b: 1, a: 1}
+      activeColor: {r: 1, g: 1, b: 1, a: 1}
+      particles: {fileID: 0}
+  StunStat:
+    name: 
+    type: 0
+    isActive: 0
+    canBeAppliedIfActive: 0
+    minPoints: 0
+    maxPoints: 100
+    Points: 100
+    defaultSpeed: 0
+    defalutPoints: 0
+    activeTimer: 0
+    activeTime: 10
+    waitTimer: 0
+    waitTime: 1
+    StartModifiers: []
+    DamageModifiers: []
+    status: {fileID: 0}
+    visuals:
+      name: 
+      type: 0
+      sprite: {fileID: 0}
+      iconColor: {r: 1, g: 1, b: 1, a: 1}
+      color: {r: 1, g: 1, b: 1, a: 1}
+      activeColor: {r: 1, g: 1, b: 1, a: 1}
+      particles: {fileID: 0}
   MaxLife: 100
   Posture: 100
   movementSpeedMultiplier: 1
   IsKilled: 0
-  IsStunned: 0
+  IsStunnedOBSOLETE: 0
   DestroyOnKill: 0
   IsAttackedEvent:
     m_PersistentCalls:
@@ -853,6 +908,8 @@ MonoBehaviour:
   OnKillEvent:
     m_PersistentCalls:
       m_Calls: []
+  headTransform: {fileID: 0}
+  bodyTransform: {fileID: 0}
   scaleParticles: 0
   DamageEffect: {fileID: 0}
   ParryEffect: {fileID: 0}

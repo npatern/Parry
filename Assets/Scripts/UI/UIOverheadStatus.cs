@@ -8,8 +8,6 @@ public class UIOverheadStatus : MonoBehaviour
     [SerializeField]
     private UIBarController HealthBar;
     [SerializeField]
-    private UIBarController PostureBar;
-    [SerializeField]
     private UIBarController LightBar;
     [SerializeField]
     private UIBarController AwarenessBar;
@@ -93,7 +91,7 @@ public class UIOverheadStatus : MonoBehaviour
             Destroy(this.gameObject);
             return;
         }
-        ApplyValues(statusController.Life, statusController.Posture, statusController.IsStunnedOBSOLETE);
+        ApplyValues(statusController.Life);
         FollowTarget(statusController.transform);
 
         InfoTextTimer -= Time.deltaTime;
@@ -108,10 +106,10 @@ public class UIOverheadStatus : MonoBehaviour
         InfoText.text = text;
         
     }
-    public void ApplyValues(float health, float posture, bool isStunned = false)
+    public void ApplyValues(float health)
     {
         HealthBar.gameObject.SetActive(ApplyHealthBar(health));
-        PostureBar.gameObject.SetActive(ApplyStunBar(posture, isStunned));
+       // PostureBar.gameObject.SetActive(ApplyStunBar(posture, isStunned));
         LightBar.gameObject.SetActive(ApplyLightBar());
         AwarenessBar.gameObject.SetActive(ApplyAwarenessBar());
         SoundBar.gameObject.SetActive(ApplySoundBar());
@@ -136,15 +134,7 @@ public class UIOverheadStatus : MonoBehaviour
         Vector3 screenPosition = Camera.main.WorldToScreenPoint(target.position + Vector3.up * 3);
         transform.position = screenPosition;
     }
-    bool ApplyStunBar(float posture, bool isStunned)
-    {
-        if (posture > 99) return false;
-        if (isStunned)
-            PostureBar.SetBarValue(100 - posture, 100, 0, true);
-        else
-            PostureBar.SetBarValue(100 - posture);
-        return true;
-    }
+     
     bool ApplyLightBar()
     {
         if (outwardController == null) return false;

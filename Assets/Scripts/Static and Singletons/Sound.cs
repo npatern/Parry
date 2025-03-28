@@ -32,4 +32,12 @@ public class Sound
         type = _type;
         if (_status.IsDeaf() && type != TYPES.cover) range = 0;
     }
+    public Sound(Vector3 _position, float _range, TYPES _type = TYPES.neutral)
+    {
+        range = _range;
+        position = _position;
+        statusController = null;
+        EntityInfo = null;
+        type = _type;
+    }
 }

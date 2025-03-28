@@ -42,7 +42,6 @@ GameObject:
   - component: {fileID: 1219534622613265631}
   - component: {fileID: 7744130853371712961}
   - component: {fileID: 6090607486352048342}
-  - component: {fileID: 7268857159949670739}
   m_Layer: 0
   m_Name: Capsule
   m_TagString: Untagged
@@ -115,20 +114,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!136 &7268857159949670739
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1836005496884798095}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  m_Radius: 0.5
-  m_Height: 2
-  m_Direction: 1
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &2080104733309709357
 GameObject:
   m_ObjectHideFlags: 0
@@ -816,8 +801,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 0
   serializedVersion: 2
-  m_Size: {x: 0.25, y: 0.85367155, z: 1.7879591}
-  m_Center: {x: 0, y: 0.053741217, z: 0.6547775}
+  m_Size: {x: 0.25, y: 1.25, z: 1.4}
+  m_Center: {x: 0, y: 0.31, z: 0.17}
 --- !u!54 &-1131207935277110543
 Rigidbody:
   m_ObjectHideFlags: 0

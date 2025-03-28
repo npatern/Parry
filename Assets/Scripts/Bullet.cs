@@ -33,11 +33,6 @@ public class Bullet : MonoBehaviour
          
         if (item.CastDamage(damage, multiplier))
         {
-            if (this.TryGetComponent<StatusController>(out StatusController status))
-            {
-                Sound sound = new Sound(status, SoundRange, soundType);
-                Sounds.MakeSound(sound);
-            }
             isDamaging = false;
             Destroy(GetComponent<Bullet>());
         }
@@ -50,6 +45,11 @@ public class Bullet : MonoBehaviour
             StatusController statusController = collision.gameObject.GetComponent<StatusController>();
              
             bounced = !statusController.TryTakeDamage(damage,  ShooterPosition, multiplier, GetComponent<StatusController>());
+        }
+        else
+        {
+            Sound sound = new Sound(transform.position, SoundRange, soundType);
+            Sounds.MakeSound(sound);
         }
         if (bounced)
         {
@@ -72,8 +72,8 @@ public class Bullet : MonoBehaviour
                 //transform.parent = collision.transform.parent;
                 //item.RemoveRigidBody();
                 if (this.TryGetComponent<StatusController>(out StatusController status)){
-                    Sound sound = new Sound(status, SoundRange, soundType);
-                    Sounds.MakeSound(sound);
+                    //Sound sound = new Sound(status, SoundRange, soundType);
+                    //Sounds.MakeSound(sound);
                 }
                 Destroy(GetComponent<Bullet>());
             }
@@ -85,16 +85,21 @@ public class Bullet : MonoBehaviour
     }
     private void OnTriggerEnter(Collider collision)
     {
-        isDamaging = false;
+        
         if (item != null) return;
+        isDamaging = false;
         HandleHit(collision);
     }
-    private void OnColliderEnter(Collider collision)
+    
+    private void OnCollisionEnter(Collision collision)
     {
         if (item == null) 
-            HandleHit(collision);
+            HandleHit(collision.collider);
         else
         {
+            Debug.Log("COLISSION!!!");
+            Sound sound = new Sound(transform.position, SoundRange, soundType);
+            Sounds.MakeSound(sound);
             isDamaging = false;
             Destroy(GetComponent<Bullet>());
         }

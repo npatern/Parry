@@ -717,8 +717,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 0
   serializedVersion: 2
-  m_Size: {x: 0.25, y: 0.85367155, z: 1.7879591}
-  m_Center: {x: 0, y: 0.053741217, z: 0.6547775}
+  m_Size: {x: 0.25, y: 0.85367155, z: 1.14}
+  m_Center: {x: 0, y: 0, z: 0.29}
 --- !u!54 &-1131207935277110543
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -782,6 +782,7 @@ MonoBehaviour:
       iconColor: {r: 1, g: 1, b: 1, a: 1}
       color: {r: 1, g: 1, b: 1, a: 1}
       activeColor: {r: 1, g: 1, b: 1, a: 1}
+      particles: {fileID: 0}
   StunStat:
     name: 
     type: 0
@@ -806,6 +807,7 @@ MonoBehaviour:
       iconColor: {r: 1, g: 1, b: 1, a: 1}
       color: {r: 1, g: 1, b: 1, a: 1}
       activeColor: {r: 1, g: 1, b: 1, a: 1}
+      particles: {fileID: 0}
   MaxLife: 100
   Posture: 100
   movementSpeedMultiplier: 1
@@ -821,6 +823,8 @@ MonoBehaviour:
   OnKillEvent:
     m_PersistentCalls:
       m_Calls: []
+  headTransform: {fileID: 0}
+  bodyTransform: {fileID: 0}
   scaleParticles: 0
   DamageEffect: {fileID: 0}
   ParryEffect: {fileID: 0}

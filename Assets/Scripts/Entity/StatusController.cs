@@ -22,7 +22,6 @@ public class StatusController : MonoBehaviour, IHear
     public Stat StunStat;
 
     public float MaxLife = 100;
-    public float Posture = 100;
     public float movementSpeedMultiplier = 1;
     public bool IsKilled = false;
     public bool IsStunnedOBSOLETE = false;
@@ -136,7 +135,7 @@ public class StatusController : MonoBehaviour, IHear
         
         if (toolsController == null)
         {
-            TakeDamage(damage, multiplier, attacker);
+            TakeDamageEffect(damage, multiplier, attacker);
             return true;
         }
         if (toolsController.IsDodging) return false;
@@ -189,16 +188,17 @@ public class StatusController : MonoBehaviour, IHear
             return true;
         }
         
-        TakeDamage(damage, multiplier, attacker, isFromBullet);
+        TakeDamageEffect(damage, multiplier, attacker, isFromBullet);
         return true;
     }
     public float GetStunndedTimerValue()
     {
         return stunnedTimer / postureStunnedRegenerationTime;
     }
-    public void TakeDamage(DamageEffects damage,float multiplier=1, StatusController attacker = null, bool isFromBullet = false)
+    
+    public void TakeDamageEffect(DamageEffects damageEffect,float multiplier=1, StatusController attacker = null, bool isFromBullet = false)
     {
-        float _damage = damage.Damage;
+        float _damage = damageEffect.Damage;
         bool isCritical = false;
         isCritical = MultiplyDamage(attacker);
          
@@ -208,25 +208,29 @@ public class StatusController : MonoBehaviour, IHear
            
    
        
-        damage.ApplyEffects(stats, multiplier);
+        damageEffect.ApplyEffects(stats, multiplier);
         
 
         if (_damage * multiplier <= 0)
         {
-            if (damage.effects.Length > 0 && sensesController != null)
+            if (damageEffect.effects.Length > 0 && sensesController != null)
                 sensesController.AddAwarenessOnce(35 );
 
             return;
         }
-            
+
+        TakeDamage(_damage,Color.red, multiplier, attacker, isFromBullet, isCritical);
+    }
+    public void TakeDamage(float _damage, Color color, float multiplier = 1, StatusController attacker = null, bool isFromBullet = false, bool isCritical = false )
+    {
 
         Life -= _damage * multiplier;
         SpawnParticles(DamageEffect, transform);
 
-        UIController.Instance.SpawnDamageNr("" + _damage* multiplier, transform,Color.red, isCritical);
-        if (Life <= 0 && !IsKilled) 
+        UIController.Instance.SpawnDamageNr("" + _damage * multiplier, transform, color, isCritical);
+        if (Life <= 0 && !IsKilled)
         {
-            Kill(attacker);
+            KillSelf(attacker);
             Sound sound = new Sound(this, 2, Sound.TYPES.danger);
             Sounds.MakeSound(sound);
         }
@@ -235,10 +239,10 @@ public class StatusController : MonoBehaviour, IHear
             if (sensesController != null)
             {
                 UIController.Instance.SpawnTextBubble(Barks.GetBark(Barks.BarkTypes.onPain), transform);
-               
+
                 sensesController.Awareness = 100;
                 if (!isFromBullet)
-                    sensesController.SetCurrentTarget( attacker);
+                    sensesController.SetCurrentTarget(attacker);
                 Sound sound = new Sound(this, 10, Sound.TYPES.neutral);
                 Sounds.MakeSound(sound);
             }
@@ -325,9 +329,9 @@ public class StatusController : MonoBehaviour, IHear
     }
     public void Kill()
     {
-        Kill(null, 0);
+        KillSelf(null, 0);
     }
-    public void Kill(StatusController attacker=null, float damage = 10)
+    public void KillSelf(StatusController attacker=null, float damage = 10)
     {
         IsKilled = true;
         

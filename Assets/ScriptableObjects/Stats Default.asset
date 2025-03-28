@@ -123,7 +123,7 @@ MonoBehaviour:
     activeTimer: 0
     activeTime: 3
     waitTimer: 0
-    waitTime: 1
+    waitTime: 5
     StartModifiers:
     - type: 4
       startEffectType: 1
@@ -131,7 +131,9 @@ MonoBehaviour:
     - type: 3
       startEffectType: 0
       targetType: 0
-    DamageModifiers: []
+    DamageModifiers:
+    - typeThatIsActive: 3
+      multiplier: 2
     status: {fileID: 0}
     visuals:
       name: 
@@ -177,7 +179,7 @@ MonoBehaviour:
     activeTimer: 0
     activeTime: 10
     waitTimer: 0
-    waitTime: 1
+    waitTime: 10
     StartModifiers:
     - type: 1
       startEffectType: 2
@@ -209,9 +211,9 @@ MonoBehaviour:
     defaultSpeed: 10
     defalutPoints: 0
     activeTimer: 0
-    activeTime: 10
+    activeTime: 60
     waitTimer: 0
-    waitTime: 1
+    waitTime: 20
     StartModifiers: []
     DamageModifiers:
     - typeThatIsActive: 0
@@ -237,7 +239,7 @@ MonoBehaviour:
     activeTimer: 0
     activeTime: 10
     waitTimer: 0
-    waitTime: 1
+    waitTime: 20
     StartModifiers:
     - type: 1
       startEffectType: 2

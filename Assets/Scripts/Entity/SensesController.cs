@@ -316,20 +316,31 @@ public class SensesController : MonoBehaviour, IHear
     }
     public void ReactToSound(Sound sound)
     {
-        
         StatusController _target = GetTargetFromSound(sound);
 
+       
         if (Vector3.Distance(eyesSource.position, sound.position) > sound.range) return;
         if (sound.type == Sound.TYPES.cover)
             GetComponent<StatusController>().MakeDeaf();
         if (GetComponent<StatusController>().IsDeaf()) return;
 
         if (sound.type == Sound.TYPES.danger)
-            AddAwarenessOnce(100, _target);
+            if (_target != null)
+                AddAwarenessOnce(100, _target);
+            else
+                AddAwarenessOnce(100, sound.position);
+
         if (sound.type == Sound.TYPES.neutral)
-            AddAwarenessOnce(10, _target);
+        {
+            if (_target != null)
+                AddAwarenessOnce(30, _target);
+            else
+                AddAwarenessOnce(30, sound.position);
+        }
+            
         if (sound.type == Sound.TYPES.continous)
             AddAwarenessContinous(1/2, _target);
+        
 
 
         //GetComponent<EntityController>().currentState.InvestigateSound(GetComponent<EntityController>(),sound.position);

@@ -150,42 +150,12 @@ public class Stat
     public StatusController status = null;
     public EffectVisuals visuals = null;
 
+    float tickTimer = 0;
+    float tickTime = 1;
+
     private ParticleSystem particleInstance = null;
     //public List<DamageEffect> effects;
-    public float GetMultiplierFromModifiers()
-    {
-        float _multiplier = 1;
-        foreach (DamageEffectMultiplier damageEffect in DamageModifiers) 
-            _multiplier*=damageEffect.GetMultiplayer(status.stats);
-
-        return _multiplier;
-    }
-    public void ApplyEffect(Effect effect, float multiplier = 1)
-    {
-        if (effect.type != type) return;
-        multiplier *= GetMultiplierFromModifiers();
-        float _damage = effect.points * multiplier;
-        if (_damage == 0) return;
-        if (visuals == null) GetVisuals();
-        //status.SpawnParticles(visuals.particles, status.bodyTransform, 2, .1f );
-        AddPoints(effect.points*multiplier);
-        Color color = Color.white;
-        
-        color = visuals.color;
-        UIController.Instance.SpawnDamageNr("" + _damage, status.transform, color, multiplier>1);
-        RefreshEffect();
-
-    }
-    void GetVisuals()
-    {
-        foreach (EffectVisuals _visuals in GameController.Instance.ListOfAssets.EffectVisuals)
-        {
-            if (type == _visuals.type)
-            {
-                visuals = _visuals;
-            }
-        }
-    }
+    
     public Stat()
     {
         isActive = false;
@@ -202,6 +172,8 @@ public class Stat
         waitTime = 1;
         //DamageModifiers = new DamageEffectMultiplier[0];
         particleInstance = null;
+        tickTimer = 0;
+        tickTime = 1;
 
         //effects = new List<DamageEffect>();
     }
@@ -222,11 +194,47 @@ public class Stat
         StartModifiers = cloned.StartModifiers;
         DamageModifiers = cloned.DamageModifiers;
         particleInstance = null;
+        tickTimer = cloned.tickTimer;
+        tickTime = cloned.tickTime;
         //effects = new List<DamageEffect>();
     }
     public Stat(Types _type)
     {
         type = _type;
+    }
+    public float GetMultiplierFromModifiers()
+    {
+        float _multiplier = 1;
+        foreach (DamageEffectMultiplier damageEffect in DamageModifiers)
+            _multiplier *= damageEffect.GetMultiplayer(status.stats);
+
+        return _multiplier;
+    }
+    public void ApplyEffect(Effect effect, float multiplier = 1)
+    {
+        if (effect.type != type) return;
+        multiplier *= GetMultiplierFromModifiers();
+        float _damage = effect.points * multiplier;
+        if (_damage == 0) return;
+        if (visuals == null) GetVisuals();
+        //status.SpawnParticles(visuals.particles, status.bodyTransform, 2, .1f );
+        AddPoints(effect.points * multiplier);
+        Color color = Color.white;
+
+        color = visuals.color;
+        //UIController.Instance.SpawnDamageNr("" + _damage, status.transform, color, multiplier > 1);
+        RefreshEffect();
+
+    }
+    void GetVisuals()
+    {
+        foreach (EffectVisuals _visuals in GameController.Instance.ListOfAssets.EffectVisuals)
+        {
+            if (type == _visuals.type)
+            {
+                visuals = _visuals;
+            }
+        }
     }
     public bool IsActive()
     {
@@ -277,7 +285,7 @@ public class Stat
             MakeDefault();
 
         if (isActive)
-            OnActiveTick();
+            OnActiveUpdate();
       
     }
     public void OnActiveStart()
@@ -314,12 +322,34 @@ public class Stat
         */
         
     }
-    public void OnActiveTick()
+    public void OnActiveUpdate()
     {
+        tickTimer += Time.fixedDeltaTime;
+        if (tickTimer > tickTime)
+        {
+            OnActiveTick();
+            tickTimer -= tickTime;
+        }
         if (activeTimer > 0)
         {
             activeTimer -= Time.fixedDeltaTime;
             if (activeTimer <= 0) ResetEffect();
+        }
+    }
+    public void OnActiveTick()
+    {
+        switch (type)
+        {
+            case Types.FIRE:
+                status.TakeDamage(10, visuals.activeColor);
+                break;
+            case Types.POISON:
+                status.TakeDamage(1, visuals.activeColor);
+                break;
+            case Types.BLEEDING:
+                status.TakeDamage(5, visuals.activeColor);
+                break;
+
         }
     }
     public void OnActiveEnd()
