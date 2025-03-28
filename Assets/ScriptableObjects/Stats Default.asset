@@ -26,8 +26,13 @@ MonoBehaviour:
     activeTime: 10
     waitTimer: 0
     waitTime: 1
-    StartModifiers: []
-    DamageModifiers: []
+    StartModifiers:
+    - type: 3
+      startEffectType: 2
+      targetType: 0
+    DamageModifiers:
+    - typeThatIsActive: 4
+      multiplier: 2
     status: {fileID: 0}
     visuals:
       name: 
@@ -36,6 +41,7 @@ MonoBehaviour:
       iconColor: {r: 1, g: 1, b: 1, a: 1}
       color: {r: 1, g: 1, b: 1, a: 1}
       activeColor: {r: 1, g: 1, b: 1, a: 1}
+      particles: {fileID: 0}
   - name: Fire
     type: 1
     isActive: 0
@@ -69,6 +75,7 @@ MonoBehaviour:
       iconColor: {r: 1, g: 1, b: 1, a: 1}
       color: {r: 1, g: 1, b: 1, a: 1}
       activeColor: {r: 1, g: 1, b: 1, a: 1}
+      particles: {fileID: 0}
   - name: Electric
     type: 2
     isActive: 0
@@ -103,6 +110,7 @@ MonoBehaviour:
       iconColor: {r: 1, g: 1, b: 1, a: 1}
       color: {r: 1, g: 1, b: 1, a: 1}
       activeColor: {r: 1, g: 1, b: 1, a: 1}
+      particles: {fileID: 0}
   - name: Stun
     type: 4
     isActive: 0
@@ -116,7 +124,13 @@ MonoBehaviour:
     activeTime: 3
     waitTimer: 0
     waitTime: 1
-    StartModifiers: []
+    StartModifiers:
+    - type: 4
+      startEffectType: 1
+      targetType: 5
+    - type: 3
+      startEffectType: 0
+      targetType: 0
     DamageModifiers: []
     status: {fileID: 0}
     visuals:
@@ -126,6 +140,7 @@ MonoBehaviour:
       iconColor: {r: 1, g: 1, b: 1, a: 1}
       color: {r: 1, g: 1, b: 1, a: 1}
       activeColor: {r: 1, g: 1, b: 1, a: 1}
+      particles: {fileID: 0}
   - name: Deaf
     type: 5
     isActive: 0
@@ -149,13 +164,14 @@ MonoBehaviour:
       iconColor: {r: 1, g: 1, b: 1, a: 1}
       color: {r: 1, g: 1, b: 1, a: 1}
       activeColor: {r: 1, g: 1, b: 1, a: 1}
+      particles: {fileID: 0}
   - name: Freeze
     type: 3
     isActive: 0
     canBeAppliedIfActive: 0
     minPoints: 0
     maxPoints: 100
-    Points: 100
+    Points: 0
     defaultSpeed: 10
     defalutPoints: 0
     activeTimer: 0
@@ -170,11 +186,9 @@ MonoBehaviour:
       startEffectType: 2
       targetType: 7
     DamageModifiers:
-    - typeThatIsActive: 0
+    - typeThatIsActive: 1
       multiplier: 0.5
-    - typeThatIsActive: 0
-      multiplier: 0.5
-    - typeThatIsActive: 0
+    - typeThatIsActive: 7
       multiplier: 2
     status: {fileID: 0}
     visuals:
@@ -184,6 +198,7 @@ MonoBehaviour:
       iconColor: {r: 1, g: 1, b: 1, a: 1}
       color: {r: 1, g: 1, b: 1, a: 1}
       activeColor: {r: 1, g: 1, b: 1, a: 1}
+      particles: {fileID: 0}
   - name: Poison
     type: 6
     isActive: 0
@@ -209,6 +224,7 @@ MonoBehaviour:
       iconColor: {r: 1, g: 1, b: 1, a: 1}
       color: {r: 1, g: 1, b: 1, a: 1}
       activeColor: {r: 1, g: 1, b: 1, a: 1}
+      particles: {fileID: 0}
   - name: Water
     type: 7
     isActive: 0
@@ -227,7 +243,7 @@ MonoBehaviour:
       startEffectType: 2
       targetType: 0
     DamageModifiers:
-    - typeThatIsActive: 0
+    - typeThatIsActive: 1
       multiplier: 0.5
     status: {fileID: 0}
     visuals:
@@ -237,3 +253,4 @@ MonoBehaviour:
       iconColor: {r: 1, g: 1, b: 1, a: 1}
       color: {r: 1, g: 1, b: 1, a: 1}
       activeColor: {r: 1, g: 1, b: 1, a: 1}
+      particles: {fileID: 0}

@@ -149,7 +149,8 @@ public class Stat
     public DamageEffectMultiplier[] DamageModifiers;
     public StatusController status = null;
     public EffectVisuals visuals = null;
-   
+
+    private ParticleSystem particleInstance = null;
     //public List<DamageEffect> effects;
     public float GetMultiplierFromModifiers()
     {
@@ -166,7 +167,7 @@ public class Stat
         float _damage = effect.points * multiplier;
         if (_damage == 0) return;
         if (visuals == null) GetVisuals();
-        status.SpawnParticles(visuals.particles, status.bodyTransform, 2, .2f );
+        //status.SpawnParticles(visuals.particles, status.bodyTransform, 2, .1f );
         AddPoints(effect.points*multiplier);
         Color color = Color.white;
         
@@ -199,9 +200,10 @@ public class Stat
         status = null;
         waitTimer = 0;
         waitTime = 1;
-        DamageModifiers = new DamageEffectMultiplier[0];
+        //DamageModifiers = new DamageEffectMultiplier[0];
+        particleInstance = null;
 
-    //effects = new List<DamageEffect>();
+        //effects = new List<DamageEffect>();
     }
     public Stat(Stat cloned)
     {
@@ -219,6 +221,7 @@ public class Stat
         status = cloned.status;
         StartModifiers = cloned.StartModifiers;
         DamageModifiers = cloned.DamageModifiers;
+        particleInstance = null;
         //effects = new List<DamageEffect>();
     }
     public Stat(Types _type)
@@ -251,7 +254,9 @@ public class Stat
         Points = maxPoints;
         if (_timer == 0) _timer = activeTime;
         if (_timer > activeTimer) activeTimer = _timer;
-        
+        if (visuals == null) GetVisuals();
+        if (particleInstance==null)
+            particleInstance = status.SpawnParticles(visuals.particles, status.bodyTransform,-1,-1);
         if (!isActive) OnActiveStart();
     }
     public bool IsWaiting()
@@ -319,7 +324,8 @@ public class Stat
     }
     public void OnActiveEnd()
     {
-
+        if (particleInstance != null)
+           GameObject.Destroy(particleInstance.gameObject);
     }
     public void MakeDefault()
     {

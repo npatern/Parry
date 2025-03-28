@@ -112,6 +112,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Bullet Poison
       objectReference: {fileID: 0}
+    - target: {fileID: 7333040839881901861, guid: 638fc67caf9cfa2489d6fbff0cde7216, type: 3}
+      propertyPath: soundType
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 638fc67caf9cfa2489d6fbff0cde7216, type: 3}
 --- !u!4 &5242912505183546467 stripped

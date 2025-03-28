@@ -145,7 +145,7 @@ public class StatusController : MonoBehaviour, IHear
         if (attacker!=null) isFromBullet= attacker.GetComponent<Bullet>();
 
         if (sensesController != null)
-            if (isFromBullet && sensesController.IsAlerted) sensesController.currentTargetLastPosition = damageSource;
+            if (isFromBullet ) sensesController.currentTargetLastPosition = damageSource;//&& sensesController.IsAlerted
 
         if (toolsController.IsDisarming)
         {
@@ -201,17 +201,27 @@ public class StatusController : MonoBehaviour, IHear
         float _damage = damage.Damage;
         bool isCritical = false;
         isCritical = MultiplyDamage(attacker);
-        if (_damage>0)
-        SpawnParticles(DamageEffect, transform);
+         
+        
         if (isCritical)
             if (attacker != null) multiplier *= attacker.CriticalMultiplier;
            
    
-        if (attacker!=null)
        
         damage.ApplyEffects(stats, multiplier);
-        Life -= _damage* multiplier;
+        
 
+        if (_damage * multiplier <= 0)
+        {
+            if (damage.effects.Length > 0 && sensesController != null)
+                sensesController.AddAwarenessOnce(35 );
+
+            return;
+        }
+            
+
+        Life -= _damage * multiplier;
+        SpawnParticles(DamageEffect, transform);
 
         UIController.Instance.SpawnDamageNr("" + _damage* multiplier, transform,Color.red, isCritical);
         if (Life <= 0 && !IsKilled) 
@@ -225,6 +235,7 @@ public class StatusController : MonoBehaviour, IHear
             if (sensesController != null)
             {
                 UIController.Instance.SpawnTextBubble(Barks.GetBark(Barks.BarkTypes.onPain), transform);
+               
                 sensesController.Awareness = 100;
                 if (!isFromBullet)
                     sensesController.SetCurrentTarget( attacker);
@@ -275,9 +286,9 @@ public class StatusController : MonoBehaviour, IHear
         return true;
     }
     
-    public void SpawnParticles(ParticleSystem particles, Transform position,float destroyLength = 10, float newLifetime = -1)
+    public ParticleSystem SpawnParticles(ParticleSystem particles, Transform position,float destroyLength = 10, float newLifetime = -1)
     {
-        if (particles == null) return;
+        if (particles == null) return null;
         ParticleSystem newParticles = Instantiate(particles.gameObject, position).GetComponent<ParticleSystem>();
          
         if (DestroyOnKill) newParticles.transform.parent = null;
@@ -290,7 +301,9 @@ public class StatusController : MonoBehaviour, IHear
         }
         if (scaleParticles)
             newParticles.transform.localScale = position.localScale;
+        if (destroyLength>=0)
         Destroy(newParticles.gameObject, destroyLength);
+        return newParticles;
     }
     public bool IsDeaf()
     {

@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 82b1f5da0ed607c449bb0266c4ced8a4, type: 3}
-  m_Name: ListOfAssetsAndValues
+  m_Name: ListOfDefaultAssetsAndValues
   m_EditorClassIdentifier: 
   ambientLightValue: 0.1
   PickableTemplate: {fileID: 6644133888316450086, guid: ba4c80c0bd79ea845bd79e0cfdb60398, type: 3}
@@ -27,6 +27,18 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 4b72f790b56247446b1ee66b07f2922a, type: 2}
   - {fileID: 11400000, guid: 25c2569e3d4805d4c834210e3eec3986, type: 2}
   - {fileID: 11400000, guid: 25c2569e3d4805d4c834210e3eec3986, type: 2}
+  - {fileID: 11400000, guid: d302d7e6c4a12bb4381799b6e3fdc892, type: 2}
+  - {fileID: 11400000, guid: d302d7e6c4a12bb4381799b6e3fdc892, type: 2}
+  - {fileID: 11400000, guid: d302d7e6c4a12bb4381799b6e3fdc892, type: 2}
+  - {fileID: 11400000, guid: d302d7e6c4a12bb4381799b6e3fdc892, type: 2}
+  - {fileID: 11400000, guid: d302d7e6c4a12bb4381799b6e3fdc892, type: 2}
+  - {fileID: 11400000, guid: d302d7e6c4a12bb4381799b6e3fdc892, type: 2}
+  - {fileID: 11400000, guid: d302d7e6c4a12bb4381799b6e3fdc892, type: 2}
+  - {fileID: 11400000, guid: d302d7e6c4a12bb4381799b6e3fdc892, type: 2}
+  - {fileID: 11400000, guid: d302d7e6c4a12bb4381799b6e3fdc892, type: 2}
+  - {fileID: 11400000, guid: d302d7e6c4a12bb4381799b6e3fdc892, type: 2}
+  - {fileID: 11400000, guid: d302d7e6c4a12bb4381799b6e3fdc892, type: 2}
+  - {fileID: 11400000, guid: d302d7e6c4a12bb4381799b6e3fdc892, type: 2}
   EffectVisuals:
   - name: Bleeding
     type: 0
@@ -83,7 +95,7 @@ MonoBehaviour:
     iconColor: {r: 0, g: 0, b: 0, a: 1}
     color: {r: 0, g: 0.6784314, b: 0.7647059, a: 1}
     activeColor: {r: 0, g: 0.8871794, b: 1, a: 1}
-    particles: {fileID: 109076319348595970, guid: 3f782619aaee8f34fbd752a65080276e, type: 3}
+    particles: {fileID: 195143390741181882, guid: 3f782619aaee8f34fbd752a65080276e, type: 3}
   DefaultEntityStats: {fileID: 11400000, guid: 664b86df3a2e0d74b862701ca2fdce47, type: 2}
   enemies:
   - {fileID: 8799387768682952896, guid: a0ae99d5a5341c441873358d634c2e1a, type: 3}

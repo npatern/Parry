@@ -92,12 +92,24 @@ public class SensesController : MonoBehaviour, IHear
     {
         return currentTarget;
     }
- 
-    void AddAwarenessOnce(float awarenessValue, StatusController _target = null)
+
+    public void AddAwarenessOnce(float awarenessValue, StatusController _target = null)
     {
         if (awarenessValue > 0)
             if (_target != null)
                 SetCurrentTarget(_target);
+
+        AddAwarenessOnce(awarenessValue);
+    }
+    public void AddAwarenessOnce(float awarenessValue, Vector3 targetPosition)
+    {
+        if (awarenessValue > 0)
+            currentTargetLastPosition = targetPosition;
+
+        AddAwarenessOnce(awarenessValue);
+    }
+    public void AddAwarenessOnce(float awarenessValue )
+    {
 
         justHeardSmthng = true;
         if (IsAlerted)
