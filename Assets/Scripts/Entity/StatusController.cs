@@ -337,8 +337,12 @@ public class StatusController : MonoBehaviour, IHear
         
         SpawnParticles(DamageEffect, transform, 10, .2f);
         Life = 0;
-        rb.isKinematic = false;
-        rb.constraints = RigidbodyConstraints.None;
+        if (rb != null)
+        {
+            rb.isKinematic = false;
+            rb.constraints = RigidbodyConstraints.None;
+        }
+        
         if (attacker != null)
         {
             Vector3 direction = (transform.position - attacker.transform.position).normalized;

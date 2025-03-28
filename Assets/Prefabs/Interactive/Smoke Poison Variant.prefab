@@ -7,6 +7,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2157291579974494785, guid: 6a10380512d2f2448afc178fcb1eccf3, type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2157291579974494786, guid: 6a10380512d2f2448afc178fcb1eccf3, type: 3}
       propertyPath: NoiseModule.strength.scalar
       value: 0.1
@@ -45,15 +49,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2157291579974494908, guid: 6a10380512d2f2448afc178fcb1eccf3, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -47.73
+      value: -21.3
       objectReference: {fileID: 0}
     - target: {fileID: 2157291579974494908, guid: 6a10380512d2f2448afc178fcb1eccf3, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.0000009536743
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2157291579974494908, guid: 6a10380512d2f2448afc178fcb1eccf3, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 39.32
+      value: -51.7
       objectReference: {fileID: 0}
     - target: {fileID: 2157291579974494908, guid: 6a10380512d2f2448afc178fcb1eccf3, type: 3}
       propertyPath: m_LocalRotation.w
@@ -85,7 +89,34 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2157291579974494909, guid: 6a10380512d2f2448afc178fcb1eccf3, type: 3}
       propertyPath: m_Name
-      value: Smoke Poison Variant
+      value: Smoke Poison Variant (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 2157291579974494909, guid: 6a10380512d2f2448afc178fcb1eccf3, type: 3}
+      propertyPath: m_Layer
+      value: 10
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6a10380512d2f2448afc178fcb1eccf3, type: 3}
+--- !u!1 &8111133476417676972 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2157291579974494909, guid: 6a10380512d2f2448afc178fcb1eccf3, type: 3}
+  m_PrefabInstance: {fileID: 7881499111373245457}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1219172122
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8111133476417676972}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b4c43377766d4dc428a572f3796c3f76, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  effects:
+    Damage: 0
+    effects:
+    - type: 6
+      points: 36
+  TickTime: 0.5
