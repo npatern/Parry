@@ -73,8 +73,8 @@ public class GameController : MonoBehaviour
     void ApplyStunnedPostprocess()
     {
         if (CurrentPlayer == null) return;
-        if (!CurrentPlayer.IsStunned()) StunnedPostProcess.weight = 0;
-        else StunnedPostProcess.weight = CurrentPlayer.GetStunndedTimerValue()*3;
+       // if (!CurrentPlayer.IsStunned()) StunnedPostProcess.weight = 0;
+       // else StunnedPostProcess.weight = CurrentPlayer.stats.GetStat(Stat.Types.STUN).GetTimerValue();
     }
     
     public void SwitchNoctovision()
@@ -98,7 +98,7 @@ public class GameController : MonoBehaviour
                 {
 
                     SetTimeSpeed(slowmospeed);
-                    CurrentPlayer.SpeedMultiplier = CurrentPlayer.SpeedMultiplier / slowmospeed;
+                    CurrentPlayer.SlowmoSpeedMultiplier = CurrentPlayer.SlowmoSpeedMultiplier / slowmospeed;
                 }
                 slowmo = true;
                 slowmoTimer -= Time.fixedDeltaTime;
@@ -109,7 +109,7 @@ public class GameController : MonoBehaviour
                 if (slowmo)
                 {
                     SetTimeSpeed(1);
-                    CurrentPlayer.SpeedMultiplier = CurrentPlayer.SpeedMultiplier * slowmospeed;
+                    CurrentPlayer.SlowmoSpeedMultiplier = CurrentPlayer.SlowmoSpeedMultiplier * slowmospeed;
                 }
                 slowmo = false;
             }

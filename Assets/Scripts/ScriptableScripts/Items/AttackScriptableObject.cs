@@ -66,8 +66,8 @@ public class AttackScriptableObject : ScriptableObject
             while (elapsedTime < waitTime)
             {
                 //combat.CurrentWeapon.localPosition += Vector3.Lerp(Vector3.zero, combat.WeaponVelocity, Time.deltaTime);
-                toolsController.CurrentWeaponWrapper.CurrentWeaponObject.localPosition = Vector3.LerpUnclamped(currentPos, goToPosition, MovementCurve.Evaluate(elapsedTime / WaitTime));
-                toolsController.CurrentWeaponWrapper.CurrentWeaponObject.localRotation = Quaternion.LerpUnclamped(currentRot, goToRotation, MovementCurve.Evaluate(elapsedTime / WaitTime));
+                toolsController.CurrentWeaponWrapper.CurrentWeaponObject.localPosition = Vector3.LerpUnclamped(currentPos, goToPosition, MovementCurve.Evaluate(elapsedTime / waitTime));
+                toolsController.CurrentWeaponWrapper.CurrentWeaponObject.localRotation = Quaternion.LerpUnclamped(currentRot, goToRotation, MovementCurve.Evaluate(elapsedTime / waitTime));
                 elapsedTime += Time.deltaTime;
 
                 if (toolsController.IsDamaging)

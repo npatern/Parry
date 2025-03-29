@@ -177,7 +177,7 @@ MonoBehaviour:
     defaultSpeed: 10
     defalutPoints: 0
     activeTimer: 0
-    activeTime: 10
+    activeTime: 5
     waitTimer: 0
     waitTime: 10
     StartModifiers:

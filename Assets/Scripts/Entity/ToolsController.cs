@@ -50,7 +50,7 @@ public class ToolsController : MonoBehaviour
     private void Start()
     {
 
-        statusController.IsStunnedEvent.AddListener(PerformStunned);
+        statusController.StartStunEvent.AddListener(PerformStunned);
         statusController.IsAttackedEvent.AddListener(PerformAttacked);
         //statusController.IsKilledEvent.AddListener(PerformAttacked);
         if (TESTCurrentWeaponScriptable == null) return;
@@ -63,7 +63,8 @@ public class ToolsController : MonoBehaviour
     public float GetCombatSpeedMultiplier()
     {
         float multiplier = 1;
-        multiplier *= statusController.SpeedMultiplier;
+        multiplier *= statusController.SlowmoSpeedMultiplier;
+        multiplier *= statusController.attackSpeedMultiplier;
         //dodac mnoznik z broni i roznych efektow jak freeze
         return multiplier;
     }
@@ -211,6 +212,11 @@ public class ToolsController : MonoBehaviour
         BreakAttackCoroutines();
         attack = StartCoroutine(PlayAttackSteps(CurrentWeaponWrapper.itemType.Parry, context));
     }
+    public void PerformIdle()
+    {
+        BreakAttackCoroutines();
+        attack = StartCoroutine(PlayAttackSteps(CurrentWeaponWrapper.itemType.Equip));
+    }
 
     public void PerformStunned()
     {
@@ -229,6 +235,7 @@ public class ToolsController : MonoBehaviour
 
         return true;
     }
+
     public IEnumerator PlayAttackSteps(AttackScriptableObject attack, InputAction.CallbackContext context = new InputAction.CallbackContext())
     {
         if (attack == null) yield break;

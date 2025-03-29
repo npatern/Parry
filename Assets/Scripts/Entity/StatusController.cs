@@ -16,19 +16,25 @@ public class StatusController : MonoBehaviour, IHear
     public bool IsPlayer = false;
 
     public float CriticalMultiplier = 4;
-    public float SpeedMultiplier = 1;
+    public float SlowmoSpeedMultiplier = 1;
     public float Life = 100;
     public Stat HealthStat;
     public Stat StunStat;
 
     public float MaxLife = 100;
     public float movementSpeedMultiplier = 1;
+    public float attackSpeedMultiplier = 1;
     public bool IsKilled = false;
     public bool IsStunnedOBSOLETE = false;
     public bool DestroyOnKill = false;
 
     public UnityEvent IsAttackedEvent;
-    public UnityEvent IsStunnedEvent;
+
+    public UnityEvent StartStunEvent;
+    public UnityEvent EndStunEvent;
+    public UnityEvent StartFreezeEvent;
+    public UnityEvent EndFreezeEvent;
+
     public UnityEvent OnKillEvent;
 
     public Transform headTransform;
@@ -49,12 +55,6 @@ public class StatusController : MonoBehaviour, IHear
     private ToolsController toolsController;
     private SensesController sensesController;
 
-    private float postureRegenerationDelayTime = 1f;
-    private float postureDelayTimer = 5f;
-    private float postureRegenerationSpeed = 5f;
-    private float postureStunnedRegenerationTime = 5f;
-    private float stunnedTimer = 0f;
-
     private float deafTimer = 0f;
     public float deafTime = 1f;
 
@@ -66,8 +66,14 @@ public class StatusController : MonoBehaviour, IHear
             toolsController = GetComponent<ToolsController>();
         if (GetComponent<Rigidbody>() != null)
             rb = GetComponent<Rigidbody>();
-        if (IsStunnedEvent == null)
-            IsStunnedEvent = new UnityEvent();
+        if (StartStunEvent == null)
+            StartStunEvent = new UnityEvent();
+        if (StartFreezeEvent == null)
+            StartFreezeEvent = new UnityEvent();
+        if (EndStunEvent == null)
+            EndStunEvent = new UnityEvent();
+        if (EndFreezeEvent == null)
+            EndFreezeEvent = new UnityEvent();
         if (GetComponent<InputController>() != null)
             IsPlayer = true;
         if (OnKillEvent == null)
@@ -75,13 +81,17 @@ public class StatusController : MonoBehaviour, IHear
         if (GetComponent<SensesController>() != null)
             sensesController = GetComponent<SensesController>();
         if (statsSource != null) stats = new Stats(statsSource, this);
+        
     }
     void Start()
     {
         if (UIController.Instance == null) return;
         OverheadController = UIController.Instance.SpawnHealthBar(this).GetComponent<UIOverheadStatus>() ;
-        IsStunnedEvent.AddListener(Stunned);
+        StartStunEvent.AddListener(StunnedStart);
+        StartStunEvent.AddListener(StunnedEnd);
         IsAttackedEvent.AddListener(Attacked);
+        StartFreezeEvent.AddListener(FrozenStart);
+        EndFreezeEvent.AddListener(FrozenEnd);
         LoadStatsFromScriptable(GameController.Instance.ListOfAssets.DefaultEntityStats);
     }
     
@@ -106,21 +116,30 @@ public class StatusController : MonoBehaviour, IHear
     }
     void LoadStatsFromScriptable(EntityStatsScriptableObject scriptable)
     {
-        postureRegenerationDelayTime = scriptable.PostureRegenerationDelayTime;
-        postureRegenerationSpeed = scriptable.PostureRegenerationSpeed;
-        postureStunnedRegenerationTime = scriptable.PostureStunnedRegenerationTime;
         if (PostureEffect == null) PostureEffect = scriptable.PostureEffect;
         if (PostureLongEffect == null) PostureLongEffect = scriptable.PostureLongEffect;
     }
-    public void Stunned()
+    public void StunnedStart()
     {
-        IsStunnedOBSOLETE = true;
-        stunnedTimer = postureStunnedRegenerationTime;
-
-        SpawnParticles(PostureLongEffect, transform, 10, postureStunnedRegenerationTime);
+         
+    }
+    public void StunnedEnd()
+    {
+        
     }
     public void Attacked()
     {
+    }
+    void FrozenStart()
+    {
+        attackSpeedMultiplier = 0f;
+        movementSpeedMultiplier = 0f;
+    }
+    void FrozenEnd()
+    {
+        attackSpeedMultiplier = 1f;
+        movementSpeedMultiplier = 1f;
+        if (toolsController != null) toolsController.PerformIdle();
     }
     
     public bool TryTakeDamage(DamageEffects damage, float multiplier = 1, StatusController attacker = null)
@@ -191,11 +210,7 @@ public class StatusController : MonoBehaviour, IHear
         TakeDamageEffect(damage, multiplier, attacker, isFromBullet);
         return true;
     }
-    public float GetStunndedTimerValue()
-    {
-        return stunnedTimer / postureStunnedRegenerationTime;
-    }
-    
+     
     public void TakeDamageEffect(DamageEffects damageEffect,float multiplier=1, StatusController attacker = null, bool isFromBullet = false)
     {
         float _damage = damageEffect.Damage;

@@ -2,10 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-
+using TMPro;
 public class UIItem : MonoBehaviour
 {
     public Image image;
+    [SerializeField]
+    TextMeshProUGUI ItemName;
+    [SerializeField]
+    TextMeshProUGUI ItemDesc;
+
     public void Update()
     {
         RefreshImage();
@@ -18,5 +23,7 @@ public class UIItem : MonoBehaviour
         if (GameController.Instance.CurrentPlayer.GetComponent<ToolsController>().CurrentWeaponWrapper.icon == null) return;
 
         image.sprite = GameController.Instance.CurrentPlayer.GetComponent<ToolsController>().CurrentWeaponWrapper.icon;
+        ItemName.text = GameController.Instance.CurrentPlayer.GetComponent<ToolsController>().CurrentWeaponWrapper.ItemName;
+        ItemDesc.text = GameController.Instance.CurrentPlayer.GetComponent<ToolsController>().CurrentWeaponWrapper.Description;
     }
 }

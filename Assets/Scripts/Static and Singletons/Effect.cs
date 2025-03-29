@@ -295,6 +295,18 @@ public class Stat
         {
             startEffect.ApplyStartEffect(status);
         }
+
+        if (status == null) return;
+        switch (type)
+        {
+            case Types.STUN:
+                status.StartStunEvent.Invoke();
+                break;
+            case Types.FREEZE:
+                status.StartFreezeEvent.Invoke();
+                break;
+        }
+
         /*
         switch (type)
         {
@@ -320,7 +332,7 @@ public class Stat
                 break;
         }
         */
-        
+
     }
     public void OnActiveUpdate()
     {
@@ -356,6 +368,15 @@ public class Stat
     {
         if (particleInstance != null)
            GameObject.Destroy(particleInstance.gameObject);
+        switch (type)
+        {
+            case Types.STUN:
+                status.EndStunEvent.Invoke();
+                break;
+            case Types.FREEZE:
+                status.EndFreezeEvent.Invoke();                     
+                break;
+        }
     }
     public void MakeDefault()
     {

@@ -117,6 +117,7 @@ public class Idle : State
     public override void Update()
     {
         base.Update();
+        entity.SetAgentSpeedWalk();
         if (entity.CurrentNeed == null)
         {
             entity.FindNextNeed();
@@ -175,6 +176,7 @@ public class UseObject : State
     public override void Update()
     {
         base.Update();
+        entity.SetAgentSpeedWalk();
         if (fulfiller.UserSpot != null)
         {
             entity.transform.position = fulfiller.UserSpot.position;
@@ -218,6 +220,7 @@ public class Investigate : State
     public override void Update()
     {
         base.Update();
+        entity.SetAgentSpeedWalk();
         maxTime -= Time.deltaTime;
         investigatedPosition = sensesController.currentTargetLastPosition;
 
@@ -271,7 +274,7 @@ public class Search : State
     public override void Update()
     {
         base.Update();
-
+        entity.SetAgentSpeedChase();
         if (timer > time)
         {
             UIController.Instance.SpawnTextBubble(Barks.GetBark(Barks.BarkTypes.onSearchStart), entity.transform);
@@ -331,6 +334,7 @@ public class Combat : State
     public override void Update()
     {
         base.Update();
+        entity.SetAgentSpeedChase();
         entity.SetAvoidanceRadius(1.5f);
         combatTarget = sensesController.currentTarget;
         if (combatTarget == null) return;
@@ -376,7 +380,7 @@ public class Flee : State
     public override void Update()
     {
         base.Update();
-        
+        entity.SetAgentSpeedChase();
         statusController.MakeDeaf(statusController.deafTime);
         if (timer > time)
         {

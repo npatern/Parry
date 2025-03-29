@@ -121,7 +121,7 @@ public class EntityController : MonoBehaviour
     }
     public void SetAgentSpeed(float speed)
     {
-        agent.speed = speed;
+        agent.speed = speed * statusController.movementSpeedMultiplier;
     }
     public void SetAgentSpeedChase()
     {

@@ -27,8 +27,13 @@ public class Damage : MonoBehaviour
     }
     private void OnTriggerEnter(Collider other)
     {
-        if (other.TryGetComponent<StatusController>(out StatusController status) != null)
+        if (other.TryGetComponent<StatusController>(out StatusController status))
+        {
             statuses.Add(status);
+            if (status.stats != null)
+                effects.ApplyEffects(status.stats);
+        }
+            
     }
     private void OnTriggerExit(Collider other)
     {
