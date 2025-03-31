@@ -14,7 +14,19 @@ public class GameController : MonoBehaviour
     [SerializeField]
     float timer = 0;
     public Transform GarbageCollector;
-    public static GameController Instance { get; private set; }
+    public static GameController _instance;
+    public static GameController Instance
+    {
+        get
+        {
+            if (_instance == null)
+            {
+                _instance = GameObject.FindObjectOfType<GameController>();
+            }
+
+            return _instance;
+        }
+    }
     public EntityController CurrentEntity = null;
     public GameObject[] Spawners;
     public NeedScriptableObject[] Needs;
@@ -36,15 +48,9 @@ public class GameController : MonoBehaviour
     bool slowmo = false;
     private void Awake()
     {
-        if (Instance != null && Instance != this)
-        {
-            Destroy(this);
-        }
-        else
-        {
-            Instance = this;
-        }
-        
+        //Instance = this;
+        DontDestroyOnLoad(gameObject);
+
         if (StopTimeOnStart) StopTime();
         CollectLevelElements();
         lightControllers = new List<LightController>();

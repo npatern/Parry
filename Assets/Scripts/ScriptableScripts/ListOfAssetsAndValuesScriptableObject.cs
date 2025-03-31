@@ -11,15 +11,17 @@ public class ListOfAssetsAndValuesScriptableObject : ScriptableObject
     public Bullet BulletThrowTemplate;
     public ItemWeaponScriptableObject EmptyWeapon;
     public ItemWeaponScriptableObject[] Weapons;
-    
-    public EffectVisuals[] EffectVisuals;
+
+
     public ItemWeaponScriptableObject GetRandomWeapon()
     {
         return Weapons[Random.Range(0,Weapons.Length)];
     }
 
     [Space(10), Header("Entities")]
-    public EntityStatsScriptableObject DefaultEntityStats;
+    public EntityValuesScriptableObject DefaultEntityValues;
+    public StatsScriptable DefaultEffectStats;
+    public EffectVisuals[] EffectVisuals;
     public GameObject[] enemies;
 
     [Space(10), Header("Barks")]

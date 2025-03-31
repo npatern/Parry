@@ -55,7 +55,7 @@ public class SensesController : MonoBehaviour, IHear
     }
     private void Start()
     {
-        LoadStatsFromScriptable(GameController.Instance.ListOfAssets.DefaultEntityStats);
+        LoadStatsFromScriptable(GameController.Instance.ListOfAssets.DefaultEntityValues);
         if (UIController.Instance != null) UIarrow = UIController.Instance.SpawnAwarenessArrow(this);
     }
     private void Update()
@@ -189,7 +189,7 @@ public class SensesController : MonoBehaviour, IHear
         Awareness = Mathf.Clamp(Awareness, 0, 100);
         justHeardSmthng = false;
     }
-    void LoadStatsFromScriptable(EntityStatsScriptableObject scriptable)
+    void LoadStatsFromScriptable(EntityValuesScriptableObject scriptable)
     {
         awarenessUpTime = scriptable.AwarenessUpTime;
         awarenessDownTime = scriptable.AwarenessDownTime;

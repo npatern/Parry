@@ -56,7 +56,7 @@ public class EntityController : MonoBehaviour
         if (GameController.Instance.Needs.Length>0)
         while (ListOfNeeds.Count < 4)
             ListOfNeeds.Add(GameController.Instance.Needs[Random.Range(0, GameController.Instance.Needs.Length)]);
-        LoadStatsFromScriptable(GameController.Instance.ListOfAssets.DefaultEntityStats);
+        LoadStatsFromScriptable(GameController.Instance.ListOfAssets.DefaultEntityValues);
         HomePosition = transform.position;
         currentState = new Idle(this);
 
@@ -82,7 +82,7 @@ public class EntityController : MonoBehaviour
          
         return;
     }
-    void LoadStatsFromScriptable(EntityStatsScriptableObject scriptable)
+    void LoadStatsFromScriptable(EntityValuesScriptableObject scriptable)
     {
         slowSpeed = scriptable.NPCspeed;
         fastSpeed = scriptable.NPCspeedChase;

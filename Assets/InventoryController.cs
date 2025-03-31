@@ -26,8 +26,7 @@ public class InventoryController : MonoBehaviour
     //public ItemWeaponWrapper handSlot;
     public bool AddToInventory(ItemWeaponWrapper item)
     {
-        Debug.Log("start Add to inventory");
-        ListInventory();
+        
         if (item == null) return false;
         List<ItemWeaponWrapper> list;
         int maxNr = maxSlotsNr;
@@ -59,12 +58,9 @@ public class InventoryController : MonoBehaviour
         }  
        
         if (list.Count >= maxSlotsNr) return false;
-        
+      
         list.Add(item);
-
-
         item.DestroyPhysicalPresence();
-        Debug.Log("End Add to inventory");
         ListInventory();
         return true;
     }

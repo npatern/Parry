@@ -52,7 +52,7 @@ public class InteractionController : MonoBehaviour
     public void Pick(Pickable pick)
     {
         if (pick == null) return;
-        Debug.Log("PICK HAPPENS "+ pick.name);
+        //Debug.Log("PICK HAPPENS "+ pick.name);
         RemoveFromPicks(pick);
         GetComponent<ToolsController>().EquipWeaponFromPickable(pick);
     }

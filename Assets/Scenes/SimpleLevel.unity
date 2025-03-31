@@ -5776,7 +5776,7 @@ Transform:
   - {fileID: 745038160}
   - {fileID: 2112665131}
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &163499842
 PrefabInstance:
@@ -28867,7 +28867,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &964293760
 Transform:
   m_ObjectHideFlags: 0
@@ -35245,7 +35245,6 @@ MonoBehaviour:
   Team: 
   size: {x: 1, y: 1, z: 1}
   loadValuesInRealTime: 0
-  statsSource: {fileID: 0}
   stats:
     stats: []
     status: {fileID: 0}
@@ -35253,56 +35252,6 @@ MonoBehaviour:
   CriticalMultiplier: 4
   SlowmoSpeedMultiplier: 1
   Life: 100
-  HealthStat:
-    name: 
-    type: 0
-    isActive: 0
-    canBeAppliedIfActive: 0
-    minPoints: 0
-    maxPoints: 100
-    Points: 100
-    defaultSpeed: 0
-    defalutPoints: 0
-    activeTimer: 0
-    activeTime: 10
-    waitTimer: 0
-    waitTime: 1
-    StartModifiers: []
-    DamageModifiers: []
-    status: {fileID: 0}
-    visuals:
-      name: 
-      type: 0
-      sprite: {fileID: 0}
-      iconColor: {r: 1, g: 1, b: 1, a: 1}
-      color: {r: 1, g: 1, b: 1, a: 1}
-      activeColor: {r: 1, g: 1, b: 1, a: 1}
-      particles: {fileID: 0}
-  StunStat:
-    name: 
-    type: 0
-    isActive: 0
-    canBeAppliedIfActive: 0
-    minPoints: 0
-    maxPoints: 100
-    Points: 100
-    defaultSpeed: 0
-    defalutPoints: 0
-    activeTimer: 0
-    activeTime: 10
-    waitTimer: 0
-    waitTime: 1
-    StartModifiers: []
-    DamageModifiers: []
-    status: {fileID: 0}
-    visuals:
-      name: 
-      type: 0
-      sprite: {fileID: 0}
-      iconColor: {r: 1, g: 1, b: 1, a: 1}
-      color: {r: 1, g: 1, b: 1, a: 1}
-      activeColor: {r: 1, g: 1, b: 1, a: 1}
-      particles: {fileID: 0}
   MaxLife: 100
   movementSpeedMultiplier: 1
   attackSpeedMultiplier: 1
@@ -49880,7 +49829,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6410340561425525572, guid: abf5878abcdb9624c86c829ab7ca2f5f, type: 3}
       propertyPath: m_RootOrder
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 6410340561425525572, guid: abf5878abcdb9624c86c829ab7ca2f5f, type: 3}
       propertyPath: m_LocalPosition.x
@@ -49955,6 +49904,30 @@ PrefabInstance:
       propertyPath: m_Color.r
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 1358103974940050982, guid: c0c15ffe08ae92c42adabab2246181ce, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1358103974940050982, guid: c0c15ffe08ae92c42adabab2246181ce, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1358103974940050982, guid: c0c15ffe08ae92c42adabab2246181ce, type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1358103974940050982, guid: c0c15ffe08ae92c42adabab2246181ce, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1358103974940050982, guid: c0c15ffe08ae92c42adabab2246181ce, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: -392
+      objectReference: {fileID: 0}
+    - target: {fileID: 1358103974940050982, guid: c0c15ffe08ae92c42adabab2246181ce, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: -330
+      objectReference: {fileID: 0}
     - target: {fileID: 7406794491791214841, guid: c0c15ffe08ae92c42adabab2246181ce, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -49965,7 +49938,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7406794491791214841, guid: c0c15ffe08ae92c42adabab2246181ce, type: 3}
       propertyPath: m_RootOrder
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7406794491791214841, guid: c0c15ffe08ae92c42adabab2246181ce, type: 3}
       propertyPath: m_AnchorMax.x

@@ -45,7 +45,11 @@ public class UIBarController : MonoBehaviour
     }
     public void ApplyStatVisuals()
     {
-        if (stat == null) return;
+        if (stat == null) 
+        {
+            Debug.LogError("Stat not found!");
+            return; 
+        }
         foreach (EffectVisuals _visuals in GameController.Instance.ListOfAssets.EffectVisuals)
         {
             if (stat.type == _visuals.type) 
@@ -65,7 +69,12 @@ public class UIBarController : MonoBehaviour
     }
     public bool SetCircleBar()
     {
-        if (stat.Points == stat.minPoints) return false;
+        if (stat == null) 
+        {
+            Debug.LogError("Didnt find stat!");
+            return true; 
+        } 
+        //if (stat.Points == stat.minPoints) return false;
         bar.localScale = new Vector3(bar.localScale.x, stat.GetValue(), bar.localScale.y);
         timeValue = stat.GetTimerValue();
         timeBar.fillAmount = timeValue;

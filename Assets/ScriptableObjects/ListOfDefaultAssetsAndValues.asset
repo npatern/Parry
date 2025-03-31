@@ -39,6 +39,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: d302d7e6c4a12bb4381799b6e3fdc892, type: 2}
   - {fileID: 11400000, guid: d302d7e6c4a12bb4381799b6e3fdc892, type: 2}
   - {fileID: 11400000, guid: d302d7e6c4a12bb4381799b6e3fdc892, type: 2}
+  DefaultEntityValues: {fileID: 11400000, guid: 664b86df3a2e0d74b862701ca2fdce47, type: 2}
+  DefaultEffectStats: {fileID: 11400000, guid: 16439299c17ce0540b8a6c59e2797a4e, type: 2}
   EffectVisuals:
   - name: Bleeding
     type: 0
@@ -96,7 +98,6 @@ MonoBehaviour:
     color: {r: 0, g: 0.6784314, b: 0.7647059, a: 1}
     activeColor: {r: 0, g: 0.8871794, b: 1, a: 1}
     particles: {fileID: 195143390741181882, guid: 3f782619aaee8f34fbd752a65080276e, type: 3}
-  DefaultEntityStats: {fileID: 11400000, guid: 664b86df3a2e0d74b862701ca2fdce47, type: 2}
   enemies:
   - {fileID: 8799387768682952896, guid: a0ae99d5a5341c441873358d634c2e1a, type: 3}
   - {fileID: 8799387768682952896, guid: 4f635c42499732c49b07fea74a04f6ad, type: 3}

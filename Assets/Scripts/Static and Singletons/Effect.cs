@@ -368,6 +368,7 @@ public class Stat
     {
         if (particleInstance != null)
            GameObject.Destroy(particleInstance.gameObject);
+        if (status == null) return;
         switch (type)
         {
             case Types.STUN:

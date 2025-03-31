@@ -10,7 +10,6 @@ public class StatusController : MonoBehaviour, IHear
     public Vector3 size = Vector3.one;
     [SerializeField]
     private bool loadValuesInRealTime = false;
-    public StatsScriptable statsSource;
     [SerializeField]
     public Stats stats;
     public bool IsPlayer = false;
@@ -18,9 +17,6 @@ public class StatusController : MonoBehaviour, IHear
     public float CriticalMultiplier = 4;
     public float SlowmoSpeedMultiplier = 1;
     public float Life = 100;
-    public Stat HealthStat;
-    public Stat StunStat;
-
     public float MaxLife = 100;
     public float movementSpeedMultiplier = 1;
     public float attackSpeedMultiplier = 1;
@@ -57,6 +53,59 @@ public class StatusController : MonoBehaviour, IHear
 
     private float deafTimer = 0f;
     public float deafTime = 1f;
+    /*
+    [Space(10), Header("PowerSource")]
+
+    public bool NeedsOutsideSource = false;
+    public StatusController powerSource = null;
+    public UnityEvent PowerOffEvent;
+    public UnityEvent PowerOnEvent;
+    public bool HasPower = false;
+    public bool PowerSwitch = true;
+    public bool IsPowerFlowing()
+    {
+        if (PowerSwitch == false) return false;
+        if (IsStunned()) return false;
+        if (IsKilled) return false;
+        if (NeedsOutsideSource)
+        {
+            if (powerSource = null) return false;
+            if (powerSource != this) if (powerSource.HasPower == false) return false;
+        }
+        return true;
+    }
+    public void RefreshPowerFlow()
+    {
+        bool _hadPower = HasPower;
+        bool _hasPower = IsPowerFlowing();
+
+        HasPower = _hasPower;
+        if (HasPower != _hadPower)
+        {
+            if (HasPower)
+                PowerOnEvent.Invoke();
+            else
+                PowerOffEvent.Invoke();
+        }
+    }
+    public void onPowerAwake()
+    {
+        if (PowerOffEvent == null)
+            PowerOffEvent = new UnityEvent();
+        if (PowerOffEvent == null)
+            PowerOnEvent = new UnityEvent();
+        if (!NeedsOutsideSource) return;
+    }
+    public void onPowerStart()
+    {
+        if (!NeedsOutsideSource) return;
+        if (powerSource == this) return;
+        powerSource.PowerOffEvent.AddListener(RefreshPowerFlow);
+        powerSource.PowerOnEvent.AddListener(RefreshPowerFlow);
+        RefreshPowerFlow();
+    }
+
+    */
 
     public UIOverheadStatus OverheadController;
     void Awake()
@@ -80,19 +129,27 @@ public class StatusController : MonoBehaviour, IHear
             OnKillEvent = new UnityEvent();
         if (GetComponent<SensesController>() != null)
             sensesController = GetComponent<SensesController>();
-        if (statsSource != null) stats = new Stats(statsSource, this);
-        
+        stats = new Stats(GameController.Instance.ListOfAssets.DefaultEffectStats, this);
+        if (headTransform == null) headTransform = transform;
+        if (bodyTransform == null) bodyTransform = transform;
+        //onPowerAwake();
     }
     void Start()
     {
-        if (UIController.Instance == null) return;
+        if (UIController.Instance == null)
+        {
+            Debug.LogError("Didnt find UICONTROLLER while starting " + gameObject.name);
+            return;
+        } 
         OverheadController = UIController.Instance.SpawnHealthBar(this).GetComponent<UIOverheadStatus>() ;
         StartStunEvent.AddListener(StunnedStart);
         StartStunEvent.AddListener(StunnedEnd);
         IsAttackedEvent.AddListener(Attacked);
         StartFreezeEvent.AddListener(FrozenStart);
         EndFreezeEvent.AddListener(FrozenEnd);
-        LoadStatsFromScriptable(GameController.Instance.ListOfAssets.DefaultEntityStats);
+        LoadStatsFromScriptable(GameController.Instance.ListOfAssets.DefaultEntityValues);
+
+        //onPowerStart();
     }
     
     private void FixedUpdate()
@@ -100,7 +157,7 @@ public class StatusController : MonoBehaviour, IHear
         stats.ApplyTick();
         deafTimer -= Time.fixedDeltaTime;
         
-        if (loadValuesInRealTime) LoadStatsFromScriptable(GameController.Instance.ListOfAssets.DefaultEntityStats);
+        if (loadValuesInRealTime) LoadStatsFromScriptable(GameController.Instance.ListOfAssets.DefaultEntityValues);
     }
     bool CanBeStunned()
     {
@@ -114,18 +171,18 @@ public class StatusController : MonoBehaviour, IHear
 
         return false;
     }
-    void LoadStatsFromScriptable(EntityStatsScriptableObject scriptable)
+    void LoadStatsFromScriptable(EntityValuesScriptableObject scriptable)
     {
         if (PostureEffect == null) PostureEffect = scriptable.PostureEffect;
         if (PostureLongEffect == null) PostureLongEffect = scriptable.PostureLongEffect;
     }
     public void StunnedStart()
     {
-         
+        //RefreshPowerFlow();
     }
     public void StunnedEnd()
     {
-        
+        //RefreshPowerFlow();
     }
     public void Attacked()
     {
@@ -151,22 +208,23 @@ public class StatusController : MonoBehaviour, IHear
     public bool TryTakeDamage(DamageEffects damage, Vector3 damageSource, float multiplier = 1, StatusController attacker=null)
     {
         if (IsKilled) return true;
-        
+        bool isFromBullet = true;
+        if (attacker != null) isFromBullet = attacker.GetComponent<Bullet>();
         if (toolsController == null)
         {
-            TakeDamageEffect(damage, multiplier, attacker);
+            TakeDamageEffect(damage, multiplier, attacker, isFromBullet);
             return true;
         }
         if (toolsController.IsDodging) return false;
 
-        bool isFromBullet = true;
-        if (attacker!=null) isFromBullet= attacker.GetComponent<Bullet>();
+        
 
         if (sensesController != null)
             if (isFromBullet ) sensesController.currentTargetLastPosition = damageSource;//&& sensesController.IsAlerted
 
         if (toolsController.IsDisarming)
         {
+            
             Pickable toEquip = attacker.toolsController.DropWeaponFromHands();
             if (toEquip != null)
             {
@@ -349,7 +407,7 @@ public class StatusController : MonoBehaviour, IHear
     public void KillSelf(StatusController attacker=null, float damage = 10)
     {
         IsKilled = true;
-        
+        //RefreshPowerFlow();
         SpawnParticles(DamageEffect, transform, 10, .2f);
         Life = 0;
         if (rb != null)
@@ -403,5 +461,4 @@ public class StatusController : MonoBehaviour, IHear
         if (DestroyOnKill)
          Destroy(gameObject,.1f);
     }
-
 }

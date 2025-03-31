@@ -159,30 +159,30 @@ public class ItemWeaponWrapper
     public bool CastDamage(DamageEffects damage,float multiplier = 1, StatusController statusController = null)
     {
 
-        Debug.Log("Trying to cast damage!");
+        //Debug.Log("Trying to cast damage!");
         if (CurrentWeaponObject == null) return false;
         if (CurrentWeaponObject.GetComponent<WeaponModel>() == null) return false;
         LayerMask layerMask = LayerMask.GetMask("Entity", "Blockout", "Bush");
         WeaponModel weaponModel = CurrentWeaponObject.GetComponent<WeaponModel>();
         Collider[] hitEnemies = Physics.OverlapCapsule(weaponModel.StartPoint.position, weaponModel.EndPoint.position, ColliderSize, layerMask);
         bool hitAnything = false;
-        Debug.Log("Found colliders: "+hitEnemies.Length);
+        //Debug.Log("Found colliders: "+hitEnemies.Length);
         int tempColliders = 1;
         foreach (Collider enemy in hitEnemies)
         {
-            Debug.Log("Checking collider " + tempColliders);
+            //Debug.Log("Checking collider " + tempColliders);
             tempColliders++;
             StatusController enemyStatus = enemy.GetComponent<StatusController>();
 
-            Debug.Log("Checking for status controller on a new collider...");
+            //Debug.Log("Checking for status controller on a new collider...");
             if (enemyStatus == null) continue;
-            Debug.Log("StatusContr confirmed on potential enemy: " + enemyStatus.name);
+            //Debug.Log("StatusContr confirmed on potential enemy: " + enemyStatus.name);
             
             if (statusController != null)
             {
-                Debug.Log("checking if i have same controller as enemy");
+                //Debug.Log("checking if i have same controller as enemy");
                 if (enemyStatus == statusController) continue;
-                Debug.Log("checking if i have same team as enemy");
+                //Debug.Log("checking if i have same team as enemy");
                 if (statusController.Team == enemyStatus.Team) continue;
                 if (!enemyStatus.IsKilled) hitAnything = true;
                 enemyStatus.TryTakeDamage(damage,multiplier, statusController);

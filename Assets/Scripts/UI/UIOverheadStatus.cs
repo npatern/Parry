@@ -14,7 +14,7 @@ public class UIOverheadStatus : MonoBehaviour
     [SerializeField]
     private UIBarController SoundBar;
     [SerializeField]
-    private UIBarController[] CircleBars;
+    private UIBarController[] CircleBars= new UIBarController [0];
 
     [SerializeField]
     private TMP_Text healthbarText;
@@ -74,23 +74,29 @@ public class UIOverheadStatus : MonoBehaviour
         CircleBars = new UIBarController[statusController.stats.stats.Length];
         for (int i = 0; i < CircleBars.Length; i++)
         {
-            CircleBars[i] = Instantiate(CircleBarTemplate, CircleBarsParent).GetComponent<UIBarController>();
+            //CircleBars[i] = Instantiate(CircleBarTemplate, CircleBarsParent, false).GetComponent<UIBarController>();
+            CircleBars[i] = Instantiate(CircleBarTemplate).GetComponent<UIBarController>();
+            CircleBars[i].transform.SetParent(CircleBarsParent, false);
+            CircleBars[i].transform.localScale = Vector3.one;
             CircleBars[i].stat = statusController.stats.stats[i];
             CircleBars[i].ApplyStatVisuals();
         }
     }
     private void Update()
     {
-        foreach (UIBarController bar in CircleBars)
-        {
-            bar.gameObject.SetActive(bar.SetCircleBar());
-        }
-        visibilityTimer -= Time.deltaTime;
+
         if (statusController == null || statusController.IsKilled)
         {
             Destroy(this.gameObject);
             return;
         }
+        foreach (UIBarController bar in CircleBars)
+        {
+            bar.transform.localScale = Vector3.one;
+            bar.gameObject.SetActive(bar.SetCircleBar());
+        }
+        visibilityTimer -= Time.deltaTime;
+        
         ApplyValues(statusController.Life);
         FollowTarget(statusController.transform);
 
@@ -121,9 +127,9 @@ public class UIOverheadStatus : MonoBehaviour
             visibilityTimer = visibilityTime;
             lastHealth = health;    
         }
-        if (visibilityTimer <= 0) return false;
-        if (statusController.MaxLife <= 1) return false;
-        if (statusController.MaxLife <= 0) return false;
+        //if (visibilityTimer <= 0) return false;
+        //if (statusController.MaxLife <= 1) return false;
+        //if (statusController.MaxLife <= 0) return false;
         HealthBar.SetBarValue(health, statusController.MaxLife,0);
         healthbarText.text = statusController.Life +"";
         
@@ -146,6 +152,7 @@ public class UIOverheadStatus : MonoBehaviour
     }
     bool ApplySoundBar()
     {
+        
         if (!statusController.IsDeaf()) return false;
         //if (outwardController == null) return false;
         //if (!outwardController.AffectedByLight) return false;

@@ -1,7 +1,7 @@
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "EntityStats", menuName = "ScriptableObjects/EntityStats", order = 1)]
-public class EntityStatsScriptableObject : ScriptableObject
+public class EntityValuesScriptableObject : ScriptableObject
 {
     [Space(10), Header("Posture")]
 

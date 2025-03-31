@@ -127,6 +127,7 @@ public class ToolsController : MonoBehaviour
     }
     public Pickable DropWeaponFromHands()
     {
+        if (CurrentWeaponWrapper == null) return null;
         if (CurrentWeaponWrapper.emptyhanded) return null;
         Pickable pickableToReturn = CurrentWeaponWrapper.MakePickable();
         CurrentWeaponWrapper = null;
@@ -221,6 +222,7 @@ public class ToolsController : MonoBehaviour
     public void PerformStunned()
     {
         BreakAttackCoroutines();
+        if (CurrentWeaponWrapper!=null)
         attack = StartCoroutine(PlayAttackSteps(CurrentWeaponWrapper.itemType.Stunned));
     }
     public void PerformAttacked()

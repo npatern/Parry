@@ -56,10 +56,10 @@ public class InputController : MonoBehaviour
         toolsController = GetComponent<ToolsController>();
         targetParent.parent = null;
         statusController = GetComponent<StatusController>();
-        GetStatsFromScriptable(GameController.Instance.ListOfAssets.DefaultEntityStats);
+        GetStatsFromScriptable(GameController.Instance.ListOfAssets.DefaultEntityValues);
         playerInput = GetComponent<PlayerInput>();
     }
-    void GetStatsFromScriptable(EntityStatsScriptableObject scriptable)
+    void GetStatsFromScriptable(EntityValuesScriptableObject scriptable)
     {
         WalkSoundAwarenessTime = scriptable.WalkSoundAwarenessTime;
     }
