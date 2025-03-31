@@ -37,7 +37,7 @@ public class UIController : MonoBehaviour
         UITextBubbleMovement newTextBubble = Instantiate(TextBubble,  MainCanvas.transform, false).GetComponent<UITextBubbleMovement>();
         Vector3 screenPosition = Camera.main.WorldToScreenPoint(transform.position+Vector3.up*3);
         newTextBubble.transform.position = screenPosition;
-        newTextBubble.transform.parent = UITrashParent;
+        newTextBubble.transform.SetParent(UITrashParent, false);
         newTextBubble.Speech = speech;
         newTextBubble.target = transform.position;
     }
@@ -46,7 +46,7 @@ public class UIController : MonoBehaviour
         UITextBubbleMovement newTextBubble = Instantiate(TextBubbleDamageNumber, MainCanvas.transform, false).GetComponent<UITextBubbleMovement>();
         Vector3 screenPosition = Camera.main.WorldToScreenPoint(transform.position - Vector3.up * 3);
         newTextBubble.transform.position = screenPosition;
-        newTextBubble.transform.parent = UITrashParent;
+        newTextBubble.transform.SetParent(UITrashParent, false);
         if (color == null) color = Color.red;
         newTextBubble.color = color;
         if (critical) speech = "<b>" + speech + " CRITICAL!</b>";
@@ -56,9 +56,9 @@ public class UIController : MonoBehaviour
     }
     public GameObject SpawnHealthBar(StatusController statusController)
     {
-        GameObject overhead = Instantiate(HealthBar, MainCanvas.transform, false);
+        GameObject overhead = Instantiate(HealthBar);
         UIOverheadStatus bar = overhead.GetComponent<UIOverheadStatus>();
-        overhead.transform.parent = UITrashParent;
+        overhead.transform.SetParent(UITrashParent,false);
         bar.statusController = statusController;
         return overhead;
     }
@@ -66,7 +66,7 @@ public class UIController : MonoBehaviour
     {
         GameObject overhead = Instantiate(ArrowObject, MainCanvas.transform, false);
         UIAwarenessArrow arrow = overhead.GetComponent<UIAwarenessArrow>();
-        overhead.transform.parent = UITrashParent;
+        overhead.transform.SetParent(UITrashParent, false);
         arrow.sensesController = sensesController;
         return overhead;
     }

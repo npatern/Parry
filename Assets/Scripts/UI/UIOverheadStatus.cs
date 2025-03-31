@@ -98,7 +98,7 @@ public class UIOverheadStatus : MonoBehaviour
         visibilityTimer -= Time.deltaTime;
         
         ApplyValues(statusController.Life);
-        FollowTarget(statusController.transform);
+        FollowTarget(statusController.headTransform);
 
         InfoTextTimer -= Time.deltaTime;
         if (InfoText == null) return;

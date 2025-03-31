@@ -88,7 +88,7 @@ MonoBehaviour:
     defaultSpeed: 10
     defalutPoints: 0
     activeTimer: 0
-    activeTime: 1
+    activeTime: 2
     waitTimer: 0
     waitTime: 5
     StartModifiers:
@@ -213,7 +213,7 @@ MonoBehaviour:
     defaultSpeed: 10
     defalutPoints: 0
     activeTimer: 0
-    activeTime: 60
+    activeTime: 120
     waitTimer: 0
     waitTime: 20
     StartModifiers: []
@@ -248,6 +248,9 @@ MonoBehaviour:
     - type: 7
       startEffectType: 2
       targetType: 1
+    - type: 2
+      startEffectType: 0
+      targetType: 0
     DamageModifiers:
     - typeThatIsActive: 1
       multiplier: 0.5

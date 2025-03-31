@@ -297,6 +297,7 @@ public class Stat
         }
 
         if (status == null) return;
+        //if (status.IsKilled) return;
         switch (type)
         {
             case Types.STUN:
@@ -354,13 +355,13 @@ public class Stat
         switch (type)
         {
             case Types.FIRE:
-                status.TakeDamage(10* multiplier, visuals.activeColor);
+                status.TakeDamage(10, visuals.activeColor,multiplier,status);
                 break;
             case Types.POISON:
-                status.TakeDamage(1* multiplier, visuals.activeColor);
+                status.TakeDamage(1, visuals.activeColor, multiplier, status);
                 break;
             case Types.BLEEDING:
-                status.TakeDamage(5* multiplier, visuals.activeColor);
+                status.TakeDamage(5, visuals.activeColor, multiplier, status);
                 break;
 
         }
@@ -368,7 +369,12 @@ public class Stat
     public void OnActiveEnd()
     {
         if (particleInstance != null)
-           GameObject.Destroy(particleInstance.gameObject);
+        {
+            particleInstance.Stop();
+            GameObject.Destroy(particleInstance.gameObject, 10);
+            particleInstance = null;
+        }
+           
         if (status == null) return;
         switch (type)
         {

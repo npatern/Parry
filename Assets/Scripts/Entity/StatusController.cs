@@ -211,8 +211,17 @@ public class StatusController : MonoBehaviour, IHear
     }
     void FrozenStart()
     {
-        attackSpeedMultiplier = 0f;
-        movementSpeedMultiplier = 0f;
+        if (IsPlayer)
+        {
+            attackSpeedMultiplier = .2f;
+            movementSpeedMultiplier = .2f;
+        }
+        else
+        {
+            attackSpeedMultiplier = 0f;
+            movementSpeedMultiplier = 0f;
+        }
+        
     }
     void FrozenEnd()
     {
@@ -224,8 +233,12 @@ public class StatusController : MonoBehaviour, IHear
     public bool TryTakeDamage(DamageEffects damage, float multiplier = 1, StatusController attacker = null)
     {
         Vector3 pos = Vector3.zero;
-        if (attacker != null) pos = attacker.transform.position;
-        return TryTakeDamage(damage, pos, multiplier,  attacker);
+        if (attacker != null)
+        {
+            pos = attacker.transform.position;
+            return TryTakeDamage(damage, pos, multiplier, attacker);
+        }
+        return TryTakeDamage(damage, pos, multiplier);
     }
     public bool TryTakeDamage(DamageEffects damage, Vector3 damageSource, float multiplier = 1, StatusController attacker=null)
     {
@@ -246,18 +259,21 @@ public class StatusController : MonoBehaviour, IHear
 
         if (toolsController.IsDisarming)
         {
-            
-            Pickable toEquip = attacker.toolsController.DropWeaponFromHands();
-            if (toEquip != null)
+            if (attacker!= null) 
             {
-                UIController.Instance.SpawnTextBubble(Barks.GetBark(Barks.BarkTypes.onParry), transform);
-                if (IsPlayer) GameController.Instance.IncreaseSlowmoTimer();
-                toolsController.EquipWeaponFromPickable(toEquip);
-                //attacker.TakePosture(damage.Damage * CriticalMultiplier, attacker);
-                attacker.IsAttackedEvent.Invoke();
-                
-                return false;
+                Pickable toEquip = attacker.toolsController.DropWeaponFromHands();
+                if (toEquip != null)
+                {
+                    UIController.Instance.SpawnTextBubble(Barks.GetBark(Barks.BarkTypes.onParry), transform);
+                    if (IsPlayer) GameController.Instance.IncreaseSlowmoTimer();
+                    toolsController.EquipWeaponFromPickable(toEquip);
+                    //attacker.TakePosture(damage.Damage * CriticalMultiplier, attacker);
+                    attacker.IsAttackedEvent.Invoke();
+
+                    return false;
+                }
             }
+            
         }
 
         if (toolsController.IsParrying)
@@ -331,13 +347,15 @@ public class StatusController : MonoBehaviour, IHear
         }
         else
         {
-            if (sensesController != null)
+            if (sensesController != null )
             {
+                if (attacker != this)
+                {
+                    sensesController.Awareness = 100;
+                    if (!isFromBullet)
+                        sensesController.SetCurrentTarget(attacker);
+                }
                 UIController.Instance.SpawnTextBubble(Barks.GetBark(Barks.BarkTypes.onPain), transform);
-
-                sensesController.Awareness = 100;
-                if (!isFromBullet)
-                    sensesController.SetCurrentTarget(attacker);
                 Sound sound = new Sound(this, 10, Sound.TYPES.neutral);
                 Sounds.MakeSound(sound);
             }
@@ -415,6 +433,7 @@ public class StatusController : MonoBehaviour, IHear
         //RefreshPowerFlow();
         SpawnParticles(DamageEffect, transform, 10, .2f);
         Life = 0;
+        if (IsStunned()) stats.GetStat(Stat.Types.STUN).ResetEffect();
         if (rb != null)
         {
             rb.isKinematic = false;

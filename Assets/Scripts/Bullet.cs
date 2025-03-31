@@ -22,6 +22,7 @@ public class Bullet : MonoBehaviour
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
+        ParticlesToKill = GetComponentInChildren<ParticleSystem>();
     }
     private void Start()
     {
@@ -34,6 +35,7 @@ public class Bullet : MonoBehaviour
         if (item.CastDamage(damage, multiplier))
         {
             isDamaging = false;
+            RemoveParticles();
             Destroy(GetComponent<Bullet>());
         }
     }
@@ -75,17 +77,18 @@ public class Bullet : MonoBehaviour
                     //Sound sound = new Sound(status, SoundRange, soundType);
                     //Sounds.MakeSound(sound);
                 }
+                RemoveParticles();
                 Destroy(GetComponent<Bullet>());
             }
             else
             {
+                RemoveParticles();
                 Destroy(this);
             }
         }
     }
     private void OnTriggerEnter(Collider collision)
     {
-        
         if (item != null) return;
         isDamaging = false;
         HandleHit(collision);
@@ -101,19 +104,24 @@ public class Bullet : MonoBehaviour
             Sound sound = new Sound(transform.position, SoundRange, soundType);
             Sounds.MakeSound(sound);
             isDamaging = false;
+            RemoveParticles();
             Destroy(GetComponent<Bullet>());
         }
             
     }
-    
-    public void DestroyBullet()
+    public void RemoveParticles()
     {
-        Debug.Log("bullet destroyed");
         if (ParticlesToKill != null)
         {
             ParticlesToKill.transform.parent = null;
             ParticlesToKill.Stop();
+            Destroy(ParticlesToKill.gameObject, 10);
         }
+    }
+    public void DestroyBullet()
+    {
+        Debug.Log("bullet destroyed");
+        RemoveParticles();
         if (ParticlesToSpawn != null)
         {
             Instantiate(ParticlesToSpawn, transform.position, transform.rotation, GameController.Instance.transform);
