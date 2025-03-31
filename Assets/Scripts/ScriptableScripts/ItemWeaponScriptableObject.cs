@@ -80,7 +80,9 @@ public class ItemWeaponWrapper
         Bullet = scriptableObject.bullet;
         emptyhanded = scriptableObject.emptyhanded;
         RefreshIcon();
+
     }
+    
     public Transform SpawnWeaponObjectAsCurrentObject(Transform parentTransform = null)
     {
         CurrentWeaponObject = SpawnWeaponObject(parentTransform);

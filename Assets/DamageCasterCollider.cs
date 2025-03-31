@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Damage : MonoBehaviour
+public class DamageCasterCollider : MonoBehaviour
 {
     public DamageEffects effects;
     List<StatusController> statuses = new List<StatusController>();

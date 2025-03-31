@@ -10,7 +10,7 @@ public class StatusController : MonoBehaviour, IHear
     public Vector3 size = Vector3.one;
     [SerializeField]
     private bool loadValuesInRealTime = false;
-    [SerializeField]
+
     public Stats stats;
     public bool IsPlayer = false;
 
@@ -53,6 +53,11 @@ public class StatusController : MonoBehaviour, IHear
 
     private float deafTimer = 0f;
     public float deafTime = 1f;
+
+
+    public DamageEffects effects;
+    public float TickTime = 0.5f;
+    float TickTimer = 0;
     /*
     [Space(10), Header("PowerSource")]
 
@@ -158,6 +163,27 @@ public class StatusController : MonoBehaviour, IHear
         deafTimer -= Time.fixedDeltaTime;
         
         if (loadValuesInRealTime) LoadStatsFromScriptable(GameController.Instance.ListOfAssets.DefaultEntityValues);
+
+        ApplyTick();
+    }
+    void ApplyTick()
+    {
+        TickTimer += Time.fixedDeltaTime;
+        if (TickTimer >= TickTime)
+        {
+            TickTimer -= TickTime;
+            Tick();
+        }
+    }
+    void Tick()
+    {
+        DamageEffects _damageEffects = new DamageEffects();
+        foreach (Stat _stat in stats.stats)
+        {
+            if (_stat.isActive && _stat.contagousSpeed!=0)
+                _damageEffects.effectList.Add(new Effect(_stat.contagousSpeed*TickTime, _stat.type));
+        }
+        Damages.SendDamage(new DamageField(4, bodyTransform.position, _damageEffects, this));
     }
     bool CanBeStunned()
     {
@@ -233,6 +259,10 @@ public class StatusController : MonoBehaviour, IHear
     public bool TryTakeDamage(DamageEffects damage, float multiplier = 1, StatusController attacker = null)
     {
         Vector3 pos = Vector3.zero;
+        if (damage == null)
+        {
+            Debug.LogError("Damage is null!");
+        }
         if (attacker != null)
         {
             pos = attacker.transform.position;
@@ -298,7 +328,7 @@ public class StatusController : MonoBehaviour, IHear
 
         if (toolsController.IsProtected)
         {
-            TakePosture(damage.Damage, attacker);
+            TakePosture(damage.Damage * multiplier, attacker);
             attacker.TakePosture(damage.Damage, this);
             return true;
         }
@@ -309,23 +339,18 @@ public class StatusController : MonoBehaviour, IHear
      
     public void TakeDamageEffect(DamageEffects damageEffect,float multiplier=1, StatusController attacker = null, bool isFromBullet = false)
     {
+        if (attacker != null)
+            if (MultiplyDamage(attacker))
+                multiplier *= attacker.CriticalMultiplier;
         float _damage = damageEffect.Damage;
         bool isCritical = false;
-        isCritical = MultiplyDamage(attacker);
-         
-        
-        if (isCritical)
-            if (attacker != null) multiplier *= attacker.CriticalMultiplier;
-           
-   
-       
         damageEffect.ApplyEffects(stats, multiplier);
         
 
         if (_damage * multiplier <= 0)
         {
-            if (damageEffect.effects.Length > 0 && sensesController != null)
-                sensesController.AddAwarenessOnce(35 );
+            if (damageEffect.effectList.Count > 0 && sensesController != null)
+                sensesController.AddAwarenessOnce(35);
 
             return;
         }
@@ -334,7 +359,7 @@ public class StatusController : MonoBehaviour, IHear
     }
     public void TakeDamage(float _damage, Color color, float multiplier = 1, StatusController attacker = null, bool isFromBullet = false, bool isCritical = false )
     {
-
+        
         Life -= _damage * multiplier;
         SpawnParticles(DamageEffect, transform);
 
@@ -417,7 +442,14 @@ public class StatusController : MonoBehaviour, IHear
             newParticles.Play();
         }
         if (scaleParticles)
+        {
             newParticles.transform.localScale = position.localScale;
+            float newVolume = newParticles.transform.lossyScale.x * newParticles.transform.lossyScale.y * newParticles.transform.lossyScale.z;
+
+            float particleRatio = newParticles.emissionRate*newVolume;
+            newParticles.emissionRate = particleRatio;
+        }
+            
         if (destroyLength>=0)
         Destroy(newParticles.gameObject, destroyLength);
         return newParticles;
@@ -438,14 +470,13 @@ public class StatusController : MonoBehaviour, IHear
         {
             rb.isKinematic = false;
             rb.constraints = RigidbodyConstraints.None;
+            Vector3 direction = Vector3.back;
+            if (attacker != null) direction = (transform.position - attacker.transform.position).normalized;
+            rb.AddForce(direction * Mathf.Clamp(damage,10,100), ForceMode.VelocityChange);
         }
+
         
-        if (attacker != null)
-        {
-            Vector3 direction = (transform.position - attacker.transform.position).normalized;
-            rb.AddForce(direction * damage, ForceMode.VelocityChange);
-        }
-        
+
         GetComponent<Collider>().isTrigger = false;
         if (toolsController != null)
         if (toolsController.CurrentWeaponWrapper!=null)

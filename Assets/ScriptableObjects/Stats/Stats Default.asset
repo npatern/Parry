@@ -26,6 +26,7 @@ MonoBehaviour:
     activeTime: 10
     waitTimer: 0
     waitTime: 1
+    contagousSpeed: 0
     StartModifiers:
     - type: 3
       startEffectType: 2
@@ -56,7 +57,8 @@ MonoBehaviour:
     activeTimer: 0
     activeTime: 10
     waitTimer: 0
-    waitTime: 1
+    waitTime: 5
+    contagousSpeed: 55
     StartModifiers:
     - type: 3
       startEffectType: 2
@@ -88,9 +90,10 @@ MonoBehaviour:
     defaultSpeed: 10
     defalutPoints: 0
     activeTimer: 0
-    activeTime: 2
+    activeTime: 1
     waitTimer: 0
     waitTime: 5
+    contagousSpeed: 210
     StartModifiers:
     - type: 7
       startEffectType: 0
@@ -126,6 +129,7 @@ MonoBehaviour:
     activeTime: 3
     waitTimer: 0
     waitTime: 5
+    contagousSpeed: 0
     StartModifiers:
     - type: 4
       startEffectType: 1
@@ -158,6 +162,7 @@ MonoBehaviour:
     activeTime: 0.5
     waitTimer: 0
     waitTime: 0.5
+    contagousSpeed: 0
     StartModifiers: []
     DamageModifiers: []
     status: {fileID: 0}
@@ -182,6 +187,7 @@ MonoBehaviour:
     activeTime: 5
     waitTimer: 0
     waitTime: 10
+    contagousSpeed: 0
     StartModifiers:
     - type: 1
       startEffectType: 2
@@ -216,6 +222,7 @@ MonoBehaviour:
     activeTime: 120
     waitTimer: 0
     waitTime: 20
+    contagousSpeed: 10
     StartModifiers: []
     DamageModifiers:
     - typeThatIsActive: 0
@@ -244,6 +251,7 @@ MonoBehaviour:
     activeTime: 10
     waitTimer: 0
     waitTime: 20
+    contagousSpeed: 0
     StartModifiers:
     - type: 7
       startEffectType: 2

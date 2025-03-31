@@ -69,6 +69,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 523c8803dc44ee34bbcb7be6796e4f8d, type: 3}
+--- !u!198 &1983299366700353505 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 3945553010265667219, guid: 523c8803dc44ee34bbcb7be6796e4f8d, type: 3}
+  m_PrefabInstance: {fileID: 3262703770369601906}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &7768195349406488323
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -136,6 +141,10 @@ PrefabInstance:
       propertyPath: soundType
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7333040839881901861, guid: 638fc67caf9cfa2489d6fbff0cde7216, type: 3}
+      propertyPath: ParticlesToKill
+      value: 
+      objectReference: {fileID: 1983299366700353505}
     - target: {fileID: 8388059213055857606, guid: 638fc67caf9cfa2489d6fbff0cde7216, type: 3}
       propertyPath: m_Parameters.colorGradient.key0.b
       value: 1

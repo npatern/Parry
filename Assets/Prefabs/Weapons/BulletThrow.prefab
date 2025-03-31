@@ -76,31 +76,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 52d05796f49ac21429d752001b81e6fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Damage: 20
+  obsoleteDamage: 1
+  damage:
+    Damage: 0
+    effects: []
+  multiplier: 1
   DestroyAfterDamage: 0
-  ParticlesToKill: {fileID: 6335604904681789282, guid: 6cacfb41065cd1545af16f61fe42669c, type: 3}
+  isDamaging: 1
+  ParticlesToKill: {fileID: 0}
   ParticlesToSpawn: {fileID: 0}
   ownerStatusController: {fileID: 0}
   item:
-    name: 
-    icon: {fileID: 0}
-    itemType: {fileID: 0}
-    ItemName: 
-    ID: 
-    Description: 
-    Stackable: 0
-    stack: 0
-    Big: 0
-    weaponObject: {fileID: 0}
-    CurrentWeaponObject: {fileID: 0}
-    pickable: {fileID: 0}
-    attackPattern: {fileID: 0}
-    AttackDistance: 0
-    Damage: 0
-    BulletDamage: 0
-    Bullet: {fileID: 0}
+    rid: -2
   SoundRange: 10
   soundType: 0
+  references:
+    version: 2
+    RefIds:
+    - rid: -2
+      type: {class: , ns: , asm: }
 --- !u!1 &4820077155246192842
 GameObject:
   m_ObjectHideFlags: 0

@@ -22,7 +22,7 @@ public class Bullet : MonoBehaviour
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
-        ParticlesToKill = GetComponentInChildren<ParticleSystem>();
+        //ParticlesToKill = GetComponentInChildren<ParticleSystem>();
     }
     private void Start()
     {

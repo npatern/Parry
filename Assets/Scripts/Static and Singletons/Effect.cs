@@ -8,18 +8,20 @@ public class DamageEffects
     public float Damage = 10;
     StatusController caster;
     Vector3 origin;
-    public Effect[] effects;
+    public List<Effect> effectList;
     public DamageEffects()
     {
         Damage = 0;
+        effectList = new List<Effect>();
     }
     public DamageEffects(float _damage)
     {
         Damage = _damage;
+        effectList = new List<Effect>();
     }
     public void ApplyEffects(Stats stats, float multiplier = 1)
     {
-        foreach (Effect effect in effects)
+        foreach (Effect effect in effectList)
         {
             stats.ApplyEffect(effect, multiplier);
         }
@@ -145,6 +147,8 @@ public class Stat
     public float activeTime = 10;
     public float waitTimer = 0;
     public float waitTime = 1;
+    [Tooltip("how many points per second are added to nearby targets")]
+    public float contagousSpeed = 0;
     public StartEffectModifier[] StartModifiers;
     public DamageEffectMultiplier[] DamageModifiers;
     public StatusController status = null;
@@ -174,7 +178,7 @@ public class Stat
         particleInstance = null;
         tickTimer = 0;
         tickTime = 1;
-
+        contagousSpeed = 0;
         //effects = new List<DamageEffect>();
     }
     public Stat(Stat cloned)
@@ -196,6 +200,7 @@ public class Stat
         particleInstance = null;
         tickTimer = cloned.tickTimer;
         tickTime = cloned.tickTime;
+        contagousSpeed = cloned.contagousSpeed;
         //effects = new List<DamageEffect>();
     }
     public Stat(Types _type)

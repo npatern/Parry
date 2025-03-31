@@ -26,6 +26,13 @@ MonoBehaviour:
     effects:
     - type: 6
       points: 35
+    effectList:
+    - type: 6
+      points: 60
+  bulletEffects:
+    Damage: 0
+    effects: []
+    effectList: []
   AttackDistance: 5.5
   Damage: 25
   BulletDamage: 10
