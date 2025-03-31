@@ -163,6 +163,10 @@ public class LightController : MonoBehaviour
     {
         SwitchLight(!isOn);
     }
+    public void RefreshLight()
+    {
+        SwitchLight(isOn);
+    }
     public void KillLight()
     {
         Debug.Log("KILL LIGHTS!!!!!!!!!!!!!!!!");

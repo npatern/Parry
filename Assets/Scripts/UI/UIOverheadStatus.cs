@@ -127,9 +127,9 @@ public class UIOverheadStatus : MonoBehaviour
             visibilityTimer = visibilityTime;
             lastHealth = health;    
         }
-        //if (visibilityTimer <= 0) return false;
-        //if (statusController.MaxLife <= 1) return false;
-        //if (statusController.MaxLife <= 0) return false;
+        if (visibilityTimer <= 0) return false;
+        if (statusController.MaxLife <= 1) return false;
+        if (statusController.MaxLife <= 0) return false;
         HealthBar.SetBarValue(health, statusController.MaxLife,0);
         healthbarText.text = statusController.Life +"";
         
@@ -143,6 +143,7 @@ public class UIOverheadStatus : MonoBehaviour
      
     bool ApplyLightBar()
     {
+
         if (outwardController == null) return false;
         if (!outwardController.AffectedByLight) return false;
         float value = outwardController.LightValue;
@@ -152,7 +153,8 @@ public class UIOverheadStatus : MonoBehaviour
     }
     bool ApplySoundBar()
     {
-        
+        return false;
+        /*
         if (!statusController.IsDeaf()) return false;
         //if (outwardController == null) return false;
         //if (!outwardController.AffectedByLight) return false;
@@ -160,6 +162,7 @@ public class UIOverheadStatus : MonoBehaviour
         SoundBar.SetBarValue(value, 1, 0);
         if (value <= 0) return false;
         return true;
+        */
     }
     bool ApplyAwarenessBar()
     {

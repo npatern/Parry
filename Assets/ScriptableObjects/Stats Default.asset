@@ -153,9 +153,9 @@ MonoBehaviour:
     defaultSpeed: 100
     defalutPoints: 0
     activeTimer: 0
-    activeTime: 1
+    activeTime: 0.5
     waitTimer: 0
-    waitTime: 1
+    waitTime: 0.5
     StartModifiers: []
     DamageModifiers: []
     status: {fileID: 0}
@@ -241,9 +241,9 @@ MonoBehaviour:
     waitTimer: 0
     waitTime: 20
     StartModifiers:
-    - type: 1
+    - type: 7
       startEffectType: 2
-      targetType: 0
+      targetType: 1
     DamageModifiers:
     - typeThatIsActive: 1
       multiplier: 0.5

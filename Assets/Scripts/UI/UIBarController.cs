@@ -72,9 +72,9 @@ public class UIBarController : MonoBehaviour
         if (stat == null) 
         {
             Debug.LogError("Didnt find stat!");
-            return true; 
+            return false; 
         } 
-        //if (stat.Points == stat.minPoints) return false;
+        if (stat.Points == stat.minPoints) return false;
         bar.localScale = new Vector3(bar.localScale.x, stat.GetValue(), bar.localScale.y);
         timeValue = stat.GetTimerValue();
         timeBar.fillAmount = timeValue;

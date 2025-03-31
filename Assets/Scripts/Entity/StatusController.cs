@@ -171,6 +171,28 @@ public class StatusController : MonoBehaviour, IHear
 
         return false;
     }
+    public bool CanBeDeafend()
+    {
+        if (stats.GetStat(Stat.Types.DEAF) != null) return true;
+        else return false;
+    }
+    public bool IsDeaf()
+    {
+        if (CanBeDeafend())
+            return stats.GetStat(Stat.Types.DEAF).IsActive();
+
+        return false;
+    }
+    public void MakeDeaf(float _deafTimer = 0)
+    {
+        if (!CanBeDeafend()) return;
+        stats.GetStat(Stat.Types.DEAF).ApplyFullEffect(_deafTimer);
+    }
+    public void ReactToSound(Sound sound)
+    {
+        if (sound.type == Sound.TYPES.cover) MakeDeaf();
+
+    }
     void LoadStatsFromScriptable(EntityValuesScriptableObject scriptable)
     {
         if (PostureEffect == null) PostureEffect = scriptable.PostureEffect;
@@ -325,7 +347,7 @@ public class StatusController : MonoBehaviour, IHear
     {
         
         if (IsPlayer) return false;
-        if (IsStunnedOBSOLETE) return true;
+        if (IsStunned()) return true;
         if (GetComponent<EntityController>() != null)
             if (!GetComponent<EntityController>().IsCombatReady())
                 return true;
@@ -382,24 +404,7 @@ public class StatusController : MonoBehaviour, IHear
         Destroy(newParticles.gameObject, destroyLength);
         return newParticles;
     }
-    public bool IsDeaf()
-    {
-        return deafTimer > 0;
-    }
-    public float GetDeafTimerValue()
-    {
-        return deafTimer/deafTime;
-    }
-    public void MakeDeaf(float _deafTimer=0)
-    {
-        if (_deafTimer == 0) _deafTimer = deafTime;
-        if (_deafTimer > deafTimer) deafTimer = _deafTimer;
-    }
-    public void ReactToSound(Sound sound)
-    {
-        if (sound.type == Sound.TYPES.cover) MakeDeaf();
 
-    }
     public void Kill()
     {
         KillSelf(null, 0);
