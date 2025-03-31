@@ -33,6 +33,8 @@ MonoBehaviour:
     DamageModifiers:
     - typeThatIsActive: 4
       multiplier: 2
+    - typeThatIsActive: 6
+      multiplier: 2
     status: {fileID: 0}
     visuals:
       name: 
@@ -217,6 +219,8 @@ MonoBehaviour:
     StartModifiers: []
     DamageModifiers:
     - typeThatIsActive: 0
+      multiplier: 2
+    - typeThatIsActive: 4
       multiplier: 2
     status: {fileID: 0}
     visuals:

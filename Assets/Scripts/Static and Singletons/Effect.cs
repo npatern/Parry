@@ -350,16 +350,17 @@ public class Stat
     }
     public void OnActiveTick()
     {
+        float multiplier = GetMultiplierFromModifiers();
         switch (type)
         {
             case Types.FIRE:
-                status.TakeDamage(10, visuals.activeColor);
+                status.TakeDamage(10* multiplier, visuals.activeColor);
                 break;
             case Types.POISON:
-                status.TakeDamage(1, visuals.activeColor);
+                status.TakeDamage(1* multiplier, visuals.activeColor);
                 break;
             case Types.BLEEDING:
-                status.TakeDamage(5, visuals.activeColor);
+                status.TakeDamage(5* multiplier, visuals.activeColor);
                 break;
 
         }
