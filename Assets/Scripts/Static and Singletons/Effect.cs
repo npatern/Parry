@@ -389,7 +389,7 @@ public class Stat
         if (particleInstance != null)
         {
             particleInstance.Stop();
-            GameObject.Destroy(particleInstance.gameObject, 10);
+            GameObject.Destroy(particleInstance.gameObject, 5);
             particleInstance = null;
         }
            

@@ -30,6 +30,10 @@ public class EntityController : MonoBehaviour
     public bool MarkedForDestruction = false;
     public bool IsAtTarget = false;
 
+    public float ShockMemoryTime = 30;
+    public float ShockMemoryTimer = 0;
+    public float ShockTime = 1;
+    public float ShockTimer = 1;
     public List<string> Log;
     private GameObject selector;
 
@@ -75,9 +79,39 @@ public class EntityController : MonoBehaviour
         ////
         //return (sensesController.IsTargetSeenTroughEyes(target.transform));
     }
-    
+    public void ProcessShockMemory()
+    {
+        ShockMemoryTimer -= Time.deltaTime;
+    }
+    public bool CanBeShocked()
+    {
+        if (ShockMemoryTimer > 0) return false;
+        return true;
+    }
+    public void ResetShockMemory()
+    {
+        ShockMemoryTimer = ShockMemoryTime;
+    }
+    public bool IsEnteringShock()
+    {
+        ShockTimer = ShockTime;
+        UIController.Instance.SpawnTextBubble(Barks.GetBark(Barks.BarkTypes.inCombatNoticeDisbelief), transform);
+        return true;
+    }
+    public bool IsProcessingShock()
+    {
+        ResetShockMemory();
+        if (ShockTimer > 0)
+        {
+            ShockTimer -= Time.deltaTime;
+            SetAgentSpeed(0);
+            return true;
+        }
+        return false;
+    }
     void Update()
     {
+        ProcessShockMemory();
         currentState = currentState.Process();
          
         return;
@@ -330,7 +364,7 @@ public class EntityController : MonoBehaviour
     {
         if (toolsController == null) return false;
         if (toolsController.CurrentWeaponWrapper == null) return false;
-
+        if (toolsController.CurrentWeaponWrapper.emptyhanded) return false;
         return true;
     }
 }

@@ -228,7 +228,6 @@ public class StatusController : MonoBehaviour, IHear
     public void ReactToSound(Sound sound)
     {
         if (sound.type == Sound.TYPES.cover) MakeDeaf();
-
     }
     void LoadStatsFromScriptable(EntityValuesScriptableObject scriptable)
     {
@@ -365,7 +364,6 @@ public class StatusController : MonoBehaviour, IHear
         TakeDamageWithEffects(damage, multiplier, attacker, isFromBullet);
         return true;
     }
-   
     public void TakeDamageWithEffects(DamageEffects damageEffect, float multiplier = 1, StatusController attacker = null, bool isFromBullet = false)
     {
         if (attacker != null)
@@ -413,10 +411,11 @@ public class StatusController : MonoBehaviour, IHear
                     sensesController.Awareness = 100;
                     if (!isFromBullet)
                         sensesController.SetCurrentTarget(attacker);
+
+                    UIController.Instance.SpawnTextBubble(Barks.GetBark(Barks.BarkTypes.onPain), transform);
+                    Sound sound = new Sound(this, 10, Sound.TYPES.neutral);
+                    Sounds.MakeSound(sound);
                 }
-                UIController.Instance.SpawnTextBubble(Barks.GetBark(Barks.BarkTypes.onPain), transform);
-                Sound sound = new Sound(this, 10, Sound.TYPES.neutral);
-                Sounds.MakeSound(sound);
             }
         }
     }
@@ -480,7 +479,7 @@ public class StatusController : MonoBehaviour, IHear
             Destroy(newParticles.gameObject, destroyLength);
         return newParticles;
     }
-
+    
     public void Kill()
     {
         Kill(null, 0);
@@ -498,7 +497,7 @@ public class StatusController : MonoBehaviour, IHear
             rb.constraints = RigidbodyConstraints.None;
             Vector3 direction =  transform.forward;
             //direction = Vector3.zero;
-            if (attacker != null) direction = (attacker.transform.position - transform.position).normalized;
+            if (attacker != null) direction = (transform.position - attacker.transform.position).normalized;
             rb.AddForce(Vector3.up * 2 + direction * 10, ForceMode.VelocityChange);
         }
         GetComponent<Collider>().isTrigger = false;
@@ -540,5 +539,4 @@ public class StatusController : MonoBehaviour, IHear
         if (DestroyOnKill)
             Destroy(gameObject, .1f);
     }
-    
 }

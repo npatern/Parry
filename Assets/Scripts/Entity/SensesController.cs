@@ -347,7 +347,7 @@ public class SensesController : MonoBehaviour, IHear
         StatusController _target;// = GetTargetFromSound(sound);
         Vector3 _targetPosition = GetTargetPositionFromSound(sound, out _target);
 
-
+        if (sound.callerstatusController == GetComponent<StatusController>()) return;
         if (Vector3.Distance(eyesSource.position, sound.callerPosition) > sound.range) return;
         if (sound.type == Sound.TYPES.cover)
             GetComponent<StatusController>().MakeDeaf();

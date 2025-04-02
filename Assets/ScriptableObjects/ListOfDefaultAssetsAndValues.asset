@@ -74,8 +74,8 @@ MonoBehaviour:
     type: 4
     sprite: {fileID: 21300000, guid: 93b915f9514fc9d42a31829019c9e4b5, type: 3}
     iconColor: {r: 0, g: 0, b: 0, a: 1}
-    color: {r: 1, g: 1, b: 0.57924527, a: 1}
-    activeColor: {r: 0.994719, g: 1, b: 0, a: 1}
+    color: {r: 1, g: 1, b: 0.45660377, a: 1}
+    activeColor: {r: 0.9150943, g: 0.8412473, b: 0, a: 1}
     particles: {fileID: 3945553010265667219, guid: dab8157cfa1131544b12da1c8b6f6b98, type: 3}
   - name: Deaf
     type: 5
@@ -105,6 +105,17 @@ MonoBehaviour:
   - {fileID: 8799387768682952896, guid: 5d610cff41e9034478301694f7391ec5, type: 3}
   - {fileID: 8799387768682952896, guid: fb2c57e5ed04760448d30688b89562d8, type: 3}
   - {fileID: 8799387768682952896, guid: e3190c55fdb9f514db6cf8472f36b72d, type: 3}
+  - {fileID: 8799387768682952896, guid: f966859864f464e48b5952090fe06518, type: 3}
+  - {fileID: 8799387768682952896, guid: f966859864f464e48b5952090fe06518, type: 3}
+  - {fileID: 8799387768682952896, guid: f966859864f464e48b5952090fe06518, type: 3}
+  - {fileID: 8799387768682952896, guid: f966859864f464e48b5952090fe06518, type: 3}
+  - {fileID: 8799387768682952896, guid: f966859864f464e48b5952090fe06518, type: 3}
+  - {fileID: 8799387768682952896, guid: f966859864f464e48b5952090fe06518, type: 3}
+  - {fileID: 8799387768682952896, guid: f966859864f464e48b5952090fe06518, type: 3}
+  - {fileID: 8799387768682952896, guid: f966859864f464e48b5952090fe06518, type: 3}
+  - {fileID: 8799387768682952896, guid: f966859864f464e48b5952090fe06518, type: 3}
+  - {fileID: 8799387768682952896, guid: f966859864f464e48b5952090fe06518, type: 3}
+  - {fileID: 8799387768682952896, guid: f966859864f464e48b5952090fe06518, type: 3}
   random:
   - name: Achoo!
   - name: Burp.

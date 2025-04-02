@@ -133,74 +133,39 @@ MonoBehaviour:
   Team: enemy
   size: {x: 1, y: 1, z: 1}
   loadValuesInRealTime: 0
-  statsSource: {fileID: 11400000, guid: 16439299c17ce0540b8a6c59e2797a4e, type: 2}
+  defaultDamageEffects:
+    Damage: 0
+    caster: {fileID: 0}
+    origin: {x: 0, y: 0, z: 0}
+    effectList: []
   stats:
     stats: []
     status: {fileID: 0}
+  statsArchetype: {fileID: 0}
   IsPlayer: 0
   CriticalMultiplier: 1
-  SpeedMultiplier: 1
+  SlowmoSpeedMultiplier: 1
   Life: 100
-  HealthStat:
-    name: 
-    type: 0
-    isActive: 0
-    canBeAppliedIfActive: 0
-    minPoints: 0
-    maxPoints: 100
-    Points: 100
-    defaultSpeed: 0
-    defalutPoints: 0
-    activeTimer: 0
-    activeTime: 10
-    waitTimer: 0
-    waitTime: 1
-    StartModifiers: []
-    DamageModifiers: []
-    status: {fileID: 0}
-    visuals:
-      name: 
-      type: 0
-      sprite: {fileID: 0}
-      iconColor: {r: 1, g: 1, b: 1, a: 1}
-      color: {r: 1, g: 1, b: 1, a: 1}
-      activeColor: {r: 1, g: 1, b: 1, a: 1}
-      particles: {fileID: 0}
-  StunStat:
-    name: 
-    type: 0
-    isActive: 0
-    canBeAppliedIfActive: 0
-    minPoints: 0
-    maxPoints: 100
-    Points: 100
-    defaultSpeed: 0
-    defalutPoints: 0
-    activeTimer: 0
-    activeTime: 10
-    waitTimer: 0
-    waitTime: 1
-    StartModifiers: []
-    DamageModifiers: []
-    status: {fileID: 0}
-    visuals:
-      name: 
-      type: 0
-      sprite: {fileID: 0}
-      iconColor: {r: 1, g: 1, b: 1, a: 1}
-      color: {r: 1, g: 1, b: 1, a: 1}
-      activeColor: {r: 1, g: 1, b: 1, a: 1}
-      particles: {fileID: 0}
   MaxLife: 100
-  Posture: 100
   movementSpeedMultiplier: 1
+  movementSpeedMultiplierStun: 1
+  attackSpeedMultiplier: 1
   IsKilled: 0
   IsStunnedOBSOLETE: 0
   DestroyOnKill: 0
   IsAttackedEvent:
     m_PersistentCalls:
       m_Calls: []
-  IsStunnedEvent:
+  StartStunEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  EndStunEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  StartFreezeEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  EndFreezeEvent:
     m_PersistentCalls:
       m_Calls: []
   OnKillEvent:
@@ -214,6 +179,12 @@ MonoBehaviour:
   PostureEffect: {fileID: 6335604904681789282, guid: 2b39b28f00a0b0a4da4368fdba0f6a1c, type: 3}
   PostureLongEffect: {fileID: 6335604904681789282, guid: fec9fead045d1314abee087c3f8d377a, type: 3}
   deafTime: 1
+  effects:
+    Damage: 0
+    caster: {fileID: 0}
+    origin: {x: 0, y: 0, z: 0}
+    effectList: []
+  TickTime: 0.5
   OverheadController: {fileID: 0}
 --- !u!114 &1508925607
 MonoBehaviour:
@@ -239,6 +210,10 @@ MonoBehaviour:
   rb: {fileID: 0}
   MarkedForDestruction: 0
   IsAtTarget: 0
+  ShockMemoryTime: 30
+  ShockMemoryTimer: 0
+  ShockTime: 1
+  ShockTimer: 1
   Log: []
   isSearchingForNeeds: 0
   currentState:
@@ -328,7 +303,7 @@ MonoBehaviour:
   maxAwareness: 100
   awarenessUpTime: 1
   awarenessDownTime: 1
-  viewDistance: 30
+  viewDistance: 20
   viewAngle: 90
   angleCurve:
     serializedVersion: 2

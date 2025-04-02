@@ -296,7 +296,7 @@ public class Search : State
         entity.GoToTarget(investigatedPosition);
         if (isAtTarget)
         {
-            waitInPlaceTimer -= Time.fixedDeltaTime;
+            waitInPlaceTimer -= Time.deltaTime;
             if (waitInPlaceTimer <= 0)
             {
                 Vector3 randomPositionOffset = 2 * new Vector3(Random.Range(-3, 4), 0, Random.Range(-3, 4));
@@ -333,8 +333,8 @@ public class Combat : State
     Vector3 investigatedPosition;
     bool isAtTarget = false;
 
-    float shockTimer = 1;
-    bool shocked = true;
+   
+    bool shocked = false;
 
     public Combat(EntityController _entity, StatusController _combatTarget) : base(_entity)
     {
@@ -345,21 +345,17 @@ public class Combat : State
     {
         
         entity.SetAgentSpeedChase();
-        UIController.Instance.SpawnTextBubble(Barks.GetBark(Barks.BarkTypes.inCombatNoticeDisbelief), entity.transform);
+        if (entity.CanBeShocked())
+            shocked = entity.IsEnteringShock();
         base.Enter();
     }
 
     public override void Update()
     {
         base.Update();
-        
-        if (shockTimer > 0)
-        {
-            shockTimer -= Time.fixedDeltaTime;
-            entity.SetAgentSpeed(0);
-            return;
-        }
-        else if (shocked)
+
+        if (entity.IsProcessingShock()) return;
+        if (shocked)
         {
             UIController.Instance.SpawnTextBubble(Barks.GetBark(Barks.BarkTypes.inCombatNotice), entity.transform);
             Sound sound = new Sound(statusController, 15, Sound.TYPES.danger, combatTarget);
@@ -396,6 +392,7 @@ public class Flee : State
     Vector3 investigatedPosition;
     bool isAtTarget = false;
 
+    bool shocked = false;
     public Flee(EntityController _entity) : base(_entity)
     {
         investigatedPosition = _entity.HomePosition;
@@ -403,17 +400,28 @@ public class Flee : State
     }
     public override void Enter()
     {
-        UIController.Instance.SpawnTextBubble(Barks.GetBark(Barks.BarkTypes.inFleeEnterNotice), entity.transform);
-        Sound sound = new Sound(statusController, 20, Sound.TYPES.danger);
-        Sounds.MakeSound(sound);
+        shocked = entity.IsEnteringShock();
         entity.SetAgentSpeedChase();
         entity.SetAvoidancePriority(Random.Range(50, 60));
+        
+
+
         base.Enter();
     }
 
     public override void Update()
     {
         base.Update();
+
+        if (entity.IsProcessingShock()) return;
+        if (shocked)
+        {
+            UIController.Instance.SpawnTextBubble(Barks.GetBark(Barks.BarkTypes.inFleeEnterNotice), entity.transform);
+            Sound sound = new Sound(statusController, 10, Sound.TYPES.danger);
+            Sounds.MakeSound(sound);
+            shocked = false;
+        }
+
         entity.SetAgentSpeedChase();
         statusController.MakeDeaf(statusController.deafTime);
         if (timer > time)
