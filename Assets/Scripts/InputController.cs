@@ -92,7 +92,7 @@ public class InputController : MonoBehaviour
         {
             
             //if (statusController.Posture < dodgePostureCost) return;
-            if (!statusController.TakePosture(dodgePostureCost, statusController)) return;
+            if (!statusController.TakePostureOnly(dodgePostureCost,1, statusController)) return;
             if (movement.magnitude>.2f)
                 rb.AddForce(new Vector3(movement.x, 0, movement.y) * dodgeForce, ForceMode.VelocityChange);
             else

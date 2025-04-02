@@ -119,17 +119,24 @@ public class EntityController : MonoBehaviour
         else
             toolsController.PerformHeavyAttack();
     }
+    float multiplySpeed()
+    {
+        float _multiply = 1;
+        _multiply *= statusController.movementSpeedMultiplier;
+        _multiply *= statusController.movementSpeedMultiplierStun;
+        return _multiply;
+    }
     public void SetAgentSpeed(float speed)
     {
-        agent.speed = speed * statusController.movementSpeedMultiplier;
+        agent.speed = speed * multiplySpeed();
     }
     public void SetAgentSpeedChase()
     {
-        agent.speed = fastSpeed * statusController.movementSpeedMultiplier;
+        agent.speed = fastSpeed * multiplySpeed();
     }
     public void SetAgentSpeedWalk()
     {
-        agent.speed = slowSpeed*statusController.movementSpeedMultiplier;
+        agent.speed = slowSpeed* multiplySpeed();
     }
     public void StateFulfillingNeeds()
     {

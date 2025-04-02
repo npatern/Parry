@@ -139,6 +139,11 @@ MonoBehaviour:
   - name: Must've been the wind...
   - name: Nothing here...
   - name: That was a waste of time...
+  inCombatNoticeDisbelief:
+  - name: Ah!?
+  - name: Im shocked!?
+  - name: What the..!?
+  - name: Hey!?
   inCombatNotice:
   - name: They're here!
   - name: Get them!

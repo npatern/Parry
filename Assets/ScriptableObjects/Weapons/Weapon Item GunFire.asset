@@ -10,14 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1ea5dd123d6c3344986f4d254d27bda1, type: 3}
-  m_Name: Weapon Item GunWater
+  m_Name: Weapon Item GunFire
   m_EditorClassIdentifier: 
-  ItemName: Water gun
-  ID: gunWater
-  Description: Shoots water
+  ItemName: Flamethrower
+  ID: gunFire
+  Description: Shoots fire
   Stackable: 0
   Big: 0
-  weaponObject: {fileID: 3823714102769063789, guid: 424e191eed7e5f8459b137444dc821f0, type: 3}
+  weaponObject: {fileID: 3823714102769063789, guid: 60d5bd3a410642a44b136655a61f6a51, type: 3}
   icon: {fileID: 0}
   emptyhanded: 0
   attackPattern: {fileID: 8930655107102755286, guid: 9fff009433f6c5043906c1e3ce808b93, type: 3}
@@ -33,12 +33,12 @@ MonoBehaviour:
     caster: {fileID: 0}
     origin: {x: 0, y: 0, z: 0}
     effectList:
-    - type: 7
+    - type: 1
       points: 60
   AttackDistance: 15
   Damage: 20
   BulletDamage: 10
-  bullet: {fileID: 1011653268010487846, guid: 3d920f9ffce280a48a059487e15a0b21, type: 3}
+  bullet: {fileID: 1011653268010487846, guid: bd2fcbe3431449249b0a70497cf872de, type: 3}
   stack: 0
   LightAttack: {fileID: 11400000, guid: f4bf4512d4d56154f84d22f0af0428b5, type: 2}
   HeavyAttack: {fileID: 11400000, guid: 442da46444774f7488ccb73a573b2d98, type: 2}

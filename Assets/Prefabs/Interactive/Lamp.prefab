@@ -132,9 +132,15 @@ MonoBehaviour:
   Team: 
   size: {x: 1, y: 1, z: 1}
   loadValuesInRealTime: 0
+  defaultDamageEffects:
+    Damage: 0
+    caster: {fileID: 0}
+    origin: {x: 0, y: 0, z: 0}
+    effectList: []
   stats:
     stats: []
     status: {fileID: 0}
+  statsArchetype: {fileID: 11400000, guid: 6c9e04e30e24c4947b04923dcaf24eb0, type: 2}
   IsPlayer: 0
   CriticalMultiplier: 0
   SlowmoSpeedMultiplier: 1
@@ -195,6 +201,12 @@ MonoBehaviour:
   PostureEffect: {fileID: 0}
   PostureLongEffect: {fileID: 0}
   deafTime: 1
+  effects:
+    Damage: 0
+    caster: {fileID: 0}
+    origin: {x: 0, y: 0, z: 0}
+    effectList: []
+  TickTime: 0.5
   OverheadController: {fileID: 0}
 --- !u!114 &1616799659364014222
 MonoBehaviour:

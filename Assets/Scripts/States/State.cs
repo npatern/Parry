@@ -252,6 +252,9 @@ public class Search : State
     Vector3 investigatedPosition;
     Vector3 lastSeenPosition;
     bool isAtTarget = false;
+
+    float waitInPlaceTime = 1;
+    float waitInPlaceTimer = 1;
     public Search(EntityController _entity, Vector3 _investigatedPosition) : base(_entity)
     {
         name = STATE.SEARCH;
@@ -260,11 +263,12 @@ public class Search : State
     }
     public override void Enter()
     {
-        UIController.Instance.SpawnTextBubble(Barks.GetBark(Barks.BarkTypes.onSearchStart), entity.transform);
-        Sound sound = new Sound(statusController, 10, Sound.TYPES.danger);
-        Sounds.MakeSound(sound);
+        
         lastSeenPosition = sensesController.currentTargetLastPosition;
         investigatedPosition = lastSeenPosition;
+        UIController.Instance.SpawnTextBubble(Barks.GetBark(Barks.BarkTypes.onSearchStart), entity.transform);
+        Sound sound = new Sound(statusController, 10, lastSeenPosition, Sound.TYPES.danger);
+        Sounds.MakeSound(sound);
         entity.SetAgentSpeedChase();
 
         
@@ -282,21 +286,34 @@ public class Search : State
             //Sounds.MakeSound(sound);
             ResetTimer();
         }
-        entity.GoToTarget(investigatedPosition);
+        
         if ( lastSeenPosition != sensesController.currentTargetLastPosition)
         {
             lastSeenPosition = sensesController.currentTargetLastPosition;
             investigatedPosition = lastSeenPosition;
-        }
-            
-
-        if (entity.IsTargetReached() && !isAtTarget)
-        {
-            Vector3 randomPositionOffset =2* new Vector3(Random.Range(-2, 3), 0, Random.Range(-2, 3));
-            isAtTarget = true;
-            investigatedPosition += randomPositionOffset;
             isAtTarget = false;
         }
+        entity.GoToTarget(investigatedPosition);
+        if (isAtTarget)
+        {
+            waitInPlaceTimer -= Time.fixedDeltaTime;
+            if (waitInPlaceTimer <= 0)
+            {
+                Vector3 randomPositionOffset = 2 * new Vector3(Random.Range(-3, 4), 0, Random.Range(-3, 4));
+
+                investigatedPosition += randomPositionOffset;
+                isAtTarget = false;
+            }
+            
+        }
+        else if (entity.IsTargetReached())
+        {
+            waitInPlaceTimer = waitInPlaceTime + Random.Range(0f, 1f);
+            isAtTarget = true;
+        }
+
+            
+        
         if (sensesController.Awareness <= 0)
         {
             UIController.Instance.SpawnTextBubble(Barks.GetBark(Barks.BarkTypes.onSearchFail), entity.transform);
@@ -316,24 +333,41 @@ public class Combat : State
     Vector3 investigatedPosition;
     bool isAtTarget = false;
 
+    float shockTimer = 1;
+    bool shocked = true;
+
     public Combat(EntityController _entity, StatusController _combatTarget) : base(_entity)
     {
         name = STATE.COMBAT;
-
         combatTarget = _combatTarget;
     }
     public override void Enter()
     {
-        UIController.Instance.SpawnTextBubble(Barks.GetBark(Barks.BarkTypes.inCombatNotice), entity.transform);
-        Sound sound = new Sound(statusController, 15, Sound.TYPES.danger,combatTarget);
-        Sounds.MakeSound(sound);
+        
         entity.SetAgentSpeedChase();
+        UIController.Instance.SpawnTextBubble(Barks.GetBark(Barks.BarkTypes.inCombatNoticeDisbelief), entity.transform);
         base.Enter();
     }
 
     public override void Update()
     {
         base.Update();
+        
+        if (shockTimer > 0)
+        {
+            shockTimer -= Time.fixedDeltaTime;
+            entity.SetAgentSpeed(0);
+            return;
+        }
+        else if (shocked)
+        {
+            UIController.Instance.SpawnTextBubble(Barks.GetBark(Barks.BarkTypes.inCombatNotice), entity.transform);
+            Sound sound = new Sound(statusController, 15, Sound.TYPES.danger, combatTarget);
+            Sounds.MakeSound(sound);
+            shocked = false;
+        }
+
+        
         entity.SetAgentSpeedChase();
         entity.SetAvoidanceRadius(1.5f);
         combatTarget = sensesController.currentTarget;

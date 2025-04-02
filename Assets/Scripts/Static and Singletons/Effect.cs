@@ -1,13 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using System;
 [System.Serializable]
 public class DamageEffects
 {
     public float Damage = 10;
-    StatusController caster;
-    Vector3 origin;
+    public StatusController caster;
+    public Vector3 origin;
     public List<Effect> effectList;
     public DamageEffects()
     {
@@ -45,6 +45,19 @@ public class Stats
     [SerializeField]
     public Stat[] stats;
     public StatusController status;
+    public Stats(StatsScriptable _stats, StatsArchetypeScriptable _archetype, StatusController _status = null)
+    {
+        stats = new Stat[_archetype.statsPermitted.Length];
+        status = _status;
+        int newIndex = 0;
+        for (int i = 0; i < _stats.stats.Length; i++)
+        {
+            if (!_archetype.HasType(_stats.stats[i].type)) continue;
+            stats[newIndex] =new Stat(_stats.stats[i]);
+            stats[newIndex].status = _status;
+            newIndex++;
+        }
+    }
     public Stats (StatsScriptable _stats, StatusController _status = null)
     {
         stats = new Stat[_stats.stats.Length];
@@ -422,4 +435,24 @@ public class Stat
         Points = defalutPoints;
     }
 }
+/*
+class StatusEffect
+{
+    float statusTimer = 0;
+    bool markForDeletion = false;
 
+
+    public void Execute(StatusController _status)
+    {
+        statusTimer -= Time.fixedDeltaTime;
+        if (statusTimer <= 0)
+        {
+            markForDeletion = true;
+            return;
+        }
+    }
+    public virtual void ApplyStatusEffect(StatusController _status)
+    {
+    }
+}
+*/

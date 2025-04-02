@@ -8,9 +8,9 @@ public static class Sounds
     {
         if (sound.range <= 0) return;
         //Gizmos.DrawSphere(sound.position, sound.range);
-        Debug.DrawRay(sound.position+Vector3.forward,Vector3.up* sound.range  + Vector3.up);
+        Debug.DrawRay(sound.callerPosition+Vector3.forward,Vector3.up* sound.range  + Vector3.up);
 
-        Collider[] colliders = Physics.OverlapSphere(sound.position, sound.range);
+        Collider[] colliders = Physics.OverlapSphere(sound.callerPosition, sound.range);
         foreach (Collider col in colliders)
             if (col.TryGetComponent(out IHear hearer))
             {

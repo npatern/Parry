@@ -301,25 +301,54 @@ public class SensesController : MonoBehaviour, IHear
 
         return anglePercent;
     }
-
+    Vector3 GetTargetPositionFromSound(Sound sound, out StatusController _status)
+    {
+        _status = null;
+        if (sound.hasTargetInfo)
+        {
+            if (sound.targetEntityInfo != null && sound.targetEntityInfo.IsPlayer)
+            {
+                _status = sound.targetEntityInfo;
+                return _status.transform.position;
+            }
+            else
+            {
+                return sound.targetPositionInfo;
+            }
+        }
+        else
+        {
+            if (sound.callerstatusController != null && sound.callerstatusController.IsPlayer)
+            {
+                _status = sound.callerstatusController;
+                return _status.transform.position;
+            }
+            else
+            {
+                return sound.callerPosition;
+            }
+        }
+    }
     StatusController GetTargetFromSound(Sound sound)
     {
-        if (sound.EntityInfo != null)
-            if (sound.EntityInfo.IsPlayer)
-                return sound.EntityInfo;
 
-        if (sound.statusController != null)
-            if (sound.statusController.IsPlayer)
-                return sound.statusController;
+        if (sound.targetEntityInfo != null)
+            if (sound.targetEntityInfo.IsPlayer)
+                return sound.targetEntityInfo;
+
+        if (sound.callerstatusController != null)
+            if (sound.callerstatusController.IsPlayer)
+                return sound.callerstatusController;
 
         return null;
     }
     public void ReactToSound(Sound sound)
     {
-        StatusController _target = GetTargetFromSound(sound);
+        StatusController _target;// = GetTargetFromSound(sound);
+        Vector3 _targetPosition = GetTargetPositionFromSound(sound, out _target);
 
-       
-        if (Vector3.Distance(eyesSource.position, sound.position) > sound.range) return;
+
+        if (Vector3.Distance(eyesSource.position, sound.callerPosition) > sound.range) return;
         if (sound.type == Sound.TYPES.cover)
             GetComponent<StatusController>().MakeDeaf();
         if (GetComponent<StatusController>().IsDeaf()) return;
@@ -328,14 +357,14 @@ public class SensesController : MonoBehaviour, IHear
             if (_target != null)
                 AddAwarenessOnce(100, _target);
             else
-                AddAwarenessOnce(100, sound.position);
+                AddAwarenessOnce(100, _targetPosition);
 
         if (sound.type == Sound.TYPES.neutral)
         {
             if (_target != null)
                 AddAwarenessOnce(30, _target);
             else
-                AddAwarenessOnce(30, sound.position);
+                AddAwarenessOnce(30, _targetPosition);
         }
             
         if (sound.type == Sound.TYPES.continous)
@@ -351,5 +380,8 @@ public class SensesController : MonoBehaviour, IHear
         Destroy(UIarrow);
         Destroy(GetComponent<SensesController>());
     }
-    
+    private void OnDrawGizmos()
+    {
+        Gizmos.DrawSphere(currentTargetLastPosition, .5f);
+    }
 }

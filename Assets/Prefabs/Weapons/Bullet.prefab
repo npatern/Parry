@@ -32,6 +32,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 5020065948950406662}
   - {fileID: 2525602013554579872}
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -77,31 +78,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 52d05796f49ac21429d752001b81e6fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Damage: 1
+  obsoleteDamage: 1
+  damage:
+    Damage: 0
+    caster: {fileID: 0}
+    origin: {x: 0, y: 0, z: 0}
+    effectList: []
+  multiplier: 1
   DestroyAfterDamage: 1
+  isDamaging: 1
   ParticlesToKill: {fileID: 0}
   ParticlesToSpawn: {fileID: 0}
   ownerStatusController: {fileID: 0}
   item:
-    name: 
-    icon: {fileID: 0}
-    itemType: {fileID: 0}
-    ItemName: 
-    ID: 
-    Description: 
-    Stackable: 0
-    stack: 0
-    Big: 0
-    weaponObject: {fileID: 0}
-    CurrentWeaponObject: {fileID: 0}
-    pickable: {fileID: 0}
-    attackPattern: {fileID: 0}
-    AttackDistance: 0
-    Damage: 0
-    BulletDamage: 0
-    Bullet: {fileID: 0}
+    rid: -2
   SoundRange: 2
   soundType: 2
+  references:
+    version: 2
+    RefIds:
+    - rid: -2
+      type: {class: , ns: , asm: }
 --- !u!114 &-685507454934128269
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -117,31 +114,57 @@ MonoBehaviour:
   Team: 
   size: {x: 1, y: 1, z: 1}
   loadValuesInRealTime: 0
+  defaultDamageEffects:
+    Damage: 0
+    caster: {fileID: 0}
+    origin: {x: 0, y: 0, z: 0}
+    effectList: []
+  stats:
+    stats: []
+    status: {fileID: 0}
+  statsArchetype: {fileID: 0}
   IsPlayer: 0
   CriticalMultiplier: 10
-  SpeedMultiplier: 1
+  SlowmoSpeedMultiplier: 1
   Life: 5
   MaxLife: 100
-  Posture: 100
   movementSpeedMultiplier: 1
+  attackSpeedMultiplier: 1
   IsKilled: 0
-  IsStunned: 0
+  IsStunnedOBSOLETE: 0
   DestroyOnKill: 0
   IsAttackedEvent:
     m_PersistentCalls:
       m_Calls: []
-  IsStunnedEvent:
+  StartStunEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  EndStunEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  StartFreezeEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  EndFreezeEvent:
     m_PersistentCalls:
       m_Calls: []
   OnKillEvent:
     m_PersistentCalls:
       m_Calls: []
+  headTransform: {fileID: 0}
+  bodyTransform: {fileID: 0}
   scaleParticles: 0
   DamageEffect: {fileID: 6335604904681789282, guid: 6cacfb41065cd1545af16f61fe42669c, type: 3}
   ParryEffect: {fileID: 0}
   PostureEffect: {fileID: 0}
   PostureLongEffect: {fileID: 0}
   deafTime: 0.2
+  effects:
+    Damage: 0
+    caster: {fileID: 0}
+    origin: {x: 0, y: 0, z: 0}
+    effectList: []
+  TickTime: 0.5
   OverheadController: {fileID: 0}
 --- !u!1 &2525602013554579875
 GameObject:
@@ -173,10 +196,9 @@ Transform:
   m_LocalScale: {x: 0.2, y: 0.2, z: 0.2}
   m_ConstrainProportionsScale: 1
   m_Children:
-  - {fileID: 5020065948950406662}
   - {fileID: 779815730311812647}
   m_Father: {fileID: 2525602011858877280}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
 --- !u!33 &2525602013554579879
 MeshFilter:
@@ -252,12 +274,12 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4820077155246192842}
-  m_LocalRotation: {x: -0.7071058, y: -0, z: -0, w: 0.70710784}
-  m_LocalPosition: {x: 0, y: -0.7500001, z: 0}
-  m_LocalScale: {x: 1, y: 0.52499986, z: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: -0, z: -0.15000004}
+  m_LocalScale: {x: 0.2, y: 0.105000004, z: 0.20000006}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 2525602013554579872}
+  m_Father: {fileID: 2525602011858877280}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!96 &8388059213055857606
@@ -399,7 +421,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2525602013554579872}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &340745594883720019
 MeshFilter:
