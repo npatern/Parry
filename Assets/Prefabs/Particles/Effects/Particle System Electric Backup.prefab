@@ -4883,7 +4883,7 @@ GameObject:
   - component: {fileID: 4363768245524065656}
   - component: {fileID: 7491110413558200742}
   m_Layer: 0
-  m_Name: Particle System Electric
+  m_Name: Particle System Electric Backup
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4988,8 +4988,8 @@ ParticleSystem:
     startLifetime:
       serializedVersion: 2
       minMaxState: 3
-      scalar: 0.4
-      minScalar: 0.5
+      scalar: 0.5
+      minScalar: 0.4
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -5041,7 +5041,7 @@ ParticleSystem:
     startSpeed:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 5
+      scalar: 4
       minScalar: 5
       maxCurve:
         serializedVersion: 2
@@ -7556,7 +7556,7 @@ ParticleSystem:
     strength:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 7.4
+      scalar: 2.69
       minScalar: 1
       maxCurve:
         serializedVersion: 2

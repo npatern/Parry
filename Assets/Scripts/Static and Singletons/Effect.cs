@@ -55,6 +55,10 @@ public class Stats
             if (!_archetype.HasType(_stats.stats[i].type)) continue;
             stats[newIndex] =new Stat(_stats.stats[i]);
             stats[newIndex].status = _status;
+            stats[newIndex].mortalOnEmpty = _archetype.IsMortalOnEmpty(stats[newIndex].type);
+            stats[newIndex].mortalOnFull = _archetype.IsMortalOnFull(stats[newIndex].type);
+            stats[newIndex].isAlwaysFull = _archetype.IsAlwaysFull(stats[newIndex].type);
+            if (_archetype.IsContagous(stats[newIndex].type)) stats[newIndex].contagousSpeed = 201;
             newIndex++;
         }
     }
@@ -167,6 +171,9 @@ public class Stat
     public StatusController status = null;
     public EffectVisuals visuals = null;
 
+    public bool mortalOnEmpty = false;
+    public bool mortalOnFull = false;
+    public bool isAlwaysFull = false;
     float tickTimer = 0;
     float tickTime = 1;
 
@@ -283,6 +290,14 @@ public class Stat
         if (visuals == null) GetVisuals();
         if (particleInstance==null)
             particleInstance = status.SpawnParticles(visuals.particles, status.bodyTransform,-1,-1);
+        if (status.UseBoxParticles() && particleInstance != null)
+        {
+            var shape = particleInstance.GetComponent<ParticleSystem>().shape;
+            shape.shapeType = ParticleSystemShapeType.Rectangle;
+            Debug.Log("Shape type after change: " + shape.shapeType);
+        }
+        particleInstance.emissionRate = particleInstance.emissionRate*particleInstance.transform.lossyScale.x * particleInstance.transform.lossyScale.z;
+        particleInstance.emissionRate = Mathf.Clamp(particleInstance.emissionRate, 0, particleInstance.maxParticles * 2);
         if (!isActive) OnActiveStart();
     }
     public bool IsWaiting()
@@ -325,7 +340,10 @@ public class Stat
                 status.StartFreezeEvent.Invoke();
                 break;
         }
-
+        if (mortalOnFull)
+        {
+            status.Kill();
+        }
         /*
         switch (type)
         {
@@ -361,6 +379,7 @@ public class Stat
             OnActiveTick();
             tickTimer -= tickTime;
         }
+        if (isAlwaysFull) return;
         if (activeTimer > 0)
         {
             activeTimer -= Time.fixedDeltaTime;
@@ -403,6 +422,10 @@ public class Stat
                 status.EndFreezeEvent.Invoke();                     
                 break;
         }
+        if (mortalOnEmpty)
+        {
+            status.Kill();
+        }
     }
     public void MakeDefault()
     {
@@ -421,7 +444,7 @@ public class Stat
     }
     public void RefreshEffect()
     {
-
+        if (isAlwaysFull) Points = maxPoints+1;
         if (!isActive && Points >= maxPoints || canBeAppliedIfActive && Points > maxPoints)
         {
             ApplyFullEffect();

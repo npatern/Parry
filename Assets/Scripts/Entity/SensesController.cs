@@ -103,7 +103,7 @@ public class SensesController : MonoBehaviour, IHear
     }
     public void AddAwarenessOnce(float awarenessValue, Vector3 targetPosition)
     {
-        if (awarenessValue > 0)
+        if (awarenessValue > 0 && targetPosition!=Vector3.zero)
             currentTargetLastPosition = targetPosition;
 
         AddAwarenessOnce(awarenessValue);
@@ -377,8 +377,9 @@ public class SensesController : MonoBehaviour, IHear
     }
     public void Kill()
     {
+        
         Destroy(UIarrow);
-        Destroy(GetComponent<SensesController>());
+        Destroy(this);
     }
     private void OnDrawGizmos()
     {

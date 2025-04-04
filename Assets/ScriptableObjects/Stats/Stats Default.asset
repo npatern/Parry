@@ -45,6 +45,9 @@ MonoBehaviour:
       color: {r: 1, g: 1, b: 1, a: 1}
       activeColor: {r: 1, g: 1, b: 1, a: 1}
       particles: {fileID: 0}
+    mortalOnEmpty: 0
+    mortalOnFull: 0
+    isAlwaysFull: 0
   - name: Fire
     type: 1
     isActive: 0
@@ -60,6 +63,9 @@ MonoBehaviour:
     waitTime: 5
     contagousSpeed: 55
     StartModifiers:
+    - type: 3
+      startEffectType: 1
+      targetType: 7
     - type: 3
       startEffectType: 2
       targetType: 3
@@ -80,6 +86,9 @@ MonoBehaviour:
       color: {r: 1, g: 1, b: 1, a: 1}
       activeColor: {r: 1, g: 1, b: 1, a: 1}
       particles: {fileID: 0}
+    mortalOnEmpty: 0
+    mortalOnFull: 0
+    isAlwaysFull: 0
   - name: Electric
     type: 2
     isActive: 0
@@ -116,6 +125,9 @@ MonoBehaviour:
       color: {r: 1, g: 1, b: 1, a: 1}
       activeColor: {r: 1, g: 1, b: 1, a: 1}
       particles: {fileID: 0}
+    mortalOnEmpty: 0
+    mortalOnFull: 0
+    isAlwaysFull: 0
   - name: Stun
     type: 4
     isActive: 0
@@ -149,6 +161,9 @@ MonoBehaviour:
       color: {r: 1, g: 1, b: 1, a: 1}
       activeColor: {r: 1, g: 1, b: 1, a: 1}
       particles: {fileID: 0}
+    mortalOnEmpty: 0
+    mortalOnFull: 0
+    isAlwaysFull: 0
   - name: Deaf
     type: 5
     isActive: 0
@@ -174,6 +189,9 @@ MonoBehaviour:
       color: {r: 1, g: 1, b: 1, a: 1}
       activeColor: {r: 1, g: 1, b: 1, a: 1}
       particles: {fileID: 0}
+    mortalOnEmpty: 0
+    mortalOnFull: 0
+    isAlwaysFull: 0
   - name: Freeze
     type: 3
     isActive: 0
@@ -209,6 +227,9 @@ MonoBehaviour:
       color: {r: 1, g: 1, b: 1, a: 1}
       activeColor: {r: 1, g: 1, b: 1, a: 1}
       particles: {fileID: 0}
+    mortalOnEmpty: 0
+    mortalOnFull: 0
+    isAlwaysFull: 0
   - name: Poison
     type: 6
     isActive: 0
@@ -238,6 +259,9 @@ MonoBehaviour:
       color: {r: 1, g: 1, b: 1, a: 1}
       activeColor: {r: 1, g: 1, b: 1, a: 1}
       particles: {fileID: 0}
+    mortalOnEmpty: 0
+    mortalOnFull: 0
+    isAlwaysFull: 0
   - name: Water
     type: 7
     isActive: 0
@@ -271,3 +295,6 @@ MonoBehaviour:
       color: {r: 1, g: 1, b: 1, a: 1}
       activeColor: {r: 1, g: 1, b: 1, a: 1}
       particles: {fileID: 0}
+    mortalOnEmpty: 0
+    mortalOnFull: 0
+    isAlwaysFull: 0

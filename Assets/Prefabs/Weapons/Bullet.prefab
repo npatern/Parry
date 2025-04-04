@@ -111,6 +111,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cd7c774c27a4a1748a992000bcc3da8d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Immortal: 0
   Team: 
   size: {x: 1, y: 1, z: 1}
   loadValuesInRealTime: 0
@@ -122,13 +123,15 @@ MonoBehaviour:
   stats:
     stats: []
     status: {fileID: 0}
-  statsArchetype: {fileID: 0}
+  damageEffectsRangeBoxCollider: {fileID: 0}
+  statsArchetype: {fileID: 11400000, guid: 018b49f8db35ba04aa36c46520345702, type: 2}
   IsPlayer: 0
   CriticalMultiplier: 10
   SlowmoSpeedMultiplier: 1
   Life: 5
   MaxLife: 100
   movementSpeedMultiplier: 1
+  movementSpeedMultiplierStun: 1
   attackSpeedMultiplier: 1
   IsKilled: 0
   IsStunnedOBSOLETE: 0

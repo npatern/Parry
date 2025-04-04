@@ -26,6 +26,7 @@ public class State
     protected float timer = 0;
     protected float time = 10;
 
+    protected float Tick = 0;
     protected void ResetTimer(float min = 3, float max = 10)
     {
         timer = 0;
@@ -57,10 +58,12 @@ public class State
         stage = EVENT.EXIT; 
         //Debug.Log(stage + " stage, " + name); 
     }
-    public State Process()
+    public State Process(float _tick)
     {
-        timer += Time.deltaTime;
+        Tick = _tick;
+        timer += Tick;
         entity.SetAvoidanceRadius(0);
+        entity.ProcessShockMemory();
         //FLEE
         if (name != STATE.FLEE && sensesController.IsAlerted && sensesController.Awareness > 0 && !entity.IsCombatReady())
         {
@@ -221,7 +224,7 @@ public class Investigate : State
     {
         base.Update();
         entity.SetAgentSpeedWalk();
-        maxTime -= Time.deltaTime;
+        maxTime -= Tick;
         investigatedPosition = sensesController.currentTargetLastPosition;
 
         entity.GoToTarget(investigatedPosition,2);
@@ -266,9 +269,13 @@ public class Search : State
         
         lastSeenPosition = sensesController.currentTargetLastPosition;
         investigatedPosition = lastSeenPosition;
-        UIController.Instance.SpawnTextBubble(Barks.GetBark(Barks.BarkTypes.onSearchStart), entity.transform);
-        Sound sound = new Sound(statusController, 10, lastSeenPosition, Sound.TYPES.danger);
-        Sounds.MakeSound(sound);
+        if (investigatedPosition != Vector3.zero)
+        {
+            UIController.Instance.SpawnTextBubble(Barks.GetBark(Barks.BarkTypes.onSearchStart), entity.transform);
+            Sound sound = new Sound(statusController, 10, lastSeenPosition, Sound.TYPES.danger);
+            Sounds.MakeSound(sound);
+        }
+        
         entity.SetAgentSpeedChase();
 
         
@@ -296,7 +303,7 @@ public class Search : State
         entity.GoToTarget(investigatedPosition);
         if (isAtTarget)
         {
-            waitInPlaceTimer -= Time.deltaTime;
+            waitInPlaceTimer -= Tick;
             if (waitInPlaceTimer <= 0)
             {
                 Vector3 randomPositionOffset = 2 * new Vector3(Random.Range(-3, 4), 0, Random.Range(-3, 4));
@@ -358,7 +365,7 @@ public class Combat : State
         if (shocked)
         {
             UIController.Instance.SpawnTextBubble(Barks.GetBark(Barks.BarkTypes.inCombatNotice), entity.transform);
-            Sound sound = new Sound(statusController, 15, Sound.TYPES.danger, combatTarget);
+            Sound sound = new Sound(statusController, 10, Sound.TYPES.danger, combatTarget);
             Sounds.MakeSound(sound);
             shocked = false;
         }
@@ -371,7 +378,7 @@ public class Combat : State
         if (timer > time)
         {
             UIController.Instance.SpawnTextBubble(Barks.GetBark(Barks.BarkTypes.inCombatNotice), entity.transform);
-            Sound sound = new Sound(statusController, 15, Sound.TYPES.danger, combatTarget);
+            Sound sound = new Sound(statusController, 10, Sound.TYPES.danger, combatTarget);
             Sounds.MakeSound(sound);
             ResetTimer();
         }

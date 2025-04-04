@@ -6,6 +6,7 @@ using UnityEngine.InputSystem;
 using UnityEngine.Events;
 public class StatusController : MonoBehaviour, IHear
 {
+    public bool Immortal = false;
     public string Team = "";
     public Vector3 size = Vector3.one;
     [SerializeField]
@@ -13,9 +14,11 @@ public class StatusController : MonoBehaviour, IHear
     public DamageEffects defaultDamageEffects;
     public Stats stats;
     [SerializeField]
+    public BoxCollider damageEffectsRangeBoxCollider;
+    [SerializeField]
     private StatsArchetypeScriptable statsArchetype;
     public bool IsPlayer = false;
-
+    
     public float CriticalMultiplier = 4;
     public float SlowmoSpeedMultiplier = 1;
     public float Life = 100;
@@ -118,6 +121,11 @@ public class StatusController : MonoBehaviour, IHear
     */
 
     public UIOverheadStatus OverheadController;
+    public bool UseBoxParticles()
+    {
+        if (damageEffectsRangeBoxCollider == null) return false;
+        else return true;
+    }
     void Awake()
     {
         if (Life > MaxLife) Life = MaxLife;
@@ -188,13 +196,24 @@ public class StatusController : MonoBehaviour, IHear
     }
     void Tick()
     {
+        
+
         DamageEffects _damageEffects = new DamageEffects();
         foreach (Stat _stat in stats.stats)
         {
             if (_stat.isActive && _stat.contagousSpeed != 0)
                 _damageEffects.effectList.Add(new Effect(_stat.contagousSpeed * TickTime, _stat.type));
         }
-        Damages.SendDamage(new DamageField(2, bodyTransform.position, _damageEffects, this));
+        if (damageEffectsRangeBoxCollider != null)
+        {
+            Debug.Log("Reference to collider found");
+            Damages.SendDamage(new DamageField(damageEffectsRangeBoxCollider, _damageEffects, this));
+        }
+        else
+        {
+            Damages.SendDamage(new DamageField(2, bodyTransform.position, _damageEffects, this));
+        }
+        
     }
     bool CanBeStunned()
     {
@@ -391,7 +410,7 @@ public class StatusController : MonoBehaviour, IHear
     }
     public void TakeDamage(float _damage, Color color, float multiplier = 1, StatusController attacker = null, bool isFromBullet = false, bool isCritical = false)
     {
-
+        if (Immortal) return;
         Life -= _damage * multiplier;
         SpawnParticles(DamageEffect, transform);
 
@@ -413,7 +432,7 @@ public class StatusController : MonoBehaviour, IHear
                         sensesController.SetCurrentTarget(attacker);
 
                     UIController.Instance.SpawnTextBubble(Barks.GetBark(Barks.BarkTypes.onPain), transform);
-                    Sound sound = new Sound(this, 10, Sound.TYPES.neutral);
+                    Sound sound = new Sound(this, 5, Sound.TYPES.neutral);
                     Sounds.MakeSound(sound);
                 }
             }
@@ -486,6 +505,7 @@ public class StatusController : MonoBehaviour, IHear
     }
     public void Kill(StatusController attacker = null, float damage = 10)
     {
+        if (Immortal) return; 
         IsKilled = true;
         //RefreshPowerFlow();
         SpawnParticles(DamageEffect, transform, 10, .2f);
@@ -530,7 +550,8 @@ public class StatusController : MonoBehaviour, IHear
         if (GetComponent<SensesController>() != null)
         {
             GetComponent<SensesController>().Kill();
-            GetComponent<SensesController>().enabled = false;
+           // GetComponent<SensesController>().enabled = false;
+            
         }
 
 

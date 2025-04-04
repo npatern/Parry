@@ -1,0 +1,39 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &6725790741403292807
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 1879006402118461699, guid: 6398f0fdfe5e30f46a9e654dff7db756, type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1879006402118461699, guid: 6398f0fdfe5e30f46a9e654dff7db756, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1879006402118461699, guid: 6398f0fdfe5e30f46a9e654dff7db756, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1879006402118461699, guid: 6398f0fdfe5e30f46a9e654dff7db756, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4363768245524065656, guid: 6398f0fdfe5e30f46a9e654dff7db756, type: 3}
+      propertyPath: ShapeModule.type
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4363768245524065656, guid: 6398f0fdfe5e30f46a9e654dff7db756, type: 3}
+      propertyPath: ShapeModule.radiusThickness
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8984319716663259600, guid: 6398f0fdfe5e30f46a9e654dff7db756, type: 3}
+      propertyPath: m_Name
+      value: Particle System Electric Square Variant
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 6398f0fdfe5e30f46a9e654dff7db756, type: 3}

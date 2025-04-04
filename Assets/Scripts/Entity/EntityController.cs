@@ -9,6 +9,10 @@ public class EntityController : MonoBehaviour
     float slowSpeed = 5;
     float fastSpeed = 8;
 
+    public float Tick = .2f;
+    private bool isLookingAtTarget = false;
+    private Transform lookAtTargetPosition;
+    public float TickTimer = 0;
     public float AwarnessDistance = 7f;
     public float rotationSpeed = 10;
     public NavMeshAgent agent;
@@ -81,7 +85,8 @@ public class EntityController : MonoBehaviour
     }
     public void ProcessShockMemory()
     {
-        ShockMemoryTimer -= Time.deltaTime;
+        
+        ShockMemoryTimer -= Tick;
     }
     public bool CanBeShocked()
     {
@@ -103,17 +108,23 @@ public class EntityController : MonoBehaviour
         ResetShockMemory();
         if (ShockTimer > 0)
         {
-            ShockTimer -= Time.deltaTime;
+            ShockTimer -= Tick;
             SetAgentSpeed(0);
             return true;
         }
         return false;
     }
-    void Update()
+    void FixedUpdate()
     {
-        ProcessShockMemory();
-        currentState = currentState.Process();
-         
+        TickTimer += Time.fixedDeltaTime;
+        
+        while (TickTimer > Tick)
+        {
+            currentState = currentState.Process(Tick);
+            TickTimer -= Tick;
+        }
+        if (isLookingAtTarget)
+            LookAtTarget(lookAtTargetPosition);
         return;
     }
     void LoadStatsFromScriptable(EntityValuesScriptableObject scriptable)
@@ -124,6 +135,7 @@ public class EntityController : MonoBehaviour
     public void AttackTarget(StatusController statusObject)
     {
         float sizeDifferential = (1 + statusController.size.z) / 2;
+        StopLookingAtTarget();
         if (Vector3.Distance(target.transform.position, transform.position) < toolsController.attackDistance*2/3* sizeDifferential)
         {
             DisableNavmesh(false);
@@ -138,7 +150,7 @@ public class EntityController : MonoBehaviour
         else if (sensesController.IsAlerted)
         {
             DisableNavmesh(true);
-            LookAtTarget(target.transform);
+            StartLookingAtTarget(target.transform);
             PlayRandomAttack();
         }
     }
@@ -296,14 +308,19 @@ public class EntityController : MonoBehaviour
         agent.SetDestination(transform.position);
         //agent.enabled = !isDisabled;
     }
+    public void StopLookingAtTarget()
+    {
+        isLookingAtTarget = false;
+        lookAtTargetPosition = null;
+    }
+    public void StartLookingAtTarget(Transform target)
+    {
+        isLookingAtTarget = true;
+        lookAtTargetPosition = target;
+    }
+    
     public void LookAtTarget(Transform target)
     {
-
-        /*
-        transform.LookAt(target);
-        //rb.centerOfMass = Vector3.zero;
-        rb.freezeRotation = true;
-        */
         float angle;
 
         var localTarget = transform.InverseTransformPoint(target.transform.position);
@@ -311,7 +328,7 @@ public class EntityController : MonoBehaviour
         angle = Mathf.Atan2(localTarget.x, localTarget.z) * Mathf.Rad2Deg;
 
         Vector3 eulerAngleVelocity = new Vector3(0, angle, 0);
-        Quaternion deltaRotation = Quaternion.Euler(eulerAngleVelocity * Time.deltaTime * rotationSpeed);
+        Quaternion deltaRotation = Quaternion.Euler(eulerAngleVelocity * Time.fixedDeltaTime * rotationSpeed);
         rb.MoveRotation(rb.rotation * deltaRotation);
     }
     public void ResetFulfiller()

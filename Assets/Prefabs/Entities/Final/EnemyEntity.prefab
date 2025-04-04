@@ -198,6 +198,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f08fbff84805b048ad900f7261136a9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Tick: 0.5
+  TickTimer: 0
   AwarnessDistance: 25
   rotationSpeed: 10
   agent: {fileID: 0}
