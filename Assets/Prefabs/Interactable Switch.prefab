@@ -268,6 +268,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Interactable Switch
       objectReference: {fileID: 0}
+    - target: {fileID: 6644133888316450086, guid: dd7af1c7ed0dfa641ba886d967566bf1, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 6644133888316450089, guid: dd7af1c7ed0dfa641ba886d967566bf1, type: 3}
       propertyPath: InteractionEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
@@ -300,12 +304,115 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6908711368201940159, guid: dd7af1c7ed0dfa641ba886d967566bf1, type: 3}
+      propertyPath: interactable
+      value: 
+      objectReference: {fileID: 8040142054156547687}
     - target: {fileID: 7249097659893051491, guid: dd7af1c7ed0dfa641ba886d967566bf1, type: 3}
       propertyPath: m_RootOrder
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: dd7af1c7ed0dfa641ba886d967566bf1, type: 3}
+--- !u!1 &5532784257875219234 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6644133888316450086, guid: dd7af1c7ed0dfa641ba886d967566bf1, type: 3}
+  m_PrefabInstance: {fileID: 1224083435974964740}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &7946147046674949934
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5532784257875219234}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cd7c774c27a4a1748a992000bcc3da8d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Immortal: 1
+  Team: 
+  size: {x: 1, y: 1, z: 1}
+  loadValuesInRealTime: 0
+  defaultDamageEffects:
+    Damage: 0
+    caster: {fileID: 0}
+    origin: {x: 0, y: 0, z: 0}
+    effectList: []
+  stats:
+    stats: []
+    status: {fileID: 0}
+  damageEffectsRangeBoxCollider: {fileID: 0}
+  statsArchetype: {fileID: 11400000, guid: 6c9e04e30e24c4947b04923dcaf24eb0, type: 2}
+  IsPlayer: 0
+  CriticalMultiplier: 4
+  SlowmoSpeedMultiplier: 1
+  Life: 100
+  MaxLife: 100
+  movementSpeedMultiplier: 1
+  movementSpeedMultiplierStun: 1
+  attackSpeedMultiplier: 1
+  IsKilled: 0
+  IsStunnedOBSOLETE: 0
+  DestroyOnKill: 0
+  IsAttackedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  StartStunEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 8040142054156547687}
+        m_TargetAssemblyTypeName: InteractableSwitch, Assembly-CSharp
+        m_MethodName: SwitchOff
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  EndStunEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 8040142054156547687}
+        m_TargetAssemblyTypeName: InteractableSwitch, Assembly-CSharp
+        m_MethodName: SwitchOn
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  StartFreezeEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  EndFreezeEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  OnKillEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  headTransform: {fileID: 0}
+  bodyTransform: {fileID: 0}
+  scaleParticles: 0
+  DamageEffect: {fileID: 0}
+  ParryEffect: {fileID: 0}
+  PostureEffect: {fileID: 0}
+  PostureLongEffect: {fileID: 0}
+  deafTime: 1
+  effects:
+    Damage: 0
+    caster: {fileID: 0}
+    origin: {x: 0, y: 0, z: 0}
+    effectList: []
+  TickTime: 0.5
+  OverheadController: {fileID: 0}
 --- !u!4 &5532784257875219241 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6644133888316450093, guid: dd7af1c7ed0dfa641ba886d967566bf1, type: 3}
@@ -327,6 +434,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4949759556746734986, guid: dd7af1c7ed0dfa641ba886d967566bf1, type: 3}
   m_PrefabInstance: {fileID: 1224083435974964740}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &8040142054156547687 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 9180732974873968739, guid: dd7af1c7ed0dfa641ba886d967566bf1, type: 3}
+  m_PrefabInstance: {fileID: 1224083435974964740}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5532784257875219234}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0725f4f7577bf1b4991272d3a6f26eac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &8387152265272641127 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7249097659893051491, guid: dd7af1c7ed0dfa641ba886d967566bf1, type: 3}

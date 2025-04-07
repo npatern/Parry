@@ -61,7 +61,7 @@ public class State
     public State Process(float _tick)
     {
         Tick = _tick;
-        timer += Tick;
+        timer += Time.fixedDeltaTime;
         entity.SetAvoidanceRadius(0);
         entity.ProcessShockMemory();
         //FLEE
@@ -92,7 +92,12 @@ public class State
         }
         
         if (stage == EVENT.ENTER) Enter();
-        if (stage == EVENT.UPDATE) Update();
+        while (entity.TickTimer > Tick)
+        {
+            if (stage == EVENT.UPDATE) Update();
+            entity.TickTimer -= Tick;
+        }
+        
         if (stage == EVENT.EXIT)
         {
             Exit();
@@ -222,6 +227,7 @@ public class Investigate : State
 
     public override void Update()
     {
+        Debug.Log("UPdate INVESTIGATION");
         base.Update();
         entity.SetAgentSpeedWalk();
         maxTime -= Tick;
@@ -300,7 +306,8 @@ public class Search : State
             investigatedPosition = lastSeenPosition;
             isAtTarget = false;
         }
-        entity.GoToTarget(investigatedPosition);
+        
+        entity.GoToTarget(investigatedPosition,2);
         if (isAtTarget)
         {
             waitInPlaceTimer -= Tick;

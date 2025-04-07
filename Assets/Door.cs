@@ -10,33 +10,37 @@ public class Door : MonoBehaviour
     [SerializeField] Transform door;
     Vector3 doorStartingPosition;
     Vector3 doorTargetPosition;
-    bool DoorOpenState = false;
+    bool DoorOpenState = true;
 
     float doorTimer = 0;
 
-    public bool TICDOOR = false;
+    public bool ForceChange = false;
 
     private void Awake()
     {
         doorStartingPosition = door.transform.position;
         doorTargetPosition = door.transform.position;
+        SwitchDoorState(DoorOpenState);
     }
     private void Update()
     {
-        if (TICDOOR) SwitchDoorState();
+        if (ForceChange) SwitchDoorState(); ForceChange = false;
         doorTimer += Time.deltaTime;
-        door.position = Vector3.Lerp(door.position, doorTargetPosition, doorTimer/doorCloseTime);
+        door.position = Vector3.Lerp(door.position, doorTargetPosition, doorTimer / doorCloseTime);
     }
-    public void SwitchDoorState()
+    public void SwitchDoorState(bool TagetOpenState)
     {
-        Debug.Log("DOOOR USEEEED state: "+ DoorOpenState);
+        //if (DoorOpenState == TagetOpenState) return;
+
+        Debug.Log("DOOOR USEEEED state: " + DoorOpenState);
         doorTimer = 0;
-        DoorOpenState = !DoorOpenState;
+        DoorOpenState = TagetOpenState;
 
         if (DoorOpenState) doorTargetPosition = doorOpenPosition.position;
         else doorTargetPosition = doorStartingPosition;
-
-        TICDOOR = false;
-       // return DoorOpenState;
+    }
+    public void SwitchDoorState()
+    {
+        SwitchDoorState(!DoorOpenState);
     }
 }

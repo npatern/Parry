@@ -7,25 +7,30 @@ using UnityEngine.Events;
 public class Interactable : MonoBehaviour
 {
     public bool IsInteractable = true;
+    public UnityEvent InteractionEvent;
 
-    public UnityEvent<StatusController> InteractionEvent;
-    private void Awake()
+    protected virtual void Awake()
     {
         if (InteractionEvent == null)
-            InteractionEvent = new UnityEvent<StatusController>();
+            InteractionEvent = new UnityEvent();
     }
-    private void OnTriggerEnter(Collider other)
+    protected void OnTriggerEnter(Collider other)
     {
         if (other.TryGetComponent<InteractionController>(out InteractionController interaction))
         {
             interaction.AddToInteractions(this);
         }
     }
-    private void OnTriggerExit(Collider other)
+    protected void OnTriggerExit(Collider other)
     {
         if (other.TryGetComponent<InteractionController>(out InteractionController interaction))
         {
             interaction.RemoveFromInteractions(this);
         }
+    }
+    public virtual void Interact(StatusController _status = null)
+    {
+        Debug.Log("INTERACTION FROM INTERACTABLE");
+        InteractionEvent.Invoke();
     }
 }

@@ -196,17 +196,29 @@ public class StatusController : MonoBehaviour, IHear
     }
     void Tick()
     {
+        //reacting to rain - temporary disabled
+        /*
+        LayerMask mask = LayerMask.GetMask("Weather", "Blockout");
+        RaycastHit hit;
         
-
-        DamageEffects _damageEffects = new DamageEffects();
+        if (Physics.Raycast(headTransform.position, transform.up,out hit, 50, mask))
+        {
+            if (hit.collider.TryGetComponent<Weather>(out Weather weather))
+                TakeDamageWithEffects(weather.effects);
+        }
+        */
+            DamageEffects _damageEffects = new DamageEffects();
         foreach (Stat _stat in stats.stats)
         {
             if (_stat.isActive && _stat.contagousSpeed != 0)
+            {
                 _damageEffects.effectList.Add(new Effect(_stat.contagousSpeed * TickTime, _stat.type));
+                if (_stat.emptyOnContangion) _stat.ResetEffect();
+            }
+                
         }
         if (damageEffectsRangeBoxCollider != null)
         {
-            Debug.Log("Reference to collider found");
             Damages.SendDamage(new DamageField(damageEffectsRangeBoxCollider, _damageEffects, this));
         }
         else
@@ -268,7 +280,7 @@ public class StatusController : MonoBehaviour, IHear
     }
     public void StunnedEnd()
     {
-        Debug.Log("STUNNED END");
+        //Debug.Log("STUNNED END");
         if (IsPlayer)
         {
             movementSpeedMultiplierStun = 1f;
@@ -520,7 +532,14 @@ public class StatusController : MonoBehaviour, IHear
             if (attacker != null) direction = (transform.position - attacker.transform.position).normalized;
             rb.AddForce(Vector3.up * 2 + direction * 10, ForceMode.VelocityChange);
         }
-        GetComponent<Collider>().isTrigger = false;
+        if (TryGetComponent<Collider>(out Collider col))
+        {
+            col.isTrigger = false;
+        }
+        if (stats != null)
+        {
+            stats.EmptyStats();// check for bugs
+        }
         if (toolsController != null)
             if (toolsController.CurrentWeaponWrapper != null)
             {

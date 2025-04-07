@@ -117,12 +117,8 @@ public class EntityController : MonoBehaviour
     void FixedUpdate()
     {
         TickTimer += Time.fixedDeltaTime;
+        currentState = currentState.Process(Tick);
         
-        while (TickTimer > Tick)
-        {
-            currentState = currentState.Process(Tick);
-            TickTimer -= Tick;
-        }
         if (isLookingAtTarget)
             LookAtTarget(lookAtTargetPosition);
         return;
@@ -293,6 +289,8 @@ public class EntityController : MonoBehaviour
     public void GoToTarget(Vector3 targetPosition, float stoppingDistance = 0f)
     {
         if (agent == null) return;
+        //crude way to check if value is null...
+        if (targetPosition == Vector3.zero) return;
         agent.stoppingDistance = stoppingDistance;
         agent.isStopped = false;
         agent.destination = targetPosition;

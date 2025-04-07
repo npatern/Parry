@@ -59,6 +59,7 @@ public class Stats
             stats[newIndex].mortalOnFull = _archetype.IsMortalOnFull(stats[newIndex].type);
             stats[newIndex].isAlwaysFull = _archetype.IsAlwaysFull(stats[newIndex].type);
             if (_archetype.IsContagous(stats[newIndex].type)) stats[newIndex].contagousSpeed = 201;
+            if (_archetype.StartFull(stats[newIndex].type)) stats[newIndex].Points = stats[newIndex].maxPoints;
             newIndex++;
         }
     }
@@ -104,6 +105,13 @@ public class Stats
         Stat _stat = GetStat(_type);
         if (_stat == null) return;
         _stat.ApplyFullEffect();
+    }
+    public void EmptyStats()
+    {
+        foreach (Stat stat in stats)
+        {
+            stat.RemoveParticles();
+        }
     }
 }
 [System.Serializable]
@@ -174,9 +182,10 @@ public class Stat
     public bool mortalOnEmpty = false;
     public bool mortalOnFull = false;
     public bool isAlwaysFull = false;
+    public bool emptyOnContangion = false;
     float tickTimer = 0;
     float tickTime = 1;
-
+    [SerializeField]
     private ParticleSystem particleInstance = null;
     //public List<DamageEffect> effects;
     
@@ -199,6 +208,7 @@ public class Stat
         tickTimer = 0;
         tickTime = 1;
         contagousSpeed = 0;
+        emptyOnContangion = false;
         //effects = new List<DamageEffect>();
     }
     public Stat(Stat cloned)
@@ -221,6 +231,7 @@ public class Stat
         tickTimer = cloned.tickTimer;
         tickTime = cloned.tickTime;
         contagousSpeed = cloned.contagousSpeed;
+        emptyOnContangion = cloned.emptyOnContangion;
         //effects = new List<DamageEffect>();
     }
     public Stat(Types _type)
@@ -290,11 +301,12 @@ public class Stat
         if (visuals == null) GetVisuals();
         if (particleInstance==null)
             particleInstance = status.SpawnParticles(visuals.particles, status.bodyTransform,-1,-1);
+        if (particleInstance == null) return;
         if (status.UseBoxParticles() && particleInstance != null)
         {
             var shape = particleInstance.GetComponent<ParticleSystem>().shape;
             shape.shapeType = ParticleSystemShapeType.Rectangle;
-            Debug.Log("Shape type after change: " + shape.shapeType);
+            //Debug.Log("Shape type after change: " + shape.shapeType);
         }
         particleInstance.emissionRate = particleInstance.emissionRate*particleInstance.transform.lossyScale.x * particleInstance.transform.lossyScale.z;
         particleInstance.emissionRate = Mathf.Clamp(particleInstance.emissionRate, 0, particleInstance.maxParticles * 2);
@@ -403,7 +415,7 @@ public class Stat
 
         }
     }
-    public void OnActiveEnd()
+    public void RemoveParticles()
     {
         if (particleInstance != null)
         {
@@ -411,6 +423,10 @@ public class Stat
             GameObject.Destroy(particleInstance.gameObject, 5);
             particleInstance = null;
         }
+    }
+    public void OnActiveEnd()
+    {
+        RemoveParticles();
            
         if (status == null) return;
         switch (type)
@@ -419,7 +435,7 @@ public class Stat
                 status.EndStunEvent.Invoke();
                 break;
             case Types.FREEZE:
-                status.EndFreezeEvent.Invoke();                     
+                status.EndFreezeEvent.Invoke();
                 break;
         }
         if (mortalOnEmpty)

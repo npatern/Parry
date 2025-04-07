@@ -50,6 +50,7 @@ public class Bullet : MonoBehaviour
         }
         else
         {
+            Debug.DrawRay(transform.position, Vector3.up, Color.blue, .5f);
             Sound sound = new Sound(transform.position, SoundRange, soundType);
             Sounds.MakeSound(sound);
         }
@@ -100,6 +101,8 @@ public class Bullet : MonoBehaviour
             HandleHit(collision.collider);
         else
         {
+            Debug.DrawRay(transform.position, Vector3.up, Color.red,.5f);
+             
             Debug.Log("COLISSION!!!");
             Sound sound = new Sound(transform.position, SoundRange, soundType);
             Sounds.MakeSound(sound);
@@ -127,7 +130,8 @@ public class Bullet : MonoBehaviour
             Instantiate(ParticlesToSpawn, transform.position, transform.rotation, GameController.Instance.transform);
         }
         if (GetComponent<StatusController>() != null) if (GetComponent<StatusController>().IsDeaf()) return;
-        
+
+        Debug.DrawRay(transform.position, Vector3.left, Color.green, .5f);
         Sound sound = new Sound(GetComponent<StatusController>(), SoundRange, soundType);
         Sounds.MakeSound(sound);
         Destroy(gameObject);

@@ -156,5 +156,65 @@ PrefabInstance:
       propertyPath: InteractionEvent.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
+    - target: {fileID: 8040142054156547687, guid: 57db80ac8f8590a43af60cb1ed81d55f, type: 3}
+      propertyPath: SwitchOnEvent.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8040142054156547687, guid: 57db80ac8f8590a43af60cb1ed81d55f, type: 3}
+      propertyPath: SwitchOffEvent.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8040142054156547687, guid: 57db80ac8f8590a43af60cb1ed81d55f, type: 3}
+      propertyPath: SwitchOnEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 8040142054156547687, guid: 57db80ac8f8590a43af60cb1ed81d55f, type: 3}
+      propertyPath: SwitchOffEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 8040142054156547687, guid: 57db80ac8f8590a43af60cb1ed81d55f, type: 3}
+      propertyPath: SwitchOnEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 372906171715894710}
+    - target: {fileID: 8040142054156547687, guid: 57db80ac8f8590a43af60cb1ed81d55f, type: 3}
+      propertyPath: SwitchOffEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 372906171715894710}
+    - target: {fileID: 8040142054156547687, guid: 57db80ac8f8590a43af60cb1ed81d55f, type: 3}
+      propertyPath: SwitchOnEvent.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8040142054156547687, guid: 57db80ac8f8590a43af60cb1ed81d55f, type: 3}
+      propertyPath: SwitchOffEvent.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8040142054156547687, guid: 57db80ac8f8590a43af60cb1ed81d55f, type: 3}
+      propertyPath: SwitchOnEvent.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: SwitchDoorState
+      objectReference: {fileID: 0}
+    - target: {fileID: 8040142054156547687, guid: 57db80ac8f8590a43af60cb1ed81d55f, type: 3}
+      propertyPath: SwitchOffEvent.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: SwitchDoorState
+      objectReference: {fileID: 0}
+    - target: {fileID: 8040142054156547687, guid: 57db80ac8f8590a43af60cb1ed81d55f, type: 3}
+      propertyPath: SwitchOnEvent.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: Door, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 8040142054156547687, guid: 57db80ac8f8590a43af60cb1ed81d55f, type: 3}
+      propertyPath: SwitchOffEvent.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: Door, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 8040142054156547687, guid: 57db80ac8f8590a43af60cb1ed81d55f, type: 3}
+      propertyPath: SwitchOnEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_BoolArgument
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8040142054156547687, guid: 57db80ac8f8590a43af60cb1ed81d55f, type: 3}
+      propertyPath: SwitchOnEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 8040142054156547687, guid: 57db80ac8f8590a43af60cb1ed81d55f, type: 3}
+      propertyPath: SwitchOffEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 57db80ac8f8590a43af60cb1ed81d55f, type: 3}

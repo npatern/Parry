@@ -20,7 +20,7 @@ MonoBehaviour:
   weaponObject: {fileID: 3823714102769063789, guid: e716d27369abbc34da08a60adf47e6a5, type: 3}
   icon: {fileID: 0}
   emptyhanded: 0
-  attackPattern: {fileID: 8930655107102755286, guid: 9fff009433f6c5043906c1e3ce808b93, type: 3}
+  attackPattern: {fileID: 8930655107102755286, guid: 913ad8e4196f7f84b8b301c52394ee73, type: 3}
   Effects:
     Damage: 0
     caster: {fileID: 0}

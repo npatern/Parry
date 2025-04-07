@@ -27,14 +27,14 @@ MonoBehaviour:
     origin: {x: 0, y: 0, z: 0}
     effectList:
     - type: 4
-      points: 55
+      points: 60
   bulletEffects:
     Damage: 0
     caster: {fileID: 0}
     origin: {x: 0, y: 0, z: 0}
     effectList:
     - type: 2
-      points: 65
+      points: 110
   AttackDistance: 15
   Damage: 30
   BulletDamage: 10

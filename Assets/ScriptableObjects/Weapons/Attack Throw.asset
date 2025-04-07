@@ -46,7 +46,7 @@ MonoBehaviour:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    StayTillGrounded: 1
+    StayTillGrounded: 0
     OnlyIfGrounded: 0
     SkipIfCanceled: 0
     StayTillContextCanceled: 1

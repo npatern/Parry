@@ -120,8 +120,8 @@ GameObject:
   m_Component:
   - component: {fileID: 6644133888316450093}
   - component: {fileID: 6644133888316450088}
-  - component: {fileID: 6644133888316450089}
   - component: {fileID: 6644133888316450092}
+  - component: {fileID: 9180732974873968739}
   m_Layer: 0
   m_Name: Interactable
   m_TagString: Untagged
@@ -158,35 +158,6 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 1
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &6644133888316450089
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6644133888316450086}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7a3e1c350971f34408411ad84d2c2b96, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  IsPickable: 0
-  IsInteractable: 1
-  InteractionEvent:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 6908711368201940159}
-        m_TargetAssemblyTypeName: SwitchController, Assembly-CSharp
-        m_MethodName: SwitchState
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
 --- !u!54 &6644133888316450092
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -203,3 +174,26 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &9180732974873968739
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6644133888316450086}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0725f4f7577bf1b4991272d3a6f26eac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  IsInteractable: 1
+  InteractionEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  SwitchOnEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  SwitchOffEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  SignalState: 1

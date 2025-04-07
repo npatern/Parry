@@ -10,10 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b9ac36251447b234ba983205d9bdf4ff, type: 3}
-  m_Name: Stats Archetype Water
+  m_Name: Stats Archetype Electricity Entity
   m_EditorClassIdentifier: 
-  statsPermitted: 020000000300000007000000
-  statsMortalOnEmpty: 
+  statsPermitted: 02000000
+  statsMortalOnEmpty: 02000000
   statsMortalOnFull: 
-  statsAlwaysFull: 07000000
-  makeCountagous: 0700000002000000
+  statsAlwaysFull: 
+  makeCountagous: 02000000
+  startFull: 02000000

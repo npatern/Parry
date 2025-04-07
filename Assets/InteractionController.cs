@@ -48,7 +48,7 @@ public class InteractionController : MonoBehaviour
     public void Use()
     {
         if (Interactables.Count <= 0) return;
-        GetBestInteraction().InteractionEvent.Invoke(statusController);
+        GetBestInteraction().Interact();
     }
     public void Pick(Pickable pick)
     {

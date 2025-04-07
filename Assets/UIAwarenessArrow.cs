@@ -8,25 +8,64 @@ public class UIAwarenessArrow : MonoBehaviour
     public StatusController player;
     [SerializeField]
     private UIBarController bar;
+    [SerializeField]
+    private GameObject eyeContactBar;
+
+    [SerializeField]
+    AnimationCurve scaleCurve;
+    [SerializeField]
+    Vector3 bigScale;
+    Vector3 basicScale;
+    private bool wasActive = false;
+    private float scaleTimer = 0;
+    [SerializeField]
+    private float scaleTime = 1;
+
+    private bool wasAlerted = false;
     private void Awake()
     {
         player = GameController.Instance.CurrentPlayer;
+        basicScale = bar.transform.localScale;
     }
     void Update()
     {
         if (!ShouldBeVisible())
         {
             bar.gameObject.SetActive(false);
+            wasActive = false;
             return;
         }
         bar.gameObject.SetActive(true);
-        
+        if (wasActive == false)
+        {
+            scaleTimer = 0;
+            wasActive = true;
+        }
+        if (wasAlerted == false && sensesController.IsAlerted)
+        {
+            scaleTimer = 0;
+            wasAlerted = true;
+        }
+        wasAlerted = sensesController.IsAlerted;
+        NoticeScale();
+        if (eyeContactBar !=null)
+            eyeContactBar.SetActive(sensesController.currentTarget != null);
         FollowTarget(player.transform);
         LookAtTarget(sensesController.transform);
         if (sensesController.IsAlerted)
             ApplyValues(sensesController.Awareness);
         else
             ApplyValues(sensesController.Awareness, true);
+    }
+    void NoticeScale()
+    {
+        if (scaleTimer > scaleTime) 
+        {
+            bar.transform.localScale = basicScale;
+            return;
+        }
+        scaleTimer += Time.deltaTime;
+        bar.transform.localScale = Vector3.LerpUnclamped(bigScale,basicScale,scaleCurve.Evaluate(scaleTimer/ scaleTime));
     }
     void LookAtTarget(Transform target)
     {
@@ -49,7 +88,7 @@ public class UIAwarenessArrow : MonoBehaviour
     {
         if (player == null || sensesController == null) return false;
         if (sensesController.Awareness <=0) return false;
-        
+        if (sensesController.currentTarget == null) return false;
         return true;
     }
 }

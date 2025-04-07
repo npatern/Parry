@@ -130,6 +130,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cd7c774c27a4a1748a992000bcc3da8d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Immortal: 0
   Team: enemy
   size: {x: 1, y: 1, z: 1}
   loadValuesInRealTime: 0
@@ -141,6 +142,7 @@ MonoBehaviour:
   stats:
     stats: []
     status: {fileID: 0}
+  damageEffectsRangeBoxCollider: {fileID: 0}
   statsArchetype: {fileID: 0}
   IsPlayer: 0
   CriticalMultiplier: 1
@@ -292,7 +294,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 18163ce89208e2b47b51fef8e3380097, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  drawRaycasts: 1
+  drawRaycasts: 0
   nrOfTestRays: 36
   playerHeight: 1.5
   IsAlerted: 0
@@ -305,6 +307,8 @@ MonoBehaviour:
   maxAwareness: 100
   awarenessUpTime: 1
   awarenessDownTime: 1
+  viewDistanceBase: 20
+  viewDistanceMultiplier: 1.8
   viewDistance: 20
   viewAngle: 90
   angleCurve:

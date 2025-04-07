@@ -92,7 +92,6 @@ public class DamageField
         range = 1;
         damageEffects = _damageEffects;
         statusController = _statusController;
-        Debug.Log("Created box damage");
     }
     public DamageField(SphereCollider _collider, DamageEffects _damageEffects, StatusController _statusController = null)
     {

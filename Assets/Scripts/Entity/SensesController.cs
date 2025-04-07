@@ -30,6 +30,10 @@ public class SensesController : MonoBehaviour, IHear
 
     [Space(10), Header("Values")]
     [SerializeField]
+    float viewDistanceBase = 20;
+    [SerializeField]
+    float viewDistanceMultiplier = 2;
+    [SerializeField]
     float viewDistance = 10;
     [SerializeField]
     float viewAngle = 45;
@@ -66,6 +70,10 @@ public class SensesController : MonoBehaviour, IHear
     }
     private void FixedUpdate()
     {
+        if (IsAlerted)
+            viewDistance = viewDistanceBase * viewDistanceMultiplier;
+        else
+            viewDistance = viewDistanceBase;
         if (currentTargetTimer > 0)
             currentTargetTimer -= Time.fixedDeltaTime;
         else
@@ -73,7 +81,8 @@ public class SensesController : MonoBehaviour, IHear
         if (currentTarget != null) currentTargetLastPosition = currentTarget.transform.position;
 
         if (currentTargetTimer<=0) 
-        if (target == null) return;
+            if (target == null) return;
+
         ApplyAwareness(GetAwarenessValue(target), target.GetComponent<StatusController>());
          
     }
@@ -362,9 +371,9 @@ public class SensesController : MonoBehaviour, IHear
         if (sound.type == Sound.TYPES.neutral)
         {
             if (_target != null)
-                AddAwarenessOnce(30, _target);
+                AddAwarenessOnce(50, _target);
             else
-                AddAwarenessOnce(30, _targetPosition);
+                AddAwarenessOnce(50, _targetPosition);
         }
             
         if (sound.type == Sound.TYPES.continous)

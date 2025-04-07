@@ -14,6 +14,8 @@ public class StatsArchetypeScriptable : ScriptableObject
     public Stat.Types[] statsAlwaysFull;
     [SerializeField]
     public Stat.Types[] makeCountagous;
+    [SerializeField]
+    public Stat.Types[] startFull;
 
     public bool HasType(Stat.Types _typeToCheck)
     {
@@ -47,6 +49,13 @@ public class StatsArchetypeScriptable : ScriptableObject
     {
         if (makeCountagous == null) return false;
         foreach (Stat.Types _type in makeCountagous)
+            if (_type == _typeToCheck) return true;
+        return false;
+    }
+    public bool StartFull(Stat.Types _typeToCheck)
+    {
+        if (startFull == null) return false;
+        foreach (Stat.Types _type in startFull)
             if (_type == _typeToCheck) return true;
         return false;
     }
