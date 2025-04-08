@@ -49,7 +49,8 @@ public class State
             nextState = new Idle(entity); 
     }
     public virtual void Update() 
-    { 
+    {
+        entity.Tick = 0.5f;
         stage = EVENT.UPDATE; 
         //Debug.Log(stage + " stage, " + name); 
     }
@@ -62,6 +63,7 @@ public class State
     {
         Tick = _tick;
         timer += Time.fixedDeltaTime;
+        
         entity.SetAvoidanceRadius(0);
         entity.ProcessShockMemory();
         //FLEE
@@ -227,7 +229,6 @@ public class Investigate : State
 
     public override void Update()
     {
-        Debug.Log("UPdate INVESTIGATION");
         base.Update();
         entity.SetAgentSpeedWalk();
         maxTime -= Tick;
@@ -367,7 +368,7 @@ public class Combat : State
     public override void Update()
     {
         base.Update();
-
+        entity.Tick = 0.1f;
         if (entity.IsProcessingShock()) return;
         if (shocked)
         {
@@ -437,7 +438,7 @@ public class Flee : State
         }
 
         entity.SetAgentSpeedChase();
-        statusController.MakeDeaf(statusController.deafTime);
+        statusController.MakeDeaf(1);
         if (timer > time)
         {
             UIController.Instance.SpawnTextBubble(Barks.GetBark(Barks.BarkTypes.inFleeEnterNotice), entity.transform);

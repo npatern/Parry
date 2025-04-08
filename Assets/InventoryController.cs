@@ -46,7 +46,7 @@ public class InventoryController : MonoBehaviour
         {
             if (item.Stackable)
             {
-                int index = list.IndexOf(item);
+                int index = list.FindIndex(i => i.ID == item.ID);
                 list[index].stack += item.stack;
                 return true;
             }

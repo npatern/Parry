@@ -59,10 +59,6 @@ public class StatusController : MonoBehaviour, IHear
     private ToolsController toolsController;
     private SensesController sensesController;
 
-    private float deafTimer = 0f;
-    public float deafTime = 1f;
-
-
     public DamageEffects effects;
     public float TickTime = 0.5f;
     float TickTimer = 0;
@@ -172,14 +168,13 @@ public class StatusController : MonoBehaviour, IHear
         StartFreezeEvent.AddListener(FrozenStart);
         EndFreezeEvent.AddListener(FrozenEnd);
         LoadStatsFromScriptable(GameController.Instance.ListOfAssets.DefaultEntityValues);
-
+        TickTimer = TickTime;
         //onPowerStart();
     }
 
     private void FixedUpdate()
     {
         stats.ApplyTick();
-        deafTimer -= Time.fixedDeltaTime;
 
         if (loadValuesInRealTime) LoadStatsFromScriptable(GameController.Instance.ListOfAssets.DefaultEntityValues);
 
@@ -536,7 +531,7 @@ public class StatusController : MonoBehaviour, IHear
         {
             col.isTrigger = false;
         }
-        if (stats != null)
+        if (stats != null && DestroyOnKill)
         {
             stats.EmptyStats();// check for bugs
         }

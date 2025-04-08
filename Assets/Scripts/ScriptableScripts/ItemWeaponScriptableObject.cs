@@ -18,8 +18,7 @@ public class ItemWeaponScriptableObject : ScriptableObject
     public DamageEffects Effects;
     public DamageEffects bulletEffects;
     public float AttackDistance = 3f;
-    public float Damage = 10;
-    public float BulletDamage = 10;
+    public bool isPrimeable = false;
     public Bullet bullet;
     public int stack;
 
@@ -53,8 +52,7 @@ public class ItemWeaponWrapper
     public DamageEffects bulletEffects;
     public AttackPattern attackPattern;
     public float AttackDistance = 3f;
-    public float Damage = 10;
-    public float BulletDamage = 10;
+    public bool isPrimeable = false;
     public Bullet Bullet;
     public float ColliderSize = 1;
     public bool emptyhanded = false;
@@ -62,7 +60,7 @@ public class ItemWeaponWrapper
     {
         itemType = scriptableObject;
         
-        Damage = scriptableObject.Damage;
+        
         ItemName = scriptableObject.ItemName;
         Effects = scriptableObject.Effects;
         bulletEffects = scriptableObject.bulletEffects;
@@ -75,14 +73,41 @@ public class ItemWeaponWrapper
         attackPattern = scriptableObject.attackPattern;
         weaponObject = scriptableObject.weaponObject;
         AttackDistance = scriptableObject.AttackDistance;
-        Damage = scriptableObject.Damage;
-        BulletDamage = scriptableObject.BulletDamage;
+        isPrimeable = scriptableObject.isPrimeable;
         Bullet = scriptableObject.bullet;
         emptyhanded = scriptableObject.emptyhanded;
         RefreshIcon();
 
     }
-    
+    public ItemWeaponWrapper(ItemWeaponWrapper copiedWrapper)
+    {
+        itemType = copiedWrapper.itemType;
+        ItemName = copiedWrapper.ItemName;
+        Effects = copiedWrapper.Effects;
+        bulletEffects = copiedWrapper.bulletEffects;
+        name = copiedWrapper.ItemName;
+        ID = copiedWrapper.ID;
+        Description = copiedWrapper.Description;
+        Stackable = copiedWrapper.Stackable;
+        stack = copiedWrapper.stack;
+        Big = copiedWrapper.Big;
+        attackPattern = copiedWrapper.attackPattern;
+        weaponObject = copiedWrapper.weaponObject;
+        AttackDistance = copiedWrapper.AttackDistance;
+        isPrimeable = copiedWrapper.isPrimeable;
+        Bullet = copiedWrapper.Bullet;
+        emptyhanded = copiedWrapper.emptyhanded;
+        icon = copiedWrapper.icon;
+        //RefreshIcon();
+
+    }
+    public ItemWeaponWrapper TakeOneFromStack()
+    {
+        ItemWeaponWrapper _newWeaponWrapper = new ItemWeaponWrapper(this);
+        _newWeaponWrapper.stack = 1;
+        stack -= 1;
+        return _newWeaponWrapper;
+    }
     public Transform SpawnWeaponObjectAsCurrentObject(Transform parentTransform = null)
     {
         CurrentWeaponObject = SpawnWeaponObject(parentTransform);
@@ -108,13 +133,24 @@ public class ItemWeaponWrapper
         //CurrentWeaponObject.GetComponent<Rigidbody>().isKinematic = true;
         if (removeRigidBody) RemoveRigidBody();
     }
-    public void AddRigidBody()
+  
+    public void AddAndSetRigidBody()
     {
-        if (CurrentWeaponObject == null) return;
+        AddRigidbody();
+        SetRigidbody();
+    }
+    private void AddRigidbody()
+    {
         if (CurrentWeaponObject.GetComponent<Rigidbody>() != null) return;
         Rigidbody rb = CurrentWeaponObject.gameObject.AddComponent<Rigidbody>();
+    }
+    private void SetRigidbody()
+    {
+        if (CurrentWeaponObject.GetComponent<Rigidbody>() == null) return;
+        Rigidbody rb = CurrentWeaponObject.GetComponent<Rigidbody>();
         rb.interpolation = RigidbodyInterpolation.Interpolate;
         rb.collisionDetectionMode = CollisionDetectionMode.ContinuousDynamic;
+        rb.isKinematic = false;
     }
     public void RemoveRigidBody()
     {
@@ -132,7 +168,8 @@ public class ItemWeaponWrapper
         CurrentWeaponObject.transform.parent = null;
         pickable.weaponObject = CurrentWeaponObject.gameObject;
         pickable.weaponWrapper = this;
-        AddRigidBody();
+        Debug.Log("ADDING RB");
+        AddAndSetRigidBody();
         return pickable;
     }
     

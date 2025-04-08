@@ -18,6 +18,9 @@ public class Bullet : MonoBehaviour
     public ItemWeaponWrapper item;
     public float SoundRange = 2;
     public Sound.TYPES soundType = Sound.TYPES.danger;
+    public GameObject destroyObject = null;
+    public bool primed = false;
+    public float primeTimer = 1;
 
     private void Awake()
     {
@@ -30,16 +33,29 @@ public class Bullet : MonoBehaviour
     }
     private void FixedUpdate()
     {
+        if (primed)
+        {
+            primeTimer -= Time.fixedDeltaTime;
+            if (primeTimer <= 0)
+                DestroyBullet();
+        }
         if (item == null || isDamaging==false) return;
          
         if (item.CastDamage(damage, multiplier))
         {
             isDamaging = false;
             RemoveParticles();
+            StopBeingBullet();
+        }
+    }
+    void StopBeingBullet()
+    {
+        if (!primed)
+        {
             Destroy(GetComponent<Bullet>());
         }
     }
-    void HandleHit(Collider collision)
+    void HandleBulletHit(Collider collision)
     {
         bool bounced = false;
         if (collision.gameObject.GetComponent<StatusController>() != null)
@@ -64,53 +80,32 @@ public class Bullet : MonoBehaviour
         {
             DestroyBullet();
         }
-
         else
         {
-            if (item != null)
-            {
-                //item.CurrentWeaponObject.transform.parent = null;
-                //item.MakePickable();
-                //item.pickable.GetComponent<Rigidbody>().velocity = rb.velocity;
-                //transform.parent = collision.transform.parent;
-                //item.RemoveRigidBody();
-                if (this.TryGetComponent<StatusController>(out StatusController status)){
-                    //Sound sound = new Sound(status, SoundRange, soundType);
-                    //Sounds.MakeSound(sound);
-                }
-                RemoveParticles();
-                Destroy(GetComponent<Bullet>());
-            }
-            else
-            {
-                RemoveParticles();
-                Destroy(this);
-            }
+            RemoveParticles();
+            Destroy(this);
         }
     }
     private void OnTriggerEnter(Collider collision)
     {
-        if (item != null) return;
-        isDamaging = false;
-        HandleHit(collision);
+        if (item == null)
+        {
+            HandleBulletHit(collision);
+        }
     }
-    
     private void OnCollisionEnter(Collision collision)
     {
         if (item == null) 
-            HandleHit(collision.collider);
+            HandleBulletHit(collision.collider);
         else
         {
             Debug.DrawRay(transform.position, Vector3.up, Color.red,.5f);
-             
-            Debug.Log("COLISSION!!!");
             Sound sound = new Sound(transform.position, SoundRange, soundType);
             Sounds.MakeSound(sound);
             isDamaging = false;
             RemoveParticles();
-            Destroy(GetComponent<Bullet>());
-        }
-            
+            StopBeingBullet();
+        }      
     }
     public void RemoveParticles()
     {
@@ -132,8 +127,10 @@ public class Bullet : MonoBehaviour
         if (GetComponent<StatusController>() != null) if (GetComponent<StatusController>().IsDeaf()) return;
 
         Debug.DrawRay(transform.position, Vector3.left, Color.green, .5f);
-        Sound sound = new Sound(GetComponent<StatusController>(), SoundRange, soundType);
+        
+        Sound sound = new Sound( transform.position, SoundRange, soundType);
         Sounds.MakeSound(sound);
+        if (destroyObject != null) Instantiate(destroyObject, transform.position, Quaternion.identity);
         Destroy(gameObject);
     }
 }

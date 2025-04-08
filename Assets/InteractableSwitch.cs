@@ -43,13 +43,11 @@ public class InteractableSwitch : Interactable
     }
     private void SwitchSignalToState(bool _setSignal, StatusController _status = null)
     {
-        Debug.Log("ARE WE GONNA SWITCH SIGNAL?");
+       //commented cos i want to make sure everything is set properly on awake
         //if (SignalState == _setSignal) return;
-        Debug.Log("WE GONNA SWITCH SIGNAL");
         SignalState = _setSignal;
         if (SignalState) SwitchOnEvent.Invoke();
         if (!SignalState) SwitchOffEvent.Invoke();
-        Debug.Log("SIGNAL SET TO "+SignalState);
 
     }
 

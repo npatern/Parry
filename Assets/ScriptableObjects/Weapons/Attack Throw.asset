@@ -105,3 +105,47 @@ MonoBehaviour:
     MovementOffset: {x: 0, y: 0, z: 0.5}
     SoundRange: 0
     soundType: 0
+  - StepName: 
+    LockMovement: 0
+    LockRotation: 0
+    TargetEnum: 0
+    WaitTime: 1
+    MovementCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 1
+        value: 1
+        inSlope: 2
+        outSlope: 2
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    StayTillGrounded: 0
+    OnlyIfGrounded: 0
+    SkipIfCanceled: 0
+    StayTillContextCanceled: 0
+    Interruptable: 1
+    IsParrying: 0
+    IsProtected: 0
+    IsDamaging: 0
+    IsFiring: 0
+    IsThrowing: 0
+    IsDisarming: 0
+    SkipIfPlayer: 0
+    MovementOffset: {x: 0, y: 0, z: 0}
+    SoundRange: 0
+    soundType: 0

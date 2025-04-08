@@ -9,6 +9,7 @@ public class DamageEffects
     public StatusController caster;
     public Vector3 origin;
     public List<Effect> effectList;
+    public GameObject deathEffect;
     public DamageEffects()
     {
         Damage = 0;
@@ -432,9 +433,11 @@ public class Stat
         switch (type)
         {
             case Types.STUN:
-                status.EndStunEvent.Invoke();
+                if (status != null)
+                    status.EndStunEvent.Invoke();
                 break;
             case Types.FREEZE:
+                if (status!=null)
                 status.EndFreezeEvent.Invoke();
                 break;
         }

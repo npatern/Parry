@@ -65,6 +65,7 @@ public class InteractionController : MonoBehaviour
     public Interactable GetBestInteraction()
     {
         if (Interactables.Count <= 0) return null;
+        RemoveEmptyInteractables();
         Interactables.Sort((a, b) => Vector3.Distance(a.transform.position, transform.position).CompareTo(Vector3.Distance(b.transform.position, transform.position)));
         if (GetComponent<InputController>() != null && statusController.IsPlayer) GetComponent<InputController>().ShowBindingsText("Interaction", " to use " + Interactables[0].gameObject.name);
         return Interactables[0];
@@ -72,8 +73,20 @@ public class InteractionController : MonoBehaviour
     public Pickable GetBestPick()
     {
         if (Pickables.Count <= 0) return null;
+        RemoveEmptyPickables();
         Pickables.Sort((a, b) => Vector3.Distance(a.transform.position, transform.position).CompareTo(Vector3.Distance(b.transform.position, transform.position)));
-        if (GetComponent<InputController>() != null && statusController.IsPlayer) GetComponent<InputController>().ShowBindingsText("Pick", " to pick " + Pickables[0].gameObject.name);
+        if (GetComponent<InputController>() != null && statusController.IsPlayer) 
+            GetComponent<InputController>().ShowBindingsText("Pick", " to pick " + Pickables[0].gameObject.name);
         return Pickables[0];
+    }
+    private void RemoveEmptyInteractables()
+    {
+        for (int i = 0; i < Interactables.Count; i++)
+            if (Interactables[i] == null) Interactables.RemoveAt(i);
+    }
+    private void RemoveEmptyPickables()
+    {
+        for (int i = 0; i < Pickables.Count; i++)
+            if (Pickables[i] == null) Pickables.RemoveAt(i);
     }
 }

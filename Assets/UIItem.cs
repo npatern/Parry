@@ -10,7 +10,8 @@ public class UIItem : MonoBehaviour
     TextMeshProUGUI ItemName;
     [SerializeField]
     TextMeshProUGUI ItemDesc;
-
+    [SerializeField]
+    TextMeshProUGUI ItemStack;
     public void Update()
     {
         RefreshImage();
@@ -22,8 +23,14 @@ public class UIItem : MonoBehaviour
         if (GameController.Instance.CurrentPlayer.GetComponent<ToolsController>().CurrentWeaponWrapper == null) return;
         if (GameController.Instance.CurrentPlayer.GetComponent<ToolsController>().CurrentWeaponWrapper.icon == null) return;
 
-        image.sprite = GameController.Instance.CurrentPlayer.GetComponent<ToolsController>().CurrentWeaponWrapper.icon;
-        ItemName.text = GameController.Instance.CurrentPlayer.GetComponent<ToolsController>().CurrentWeaponWrapper.ItemName;
-        ItemDesc.text = GameController.Instance.CurrentPlayer.GetComponent<ToolsController>().CurrentWeaponWrapper.Description;
+        ItemWeaponWrapper wrapper = GameController.Instance.CurrentPlayer.GetComponent<ToolsController>().CurrentWeaponWrapper;
+
+        image.sprite = wrapper.icon;
+        ItemName.text = wrapper.ItemName;
+        ItemDesc.text = wrapper.Description;
+        if (wrapper.stack>1)
+            ItemStack.text = ""+wrapper.stack;
+        else
+            ItemStack.text = "";
     }
 }

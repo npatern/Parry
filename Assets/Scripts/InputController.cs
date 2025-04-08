@@ -220,7 +220,7 @@ public class InputController : MonoBehaviour
     {
 
         if (context.performed)
-            GetComponent<ToolsController>().DropWeaponFromHands();
+            GetComponent<ToolsController>().DropOneWeaponFromHands();
     }
     public string GetKeyBinding(string actionName)
     {
@@ -244,6 +244,10 @@ public class InputController : MonoBehaviour
         {
             //target.parent = null;
             //TODO: get rid of camera.main later
+
+            //LayerMask mask = LayerMask.GetMask("MouseRaycast");
+            //if (Physics.Raycast(ray, out RaycastHit hitData, mask))
+
             Vector3 v3 = new Vector3(lookAtValue.x, lookAtValue.y, 10);
             Ray ray = Camera.main.ScreenPointToRay(v3);
             if (Physics.Raycast(ray, out RaycastHit hitData))

@@ -10,16 +10,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1ea5dd123d6c3344986f4d254d27bda1, type: 3}
-  m_Name: Weapon Item Hand
+  m_Name: Weapon Item Grenade smoke
   m_EditorClassIdentifier: 
-  ItemName: Hand
-  ID: empty
+  ItemName: Smoke grenade
+  ID: smokeGrenade
   Description: 
-  Stackable: 0
+  Stackable: 1
   Big: 0
-  weaponObject: {fileID: 3823714102769063789, guid: 76a3a899be49e35409532ee486b8d0e0, type: 3}
+  weaponObject: {fileID: 3823714102769063789, guid: 5330178ebecb184459bf6c0cc1e64620, type: 3}
   icon: {fileID: 0}
-  emptyhanded: 1
+  emptyhanded: 0
   attackPattern: {fileID: 8930655107102755286, guid: 28a532b9c26265c4db76cff5e5345331, type: 3}
   Effects:
     Damage: 0
@@ -28,16 +28,17 @@ MonoBehaviour:
     effectList:
     - type: 4
       points: 40
-    deathEffect: {fileID: 0}
+    deathEffect: {fileID: 2157291579974494909, guid: 6a10380512d2f2448afc178fcb1eccf3, type: 3}
   bulletEffects:
     Damage: 0
     caster: {fileID: 0}
     origin: {x: 0, y: 0, z: 0}
     effectList: []
     deathEffect: {fileID: 0}
-  AttackDistance: 2
+  AttackDistance: 10
+  isPrimeable: 1
   bullet: {fileID: 0}
-  stack: 0
+  stack: 1
   LightAttack: {fileID: 11400000, guid: f2f5effdcbefe0e46889b8229d07164a, type: 2}
   HeavyAttack: {fileID: 11400000, guid: 442da46444774f7488ccb73a573b2d98, type: 2}
   Parry: {fileID: 11400000, guid: 7eca0611d41755841b197c6a5b200241, type: 2}
@@ -45,4 +46,4 @@ MonoBehaviour:
   Dequip: {fileID: 11400000, guid: 46bb0d0e09ae2f441b3301bf798d2e1f, type: 2}
   Stunned: {fileID: 11400000, guid: e78a3d5511337714b8b637bd5d48f480, type: 2}
   Attacked: {fileID: 11400000, guid: bee5c7644232e244f839957c7fbe88ae, type: 2}
-  Throw: {fileID: 0}
+  Throw: {fileID: 11400000, guid: 73c3b1492e4534d478dca3c714daee1a, type: 2}

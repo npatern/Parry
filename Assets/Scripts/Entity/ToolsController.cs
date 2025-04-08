@@ -78,6 +78,12 @@ public class ToolsController : MonoBehaviour
     public bool EquipWeapon(ItemWeaponWrapper weaponWrapper)
     {
         if (weaponWrapper == null) return false;
+        //if (CurrentWeaponWrapper == weaponWrapper && CurrentWeaponWrapper.Stackable) 
+        //{
+        //    CurrentWeaponWrapper.stack += 1;
+         //   return true;
+        //}
+
         if (CurrentWeaponWrapper != null)
             DequipOrReplaceWeaponInHands(weaponWrapper);
 
@@ -125,11 +131,33 @@ public class ToolsController : MonoBehaviour
         if (TryHideItemFromHands()) return;
         DropWeaponFromHands();
     }
+    public Pickable DropOneWeaponFromHands()
+    {
+        if (CurrentWeaponWrapper == null) return null;
+        if (CurrentWeaponWrapper.emptyhanded) return null;
+        Pickable pickableToReturn;
+        if (CurrentWeaponWrapper.Stackable && CurrentWeaponWrapper.stack > 1)
+        {
+            ItemWeaponWrapper _newWeaponWrapper = CurrentWeaponWrapper.TakeOneFromStack();
+
+            pickableToReturn = _newWeaponWrapper.MakePickable();
+            if (CurrentWeaponWrapper.CurrentWeaponObject!=null)
+            pickableToReturn.transform.position = CurrentWeaponWrapper.CurrentWeaponObject.position;
+            //CurrentWeaponWrapper = null;
+        }
+        else
+        {
+            pickableToReturn = CurrentWeaponWrapper.MakePickable();
+            CurrentWeaponWrapper = null;
+        }
+        return pickableToReturn;
+    }
     public Pickable DropWeaponFromHands()
     {
         if (CurrentWeaponWrapper == null) return null;
         if (CurrentWeaponWrapper.emptyhanded) return null;
-        Pickable pickableToReturn = CurrentWeaponWrapper.MakePickable();
+        Pickable pickableToReturn;
+        pickableToReturn = CurrentWeaponWrapper.MakePickable();
         CurrentWeaponWrapper = null;
         return pickableToReturn;
     }
@@ -284,8 +312,8 @@ public class ToolsController : MonoBehaviour
     {
         WeaponModel weaponModel = CurrentWeaponWrapper.CurrentWeaponObject.GetComponent<WeaponModel>();
         Bullet bullet = Instantiate(CurrentWeaponWrapper.itemType.bullet, weaponModel.StartPoint.position, CurrentWeaponWrapper.CurrentWeaponObject.transform.rotation, GameController.Instance.GarbageCollector.transform).GetComponent<Bullet>();
-        bullet.obsoleteDamage = CurrentWeaponWrapper.itemType.Damage;
         bullet.damage = CurrentWeaponWrapper.bulletEffects;
+        bullet.destroyObject = bullet.damage.deathEffect;
         Rigidbody bulletRB = bullet.GetComponent<Rigidbody>();
         bulletRB.AddRelativeForce(Vector3.forward * 1000, ForceMode.Acceleration);
         Debug.Log("bullet fired!");
@@ -293,29 +321,37 @@ public class ToolsController : MonoBehaviour
     }   
     public void Throw()
     {
-        WeaponModel weaponModel = CurrentWeaponWrapper.CurrentWeaponObject.GetComponent<WeaponModel>();
+        ItemWeaponWrapper thrownWrapper;
 
-        Bullet bullet = CurrentWeaponWrapper.CurrentWeaponObject.gameObject.AddComponent<Bullet>();
+        if (CurrentWeaponWrapper.Stackable && CurrentWeaponWrapper.stack > 1)
+        {
+            thrownWrapper = CurrentWeaponWrapper.TakeOneFromStack();
+            thrownWrapper.SpawnWeaponObjectAsCurrentObject();
+            thrownWrapper.CurrentWeaponObject.position = CurrentWeaponWrapper.CurrentWeaponObject.position;
+            thrownWrapper.CurrentWeaponObject.rotation = CurrentWeaponWrapper.CurrentWeaponObject.rotation;
+        }
+        else
+        {
+            thrownWrapper = CurrentWeaponWrapper;
+            CurrentWeaponWrapper = null;
+        }
+        thrownWrapper.MakePickable();
+
+        //WeaponModel weaponModel = thrownWrapper.CurrentWeaponObject.GetComponent<WeaponModel>();
+        Bullet bullet = thrownWrapper.CurrentWeaponObject.gameObject.AddComponent<Bullet>();
         bullet.isDamaging = true;
-        bullet.obsoleteDamage = CurrentWeaponWrapper.Damage*100;
         bullet.multiplier *= 100;
-        bullet.damage = CurrentWeaponWrapper.Effects;
+        bullet.damage = thrownWrapper.Effects;
+        bullet.destroyObject = thrownWrapper.Effects.deathEffect;
         bullet.soundType = Sound.TYPES.neutral;
         bullet.SoundRange = 15;
-
-        CurrentWeaponWrapper.MakePickable();
+        if (thrownWrapper.isPrimeable) bullet.primed = true;
         Rigidbody bulletRB = bullet.GetComponent<Rigidbody>();
-        bullet.item = CurrentWeaponWrapper;
-        Vector3 throwDirection = new Vector3(CurrentWeaponWrapper.CurrentWeaponObject.position.x - transform.position.x, 0, CurrentWeaponWrapper.CurrentWeaponObject.position.z - transform.position.z);
+        bullet.item = thrownWrapper;
+        Vector3 throwDirection = new Vector3(thrownWrapper.CurrentWeaponObject.position.x - transform.position.x, 0, thrownWrapper.CurrentWeaponObject.position.z - transform.position.z);
         bullet.DestroyAfterDamage = false;
-       
-        //CurrentWeaponWrapper.CurrentWeaponObject.GetComponent<Collider>().enabled = true;
-        //CurrentWeaponWrapper.CurrentWeaponObject.GetComponent<Collider>().isTrigger = false;
-        CurrentWeaponWrapper = null;
-
         bulletRB.AddForce(throwDirection * 1000, ForceMode.Acceleration);
         BreakAttackCoroutines();
-        Debug.Log("bullet fired!");
-
+        //Debug.Log("weapon thrown");
     }
 }

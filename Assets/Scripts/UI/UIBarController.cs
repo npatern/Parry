@@ -33,6 +33,8 @@ public class UIBarController : MonoBehaviour
     private GameObject separatorObject;
     [SerializeField]
     private Image EffectIcon;
+    [SerializeField]
+    private GameObject circleBackground;
 
     Vector3 scale;
     private void Start()
@@ -77,7 +79,16 @@ public class UIBarController : MonoBehaviour
         if (stat.Points == stat.minPoints) return false;
         bar.localScale = new Vector3(bar.localScale.x, stat.GetValue(), bar.localScale.y);
         timeValue = stat.GetTimerValue();
-        timeBar.fillAmount = timeValue;
+        if (timeValue <= 0) 
+        { 
+            circleBackground.SetActive(false); 
+        }
+        else
+        {
+            circleBackground.SetActive(true);
+            timeBar.fillAmount = timeValue;
+        }
+        
         transform.localScale = scale + scale *.5f* (stat.waitTimer/stat.waitTime);
         if (stat.IsActive())
             bar.GetComponent<Image>().color = specialColor;
