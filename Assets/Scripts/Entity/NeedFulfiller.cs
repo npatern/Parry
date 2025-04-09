@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class NeedFulfiller : MonoBehaviour
 {
+    public float distanceToFulfill = 1;
     public bool Reserved = true;
     public bool Unreservable = false;
     public NeedScriptableObject NeedToFulfill;
@@ -18,6 +19,10 @@ public class NeedFulfiller : MonoBehaviour
     private void Awake()
     {
         ChangeGraphics(false);
+    }
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.DrawWireSphere(transform.position, distanceToFulfill);
     }
     public IEnumerator ExecuteSteps(EntityController entity)
     {

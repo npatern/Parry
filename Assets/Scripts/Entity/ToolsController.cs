@@ -28,6 +28,7 @@ public class ToolsController : MonoBehaviour
     public bool IsDamaging = false;
     public bool IsDodging = false;
     public bool IsDisarming = false;
+    public bool IsIllegal = false;
     public UnityEvent<bool> StopMovingEvent;
     public float attackDistance = 3f;
 
@@ -290,6 +291,7 @@ public class ToolsController : MonoBehaviour
             yield return attack.AttackStepss[i].PerformStep(this, attack, context);
         }
         IsUsingTool = false;
+        ClearStateEffects();
     }
     private void ClearStateEffects()
     {
@@ -297,6 +299,7 @@ public class ToolsController : MonoBehaviour
         IsProtected = false;
         IsDamaging = false;
         IsDisarming = false;
+        IsIllegal = false;
     }
     
     private void OnDrawGizmosSelected()

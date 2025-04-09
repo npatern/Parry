@@ -28,7 +28,7 @@ MonoBehaviour:
     effectList:
     - type: 4
       points: 40
-    deathEffect: {fileID: 2157291579974494909, guid: 6a10380512d2f2448afc178fcb1eccf3, type: 3}
+    deathEffect: {fileID: 2157291579974494909, guid: df6b6529227e5264fada3ad661d195ff, type: 3}
   bulletEffects:
     Damage: 0
     caster: {fileID: 0}
@@ -39,6 +39,7 @@ MonoBehaviour:
   isPrimeable: 1
   bullet: {fileID: 0}
   stack: 1
+  IsIllegal: 1
   LightAttack: {fileID: 11400000, guid: f2f5effdcbefe0e46889b8229d07164a, type: 2}
   HeavyAttack: {fileID: 11400000, guid: 442da46444774f7488ccb73a573b2d98, type: 2}
   Parry: {fileID: 11400000, guid: 7eca0611d41755841b197c6a5b200241, type: 2}

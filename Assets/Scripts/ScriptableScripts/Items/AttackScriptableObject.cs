@@ -9,8 +9,8 @@ public class AttackScriptableObject : ScriptableObject
     public string Name;
     public string Description;
     public float DamageMultiplayer = 0;
+    public bool IsIllegal = true;
     public AttackStep[] AttackStepss;
-   
 
     [System.Serializable]
     public class AttackStep
@@ -33,6 +33,7 @@ public class AttackScriptableObject : ScriptableObject
         public bool IsThrowing = false;
         public bool IsDisarming = false;
         public bool SkipIfPlayer = false;
+        
         public Vector3 MovementOffset = Vector3.zero;
         public float SoundRange = 0;
         public Sound.TYPES soundType = Sound.TYPES.neutral;
@@ -55,6 +56,7 @@ public class AttackScriptableObject : ScriptableObject
             if (IsParrying) toolsController.IsParrying = true;
             if (IsDamaging) toolsController.IsDamaging = true;
             if (IsDisarming) toolsController.IsDisarming = true;
+            if (attackScriptableObject.IsIllegal) toolsController.IsIllegal = true;
             
 
             if (IsFiring==true) toolsController.FireBullet();

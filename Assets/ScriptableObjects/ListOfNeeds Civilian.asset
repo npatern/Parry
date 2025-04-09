@@ -1,0 +1,17 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b8315239b152ea0499842ff982084886, type: 3}
+  m_Name: ListOfNeeds Civilian
+  m_EditorClassIdentifier: 
+  NeedProbabilities:
+  - need: {fileID: 11400000, guid: d02289e47e1d1a6439f92f97a760d16a, type: 2}
+    probability: 1

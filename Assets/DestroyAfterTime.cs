@@ -7,6 +7,7 @@ public class DestroyAfterTime : MonoBehaviour
     List<ParticleSystem> particleSystems;
     public float timer = 10;
     public float whenToDetatchParticles = 0;
+    public GameObject spawnOnDestroy;
     private void Awake()
     {
         particleSystems = new List<ParticleSystem>(GetComponentsInChildren<ParticleSystem>());
@@ -17,7 +18,11 @@ public class DestroyAfterTime : MonoBehaviour
         if (timer <= whenToDetatchParticles)
             DetachParticles();
         if (timer <= 0)
+        {
+            if (spawnOnDestroy != null) Instantiate(spawnOnDestroy, transform.position, Quaternion.identity);
             Destroy(gameObject);
+        }
+            
     }
     void DetachParticles()
     {

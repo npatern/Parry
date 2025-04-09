@@ -139,6 +139,7 @@ MonoBehaviour:
     caster: {fileID: 0}
     origin: {x: 0, y: 0, z: 0}
     effectList: []
+    deathEffect: {fileID: 0}
   stats:
     stats: []
     status: {fileID: 0}
@@ -180,12 +181,12 @@ MonoBehaviour:
   ParryEffect: {fileID: 5829956603799595035, guid: c230284ada2da5c4d99f033287009091, type: 3}
   PostureEffect: {fileID: 6335604904681789282, guid: 2b39b28f00a0b0a4da4368fdba0f6a1c, type: 3}
   PostureLongEffect: {fileID: 6335604904681789282, guid: fec9fead045d1314abee087c3f8d377a, type: 3}
-  deafTime: 1
   effects:
     Damage: 0
     caster: {fileID: 0}
     origin: {x: 0, y: 0, z: 0}
     effectList: []
+    deathEffect: {fileID: 0}
   TickTime: 0.5
   OverheadController: {fileID: 0}
 --- !u!114 &1508925607
@@ -200,6 +201,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f08fbff84805b048ad900f7261136a9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  RandomNeeds: {fileID: 11400000, guid: 36adfed163858c6438a8fef17918d59a, type: 2}
   Tick: 0.5
   TickTimer: 0
   AwarnessDistance: 25
@@ -373,6 +375,7 @@ MonoBehaviour:
     m_Bits: 0
   eyesSource: {fileID: 4358339908198517929}
   target: {fileID: 0}
+  IsStunned: 0
 --- !u!23 &7880487066440712553
 MeshRenderer:
   m_ObjectHideFlags: 0

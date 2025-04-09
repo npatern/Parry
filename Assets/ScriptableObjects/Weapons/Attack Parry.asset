@@ -16,6 +16,7 @@ MonoBehaviour:
   Name: Parry
   Description: 
   DamageMultiplayer: 0
+  IsIllegal: 0
   AttackStepss:
   - StepName: parry NPC
     LockMovement: 1

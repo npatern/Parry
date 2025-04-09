@@ -120,6 +120,7 @@ public class Idle : State
     }
     public override void Enter()
     {
+        entity.AddRandomNeeds();
         entity.SetAgentSpeedWalk();
         base.Enter();
     }
@@ -141,6 +142,7 @@ public class Idle : State
         }
         else
         {
+
             entity.SetAvoidancePriority((int)Vector3.Distance(entity.transform.position, entity.CurrentFulfiller.transform.position));
         }
         if (entity.IsTargetReached() && !entity.IsAtTarget)
@@ -189,8 +191,8 @@ public class UseObject : State
         entity.SetAgentSpeedWalk();
         if (fulfiller.UserSpot != null)
         {
-            entity.transform.position = fulfiller.UserSpot.position;
-            entity.transform.rotation = fulfiller.UserSpot.rotation;
+            //entity.transform.position = fulfiller.UserSpot.position;
+            //entity.transform.rotation = fulfiller.UserSpot.rotation;
         }
         
         if (entity.CurrentFulfiller == null)
@@ -203,7 +205,7 @@ public class UseObject : State
     {
             entity.ResetFulfiller();
             entity.CurrentNeed = null;
-            entity.transform.position = startPosition;
+            //entity.transform.position = startPosition;
         base.Exit();
     }
 }
@@ -369,9 +371,17 @@ public class Combat : State
     {
         base.Update();
         entity.Tick = 0.1f;
-        if (entity.IsProcessingShock()) return;
+
+        if (entity.IsProcessingShock())
+        {
+            entity.DisableNavmesh(true);
+            entity.StartLookingAtTarget(target.transform);
+            return;
+        }
         if (shocked)
         {
+            entity.DisableNavmesh(false);
+            entity.StopLookingAtTarget();
             UIController.Instance.SpawnTextBubble(Barks.GetBark(Barks.BarkTypes.inCombatNotice), entity.transform);
             Sound sound = new Sound(statusController, 10, Sound.TYPES.danger, combatTarget);
             Sounds.MakeSound(sound);
@@ -450,7 +460,6 @@ public class Flee : State
 
         if (entity.IsTargetReached() && !isAtTarget)
         {
-
             //Vector3 randomPositionOffset = 2 * new Vector3(Random.Range(-1, 2), 0, Random.Range(-1, 2));
             isAtTarget = true;
             //investigatedPosition += randomPositionOffset;

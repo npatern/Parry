@@ -238,7 +238,7 @@ public class InputController : MonoBehaviour
         {
             //target.parent = transform;
             if (lookAtValue.magnitude> gamepadDeadzone)
-                target.transform.position = new Vector3(lookAtValue.x * 10, 2, lookAtValue.y * 10)+transform.position;
+                target.transform.position = new Vector3(lookAtValue.x * 20, 2, lookAtValue.y * 20)+transform.position;
         }
         else
         {

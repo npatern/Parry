@@ -16,6 +16,7 @@ MonoBehaviour:
   Name: Attacked
   Description: 
   DamageMultiplayer: 0
+  IsIllegal: 0
   AttackStepss:
   - StepName: 
     LockMovement: 1
@@ -100,8 +101,12 @@ MonoBehaviour:
     IsProtected: 0
     IsDamaging: 0
     IsFiring: 0
+    IsThrowing: 0
+    IsDisarming: 0
     SkipIfPlayer: 0
     MovementOffset: {x: 0, y: 0, z: 0}
+    SoundRange: 0
+    soundType: 0
   - StepName: 
     LockMovement: 0
     LockRotation: 0
@@ -140,5 +145,9 @@ MonoBehaviour:
     IsProtected: 0
     IsDamaging: 0
     IsFiring: 0
+    IsThrowing: 0
+    IsDisarming: 0
     SkipIfPlayer: 0
     MovementOffset: {x: 0, y: 0, z: 0}
+    SoundRange: 0
+    soundType: 0

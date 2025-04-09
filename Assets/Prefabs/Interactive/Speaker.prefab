@@ -97,44 +97,45 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cd7c774c27a4a1748a992000bcc3da8d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Immortal: 0
   Team: 
   size: {x: 1, y: 1, z: 1}
   loadValuesInRealTime: 0
-  statsSource: {fileID: 0}
+  defaultDamageEffects:
+    Damage: 0
+    caster: {fileID: 0}
+    origin: {x: 0, y: 0, z: 0}
+    effectList: []
+    deathEffect: {fileID: 0}
   stats:
     stats: []
+    status: {fileID: 0}
+  damageEffectsRangeBoxCollider: {fileID: 0}
+  statsArchetype: {fileID: 0}
   IsPlayer: 0
   CriticalMultiplier: 4
-  SpeedMultiplier: 1
+  SlowmoSpeedMultiplier: 1
   Life: 100
-  HealthStat:
-    name: 
-    type: 0
-    minPoints: 0
-    maxPoints: 100
-    Points: 100
-    defaultSpeed: 0
-    timer: 1
-    time: 0
-  StunStat:
-    name: 
-    type: 0
-    minPoints: 0
-    maxPoints: 100
-    Points: 100
-    defaultSpeed: 0
-    timer: 1
-    time: 0
   MaxLife: 20
-  Posture: 100
   movementSpeedMultiplier: 1
+  movementSpeedMultiplierStun: 1
+  attackSpeedMultiplier: 1
   IsKilled: 0
-  IsStunned: 0
+  IsStunnedOBSOLETE: 0
   DestroyOnKill: 0
   IsAttackedEvent:
     m_PersistentCalls:
       m_Calls: []
-  IsStunnedEvent:
+  StartStunEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  EndStunEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  StartFreezeEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  EndFreezeEvent:
     m_PersistentCalls:
       m_Calls: []
   OnKillEvent:
@@ -164,12 +165,20 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  headTransform: {fileID: 0}
+  bodyTransform: {fileID: 0}
   scaleParticles: 0
   DamageEffect: {fileID: 5829956603799595035, guid: c230284ada2da5c4d99f033287009091, type: 3}
   ParryEffect: {fileID: 0}
   PostureEffect: {fileID: 0}
   PostureLongEffect: {fileID: 0}
-  deafTime: 1
+  effects:
+    Damage: 0
+    caster: {fileID: 0}
+    origin: {x: 0, y: 0, z: 0}
+    effectList: []
+    deathEffect: {fileID: 0}
+  TickTime: 0.5
   OverheadController: {fileID: 0}
 --- !u!136 &8159315398044558885
 CapsuleCollider:
@@ -758,6 +767,70 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5532784257875219245, guid: 57db80ac8f8590a43af60cb1ed81d55f, type: 3}
       propertyPath: InteractionEvent.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 8040142054156547687, guid: 57db80ac8f8590a43af60cb1ed81d55f, type: 3}
+      propertyPath: SignalState
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8040142054156547687, guid: 57db80ac8f8590a43af60cb1ed81d55f, type: 3}
+      propertyPath: SwitchOnEvent.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8040142054156547687, guid: 57db80ac8f8590a43af60cb1ed81d55f, type: 3}
+      propertyPath: SwitchOffEvent.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8040142054156547687, guid: 57db80ac8f8590a43af60cb1ed81d55f, type: 3}
+      propertyPath: SwitchOnEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 8040142054156547687, guid: 57db80ac8f8590a43af60cb1ed81d55f, type: 3}
+      propertyPath: SwitchOffEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 8040142054156547687, guid: 57db80ac8f8590a43af60cb1ed81d55f, type: 3}
+      propertyPath: SwitchOnEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1907393573100811634}
+    - target: {fileID: 8040142054156547687, guid: 57db80ac8f8590a43af60cb1ed81d55f, type: 3}
+      propertyPath: SwitchOffEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1907393573100811634}
+    - target: {fileID: 8040142054156547687, guid: 57db80ac8f8590a43af60cb1ed81d55f, type: 3}
+      propertyPath: SwitchOnEvent.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8040142054156547687, guid: 57db80ac8f8590a43af60cb1ed81d55f, type: 3}
+      propertyPath: SwitchOffEvent.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8040142054156547687, guid: 57db80ac8f8590a43af60cb1ed81d55f, type: 3}
+      propertyPath: SwitchOnEvent.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: SetEmiting
+      objectReference: {fileID: 0}
+    - target: {fileID: 8040142054156547687, guid: 57db80ac8f8590a43af60cb1ed81d55f, type: 3}
+      propertyPath: SwitchOffEvent.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: SetEmiting
+      objectReference: {fileID: 0}
+    - target: {fileID: 8040142054156547687, guid: 57db80ac8f8590a43af60cb1ed81d55f, type: 3}
+      propertyPath: SwitchOnEvent.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: SoundEmmiter, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 8040142054156547687, guid: 57db80ac8f8590a43af60cb1ed81d55f, type: 3}
+      propertyPath: SwitchOffEvent.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: SoundEmmiter, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 8040142054156547687, guid: 57db80ac8f8590a43af60cb1ed81d55f, type: 3}
+      propertyPath: SwitchOnEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_BoolArgument
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8040142054156547687, guid: 57db80ac8f8590a43af60cb1ed81d55f, type: 3}
+      propertyPath: SwitchOnEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 8040142054156547687, guid: 57db80ac8f8590a43af60cb1ed81d55f, type: 3}
+      propertyPath: SwitchOffEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     m_RemovedComponents: []

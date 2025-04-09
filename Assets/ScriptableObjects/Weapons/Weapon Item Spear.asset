@@ -23,21 +23,23 @@ MonoBehaviour:
   attackPattern: {fileID: 8930655107102755286, guid: ddce2a24f3bd0c04e97ebcf7b2440133, type: 3}
   Effects:
     Damage: 25
-    effects:
-    - type: 6
-      points: 35
+    caster: {fileID: 0}
+    origin: {x: 0, y: 0, z: 0}
     effectList:
     - type: 6
       points: 60
+    deathEffect: {fileID: 0}
   bulletEffects:
     Damage: 0
-    effects: []
+    caster: {fileID: 0}
+    origin: {x: 0, y: 0, z: 0}
     effectList: []
+    deathEffect: {fileID: 0}
   AttackDistance: 5.5
-  Damage: 25
-  BulletDamage: 10
+  isPrimeable: 0
   bullet: {fileID: 0}
   stack: 0
+  IsIllegal: 1
   LightAttack: {fileID: 11400000, guid: b66173f87d084944cadb992fbb36a86a, type: 2}
   HeavyAttack: {fileID: 11400000, guid: 0bbed5ff86454f9459e5b8c368317b6a, type: 2}
   Parry: {fileID: 11400000, guid: 5b2d68fd282092941ae729c5b1fd085a, type: 2}

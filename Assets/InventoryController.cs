@@ -48,6 +48,7 @@ public class InventoryController : MonoBehaviour
             {
                 int index = list.FindIndex(i => i.ID == item.ID);
                 list[index].stack += item.stack;
+                item.DestroyPhysicalPresence();
                 return true;
             }
             else

@@ -11,7 +11,9 @@ public class SensesController : MonoBehaviour, IHear
     float nrOfTestRays = 100;
     [SerializeField]
     float playerHeight = 1.5f;
-    
+
+    public bool softBurn = false;
+    public bool hardBurn = false;
 
     public bool IsAlerted = false;
     public StatusController currentTarget;
@@ -51,6 +53,8 @@ public class SensesController : MonoBehaviour, IHear
     [SerializeField]
     Transform target;
     GameObject UIarrow;
+
+    public bool IsStunned = false;
     private void Awake()
     {
         if (eyesSource == null) eyesSource = this.transform;
@@ -70,6 +74,8 @@ public class SensesController : MonoBehaviour, IHear
     }
     private void FixedUpdate()
     {
+        if (Awareness<=0)
+            softBurn = false;
         if (IsAlerted)
             viewDistance = viewDistanceBase * viewDistanceMultiplier;
         else
@@ -82,18 +88,21 @@ public class SensesController : MonoBehaviour, IHear
 
         if (currentTargetTimer<=0) 
             if (target == null) return;
-
-        ApplyAwareness(GetAwarenessValue(target), target.GetComponent<StatusController>());
+        if (!IsStunned)
+            ApplyAwareness(GetAwarenessValueFromEyes(target), target.GetComponent<StatusController>());
          
     }
     void ResetCurrentTarget()
     {
         currentTarget = null;
+        //softBurn = false;
         currentTargetTimer = 0;
     }
     public void SetCurrentTarget(StatusController _target)
     {
         if (_target == null) return;
+        if (IsAlerted)
+            hardBurn = true;
         currentTargetTimer = 1;
         currentTarget = _target;
     }
@@ -101,7 +110,10 @@ public class SensesController : MonoBehaviour, IHear
     {
         return currentTarget;
     }
-
+    public bool IsTargetBurned()
+    {
+        return softBurn || hardBurn;
+    }
     public void AddAwarenessOnce(float awarenessValue, StatusController _target = null)
     {
         if (awarenessValue > 0)
@@ -204,15 +216,62 @@ public class SensesController : MonoBehaviour, IHear
         awarenessDownTime = scriptable.AwarenessDownTime;
         alertedAwarenessDownTime = scriptable.AlertedAwarenessDownTime;
     }
-    float GetAwarenessValue(Transform destination)
+    bool IsVisionBlocked()
+    {
+        LayerMask layerToCheck = LayerMask.GetMask("Bush"); 
+        float checkRadius = 0.1f; 
+        return Physics.CheckSphere(eyesSource.position, checkRadius, layerToCheck);
+    }
+    bool IsTargetInYourFace()
+    {
+        LayerMask layerToCheck = LayerMask.GetMask("Entity");
+        Collider[] hits = Physics.OverlapSphere(eyesSource.position, .5f, layerToCheck);
+
+        foreach (Collider hit in hits)
+        {
+            if (hit.transform == target)
+            {
+                Debug.Log("Target in my face");
+                return true; 
+            }
+        }
+
+        return false;
+    }
+    float GetAwarenessValueFromEyes(Transform destination)
     {
         float awarenessValue = 0;
+        if (IsTargetBurned())
+            if (IsTargetInYourFace()) return 1;
+        if (IsVisionBlocked()) return awarenessValue;
+        
         if (IsTargetSeenTroughEyes(destination))
         {
             awarenessValue = GetSeenValueFromEyes(destination);
         }
-        if (destination.GetComponent<OutwardController>() != null)
-            awarenessValue *= destination.GetComponent<OutwardController>().LightValue;
+        if (destination.TryGetComponent<OutwardController>(out OutwardController outwardController))
+        {
+            awarenessValue *= outwardController.LightValue;
+            if (outwardController.IsHiddenInCrowd && Vector3.Distance(transform.position, outwardController.transform.position) > outwardController.CrowdRadius) 
+                awarenessValue *= 0;
+            if (!IsTargetBurned())
+            {
+                if (outwardController.IsActionIllegal())
+                {
+                    awarenessValue *= 10;
+                    if (awarenessValue > 0)
+                    {
+                        
+                         softBurn = true; 
+                    }
+                }
+                else
+                {
+                    awarenessValue *= 0;
+                }
+                
+            }
+        }
 
         return awarenessValue;
     }

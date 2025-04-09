@@ -5,6 +5,7 @@ using UnityEngine.Rendering.PostProcessing;
 using System.Linq;
 public class GameController : MonoBehaviour
 {
+    public bool spawnOnce = false;
     public Transform Level;
     public int MaxEntitiesNr = 10;
     public ListOfAssetsAndValuesScriptableObject ListOfAssets;
@@ -54,9 +55,22 @@ public class GameController : MonoBehaviour
         if (StopTimeOnStart) StopTime();
         CollectLevelElements();
         lightControllers = new List<LightController>();
+        
 }
+    private void Start()
+    {
+        
+    }
     void Update()
     {
+        if (spawnOnce)
+        {
+            while (EntitiesInGame.Count < MaxEntitiesNr)
+                SpawnEntity();
+            return;
+        }
+            
+         
         timer -= Time.deltaTime;
         if (timer < 0)
         {

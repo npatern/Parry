@@ -39,6 +39,7 @@ MonoBehaviour:
   isPrimeable: 1
   bullet: {fileID: 0}
   stack: 1
+  IsIllegal: 1
   LightAttack: {fileID: 11400000, guid: f2f5effdcbefe0e46889b8229d07164a, type: 2}
   HeavyAttack: {fileID: 11400000, guid: 442da46444774f7488ccb73a573b2d98, type: 2}
   Parry: {fileID: 11400000, guid: 7eca0611d41755841b197c6a5b200241, type: 2}

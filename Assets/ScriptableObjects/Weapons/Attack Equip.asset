@@ -16,9 +16,11 @@ MonoBehaviour:
   Name: Equip
   Description: 
   DamageMultiplayer: 0
+  IsIllegal: 0
   AttackStepss:
   - StepName: 
     LockMovement: 0
+    LockRotation: 0
     TargetEnum: 0
     WaitTime: 0.2
     MovementCurve:
@@ -53,3 +55,10 @@ MonoBehaviour:
     IsParrying: 0
     IsProtected: 0
     IsDamaging: 0
+    IsFiring: 0
+    IsThrowing: 0
+    IsDisarming: 0
+    SkipIfPlayer: 0
+    MovementOffset: {x: 0, y: 0, z: 0}
+    SoundRange: 0
+    soundType: 0

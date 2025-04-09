@@ -9,6 +9,9 @@ public class EntityController : MonoBehaviour
     float slowSpeed = 5;
     float fastSpeed = 8;
 
+    [SerializeField]
+    ListOfNeedsScriptable RandomNeeds;
+
     public float Tick = .2f;
     private bool isLookingAtTarget = false;
     private Transform lookAtTargetPosition;
@@ -61,13 +64,20 @@ public class EntityController : MonoBehaviour
     }
     void Start()
     {
-        if (GameController.Instance.Needs.Length>0)
-        while (ListOfNeeds.Count < 4)
-            ListOfNeeds.Add(GameController.Instance.Needs[Random.Range(0, GameController.Instance.Needs.Length)]);
+        AddRandomNeeds();
         LoadStatsFromScriptable(GameController.Instance.ListOfAssets.DefaultEntityValues);
         HomePosition = transform.position;
         currentState = new Idle(this);
 
+    }
+    public void AddRandomNeeds()
+    {
+        if (GameController.Instance.Needs.Length > 0)
+            while (ListOfNeeds.Count < 4)
+                if (RandomNeeds == null || RandomNeeds.NeedProbabilities.Length == 0)
+                    ListOfNeeds.Add(GameController.Instance.Needs[Random.Range(0, GameController.Instance.Needs.Length)]);
+                else
+                    ListOfNeeds.Add(RandomNeeds.GetNeed());
     }
     bool IsAwareOfPlayer()
     {
@@ -276,7 +286,7 @@ public class EntityController : MonoBehaviour
                 if (!fulfiller.Unreservable)
                 CurrentFulfiller.User = this;
                 AddToLog("Found object for fulfilling my " + CurrentNeed + " need - " + CurrentFulfiller.name + "!");
-                GoToTarget(CurrentFulfiller.transform.position);
+                GoToTarget(CurrentFulfiller.transform.position,CurrentFulfiller.distanceToFulfill);
                 break;
             }
         if (CurrentFulfiller == null)

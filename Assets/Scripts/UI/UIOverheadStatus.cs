@@ -37,8 +37,9 @@ public class UIOverheadStatus : MonoBehaviour
     private Image punctuationStroke;
     [SerializeField]
     private Image punctuationBold;
+    [SerializeField]
+    private Image enforcerDot;
 
-    
 
     [SerializeField]
     private RectTransform CircleBarsParent;
@@ -95,6 +96,9 @@ public class UIOverheadStatus : MonoBehaviour
             bar.transform.localScale = Vector3.one;
             bar.gameObject.SetActive(bar.SetCircleBar());
         }
+        if (sensesController != null && sensesController.IsTargetBurned()) enforcerDot.gameObject.SetActive(true);
+        else enforcerDot.gameObject.SetActive(false);
+
         visibilityTimer -= Time.deltaTime;
         
         ApplyValues(statusController.Life);

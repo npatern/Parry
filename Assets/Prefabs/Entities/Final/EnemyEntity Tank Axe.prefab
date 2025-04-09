@@ -32,6 +32,10 @@ PrefabInstance:
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 1508925607, guid: b655d7d83c0abe148967a3c8fd0e18dc, type: 3}
+      propertyPath: RandomNeeds
+      value: 
+      objectReference: {fileID: 11400000, guid: 9ef28e321e6900349b9a745a5e40d61f, type: 2}
+    - target: {fileID: 1508925607, guid: b655d7d83c0abe148967a3c8fd0e18dc, type: 3}
       propertyPath: AwarnessDistance
       value: 25
       objectReference: {fileID: 0}

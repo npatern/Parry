@@ -21,6 +21,7 @@ public class ItemWeaponScriptableObject : ScriptableObject
     public bool isPrimeable = false;
     public Bullet bullet;
     public int stack;
+    public bool IsIllegal = false;
 
     public AttackScriptableObject LightAttack;
     public AttackScriptableObject HeavyAttack;
@@ -46,7 +47,7 @@ public class ItemWeaponWrapper
     public GameObject weaponObject;
     public Transform CurrentWeaponObject = null;
     public Pickable pickable = null;
-
+    public bool IsIllegal = false;
     //weapon specific>>
     public DamageEffects Effects;
     public DamageEffects bulletEffects;
@@ -76,6 +77,7 @@ public class ItemWeaponWrapper
         isPrimeable = scriptableObject.isPrimeable;
         Bullet = scriptableObject.bullet;
         emptyhanded = scriptableObject.emptyhanded;
+        IsIllegal = scriptableObject.IsIllegal;
         RefreshIcon();
 
     }
@@ -97,6 +99,7 @@ public class ItemWeaponWrapper
         isPrimeable = copiedWrapper.isPrimeable;
         Bullet = copiedWrapper.Bullet;
         emptyhanded = copiedWrapper.emptyhanded;
+        IsIllegal = copiedWrapper.IsIllegal;
         icon = copiedWrapper.icon;
         //RefreshIcon();
 
