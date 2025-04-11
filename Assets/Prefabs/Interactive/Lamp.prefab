@@ -17,6 +17,8 @@ GameObject:
   - component: {fileID: 1616799659364014222}
   - component: {fileID: 1616799659364014321}
   - component: {fileID: 1024127069211544590}
+  - component: {fileID: 1666507221669027694}
+  - component: {fileID: 5385912123313177144}
   m_Layer: 8
   m_Name: Lamp
   m_TagString: Untagged
@@ -161,34 +163,10 @@ MonoBehaviour:
       m_Calls: []
   StartStunEvent:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1616799659364014222}
-        m_TargetAssemblyTypeName: LightController, Assembly-CSharp
-        m_MethodName: SwitchLight
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
   EndStunEvent:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1616799659364014222}
-        m_TargetAssemblyTypeName: LightController, Assembly-CSharp
-        m_MethodName: SwitchLight
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 1
-        m_CallState: 2
+      m_Calls: []
   StartFreezeEvent:
     m_PersistentCalls:
       m_Calls: []
@@ -227,9 +205,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   segments: 20
   gravityStrength: 2
+  NeedsPowerSource: 0
   PowerComingIn: 0
   IsSwitchedOn: 1
   powerSource: {fileID: 1024127069211544590}
+  ShowWires: 1
   textComponent: {fileID: 0}
   lightComponent: {fileID: 0}
   lightType: 0
@@ -343,8 +323,46 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   segments: 20
   gravityStrength: 2
+  NeedsPowerSource: 0
   PowerComingIn: 0
   IsSwitchedOn: 1
   powerSource: {fileID: 0}
+  ShowWires: 1
   IsOn: 1
   PowerComingOut: 0
+--- !u!114 &1666507221669027694
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1616799659364014326}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0725f4f7577bf1b4991272d3a6f26eac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  IsInteractable: 1
+  InteractionEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  SignalState: 1
+  SwitchOnEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  SwitchOffEvent:
+    m_PersistentCalls:
+      m_Calls: []
+--- !u!135 &5385912123313177144
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1616799659364014326}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 1
+  m_Center: {x: 0, y: 0, z: 0}

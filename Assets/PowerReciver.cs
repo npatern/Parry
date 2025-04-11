@@ -40,10 +40,10 @@ public class PowerReciver : MonoBehaviour
         StartCoroutine(DelayedRefresh());
     }
 
-    IEnumerator DelayedRefresh()
+    protected IEnumerator DelayedRefresh()
     {
         yield return new WaitForFixedUpdate(); // lub yield return new WaitForSeconds(0.1f);
-
+        yield return 1;
         Debug.Log("LATE START!!"+gameObject.name);
         LateStart();
     }

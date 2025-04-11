@@ -25,24 +25,33 @@ public class PowerNode : PowerReciver
     {
         if (powerSource != null)
             powerSource.PowerChangedEvent += OnPowerChanged;
+        foreach (var powerFlowController in powerFlowControllers)
+        {
+            //if (powerFlowController.RefreshPowerNode!=null)
+               powerFlowController.RefreshPowerNode += RefreshState;
+        }
         OnPowerChanged(CheckIfPowered());
+        StartCoroutine(DelayedRefresh());
     }
     protected override void LateStart()
     {
         base.LateStart();
+        Debug.Log("Power Node Late Start " +name);
         RefreshState();
+
     }
     public void RefreshState()
     {
         bool _powerOutBefore = PowerComingOut;
         PowerComingOut = IsPowerFlowing();
+        Debug.Log(name+" power is flowing in ");
         //if (_powerOutBefore != PowerComingOut)
         PowerChangedEvent?.Invoke(PowerComingOut);
     }
     bool IsPowerFlowing()
     {
         if (!CheckIfPowered()) return false;
-        if (!IsOn) return false;
+        if (!IsSwitchedOn) return false;
         foreach (var powerController in powerFlowControllers)
             if (powerController == null || !powerController.IsPowerFlowing()) return false;
         return true;
@@ -57,7 +66,10 @@ public class PowerNode : PowerReciver
         Gizmos.DrawSphere(transform.position + transform.up + transform.right,.5f);
     }
 }
+
 public interface IPowerFlowController
 {
     public bool IsPowerFlowing();
+    public event Action RefreshPowerNode;
+    
 }

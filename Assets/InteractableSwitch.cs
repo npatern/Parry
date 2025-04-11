@@ -1,4 +1,4 @@
-using System.Collections;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
@@ -9,7 +9,7 @@ public class InteractableSwitch : Interactable, IPowerFlowController
     public bool SignalState = true;
     public UnityEvent SwitchOnEvent;
     public UnityEvent SwitchOffEvent;
-   
+    public event Action RefreshPowerNode;
 
     protected override void Awake()
     {
@@ -51,6 +51,7 @@ public class InteractableSwitch : Interactable, IPowerFlowController
        //commented cos i want to make sure everything is set properly on awake
         //if (SignalState == _setSignal) return;
         SignalState = _setSignal;
+        RefreshPowerNode?.Invoke();
         if (SignalState) SwitchOnEvent.Invoke();
         if (!SignalState) SwitchOffEvent.Invoke();
 

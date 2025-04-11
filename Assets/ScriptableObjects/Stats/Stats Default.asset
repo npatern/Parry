@@ -74,6 +74,9 @@ MonoBehaviour:
     - type: 7
       startEffectType: 2
       targetType: 7
+    - type: 4
+      startEffectType: 2
+      targetType: 4
     DamageModifiers:
     - typeThatIsActive: 7
       multiplier: 0.5

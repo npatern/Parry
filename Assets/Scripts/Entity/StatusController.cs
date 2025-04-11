@@ -1,4 +1,4 @@
-using System.Collections;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
@@ -62,59 +62,7 @@ public class StatusController : MonoBehaviour, IHear, IPowerFlowController
     public DamageEffects effects;
     public float TickTime = 0.5f;
     float TickTimer = 0;
-    /*
-    [Space(10), Header("PowerSource")]
-
-    public bool NeedsOutsideSource = false;
-    public StatusController powerSource = null;
-    public UnityEvent PowerOffEvent;
-    public UnityEvent PowerOnEvent;
-    public bool HasPower = false;
-    public bool PowerSwitch = true;
-    public bool IsPowerFlowing()
-    {
-        if (PowerSwitch == false) return false;
-        if (IsStunned()) return false;
-        if (IsKilled) return false;
-        if (NeedsOutsideSource)
-        {
-            if (powerSource = null) return false;
-            if (powerSource != this) if (powerSource.HasPower == false) return false;
-        }
-        return true;
-    }
-    public void RefreshPowerFlow()
-    {
-        bool _hadPower = HasPower;
-        bool _hasPower = IsPowerFlowing();
-
-        HasPower = _hasPower;
-        if (HasPower != _hadPower)
-        {
-            if (HasPower)
-                PowerOnEvent.Invoke();
-            else
-                PowerOffEvent.Invoke();
-        }
-    }
-    public void onPowerAwake()
-    {
-        if (PowerOffEvent == null)
-            PowerOffEvent = new UnityEvent();
-        if (PowerOffEvent == null)
-            PowerOnEvent = new UnityEvent();
-        if (!NeedsOutsideSource) return;
-    }
-    public void onPowerStart()
-    {
-        if (!NeedsOutsideSource) return;
-        if (powerSource == this) return;
-        powerSource.PowerOffEvent.AddListener(RefreshPowerFlow);
-        powerSource.PowerOnEvent.AddListener(RefreshPowerFlow);
-        RefreshPowerFlow();
-    }
-
-    */
+    public event Action RefreshPowerNode;
 
     public UIOverheadStatus OverheadController;
     public bool UseBoxParticles()
@@ -171,7 +119,7 @@ public class StatusController : MonoBehaviour, IHear, IPowerFlowController
         TickTimer = TickTime;
         //onPowerStart();
     }
-
+    
     private void FixedUpdate()
     {
         stats.ApplyTick();
@@ -277,6 +225,7 @@ public class StatusController : MonoBehaviour, IHear, IPowerFlowController
         {
             movementSpeedMultiplierStun = 0f;
         }
+        CheckPowerFlow();
     }
     public void StunnedEnd()
     {
@@ -289,10 +238,14 @@ public class StatusController : MonoBehaviour, IHear, IPowerFlowController
         {
             movementSpeedMultiplierStun = 1f;
         }
-        //RefreshPowerFlow();
+        CheckPowerFlow();
     }
     public void Attacked()
     {
+    }
+    public void CheckPowerFlow()
+    {
+        RefreshPowerNode?.Invoke();
     }
     void FrozenStart()
     {

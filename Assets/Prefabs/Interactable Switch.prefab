@@ -312,34 +312,6 @@ PrefabInstance:
       propertyPath: m_RootOrder
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 9180732974873968739, guid: dd7af1c7ed0dfa641ba886d967566bf1, type: 3}
-      propertyPath: InteractionEvent.m_PersistentCalls.m_Calls.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 9180732974873968739, guid: dd7af1c7ed0dfa641ba886d967566bf1, type: 3}
-      propertyPath: InteractionEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 9180732974873968739, guid: dd7af1c7ed0dfa641ba886d967566bf1, type: 3}
-      propertyPath: InteractionEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 1389468568006088282}
-    - target: {fileID: 9180732974873968739, guid: dd7af1c7ed0dfa641ba886d967566bf1, type: 3}
-      propertyPath: InteractionEvent.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 9180732974873968739, guid: dd7af1c7ed0dfa641ba886d967566bf1, type: 3}
-      propertyPath: InteractionEvent.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: RefreshState
-      objectReference: {fileID: 0}
-    - target: {fileID: 9180732974873968739, guid: dd7af1c7ed0dfa641ba886d967566bf1, type: 3}
-      propertyPath: InteractionEvent.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: PowerNode, Assembly-CSharp
-      objectReference: {fileID: 0}
-    - target: {fileID: 9180732974873968739, guid: dd7af1c7ed0dfa641ba886d967566bf1, type: 3}
-      propertyPath: InteractionEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
-      value: UnityEngine.Object, UnityEngine
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: dd7af1c7ed0dfa641ba886d967566bf1, type: 3}
 --- !u!1 &5532784257875219234 stripped
@@ -361,9 +333,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   segments: 20
   gravityStrength: 2
+  NeedsPowerSource: 0
   PowerComingIn: 0
   IsSwitchedOn: 1
   powerSource: {fileID: 0}
+  ShowWires: 1
   IsOn: 1
   PowerComingOut: 0
 --- !u!114 &7946147046674949934
@@ -409,34 +383,10 @@ MonoBehaviour:
       m_Calls: []
   StartStunEvent:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 8040142054156547687}
-        m_TargetAssemblyTypeName: InteractableSwitch, Assembly-CSharp
-        m_MethodName: SwitchOff
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
   EndStunEvent:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 8040142054156547687}
-        m_TargetAssemblyTypeName: InteractableSwitch, Assembly-CSharp
-        m_MethodName: SwitchOn
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
   StartFreezeEvent:
     m_PersistentCalls:
       m_Calls: []
