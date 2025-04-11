@@ -433,6 +433,7 @@ MonoBehaviour:
   IsDamaging: 0
   IsDodging: 0
   IsDisarming: 0
+  IsIllegal: 0
   StopMovingEvent:
     m_PersistentCalls:
       m_Calls: []
@@ -527,6 +528,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   AffectedByLight: 1
   LightValue: 0
+  CrowdDetectionTickTime: 0.05
+  IsHiddenInCrowd: 0
+  CrowdRadius: 2.5
+  linerenderers:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
 --- !u!114 &7386340357107363141
 MonoBehaviour:
   m_ObjectHideFlags: 0

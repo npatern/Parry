@@ -11,11 +11,13 @@ public class OutwardController : MonoBehaviour
     float CrowdTick = 0;
     public bool IsHiddenInCrowd = false;
     public float CrowdRadius = 2.5f;
-    public GameObject[] linerenderers = new GameObject[3];
+    public LineRenderer[] linerenderers = new LineRenderer[5];
+    
     private void Awake()
     {
         gameController = GameController.Instance;
         if (!AffectedByLight) LightValue = 1;
+        SpawnLineRenderers();
     }
     private void FixedUpdate()
     {
@@ -39,39 +41,64 @@ public class OutwardController : MonoBehaviour
         int minCrowd = 3;
         int foundCrowd = 0;
         LayerMask layerToCheck = LayerMask.GetMask("Entity");
-        Collider[] hits = Physics.OverlapSphere(transform.position+transform.up, CrowdRadius, layerToCheck);
-        Destroy(linerenderers[0]);
-        Destroy(linerenderers[1]);
-        Destroy(linerenderers[2]);
+        float radius = CrowdRadius;
+        if (IsHiddenInCrowd) radius += .5f;
+        Collider[] hits = Physics.OverlapSphere(transform.position+transform.up, radius, layerToCheck);
+        DeactivateLineRenderers();
         foreach (Collider hit in hits)
         {
             if (hit.TryGetComponent<SensesController>(out SensesController _senses))
             {
                 if (_senses.Awareness <= 0)
                 {
-                    linerenderers[foundCrowd] = DrawLine(transform.position + transform.up, _senses.transform.position + transform.up, Color.white);
+                    //linerenderers[foundCrowd] = DrawLine(transform.position + transform.up, _senses.transform.position + transform.up, Color.white);
+                    if (foundCrowd<linerenderers.Length)
+                        SetLine(linerenderers[foundCrowd], transform.position + transform.up, _senses.transform.position + transform.up);
                     foundCrowd += 1;
                     
                 }
-                if (foundCrowd >= minCrowd) return true;
+                
             } 
         }
-        Destroy(linerenderers[0]);
-        Destroy(linerenderers[1]);
-        Destroy(linerenderers[2]);
+        if (foundCrowd >= minCrowd)
+        {
+            MakeLinesWhite();
+            return true;
+        }
         return false;
     }
-    GameObject DrawLine(Vector3 start, Vector3 end, Color color)
+    void SpawnLineRenderers()
     {
-        GameObject go = new GameObject("Line");
-        LineRenderer lr = go.AddComponent<LineRenderer>();
+        for (int i = 0; i < linerenderers.Length; i++)
+        {
+            GameObject go = new GameObject("Line");
+            linerenderers[i] = go.AddComponent<LineRenderer>();
+        }
+    }
+    void DeactivateLineRenderers()
+    {
+        foreach (LineRenderer lr in linerenderers)
+        {
+            lr.gameObject.SetActive(false);
+        }
+    }
+    void SetLine(LineRenderer lr, Vector3 start, Vector3 end)
+    {
+        lr.gameObject.SetActive(true);
         lr.positionCount = 2;
         lr.SetPosition(0, start);
         lr.SetPosition(1, end);
-        lr.startWidth = lr.endWidth = 0.05f;
+        lr.startWidth = lr.endWidth = 0.03f;
         lr.material = new Material(Shader.Find("Sprites/Default"));
-        lr.startColor = lr.endColor = color;
-        return go;
+        lr.startColor = lr.endColor = new Color(0.5f, 0.5f, 0.5f, 0.5f); // szary z przezroczystoœci¹
+    }
+    void MakeLinesWhite()
+    {
+        foreach (LineRenderer lr in linerenderers)
+        {
+            lr.startWidth = lr.endWidth = 0.06f;
+            lr.startColor = lr.endColor = Color.white;
+        }
     }
     float GetLightValue(Transform target)
     {

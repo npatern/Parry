@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.Events;
 
 [System.Serializable]
-public class InteractableSwitch : Interactable
+public class InteractableSwitch : Interactable, IPowerFlowController
 {
     public bool SignalState = true;
     public UnityEvent SwitchOnEvent;
@@ -30,8 +30,9 @@ public class InteractableSwitch : Interactable
     }
     public void Interact(bool _setSignal, StatusController _status = null)
     {
-        base.Interact(_status);
+        
         SwitchSignalToState(_setSignal, _status);
+        base.Interact(_status);
     }
     public void SwitchOn()
     {
@@ -40,6 +41,10 @@ public class InteractableSwitch : Interactable
     public void SwitchOff()
     {
         Interact(false);
+    }
+    public bool IsPowerFlowing()
+    {
+        return SignalState;
     }
     private void SwitchSignalToState(bool _setSignal, StatusController _status = null)
     {

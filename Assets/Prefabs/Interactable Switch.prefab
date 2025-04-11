@@ -312,6 +312,34 @@ PrefabInstance:
       propertyPath: m_RootOrder
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 9180732974873968739, guid: dd7af1c7ed0dfa641ba886d967566bf1, type: 3}
+      propertyPath: InteractionEvent.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9180732974873968739, guid: dd7af1c7ed0dfa641ba886d967566bf1, type: 3}
+      propertyPath: InteractionEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9180732974873968739, guid: dd7af1c7ed0dfa641ba886d967566bf1, type: 3}
+      propertyPath: InteractionEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1389468568006088282}
+    - target: {fileID: 9180732974873968739, guid: dd7af1c7ed0dfa641ba886d967566bf1, type: 3}
+      propertyPath: InteractionEvent.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 9180732974873968739, guid: dd7af1c7ed0dfa641ba886d967566bf1, type: 3}
+      propertyPath: InteractionEvent.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: RefreshState
+      objectReference: {fileID: 0}
+    - target: {fileID: 9180732974873968739, guid: dd7af1c7ed0dfa641ba886d967566bf1, type: 3}
+      propertyPath: InteractionEvent.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: PowerNode, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 9180732974873968739, guid: dd7af1c7ed0dfa641ba886d967566bf1, type: 3}
+      propertyPath: InteractionEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: dd7af1c7ed0dfa641ba886d967566bf1, type: 3}
 --- !u!1 &5532784257875219234 stripped
@@ -319,6 +347,25 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 6644133888316450086, guid: dd7af1c7ed0dfa641ba886d967566bf1, type: 3}
   m_PrefabInstance: {fileID: 1224083435974964740}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1389468568006088282
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5532784257875219234}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 81b982c35fd7768449e9d922b30cbd0c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  segments: 20
+  gravityStrength: 2
+  PowerComingIn: 0
+  IsSwitchedOn: 1
+  powerSource: {fileID: 0}
+  IsOn: 1
+  PowerComingOut: 0
 --- !u!114 &7946147046674949934
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -340,6 +387,7 @@ MonoBehaviour:
     caster: {fileID: 0}
     origin: {x: 0, y: 0, z: 0}
     effectList: []
+    deathEffect: {fileID: 0}
   stats:
     stats: []
     status: {fileID: 0}
@@ -405,12 +453,12 @@ MonoBehaviour:
   ParryEffect: {fileID: 0}
   PostureEffect: {fileID: 0}
   PostureLongEffect: {fileID: 0}
-  deafTime: 1
   effects:
     Damage: 0
     caster: {fileID: 0}
     origin: {x: 0, y: 0, z: 0}
     effectList: []
+    deathEffect: {fileID: 0}
   TickTime: 0.5
   OverheadController: {fileID: 0}
 --- !u!4 &5532784257875219241 stripped

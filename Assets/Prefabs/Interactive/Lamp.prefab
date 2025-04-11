@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: 1616799659364014320}
   - component: {fileID: 1616799659364014222}
   - component: {fileID: 1616799659364014321}
+  - component: {fileID: 1024127069211544590}
   m_Layer: 8
   m_Name: Lamp
   m_TagString: Untagged
@@ -129,6 +130,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cd7c774c27a4a1748a992000bcc3da8d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Immortal: 0
   Team: 
   size: {x: 1, y: 1, z: 1}
   loadValuesInRealTime: 0
@@ -137,9 +139,11 @@ MonoBehaviour:
     caster: {fileID: 0}
     origin: {x: 0, y: 0, z: 0}
     effectList: []
+    deathEffect: {fileID: 0}
   stats:
     stats: []
     status: {fileID: 0}
+  damageEffectsRangeBoxCollider: {fileID: 0}
   statsArchetype: {fileID: 11400000, guid: 6c9e04e30e24c4947b04923dcaf24eb0, type: 2}
   IsPlayer: 0
   CriticalMultiplier: 0
@@ -147,6 +151,7 @@ MonoBehaviour:
   Life: 10
   MaxLife: 1
   movementSpeedMultiplier: 1
+  movementSpeedMultiplierStun: 1
   attackSpeedMultiplier: 1
   IsKilled: 0
   IsStunnedOBSOLETE: 0
@@ -200,12 +205,12 @@ MonoBehaviour:
   ParryEffect: {fileID: 0}
   PostureEffect: {fileID: 0}
   PostureLongEffect: {fileID: 0}
-  deafTime: 1
   effects:
     Damage: 0
     caster: {fileID: 0}
     origin: {x: 0, y: 0, z: 0}
     effectList: []
+    deathEffect: {fileID: 0}
   TickTime: 0.5
   OverheadController: {fileID: 0}
 --- !u!114 &1616799659364014222
@@ -220,6 +225,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ba2825a4c45a9de418d7b3c3e3ee6859, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  segments: 20
+  gravityStrength: 2
+  PowerComingIn: 0
+  IsSwitchedOn: 1
+  powerSource: {fileID: 1024127069211544590}
   textComponent: {fileID: 0}
   lightComponent: {fileID: 0}
   lightType: 0
@@ -319,3 +329,22 @@ Light:
   m_UseViewFrustumForShadowCasterCull: 1
   m_ShadowRadius: 0
   m_ShadowAngle: 0
+--- !u!114 &1024127069211544590
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1616799659364014326}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 81b982c35fd7768449e9d922b30cbd0c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  segments: 20
+  gravityStrength: 2
+  PowerComingIn: 0
+  IsSwitchedOn: 1
+  powerSource: {fileID: 0}
+  IsOn: 1
+  PowerComingOut: 0

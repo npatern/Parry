@@ -49,7 +49,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5617540003320169323}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -96,6 +96,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3e165afbb6b81ca4488d99a170e7e92b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  distanceToFulfill: 1
   Reserved: 1
   Unreservable: 0
   NeedToFulfill: {fileID: 11400000, guid: e92bd0dc668ccd940a90753d04c55e39, type: 2}
@@ -106,3 +107,5 @@ MonoBehaviour:
   ShowIfUsed: {fileID: 0}
   HideIfUsed: {fileID: 0}
   currentStep: {fileID: 0}
+  maximumScale: {x: 0, y: 0, z: 0}
+  minimumScale: {x: 0, y: 0, z: 0}

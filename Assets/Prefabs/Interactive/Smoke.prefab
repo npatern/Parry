@@ -4872,5 +4872,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   timer: 10
-  whenToDetatchParticles: 2
+  whenToDetatchParticles: 3
   spawnOnDestroy: {fileID: 0}

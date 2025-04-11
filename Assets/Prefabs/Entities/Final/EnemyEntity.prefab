@@ -109,6 +109,7 @@ MonoBehaviour:
   IsDamaging: 0
   IsDodging: 0
   IsDisarming: 0
+  IsIllegal: 0
   StopMovingEvent:
     m_PersistentCalls:
       m_Calls: []
@@ -299,6 +300,8 @@ MonoBehaviour:
   drawRaycasts: 0
   nrOfTestRays: 36
   playerHeight: 1.5
+  softBurn: 0
+  hardBurn: 0
   IsAlerted: 0
   currentTarget: {fileID: 0}
   currentTargetLastPosition: {x: 0, y: 0, z: 0}

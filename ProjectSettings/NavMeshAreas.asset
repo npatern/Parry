@@ -17,10 +17,10 @@ NavMeshProjectSettings:
     cost: 3
   - name: Damage
     cost: 999
-  - name: 
-    cost: 1
-  - name: 
-    cost: 1
+  - name: Path
+    cost: 0.5
+  - name: Water
+    cost: 2
   - name: 
     cost: 1
   - name: 

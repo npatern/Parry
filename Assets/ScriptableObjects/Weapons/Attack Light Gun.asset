@@ -16,6 +16,7 @@ MonoBehaviour:
   Name: lightAttack
   Description: 
   DamageMultiplayer: 1
+  IsIllegal: 1
   AttackStepss:
   - StepName: 
     LockMovement: 0
@@ -55,6 +56,8 @@ MonoBehaviour:
     IsProtected: 0
     IsDamaging: 0
     IsFiring: 0
+    IsThrowing: 0
+    IsDisarming: 0
     SkipIfPlayer: 0
     MovementOffset: {x: 0, y: 0, z: 0}
     SoundRange: 0
@@ -106,9 +109,11 @@ MonoBehaviour:
     IsProtected: 0
     IsDamaging: 0
     IsFiring: 1
+    IsThrowing: 0
+    IsDisarming: 0
     SkipIfPlayer: 0
     MovementOffset: {x: 0, y: 0, z: 0}
-    SoundRange: 100
+    SoundRange: 10
     soundType: 2
   - StepName: AI ONLY
     LockMovement: 1
@@ -157,6 +162,8 @@ MonoBehaviour:
     IsProtected: 0
     IsDamaging: 0
     IsFiring: 0
+    IsThrowing: 0
+    IsDisarming: 0
     SkipIfPlayer: 1
     MovementOffset: {x: 0, y: 0, z: 0}
     SoundRange: 0
@@ -199,6 +206,8 @@ MonoBehaviour:
     IsProtected: 0
     IsDamaging: 0
     IsFiring: 0
+    IsThrowing: 0
+    IsDisarming: 0
     SkipIfPlayer: 0
     MovementOffset: {x: 0, y: 0, z: 0}
     SoundRange: 0
@@ -250,6 +259,8 @@ MonoBehaviour:
     IsProtected: 0
     IsDamaging: 0
     IsFiring: 0
+    IsThrowing: 0
+    IsDisarming: 0
     SkipIfPlayer: 0
     MovementOffset: {x: 0, y: 0, z: 0}
     SoundRange: 0

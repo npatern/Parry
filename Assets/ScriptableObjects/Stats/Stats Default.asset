@@ -49,6 +49,7 @@ MonoBehaviour:
     mortalOnFull: 0
     isAlwaysFull: 0
     emptyOnContangion: 0
+    particleInstance: {fileID: 0}
   - name: Fire
     type: 1
     isActive: 0
@@ -91,6 +92,7 @@ MonoBehaviour:
     mortalOnFull: 0
     isAlwaysFull: 0
     emptyOnContangion: 0
+    particleInstance: {fileID: 0}
   - name: Electric
     type: 2
     isActive: 0
@@ -106,15 +108,15 @@ MonoBehaviour:
     waitTime: 5
     contagousSpeed: 0
     StartModifiers:
-    - type: 7
-      startEffectType: 0
-      targetType: 0
     - type: 2
       startEffectType: 1
       targetType: 4
-    - type: 3
-      startEffectType: 3
+    - type: 7
+      startEffectType: 0
       targetType: 0
+    - type: 3
+      startEffectType: 2
+      targetType: 2
     DamageModifiers:
     - typeThatIsActive: 7
       multiplier: 100
@@ -131,6 +133,7 @@ MonoBehaviour:
     mortalOnFull: 0
     isAlwaysFull: 0
     emptyOnContangion: 0
+    particleInstance: {fileID: 0}
   - name: Stun
     type: 4
     isActive: 0
@@ -141,7 +144,7 @@ MonoBehaviour:
     defaultSpeed: 50
     defalutPoints: 0
     activeTimer: 0
-    activeTime: 3
+    activeTime: 10
     waitTimer: 0
     waitTime: 5
     contagousSpeed: 0
@@ -168,6 +171,7 @@ MonoBehaviour:
     mortalOnFull: 0
     isAlwaysFull: 0
     emptyOnContangion: 0
+    particleInstance: {fileID: 0}
   - name: Deaf
     type: 5
     isActive: 0
@@ -197,6 +201,7 @@ MonoBehaviour:
     mortalOnFull: 0
     isAlwaysFull: 0
     emptyOnContangion: 0
+    particleInstance: {fileID: 0}
   - name: Freeze
     type: 3
     isActive: 0
@@ -236,6 +241,7 @@ MonoBehaviour:
     mortalOnFull: 0
     isAlwaysFull: 0
     emptyOnContangion: 0
+    particleInstance: {fileID: 0}
   - name: Poison
     type: 6
     isActive: 0
@@ -269,6 +275,7 @@ MonoBehaviour:
     mortalOnFull: 0
     isAlwaysFull: 0
     emptyOnContangion: 0
+    particleInstance: {fileID: 0}
   - name: Water
     type: 7
     isActive: 0
@@ -306,3 +313,4 @@ MonoBehaviour:
     mortalOnFull: 0
     isAlwaysFull: 0
     emptyOnContangion: 0
+    particleInstance: {fileID: 0}

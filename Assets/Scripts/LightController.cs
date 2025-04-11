@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
-public class LightController : MonoBehaviour
+public class LightController : PowerReciver
 {
     [SerializeField]
     private TMP_Text textComponent;
@@ -31,8 +31,9 @@ public class LightController : MonoBehaviour
     Material offMaterial;
 
     MeshRenderer meshRenderer;
-    private void Awake()
+    protected override void Awake()
     {
+        base.Awake();
         lightComponent = GetComponent<Light>();
         statusController = GetComponent<StatusController>();
         if (GetComponent<MeshRenderer>() != null)
@@ -55,12 +56,13 @@ public class LightController : MonoBehaviour
         layerMask = LayerMask.GetMask("Entity", "Blockout", "Bush");
 
     }
-    
-    public void Start()
+    protected override void Start()
     {
+        base.Start();
         if (statusController!=null)
-        statusController.OnKillEvent.AddListener(KillLight);
+            statusController.OnKillEvent.AddListener(KillLight);
         GameController.Instance.lightControllers.Add(this);
+        RefreshLight();
     }
     private void FixedUpdate()
     {
@@ -69,6 +71,17 @@ public class LightController : MonoBehaviour
             textComponent.SetText("" + GetLightValueOnObject(GameController.Instance.CurrentPlayer.transform));
 
         if (realtime) UpdateLight();
+    }
+    protected override void OnPowerChanged(bool powered)
+    {
+        base.OnPowerChanged(powered);
+        Debug.Log("Change Light " + gameObject.name + " stan switched " + IsSwitchedOn+ " stan swiecenia: "+ isOn);
+        RefreshLight();
+    }
+    protected override void LateStart()
+    {
+        base.LateStart();
+        RefreshLight();
     }
     private bool IsInDistance(Transform target)
     {
@@ -151,9 +164,10 @@ public class LightController : MonoBehaviour
         lightValue = Mathf.Lerp(0, brightness, lerpValue);
         return lightValue;
     }
-    public void SwitchLight (bool onOff)
+    public void SetLight (bool onOff)
     {
-        isOn = onOff;
+        IsSwitchedOn = onOff;
+        isOn = IsSwitchedOn && CheckIfPowered();
         lightComponent.enabled = isOn;
         if (GetComponent<MeshRenderer>() == null) return;
         if (isOn) meshRenderer.material = onMaterial;
@@ -161,19 +175,20 @@ public class LightController : MonoBehaviour
     }
     public void SwitchLight()
     {
-        SwitchLight(!isOn);
+        SetLight(!IsSwitchedOn);
     }
     public void RefreshLight()
     {
-        SwitchLight(isOn);
+        SetLight(IsSwitchedOn);
     }
     public void KillLight()
     {
         Debug.Log("KILL LIGHTS!!!!!!!!!!!!!!!!");
-        SwitchLight(false);
+        SetLight(false);
         GetComponent<MeshRenderer>().enabled = false;
         if (textComponent!=null)
             textComponent.gameObject.SetActive(false);
         
     }
+
 }

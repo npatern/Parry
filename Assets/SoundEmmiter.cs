@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SoundEmmiter : MonoBehaviour
+public class SoundEmmiter : PowerReciver
 {
     [SerializeField]
     private bool isEmiting = true;
@@ -10,9 +10,15 @@ public class SoundEmmiter : MonoBehaviour
     private float soundRange = 20;
     [SerializeField]
     public ParticleSystem particle;
-    private void Start()
+    protected override void Start()
     {
-        SetEmiting(isEmiting);
+        base.Start();
+        SetEmiting(IsSwitchedOn);
+    }
+    protected override void OnPowerChanged(bool powered)
+    {
+        base.OnPowerChanged(powered);
+        RefreshEmiting();
     }
     private void FixedUpdate()
     {
@@ -23,16 +29,21 @@ public class SoundEmmiter : MonoBehaviour
         particle.startLifetime = soundRange / particle.startSpeed;
     }
 
-    public void SetEmiting(bool isPowered)
+    public void SetEmiting(bool switchedOn)
     {
-        isEmiting = isPowered;
-        if (isPowered)
+        IsSwitchedOn = switchedOn;
+        isEmiting = IsSwitchedOn && CheckIfPowered();
+        if (isEmiting)
             particle.Play();
         else
             particle.Stop();
     }
     public void SwitchEmiting()
     {
-        SetEmiting(!isEmiting);
+        SetEmiting(!IsSwitchedOn);
+    }
+    public void RefreshEmiting()
+    {
+        SetEmiting(IsSwitchedOn);
     }
 }

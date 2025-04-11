@@ -141,7 +141,7 @@ public class UIOverheadStatus : MonoBehaviour
     }
     void FollowTarget(Transform target)
     {
-        Vector3 screenPosition = Camera.main.WorldToScreenPoint(target.position + Vector3.up * 3);
+        Vector3 screenPosition = Camera.main.WorldToScreenPoint(target.position + Vector3.up * 1);
         transform.position = screenPosition;
     }
      

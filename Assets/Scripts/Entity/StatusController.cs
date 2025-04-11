@@ -4,8 +4,8 @@ using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.InputSystem;
 using UnityEngine.Events;
-public class StatusController : MonoBehaviour, IHear
-{
+public class StatusController : MonoBehaviour, IHear, IPowerFlowController
+{   
     public bool Immortal = false;
     public string Team = "";
     public Vector3 size = Vector3.one;
@@ -234,6 +234,11 @@ public class StatusController : MonoBehaviour, IHear
 
         return false;
     }
+    public bool IsPowerFlowing()
+    {
+        if (IsKilled || IsStunned()) return false;
+        return true;
+    }
     public bool CanBeDeafend()
     {
         if (stats.GetStat(Stat.Types.DEAF) != null) return true;
@@ -403,8 +408,8 @@ public class StatusController : MonoBehaviour, IHear
 
         if (_damage * multiplier <= 0 && attacker!=this)
         {
-            if (damageEffect.effectList.Count > 0 && sensesController != null)
-                sensesController.AddAwarenessOnce(35);
+            //if (damageEffect.effectList.Count > 0 && sensesController != null)
+            //    sensesController.AddAwarenessOnce(35);
 
             return;
         }
@@ -425,8 +430,8 @@ public class StatusController : MonoBehaviour, IHear
         if (Life <= 0 && !IsKilled)
         {
             Kill(attacker);
-            Sound sound = new Sound(this, 2, Sound.TYPES.danger);
-            Sounds.MakeSound(sound);
+            //Sound sound = new Sound(this, 2, Sound.TYPES.danger);
+            //Sounds.MakeSound(sound);
         }
         else
         {

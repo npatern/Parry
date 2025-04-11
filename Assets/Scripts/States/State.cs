@@ -27,6 +27,9 @@ public class State
     protected float time = 10;
 
     protected float Tick = 0;
+
+    protected float screamDistance = 6;
+    protected bool shocked = false;
     protected void ResetTimer(float min = 3, float max = 10)
     {
         timer = 0;
@@ -278,13 +281,16 @@ public class Search : State
         
         lastSeenPosition = sensesController.currentTargetLastPosition;
         investigatedPosition = lastSeenPosition;
+        if (entity.CanBeShocked())
+            shocked = entity.IsEnteringShock();
+        /*
         if (investigatedPosition != Vector3.zero)
         {
             UIController.Instance.SpawnTextBubble(Barks.GetBark(Barks.BarkTypes.onSearchStart), entity.transform);
-            Sound sound = new Sound(statusController, 10, lastSeenPosition, Sound.TYPES.danger);
+            Sound sound = new Sound(statusController, screamDistance, lastSeenPosition, Sound.TYPES.danger);
             Sounds.MakeSound(sound);
         }
-        
+        */
         entity.SetAgentSpeedChase();
 
         
@@ -294,7 +300,15 @@ public class Search : State
     public override void Update()
     {
         base.Update();
-        entity.SetAgentSpeedChase();
+
+        if (entity.IsProcessingShock())
+        {
+            entity.DisableNavmesh(true);
+            //entity.StartLookingAtTarget(target.transform);
+            return;
+        }
+        
+        
         if (timer > time)
         {
             UIController.Instance.SpawnTextBubble(Barks.GetBark(Barks.BarkTypes.onSearchStart), entity.transform);
@@ -309,7 +323,19 @@ public class Search : State
             investigatedPosition = lastSeenPosition;
             isAtTarget = false;
         }
-        
+        if (shocked)
+        {
+            entity.DisableNavmesh(false);
+            //entity.StopLookingAtTarget();
+            if (investigatedPosition != Vector3.zero)
+            {
+                UIController.Instance.SpawnTextBubble(Barks.GetBark(Barks.BarkTypes.onSearchStart), entity.transform);
+                Sound sound = new Sound(statusController, screamDistance, Sound.TYPES.danger);
+                Sounds.MakeSound(sound);
+            }
+            shocked = false;
+        }
+        entity.SetAgentSpeedChase();
         entity.GoToTarget(investigatedPosition,2);
         if (isAtTarget)
         {
@@ -350,9 +376,6 @@ public class Combat : State
     Vector3 investigatedPosition;
     bool isAtTarget = false;
 
-   
-    bool shocked = false;
-
     public Combat(EntityController _entity, StatusController _combatTarget) : base(_entity)
     {
         name = STATE.COMBAT;
@@ -375,6 +398,7 @@ public class Combat : State
         if (entity.IsProcessingShock())
         {
             entity.DisableNavmesh(true);
+            if (target!=null)
             entity.StartLookingAtTarget(target.transform);
             return;
         }
@@ -383,7 +407,7 @@ public class Combat : State
             entity.DisableNavmesh(false);
             entity.StopLookingAtTarget();
             UIController.Instance.SpawnTextBubble(Barks.GetBark(Barks.BarkTypes.inCombatNotice), entity.transform);
-            Sound sound = new Sound(statusController, 10, Sound.TYPES.danger, combatTarget);
+            Sound sound = new Sound(statusController, screamDistance, Sound.TYPES.danger, combatTarget);
             Sounds.MakeSound(sound);
             shocked = false;
         }
@@ -395,10 +419,12 @@ public class Combat : State
         if (combatTarget == null) return;
         if (timer > time)
         {
+            /*
             UIController.Instance.SpawnTextBubble(Barks.GetBark(Barks.BarkTypes.inCombatNotice), entity.transform);
             Sound sound = new Sound(statusController, 10, Sound.TYPES.danger, combatTarget);
             Sounds.MakeSound(sound);
             ResetTimer();
+            */
         }
 
         entity.agent.avoidancePriority = (int)Vector3.Distance(entity.transform.position, combatTarget.transform.position)/5;
@@ -442,13 +468,14 @@ public class Flee : State
         if (shocked)
         {
             UIController.Instance.SpawnTextBubble(Barks.GetBark(Barks.BarkTypes.inFleeEnterNotice), entity.transform);
-            Sound sound = new Sound(statusController, 10, Sound.TYPES.danger);
+            Sound sound = new Sound(statusController, screamDistance, Sound.TYPES.danger);
             Sounds.MakeSound(sound);
             shocked = false;
         }
 
         entity.SetAgentSpeedChase();
         statusController.MakeDeaf(1);
+        /*
         if (timer > time)
         {
             UIController.Instance.SpawnTextBubble(Barks.GetBark(Barks.BarkTypes.inFleeEnterNotice), entity.transform);
@@ -456,6 +483,7 @@ public class Flee : State
             Sounds.MakeSound(sound);
             ResetTimer();
         }
+        */
         entity.GoToTarget(investigatedPosition);
 
         if (entity.IsTargetReached() && !isAtTarget)
