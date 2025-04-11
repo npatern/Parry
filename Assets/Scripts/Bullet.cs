@@ -21,10 +21,11 @@ public class Bullet : MonoBehaviour
     public GameObject destroyObject = null;
     public bool primed = false;
     public float primeTimer = 1;
-
+    public LayerMask layerMask;
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
+        layerMask = LayerMask.GetMask("Blockout", "Default", "Entity", "Damage");
         //ParticlesToKill = GetComponentInChildren<ParticleSystem>();
     }
     private void Start()
@@ -88,6 +89,14 @@ public class Bullet : MonoBehaviour
     }
     private void OnTriggerEnter(Collider collision)
     {
+        if ((layerMask.value & (1 << collision.gameObject.layer)) != 0)
+        {
+
+        }
+        else
+        {
+            return;
+        }
         if (item == null)
         {
             HandleBulletHit(collision);
@@ -95,6 +104,15 @@ public class Bullet : MonoBehaviour
     }
     private void OnCollisionEnter(Collision collision)
     {
+        if ((layerMask.value & (1 << collision.gameObject.layer)) != 0)
+        {
+
+        }
+        else
+        {
+            return;
+        }
+
         if (item == null) 
             HandleBulletHit(collision.collider);
         else

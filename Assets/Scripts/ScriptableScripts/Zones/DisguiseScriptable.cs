@@ -1,0 +1,52 @@
+using UnityEngine;
+using System.Collections.Generic;
+using UnityEngine.UI;
+
+[CreateAssetMenu(fileName = "Disguise ", menuName = "ScriptableObjects/Disguises/Disguise", order = 2)]
+public class DisguiseScriptable : ScriptableObject
+{
+    public ItemTypes LegalItems = ItemTypes.UTILITY;
+    public List<GameObject> defaultClothes;
+    public List<GameObject> defaultHeadgear;
+
+    public List<DisguiseScriptable> enforcesDisguises;
+
+    public bool OverrideRestrictions = false;
+    public RestrictionType OverridenRestriction = RestrictionType.FREE;
+}
+
+[System.Serializable]
+public class DisguiseWrapper
+{
+    public DisguiseScriptable disguiseType;
+    public ItemTypes LegalItems;
+    public List<GameObject> defaultClothes;
+    public List<GameObject> defaultHeadgear;
+
+    public List<DisguiseScriptable> enforcesDisguises;
+
+    public bool OverrideRestrictions = false;
+    public RestrictionType OverridenRestriction = RestrictionType.FREE;
+    public DisguiseWrapper(DisguiseScriptable _source)
+    {
+        disguiseType = _source;
+        LegalItems = _source.LegalItems;
+        defaultClothes = new List<GameObject>(_source.defaultClothes);
+        defaultHeadgear = new List<GameObject>(_source.defaultHeadgear);
+        OverrideRestrictions = _source.OverrideRestrictions;
+        OverridenRestriction = _source.OverridenRestriction;
+        enforcesDisguises = new List<DisguiseScriptable>(_source.enforcesDisguises);
+    }
+}
+[System.Flags]
+public enum ItemTypes
+{
+    None = 0,
+    UTILITY = 1 << 0,
+    KNIFE = 1 << 1,
+    PISTOL = 1 << 2,
+    RIFLE = 1 << 3,
+    SWORD = 1 << 4,
+    EXPLOSIVES = 1 << 5,
+    Everything = ~0
+}

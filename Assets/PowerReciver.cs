@@ -50,7 +50,9 @@ public class PowerReciver : MonoBehaviour
 
     protected virtual void LateStart()
     {
-        //GenerateWiresB();
+        if (NeedsPowerSource)
+           // GenerateWiresB();
+        GenerateWires();
     }
     protected virtual void OnPowerChanged(bool powered)
     {
@@ -73,14 +75,15 @@ public class PowerReciver : MonoBehaviour
     void GenerateWires()
     {
         if (!ShowWires || powerSource == null) return;
-        if(Wires == null)
+        if (powerSource.gameObject == gameObject) return;
+        if (Wires == null)
         Wires = gameObject.AddComponent<LineRenderer>();
         Wires.useWorldSpace = true;
 
         // Visual setup
         Wires.material = new Material(Shader.Find("Sprites/Default")); // Replace with your material if needed
         Wires.startColor = Color.black;
-        Wires.endColor = Color.blue;
+        Wires.endColor = Color.black;
         Wires.startWidth = 0.05f;
         Wires.endWidth = 0.05f;
 
@@ -106,6 +109,7 @@ public class PowerReciver : MonoBehaviour
     void GenerateWiresB()
     {
         if (!ShowWires || powerSource == null) return;
+        if (powerSource.gameObject == gameObject) return;
 
         int cableCount = 5; // Number of cables to generate
         int segments = 20;  // Number of segments per cable for smoothness
@@ -140,7 +144,7 @@ public class PowerReciver : MonoBehaviour
                 Vector3 point = Vector3.Lerp(startPoint, endPoint, t);
 
                 // Apply a downward offset to simulate sagging
-                float sag = Mathf.Sin(t * Mathf.PI) * Random.Range(1.5f, 2.5f);
+                float sag = Mathf.Sin(t * Mathf.PI) * (gravityStrength+ Random.Range(-.5f, .5f));
                 point.y -= sag;
 
                 // Apply a slight horizontal offset to differentiate cables

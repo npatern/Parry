@@ -113,7 +113,7 @@ MonoBehaviour:
     IsDisarming: 0
     SkipIfPlayer: 0
     MovementOffset: {x: 0, y: 0, z: -0.2}
-    SoundRange: 15
+    SoundRange: 25
     soundType: 2
   - StepName: windup
     LockMovement: 0
@@ -210,7 +210,7 @@ MonoBehaviour:
     IsDisarming: 0
     SkipIfPlayer: 0
     MovementOffset: {x: 0, y: 0, z: -0.3}
-    SoundRange: 15
+    SoundRange: 25
     soundType: 2
   - StepName: windup
     LockMovement: 0
@@ -307,7 +307,7 @@ MonoBehaviour:
     IsDisarming: 0
     SkipIfPlayer: 0
     MovementOffset: {x: 0, y: 0, z: -0.4}
-    SoundRange: 15
+    SoundRange: 25
     soundType: 2
   - StepName: AI ONLY
     LockMovement: 1

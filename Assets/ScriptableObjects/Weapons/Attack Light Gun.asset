@@ -113,7 +113,7 @@ MonoBehaviour:
     IsDisarming: 0
     SkipIfPlayer: 0
     MovementOffset: {x: 0, y: 0, z: 0}
-    SoundRange: 10
+    SoundRange: 20
     soundType: 2
   - StepName: AI ONLY
     LockMovement: 1

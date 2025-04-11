@@ -318,7 +318,7 @@ public class ToolsController : MonoBehaviour
         bullet.damage = CurrentWeaponWrapper.bulletEffects;
         bullet.destroyObject = bullet.damage.deathEffect;
         Rigidbody bulletRB = bullet.GetComponent<Rigidbody>();
-        bulletRB.AddRelativeForce(Vector3.forward * 1000, ForceMode.Acceleration);
+        bulletRB.AddRelativeForce(Vector3.forward * 2000, ForceMode.Acceleration);
         Debug.Log("bullet fired!");
 
     }   

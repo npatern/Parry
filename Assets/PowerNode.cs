@@ -9,6 +9,8 @@ public class PowerNode : PowerReciver
     public bool IsOn = true;
     public bool PowerComingOut = false;
 
+
+
     float timer = 1;
     bool refreshed = false;
     protected override void Awake()

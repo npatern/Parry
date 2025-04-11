@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 public class OutwardController : MonoBehaviour
 {
@@ -12,9 +13,14 @@ public class OutwardController : MonoBehaviour
     public bool IsHiddenInCrowd = false;
     public float CrowdRadius = 2.5f;
     public LineRenderer[] linerenderers = new LineRenderer[5];
-    
+
+    public LayerMask zoneMask;
+    public List<Zone> Zones;
+    public ZoneScriptable activeZone;
+    private bool IsPlayer;
     private void Awake()
     {
+        zoneMask = LayerMask.GetMask("Zones");
         gameController = GameController.Instance;
         if (!AffectedByLight) LightValue = 1;
         SpawnLineRenderers();
@@ -122,5 +128,33 @@ public class OutwardController : MonoBehaviour
                 
         }
         return false;
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if ((zoneMask.value & (1 << other.gameObject.layer)) != 0)
+        {
+            if (other.TryGetComponent<Zone>(out Zone _zone))
+            {
+                Zones.Add(_zone);
+                RefreshZone();
+            }
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if ((zoneMask.value & (1 << other.gameObject.layer)) != 0)
+        {
+            if (other.TryGetComponent<Zone>(out Zone _zone))
+            {
+                Zones.Remove(_zone);
+                RefreshZone();
+            }
+        }
+    }
+    public void RefreshZone()
+    {
+        activeZone = Zones.OrderByDescending(z => z.zone.Depth).FirstOrDefault().zone;
     }
 }

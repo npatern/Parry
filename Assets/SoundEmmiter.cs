@@ -20,6 +20,11 @@ public class SoundEmmiter : PowerReciver
         base.OnPowerChanged(powered);
         RefreshEmiting();
     }
+    protected override void LateStart()
+    {
+        base.LateStart();
+        RefreshEmiting();
+    }
     private void FixedUpdate()
     {
 
