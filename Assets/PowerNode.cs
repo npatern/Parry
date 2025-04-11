@@ -53,7 +53,7 @@ public class PowerNode : PowerReciver
         if (!CheckIfPowered()) return false;
         if (!IsSwitchedOn) return false;
         foreach (var powerController in powerFlowControllers)
-            if (powerController == null || !powerController.IsPowerFlowing()) return false;
+            if (powerController == null || powerController.IsPowerFlowing()== false) return false;
         return true;
     }
     protected override void OnDrawGizmos()

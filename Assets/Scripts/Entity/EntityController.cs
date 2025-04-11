@@ -47,6 +47,8 @@ public class EntityController : MonoBehaviour
     public bool isSearchingForNeeds = false;
     public State currentState;
     public Vector3 HomePosition;
+
+    public Vector3 AddedVelocity = Vector3.zero;
     private void Awake()
     {
         if (GetComponent<NavMeshAgent>()!=null)
@@ -124,8 +126,24 @@ public class EntityController : MonoBehaviour
         }
         return false;
     }
+    public void AddVelocity(Vector3 velocity)
+    {
+       AddedVelocity += velocity;
+    }
+    void NavmeshVelocity()
+    {
+        if (AddedVelocity != Vector3.zero)
+            agent.velocity += AddedVelocity;
+        AddedVelocity *= .7f;
+        if (AddedVelocity.magnitude < 0.1) AddedVelocity = Vector3.zero;
+
+        //AddedVelocity = Vector3.zero;
+    }
     void FixedUpdate()
     {
+        //NavmeshVelocity();
+
+
         TickTimer += Time.fixedDeltaTime;
         currentState = currentState.Process(Tick);
         

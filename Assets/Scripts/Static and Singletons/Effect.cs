@@ -428,7 +428,7 @@ public class Stat
     public void OnActiveEnd()
     {
         RemoveParticles();
-           
+        isActive = false;
         if (status == null) return;
         switch (type)
         {
@@ -472,9 +472,8 @@ public class Stat
     public void ResetEffect()
     {
         activeTimer = 0;
-        OnActiveEnd();
-        isActive = false;
         Points = defalutPoints;
+        OnActiveEnd();
     }
 }
 /*

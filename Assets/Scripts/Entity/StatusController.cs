@@ -388,6 +388,11 @@ public class StatusController : MonoBehaviour, IHear, IPowerFlowController
         }
         else
         {
+            
+            if (TryGetComponent<EntityController>(out EntityController _entity))
+            {
+                _entity.AddVelocity(-transform.forward * 10);
+            }
             if (sensesController != null)
             {
                 if (attacker != this)
