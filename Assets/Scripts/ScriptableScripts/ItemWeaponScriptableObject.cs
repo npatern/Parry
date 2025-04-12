@@ -171,7 +171,7 @@ public class ItemWeaponWrapper
         CurrentWeaponObject.transform.parent = null;
         pickable.weaponObject = CurrentWeaponObject.gameObject;
         pickable.weaponWrapper = this;
-        Debug.Log("ADDING RB");
+        
         AddAndSetRigidBody();
         return pickable;
     }

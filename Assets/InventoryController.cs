@@ -62,7 +62,6 @@ public class InventoryController : MonoBehaviour
       
         list.Add(item);
         item.DestroyPhysicalPresence();
-        ListInventory();
         return true;
     }
     bool IsAlreadyInInventory(ItemWeaponWrapper item, List<ItemWeaponWrapper> list)
@@ -102,7 +101,7 @@ public class InventoryController : MonoBehaviour
     {
         if (slots.Count <= 0) return null;
         ItemWeaponWrapper itemToReturn = slots[0];
-        Debug.Log("nextweapon: " + itemToReturn.name);
+        //Debug.Log("nextweapon: " + itemToReturn.name);
         return itemToReturn;
     }
     public ItemWeaponWrapper GetPreviousWeapon()
@@ -110,10 +109,10 @@ public class InventoryController : MonoBehaviour
         if (slots.Count <= 0) return null;
         int slotNr = slots.Count-1;
         ItemWeaponWrapper itemToReturn = slots[slotNr];
-        Debug.Log("prev weapon: " + itemToReturn.name);
+        //Debug.Log("prev weapon: " + itemToReturn.name);
         return itemToReturn;
     }
-    public void ListInventory()
+    public void DebugListInventory()
     {
         string currentInventory = "CURRENT INVENTORY: ";
         

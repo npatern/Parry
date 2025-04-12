@@ -5127,31 +5127,7 @@ MonoBehaviour:
       m_Calls: []
   OnKillEvent:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 3577817869277863407}
-        m_TargetAssemblyTypeName: SoundEmmiter, Assembly-CSharp
-        m_MethodName: SetEmiting
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 5854190156225085745}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
   headTransform: {fileID: 0}
   bodyTransform: {fileID: 0}
   scaleParticles: 0
@@ -5200,7 +5176,6 @@ MonoBehaviour:
   IsSwitchedOn: 1
   powerSource: {fileID: 1062362792783692873}
   ShowWires: 1
-  IsOn: 1
   PowerComingOut: 0
 --- !u!1 &8368805945047428584
 GameObject:
@@ -5407,17 +5382,12 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1389468568006088282, guid: 57db80ac8f8590a43af60cb1ed81d55f, type: 3}
   m_PrefabInstance: {fileID: 2158956063203004947}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5854190156225085745}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 81b982c35fd7768449e9d922b30cbd0c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!1 &5854190156225085745 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 5532784257875219234, guid: 57db80ac8f8590a43af60cb1ed81d55f, type: 3}
-  m_PrefabInstance: {fileID: 2158956063203004947}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &5854190156225085754 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5532784257875219241, guid: 57db80ac8f8590a43af60cb1ed81d55f, type: 3}

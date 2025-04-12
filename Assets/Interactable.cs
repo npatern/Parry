@@ -30,7 +30,6 @@ public class Interactable : MonoBehaviour
     }
     public virtual void Interact(StatusController _status = null)
     {
-        Debug.Log("INTERACTION FROM INTERACTABLE");
         InteractionEvent.Invoke();
     }
 }

@@ -136,7 +136,6 @@ public class Bullet : MonoBehaviour
     }
     public void DestroyBullet()
     {
-        Debug.Log("bullet destroyed");
         RemoveParticles();
         if (ParticlesToSpawn != null)
         {

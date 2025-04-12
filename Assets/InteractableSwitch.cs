@@ -25,7 +25,6 @@ public class InteractableSwitch : Interactable, IPowerFlowController
     }
     public override void Interact(StatusController _status = null)
     {
-        Debug.Log("INTERACTION FROM SWITCH");
         Interact(!SignalState, _status);
     }
     public void Interact(bool _setSignal, StatusController _status = null)

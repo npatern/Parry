@@ -31,8 +31,6 @@ public class Door : MonoBehaviour
     public void SwitchDoorState(bool TagetOpenState)
     {
         //if (DoorOpenState == TagetOpenState) return;
-
-        Debug.Log("DOOOR USEEEED state: " + DoorOpenState);
         doorTimer = 0;
         DoorOpenState = TagetOpenState;
 

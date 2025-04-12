@@ -38,6 +38,6 @@ public class UIzone : MonoBehaviour
                 break;
 
         }
-        image.color = color;
+        image.color = color; 
     }
 }
