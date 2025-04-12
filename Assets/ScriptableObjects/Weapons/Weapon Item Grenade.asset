@@ -28,13 +28,13 @@ MonoBehaviour:
     effectList:
     - type: 4
       points: 40
-    deathEffect: {fileID: 3323699687725421651, guid: 033c07fe85d8390429950ed260c875fe, type: 3}
+    deathEffectObjectToSpawn: {fileID: 3323699687725421651, guid: 033c07fe85d8390429950ed260c875fe, type: 3}
   bulletEffects:
     Damage: 0
     caster: {fileID: 0}
     origin: {x: 0, y: 0, z: 0}
     effectList: []
-    deathEffect: {fileID: 0}
+    deathEffectObjectToSpawn: {fileID: 0}
   AttackDistance: 10
   isPrimeable: 1
   bullet: {fileID: 0}

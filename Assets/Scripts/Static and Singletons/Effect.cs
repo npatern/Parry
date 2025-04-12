@@ -9,7 +9,7 @@ public class DamageEffects
     public StatusController caster;
     public Vector3 origin;
     public List<Effect> effectList;
-    public GameObject deathEffect;
+    public GameObject deathEffectObjectToSpawn;
     public DamageEffects()
     {
         Damage = 0;

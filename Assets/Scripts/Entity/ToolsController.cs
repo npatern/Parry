@@ -316,7 +316,7 @@ public class ToolsController : MonoBehaviour
         WeaponModel weaponModel = CurrentWeaponWrapper.CurrentWeaponObject.GetComponent<WeaponModel>();
         Bullet bullet = Instantiate(CurrentWeaponWrapper.itemType.bullet, weaponModel.StartPoint.position, CurrentWeaponWrapper.CurrentWeaponObject.transform.rotation, GameController.Instance.GarbageCollector.transform).GetComponent<Bullet>();
         bullet.damage = CurrentWeaponWrapper.bulletEffects;
-        bullet.destroyObject = bullet.damage.deathEffect;
+        bullet.destroyObject = bullet.damage.deathEffectObjectToSpawn;
         Rigidbody bulletRB = bullet.GetComponent<Rigidbody>();
         bulletRB.AddRelativeForce(Vector3.forward * 2000, ForceMode.Acceleration);
         Debug.Log("bullet fired!");
@@ -345,7 +345,7 @@ public class ToolsController : MonoBehaviour
         bullet.isDamaging = true;
         bullet.multiplier *= 100;
         bullet.damage = thrownWrapper.Effects;
-        bullet.destroyObject = thrownWrapper.Effects.deathEffect;
+        bullet.destroyObject = thrownWrapper.Effects.deathEffectObjectToSpawn;
         bullet.soundType = Sound.TYPES.neutral;
         bullet.SoundRange = 15;
         if (thrownWrapper.isPrimeable) bullet.primed = true;

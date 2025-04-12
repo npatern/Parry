@@ -477,9 +477,10 @@ public class StatusController : MonoBehaviour, IHear, IPowerFlowController
     {
         if (Immortal) return; 
         IsKilled = true;
-        //RefreshPowerFlow();
+        CheckPowerFlow();
         SpawnParticles(DamageEffect, transform, 10, .2f);
         Life = 0;
+        if (defaultDamageEffects.deathEffectObjectToSpawn != null) Instantiate(defaultDamageEffects.deathEffectObjectToSpawn, transform.position, Quaternion.identity);
         if (IsStunned()) stats.GetStat(Stat.Types.STUN).ResetEffect();
         if (rb != null)
         {

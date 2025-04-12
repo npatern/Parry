@@ -82,7 +82,7 @@ MonoBehaviour:
     effectList:
     - type: 4
       points: 222
-    deathEffect: {fileID: 0}
+    deathEffectObjectToSpawn: {fileID: 2157291579974494909, guid: 6a10380512d2f2448afc178fcb1eccf3, type: 3}
   TickTime: 1
   ApplyOnlyOnce: 1
   applyExplosionForce: 1

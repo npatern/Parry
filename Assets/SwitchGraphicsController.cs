@@ -9,6 +9,8 @@ public class SwitchGraphicsController : MonoBehaviour
     GameObject onGraphics;
     [SerializeField]
     GameObject offGraphics;
+    [SerializeField]
+    GameObject[] NonInteractableGraphics;
     bool isOn = true;
     public void Awake()
     {

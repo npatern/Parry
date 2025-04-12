@@ -18,6 +18,7 @@ public class Interactable : MonoBehaviour
     {
         if (other.TryGetComponent<InteractionController>(out InteractionController interaction))
         {
+            if (IsInteractable)
             interaction.AddToInteractions(this);
         }
     }
@@ -31,5 +32,9 @@ public class Interactable : MonoBehaviour
     public virtual void Interact(StatusController _status = null)
     {
         InteractionEvent.Invoke();
+    }
+    public void Kill()
+    {
+        IsInteractable = false;
     }
 }

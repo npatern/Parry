@@ -89,6 +89,7 @@ public class Bullet : MonoBehaviour
     }
     private void OnTriggerEnter(Collider collision)
     {
+        if (collision.isTrigger) return;
         if ((layerMask.value & (1 << collision.gameObject.layer)) != 0)
         {
 
