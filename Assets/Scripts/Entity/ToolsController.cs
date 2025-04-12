@@ -353,7 +353,7 @@ public class ToolsController : MonoBehaviour
         bullet.item = thrownWrapper;
         Vector3 throwDirection = new Vector3(thrownWrapper.CurrentWeaponObject.position.x - transform.position.x, 0, thrownWrapper.CurrentWeaponObject.position.z - transform.position.z);
         bullet.DestroyAfterDamage = false;
-        bulletRB.AddForce(throwDirection * 1000, ForceMode.Acceleration);
+        bulletRB.AddForce(throwDirection * 2000, ForceMode.Acceleration);
         BreakAttackCoroutines();
         //Debug.Log("weapon thrown");
     }

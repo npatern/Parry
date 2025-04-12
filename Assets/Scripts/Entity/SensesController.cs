@@ -102,8 +102,14 @@ public class SensesController : MonoBehaviour, IHear
     {
         if (_target == null) return;
         if (IsAlerted)
+        {
             hardBurn = true;
-        currentTargetTimer = 1;
+            currentTargetTimer = 2;
+        }
+        else
+        {
+            currentTargetTimer = .2f;
+        }
         currentTarget = _target;
     }
     public StatusController GetCurrentTarget()
@@ -254,14 +260,18 @@ public class SensesController : MonoBehaviour, IHear
             awarenessValue *= outwardController.LightValue;
             if (outwardController.IsHiddenInCrowd && Vector3.Distance(transform.position, outwardController.transform.position) > outwardController.CrowdRadius) 
                 awarenessValue *= 0;
-            if (!IsTargetBurned())
-            {
-                if (outwardController.IsActionIllegal())
+
+                int illegality;
+                if (IsTargetBurned()) 
+                    illegality = 2;
+                else
+                    illegality = outwardController.HowMuchIllegal();
+
+                if (illegality>0)
                 {
-                    awarenessValue *= 10;
-                    if (awarenessValue > 0)
+                    awarenessValue *= illegality;
+                    if (awarenessValue > 0 && illegality>1)
                     {
-                        
                          softBurn = true; 
                     }
                 }
@@ -269,8 +279,7 @@ public class SensesController : MonoBehaviour, IHear
                 {
                     awarenessValue *= 0;
                 }
-                
-            }
+
         }
 
         return awarenessValue;

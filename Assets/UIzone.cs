@@ -6,6 +6,7 @@ using TMPro;
 public class UIzone : MonoBehaviour
 {
     public Image image;
+    public Image[] images;
     [SerializeField]
     TextMeshProUGUI zoneName;
     Color color;
@@ -38,6 +39,7 @@ public class UIzone : MonoBehaviour
                 break;
 
         }
-        image.color = color; 
+        image.color = color;
+        foreach (Image _image in images) _image.color = color;
     }
 }

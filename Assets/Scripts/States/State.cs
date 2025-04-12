@@ -28,7 +28,7 @@ public class State
 
     protected float Tick = 0;
 
-    protected float screamDistance = 6;
+    protected float screamDistance = 12;
     protected bool shocked = false;
     protected void ResetTimer(float min = 3, float max = 10)
     {

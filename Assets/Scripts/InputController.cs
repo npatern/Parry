@@ -49,6 +49,7 @@ public class InputController : MonoBehaviour
     bool isSprinting = false;
     PlayerInput playerInput;
     float WalkSoundAwarenessTime = 1;
+    private Camera camera;
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
@@ -58,6 +59,7 @@ public class InputController : MonoBehaviour
         statusController = GetComponent<StatusController>();
         GetStatsFromScriptable(GameController.Instance.ListOfAssets.DefaultEntityValues);
         playerInput = GetComponent<PlayerInput>();
+        camera = Camera.main;
     }
     void GetStatsFromScriptable(EntityValuesScriptableObject scriptable)
     {
@@ -119,9 +121,9 @@ public class InputController : MonoBehaviour
             targetVelocity *= runSpeed;
         else
             targetVelocity *= movementSpeed;
-
+        if (camera == null) camera = Camera.main;
         if (alignToCamera)
-            targetVelocity = Camera.main.transform.TransformDirection(targetVelocity);
+            targetVelocity = camera.transform.TransformDirection(targetVelocity);
 
         Vector3 velocityChange = (targetVelocity - currentVelocity);
         velocityChange = new Vector3(velocityChange.x, 0, velocityChange.z);
@@ -242,19 +244,43 @@ public class InputController : MonoBehaviour
         }
         else
         {
-            //target.parent = null;
-            //TODO: get rid of camera.main later
 
-            //LayerMask mask = LayerMask.GetMask("MouseRaycast");
-            //if (Physics.Raycast(ray, out RaycastHit hitData, mask))
+            /*
+          LayerMask mask = LayerMask.GetMask("Blockout");
+          //if (Physics.Raycast(ray, out RaycastHit hitData, mask))
 
-            Vector3 v3 = new Vector3(lookAtValue.x, lookAtValue.y, 10);
-            Ray ray = Camera.main.ScreenPointToRay(v3);
-            if (Physics.Raycast(ray, out RaycastHit hitData))
-                v3 = hitData.point;
-            v3.y += 2;
-            target.transform.position = v3;
+          Vector3 v3 = new Vector3(lookAtValue.x, lookAtValue.y, 10);
+          if (camera == null) camera = Camera.main;
+          Ray ray = camera.ScreenPointToRay(v3);
+          if (Physics.Raycast(ray, out RaycastHit hitData, mask))
+              v3 = hitData.point;
+           target.transform.position = v3;
+          */
+
+
+            if (camera == null) camera = Camera.main;
+
+            Vector2 screenPoint = new Vector2(lookAtValue.x, lookAtValue.y);
+            float desiredY = transform.position.y + 2;
+
+            Vector3? worldPoint = ScreenToWorldAtY(screenPoint, desiredY);
+            if (worldPoint.HasValue)
+            {
+                target.transform.position = worldPoint.Value;
+            }
         }
+    }
+    public Vector3? ScreenToWorldAtY(Vector2 screenPos, float yTarget)
+    {
+        Ray ray = Camera.main.ScreenPointToRay(screenPos);
+        Vector3 origin = ray.origin;
+        Vector3 direction = ray.direction;
+
+        if (Mathf.Approximately(direction.y, 0f))
+            return null;
+
+        float t = (yTarget - origin.y) / direction.y;
+        return origin + direction * t;
     }
     public void Jump(InputAction.CallbackContext context)
     {

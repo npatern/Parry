@@ -119,17 +119,38 @@ public class OutwardController : MonoBehaviour
         value = Mathf.Clamp01(value);
         return value;
     }
-    public bool IsActionIllegal()
+    public int HowMuchActionIllegal()
     {
+        int level = 0;
         if (TryGetComponent<ToolsController>(out ToolsController toolsController))
         {
-            if (toolsController.IsIllegal) return true;
-            if (toolsController.CurrentWeaponWrapper != null && toolsController.CurrentWeaponWrapper.IsIllegal) return true;
-                
+            if (toolsController.CurrentWeaponWrapper != null && toolsController.CurrentWeaponWrapper.IsIllegal) level = 1;
+            if (toolsController.IsIllegal) level = 2;
         }
-        return false;
+        return level;
+    }
+    public bool IsActionIllegal()
+    {
+        return HowMuchActionIllegal() > 0;
+    }
+    public int HowMuchBeingIllegal()
+    {
+        if (activeZone == null) return 0;
+        if (activeZone.DefaultRestriction == RestrictionType.FREE) return 0;
+        if (activeZone.DefaultRestriction == RestrictionType.RESTRICTED) return 1;
+        if (activeZone.DefaultRestriction == RestrictionType.HOSTILE) return 2;
+        return 0;
     }
 
+    public bool IsBeingIllegal()
+    {
+        return HowMuchBeingIllegal() > 0;
+    }
+    
+    public int HowMuchIllegal()
+    {
+        return Mathf.Max(HowMuchBeingIllegal(), HowMuchActionIllegal());
+    }
     private void OnTriggerEnter(Collider other)
     {
         if ((zoneMask.value & (1 << other.gameObject.layer)) != 0)

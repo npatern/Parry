@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Zone ___Exclusive
   m_EditorClassIdentifier: 
   DefaultRestriction: 2
-  Depth: 0
+  Depth: 1
   FREEDisguises:
   - {fileID: 11400000, guid: 6088e1fa2b8ce534bb361f5f1dbd7a58, type: 2}
   - {fileID: 11400000, guid: 4a7631e88162c494e9259fc25f9ae818, type: 2}
