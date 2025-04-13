@@ -12,6 +12,8 @@ public class SensesController : MonoBehaviour, IHear
     [SerializeField]
     float playerHeight = 1.5f;
 
+    List<DisguiseScriptable> BurnedDisguises = new List<DisguiseScriptable>();
+    List<DisguiseScriptable> SoftBurnedDisguises = new List<DisguiseScriptable>();
     public bool softBurn = false;
     public bool hardBurn = false;
 
@@ -76,8 +78,9 @@ public class SensesController : MonoBehaviour, IHear
     {
         if (GameController.Instance.CurrentPlayer == null) return;
         if (target == null) target = GameController.Instance.CurrentPlayer.transform;
-        if (Awareness<=0)
-            softBurn = false;
+        if (Awareness <= 0)
+            SoftBurnedDisguises.Clear();
+            //softBurn = false;
         if (IsAlerted)
             viewDistance = viewDistanceBase * viewDistanceMultiplier;
         else
@@ -107,7 +110,8 @@ public class SensesController : MonoBehaviour, IHear
         if (_target == null) return;
         if (IsAlerted)
         {
-            hardBurn = true;
+            BurnedDisguises.Add(_target.GetComponent<OutwardController>().disguise);
+            //hardBurn = true;
             currentTargetTimer = 2;
         }
         else
@@ -122,7 +126,13 @@ public class SensesController : MonoBehaviour, IHear
     }
     public bool IsTargetBurned()
     {
-        return softBurn || hardBurn;
+        if (target != null)
+        {
+            if (BurnedDisguises.Contains(target.GetComponent<OutwardController>().disguise)) return true;
+            if (SoftBurnedDisguises.Contains(target.GetComponent<OutwardController>().disguise)) return true;
+        }
+            
+        return false;
     }
     public void AddAwarenessOnce(float awarenessValue, StatusController _target = null)
     {
@@ -277,7 +287,7 @@ public class SensesController : MonoBehaviour, IHear
                     awarenessValue *= illegality;
                     if (awarenessValue > 0 && illegality>1)
                     {
-                         softBurn = true; 
+                        SoftBurnedDisguises.Add(outwardController.disguise);
                     }
                 }
                 else

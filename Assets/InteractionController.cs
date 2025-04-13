@@ -5,7 +5,7 @@ using System.Linq;
 using UnityEngine.InputSystem;
 public class InteractionController : MonoBehaviour
 {
-    public List<Interactable> Interactables = new List<Interactable>();
+    public List<IInteractable> Interactables = new List<IInteractable>();
     public List<Pickable> Pickables = new List<Pickable>();
     StatusController statusController;
     PlayerInput playerInput;
@@ -25,12 +25,12 @@ public class InteractionController : MonoBehaviour
         // if (GetBestInteraction()!=null)
         //Debug.Log(GetBestInteraction().gameObject.name);
     }
-    public void AddToInteractions(Interactable interactable)
+    public void AddToInteractions(IInteractable interactable)
     {
         if (Interactables.Contains(interactable)) return;
         Interactables.Add(interactable);
     }
-    public void RemoveFromInteractions(Interactable interactable)
+    public void RemoveFromInteractions(IInteractable interactable)
     {
         if (Interactables.Contains(interactable))
             Interactables.Remove(interactable);
@@ -48,7 +48,7 @@ public class InteractionController : MonoBehaviour
     public void Use()
     {
         if (Interactables.Count <= 0) return;
-        GetBestInteraction().Interact();
+        GetBestInteraction().Interact(statusController);
     }
     public void Pick(Pickable pick)
     {
@@ -62,21 +62,33 @@ public class InteractionController : MonoBehaviour
         Pickable pick = GetBestPick();
         Pick(pick);
     }
-    public Interactable GetBestInteraction()
+    public IInteractable GetBestInteraction()
     {
         if (Interactables.Count <= 0) return null;
+        if (GetComponent<InputController>() == null || statusController.IsPlayer == false) return null;
         RemoveEmptyInteractables();
-        Interactables.Sort((a, b) => Vector3.Distance(a.transform.position, transform.position).CompareTo(Vector3.Distance(b.transform.position, transform.position)));
-        if (GetComponent<InputController>() != null && statusController.IsPlayer) GetComponent<InputController>().ShowBindingsText("Interaction", " to use " + Interactables[0].gameObject.name);
-        return Interactables[0];
+        Interactables.Sort((a, b) => Vector3.Distance(((MonoBehaviour)a).transform.position, transform.position).CompareTo(Vector3.Distance(((MonoBehaviour)b).transform.position, transform.position)));
+        IInteractable chosenInteractable = null;
+        foreach (IInteractable _interactable in Interactables)
+        {
+            if (_interactable.CanBeInteracted())
+            {
+                chosenInteractable = _interactable;
+                Debug.Log("Found interaction! "+ ((MonoBehaviour)chosenInteractable).gameObject.name);
+                break;
+            }
+        }
+        if (chosenInteractable == null) return null;
+        GetComponent<InputController>().ShowBindingsText("Interaction", " to use " + ((MonoBehaviour)chosenInteractable).gameObject.name);
+        return chosenInteractable;
     }
     public Pickable GetBestPick()
     {
+        if (GetComponent<InputController>() == null || statusController.IsPlayer==false) return null;
         if (Pickables.Count <= 0) return null;
         RemoveEmptyPickables();
         Pickables.Sort((a, b) => Vector3.Distance(a.transform.position, transform.position).CompareTo(Vector3.Distance(b.transform.position, transform.position)));
-        if (GetComponent<InputController>() != null && statusController.IsPlayer) 
-            GetComponent<InputController>().ShowBindingsText("Pick", " to pick " + Pickables[0].gameObject.name);
+        GetComponent<InputController>().ShowBindingsText("Pick", " to pick " + Pickables[0].gameObject.name);
         return Pickables[0];
     }
     private void RemoveEmptyInteractables()
@@ -88,5 +100,22 @@ public class InteractionController : MonoBehaviour
     {
         for (int i = 0; i < Pickables.Count; i++)
             if (Pickables[i] == null) Pickables.RemoveAt(i);
+    }
+    protected void OnTriggerEnter(Collider other)
+    {
+        if (other.TryGetComponent<IInteractable>(out IInteractable interaction))
+        {
+          //  if (other.gameObject==gameObject)
+           // if (interaction.IsInteractable)
+                AddToInteractions(interaction);
+        }
+    }
+    protected void OnTriggerExit(Collider other)
+    {
+        if (other.TryGetComponent<IInteractable>(out IInteractable interaction))
+        {
+           // if (other.gameObject == gameObject)
+                RemoveFromInteractions(interaction);
+        }
     }
 }

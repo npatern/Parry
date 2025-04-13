@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.Events;
 
 [System.Serializable]
-public class Interactable : MonoBehaviour
+public class Interactable : MonoBehaviour, IInteractable
 {
     public bool IsInteractable = true;
     public UnityEvent InteractionEvent;
@@ -14,6 +14,7 @@ public class Interactable : MonoBehaviour
         if (InteractionEvent == null)
             InteractionEvent = new UnityEvent();
     }
+    /*
     protected void OnTriggerEnter(Collider other)
     {
         if (other.TryGetComponent<InteractionController>(out InteractionController interaction))
@@ -29,12 +30,22 @@ public class Interactable : MonoBehaviour
             interaction.RemoveFromInteractions(this);
         }
     }
+    */
     public virtual void Interact(StatusController _status = null)
     {
         InteractionEvent.Invoke();
+    }
+    public bool CanBeInteracted(StatusController _status = null)
+    {
+        return IsInteractable;
     }
     public void Kill()
     {
         IsInteractable = false;
     }
+}
+public interface IInteractable
+{
+    public void Interact(StatusController _status= null);
+    public bool CanBeInteracted(StatusController _status = null);
 }

@@ -14,6 +14,17 @@ public class DisguiseScriptable : ScriptableObject
 
     public bool OverrideRestrictions = false;
     public RestrictionType OverridenRestriction = RestrictionType.FREE;
+
+    public int GetLegality(ZoneScriptable _zone)
+    {
+        if (OverrideRestrictions)
+            return (int)OverridenRestriction;
+        if (_zone == null) return 0;
+        if (_zone.FREEDisguises.Contains(this)) return 0;
+        if (_zone.RESTRICTEDDisguises.Contains(this)) return 1;
+        if (_zone.HOSTILEDisguises.Contains(this)) return 2;
+        return (int)_zone.DefaultRestriction;
+    }
 }
 
 [System.Serializable]

@@ -17,6 +17,7 @@ MonoBehaviour:
   - {fileID: 5824723735499154838, guid: a08491f7e805acc4e8677daa8db81a04, type: 3}
   defaultHeadgear:
   - {fileID: 3504066850080604291, guid: 44b05f4e88ac1294a85aec5c5e3e3321, type: 3}
+  item: {fileID: 11400000, guid: a91c42f4b2c8052409f3bf2e3e92a4aa, type: 2}
   enforcesDisguises:
   - {fileID: 11400000, guid: 3d9f84c28ebb2164083bfa59056ab3c2, type: 2}
   OverrideRestrictions: 0

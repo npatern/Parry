@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 
-public class OutwardController : MonoBehaviour
+public class OutwardController : MonoBehaviour,IInteractable
 {
     public bool AffectedByLight = false;
     public bool AffectedByCrowd = false;
@@ -14,7 +14,7 @@ public class OutwardController : MonoBehaviour
     public bool IsHiddenInCrowd = false;
     public float CrowdRadius = 2.5f;
     public LineRenderer[] linerenderers = new LineRenderer[5];
-
+    public StatusController status;
     public LayerMask zoneMask;
     public List<Zone> Zones;
     public ZoneScriptable activeZone;
@@ -29,6 +29,8 @@ public class OutwardController : MonoBehaviour
         if (!AffectedByLight) LightValue = 1;
         if (AffectedByCrowd)
             SpawnLineRenderers();
+         status = GetComponent<StatusController>();
+        if (disguise != null) WearDisguise();
     }
     private void FixedUpdate()
     {
@@ -143,11 +145,9 @@ public class OutwardController : MonoBehaviour
     }
     public int HowMuchBeingIllegal()
     {
-        if (activeZone == null) return 0;
-        if (activeZone.DefaultRestriction == RestrictionType.FREE) return 0;
-        if (activeZone.DefaultRestriction == RestrictionType.RESTRICTED) return 1;
-        if (activeZone.DefaultRestriction == RestrictionType.HOSTILE) return 2;
-        return 0;
+        int illegality = 0;
+        if (disguise != null) illegality = disguise.GetLegality(activeZone);
+        return illegality;
     }
 
     public bool IsBeingIllegal()
@@ -163,14 +163,42 @@ public class OutwardController : MonoBehaviour
     {
         WearDisguise(disguise);
     }
+    public void Undress()
+    {
+        disguise = null;
+        if (torsoGear != null) Destroy(torsoGear);
+        if (headGear != null) Destroy(headGear);
+    }
     public void WearDisguise(DisguiseScriptable _disguise)
     {
+        
+        Undress();
         disguise = _disguise;
-        StatusController status = GetComponent<StatusController>();
-        if (torsoGear!= null) Destroy(torsoGear);
-        torsoGear = Instantiate(disguise.defaultClothes[0],transform);
-        if (headGear != null) Destroy(headGear);
-        headGear = Instantiate(disguise.defaultHeadgear[0],status.headTransform.position, status.headTransform.rotation,status.headTransform);
+        if (disguise == null) return;
+        if (disguise.defaultClothes.Count>0)
+            torsoGear = Instantiate(disguise.defaultClothes[0], status.bodyTransform.position, status.bodyTransform.rotation, status.bodyTransform);
+        if (disguise.defaultHeadgear.Count > 0)
+            headGear = Instantiate(disguise.defaultHeadgear[0], status.headTransform.position, status.headTransform.rotation,status.headTransform);
+    }
+    public void Interact(StatusController _status)
+    {
+        if (_status == null)
+        {
+            Debug.Log("Who steals clothes?!");
+        }
+        StealDisguise(_status);
+    }
+    public bool CanBeInteracted(StatusController _status)
+    {
+        if (status != null)
+            return status.IsKilled;
+        return false;
+    }
+    public void StealDisguise(StatusController _status)
+    {
+        if (disguise == null) return;
+        _status.GetComponent<OutwardController>().WearDisguise(disguise);
+        Undress();
     }
     private void OnTriggerEnter(Collider other)
     {
@@ -201,4 +229,5 @@ public class OutwardController : MonoBehaviour
             activeZone = Zones.OrderByDescending(z => z.zone.Depth).FirstOrDefault().zone;
         else activeZone = null;
     }
+    
 }

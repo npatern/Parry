@@ -20,21 +20,21 @@ public class UIzone : MonoBehaviour
         if (GameController.Instance.CurrentPlayer == null) return;
         if (GameController.Instance.CurrentPlayer.GetComponent<OutwardController>() == null) return;
         if (GameController.Instance.CurrentPlayer.GetComponent<OutwardController>().activeZone == null) return;
-
+        OutwardController outward = GameController.Instance.CurrentPlayer.GetComponent<OutwardController>();
         ZoneScriptable zone = GameController.Instance.CurrentPlayer.GetComponent<OutwardController>().activeZone;
         
         if (zone == null) return;
         zoneName.text = zone.name;
-
-        switch (zone.DefaultRestriction)
+        int suspicionLevel = outward.HowMuchBeingIllegal();
+        switch (suspicionLevel)
         {
-            case RestrictionType.FREE:
+            case 0:
                 color = Color.white;
                 break;
-            case RestrictionType.RESTRICTED:
+            case 1:
                 color = Color.yellow;
                 break;
-            case RestrictionType.HOSTILE:
+            case 2:
                 color = Color.red;
                 break;
 

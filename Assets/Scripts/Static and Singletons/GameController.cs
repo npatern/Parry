@@ -72,16 +72,15 @@ public class GameController : MonoBehaviour
     }
     public void SpawnNpcs()
     {
-        while (EntitiesInGame.Count < MaxEntitiesNr)
-            SpawnEntity();
-        return;
+        
         foreach (SpawnerNPC spawner in Spawners)
         {
             spawner.RunSpawner();
 
         }
         /*
-            
+            while (EntitiesInGame.Count < MaxEntitiesNr)
+            SpawnEntity();
         */
     }
     public void SpawnNpcsRuntime()

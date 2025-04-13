@@ -53,7 +53,5 @@ public class InteractableSwitch : Interactable, IPowerFlowController
         RefreshPowerNode?.Invoke();
         if (SignalState) SwitchOnEvent.Invoke();
         if (!SignalState) SwitchOffEvent.Invoke();
-
     }
-
 }

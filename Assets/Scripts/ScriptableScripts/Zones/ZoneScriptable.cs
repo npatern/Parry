@@ -14,7 +14,7 @@ public class ZoneScriptable : ScriptableObject
     public List<DisguiseScriptable> RESTRICTEDDisguises;
     public List<DisguiseScriptable> HOSTILEDisguises;
 }
-public enum RestrictionType { FREE, RESTRICTED, HOSTILE };
+public enum RestrictionType { FREE = 0, RESTRICTED = 1, HOSTILE = 2 };
 
 [System.Serializable]
 public class ZoneWrapper
