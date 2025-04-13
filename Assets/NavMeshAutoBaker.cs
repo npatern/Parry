@@ -1,9 +1,9 @@
+#if UNITY_EDITOR
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.AI;
 using Unity.AI.Navigation;
 using System.Linq;
-
 public class NavMeshAutoBaker
 {
     [MenuItem("Tools/NavMesh/Build All Surfaces %&n")] // Ctrl+Shift+B
@@ -26,3 +26,4 @@ public class NavMeshAutoBaker
         Debug.Log($"Baked {surfaces.Length} NavMeshSurface(s).");
     }
 }
+#endif
