@@ -13,8 +13,10 @@ MonoBehaviour:
   m_Name: Disguise Guard Captain
   m_EditorClassIdentifier: 
   LegalItems: 55
-  defaultClothes: []
-  defaultHeadgear: []
+  defaultClothes:
+  - {fileID: 5824723735499154838, guid: a08491f7e805acc4e8677daa8db81a04, type: 3}
+  defaultHeadgear:
+  - {fileID: 3504066850080604291, guid: 44b05f4e88ac1294a85aec5c5e3e3321, type: 3}
   enforcesDisguises:
   - {fileID: 11400000, guid: 3d9f84c28ebb2164083bfa59056ab3c2, type: 2}
   OverrideRestrictions: 0

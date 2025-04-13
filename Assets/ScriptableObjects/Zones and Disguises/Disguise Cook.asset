@@ -13,8 +13,10 @@ MonoBehaviour:
   m_Name: Disguise Cook
   m_EditorClassIdentifier: 
   LegalItems: 3
-  defaultClothes: []
-  defaultHeadgear: []
+  defaultClothes:
+  - {fileID: 2385302219124021046, guid: 27942dc989cb21542af569f6ad73d2f7, type: 3}
+  defaultHeadgear:
+  - {fileID: 1611454869774661869, guid: 8bf626cf0385e9f41b23a0871697b736, type: 3}
   enforcesDisguises: []
   OverrideRestrictions: 0
   OverridenRestriction: 0

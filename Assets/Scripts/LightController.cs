@@ -75,7 +75,7 @@ public class LightController : PowerReciver
     protected override void OnPowerChanged(bool powered)
     {
         base.OnPowerChanged(powered);
-        Debug.Log("Change Light " + gameObject.name + " stan switched " + IsSwitchedOn+ " stan swiecenia: "+ isOn);
+        //Debug.Log("Change Light " + gameObject.name + " stan switched " + IsSwitchedOn+ " stan swiecenia: "+ isOn);
         RefreshLight();
     }
     protected override void LateStart()
@@ -183,12 +183,10 @@ public class LightController : PowerReciver
     }
     public void KillLight()
     {
-        Debug.Log("KILL LIGHTS!!!!!!!!!!!!!!!!");
         SetLight(false);
         GetComponent<MeshRenderer>().enabled = false;
         if (textComponent!=null)
             textComponent.gameObject.SetActive(false);
-        
     }
 
 }

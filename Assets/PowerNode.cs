@@ -38,15 +38,13 @@ public class PowerNode : PowerReciver
     protected override void LateStart()
     {
         base.LateStart();
-        Debug.Log("Power Node Late Start " +name);
         RefreshState();
 
     }
     public void RefreshState()
     {
         bool _powerOutBefore = PowerComingOut;
-        PowerComingOut = IsPowerFlowing();
-        Debug.Log(name+" power is flowing in ");
+        PowerComingOut = IsPowerFlowing(); 
         //if (_powerOutBefore != PowerComingOut)
         PowerChangedEvent?.Invoke(PowerComingOut);
     }

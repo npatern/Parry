@@ -29,7 +29,8 @@ public class GameController : MonoBehaviour
         }
     }
     public EntityController CurrentEntity = null;
-    public GameObject[] Spawners;
+    public GameObject[] LegacySpawners;
+    public SpawnerNPC[] Spawners;
     public NeedScriptableObject[] Needs;
     public NeedScriptableObject ExitNeed;
     public NeedFulfiller[] NeedFulfillers;
@@ -51,52 +52,60 @@ public class GameController : MonoBehaviour
     {
         //Instance = this;
         DontDestroyOnLoad(gameObject);
-
         if (StopTimeOnStart) StopTime();
         CollectLevelElements();
         lightControllers = new List<LightController>();
         
-}
+    }
     private void Start()
     {
-        
+      //  if (spawnOnce)
+          //  SpawnNpcs();
     }
-    void Update()
+    void CollectLevelElements()
     {
-        if (spawnOnce)
+        LegacySpawners = GameObject.FindGameObjectsWithTag("Spawn");
+        Spawners = GameObject.FindObjectsOfType<SpawnerNPC>();
+        Debug.Log("Znaleziono spawnerów: " + Spawners.Length);
+        CollectNeedFulfillers();
+        //Level.GetComponentsInChildren(lightControllers);
+    }
+    public void SpawnNpcs()
+    {
+        while (EntitiesInGame.Count < MaxEntitiesNr)
+            SpawnEntity();
+        return;
+        foreach (SpawnerNPC spawner in Spawners)
         {
-            while (EntitiesInGame.Count < MaxEntitiesNr)
-                SpawnEntity();
-            return;
+            spawner.RunSpawner();
+
         }
+        /*
             
-         
+        */
+    }
+    public void SpawnNpcsRuntime()
+    {
         timer -= Time.deltaTime;
         if (timer < 0)
         {
-            if (EntitiesInGame.Count< MaxEntitiesNr)
+            if (EntitiesInGame.Count < MaxEntitiesNr)
                 SpawnEntity();
             timer = TimeBetweenSpawns;
         }
     }
     private void FixedUpdate()
     {
+        if (!spawnOnce)
+            SpawnNpcsRuntime();
         ApplySlowmoPostprocess();
         ApplyStunnedPostprocess();
     }
-    void CollectLevelElements()
-    {
-        Spawners = GameObject.FindGameObjectsWithTag("Spawn");
-        CollectNeedFulfillers();
-        //Level.GetComponentsInChildren(lightControllers);
-    }
+    
     void ApplyStunnedPostprocess()
     {
-        if (CurrentPlayer == null) return;
-       // if (!CurrentPlayer.IsStunned()) StunnedPostProcess.weight = 0;
-       // else StunnedPostProcess.weight = CurrentPlayer.stats.GetStat(Stat.Types.STUN).GetTimerValue();
+        if (CurrentPlayer == null) return; 
     }
-    
     public void SwitchNoctovision()
     {
         NoctovisionOn = !NoctovisionOn;
@@ -104,8 +113,6 @@ public class GameController : MonoBehaviour
             NoctovisionPostProcess.weight = 1;
         else
             NoctovisionPostProcess.weight = 0;
-
-        
     }
     void ApplySlowmoPostprocess()
     {
@@ -149,7 +156,6 @@ public class GameController : MonoBehaviour
         //foreach (EntityController entity in EntitiesInGame)
         foreach (StatusController entity in entities)
             Destroy(entity.gameObject);
-
     }
     public void RemoveFromListOfEntities(EntityController sentity)
     {
@@ -165,6 +171,7 @@ public class GameController : MonoBehaviour
         CurrentPlayer = Instantiate(PlayerEntity, Vector3.zero, Quaternion.identity, EntitiesParent).GetComponent<StatusController>() ;
         CurrentPlayer.GetComponent<ToolsController>().EquipWeapon(new ItemWeaponWrapper(ListOfAssets.GetRandomWeapon()));
         cameraController.ApplyTarget(CurrentPlayer.transform);
+        SpawnNpcs();
     }
     public void RestartGame()
     {
@@ -177,14 +184,25 @@ public class GameController : MonoBehaviour
     }
     void SpawnEntity()
     {
-        if (Spawners.Length == 0) return;
-        int spawnerNumber = Random.Range(0, Spawners.Length);
+        if (LegacySpawners.Length == 0) return;
+        int spawnerNumber = Random.Range(0, LegacySpawners.Length);
         if (ListOfAssets == null) return;
         if (ListOfAssets.enemies.Length == 0) return;
         int entityNumber = Random.Range(0, ListOfAssets.enemies.Length);
-        EntityController newEntity = Instantiate(ListOfAssets.enemies[entityNumber], Spawners[spawnerNumber].transform.position, Quaternion.identity, EntitiesParent).GetComponent<EntityController>();
+        GameObject _objToSpawn = ListOfAssets.enemies[entityNumber];
+        Vector3 _spawnPosition = LegacySpawners[spawnerNumber].transform.position;
+        EntityController newEntity = Instantiate(_objToSpawn, _spawnPosition, Quaternion.identity, EntitiesParent).GetComponent<EntityController>();
         newEntity.target = CurrentPlayer;
         EntitiesInGame.Add(newEntity);
+    }
+    public void SpawnEntity(Transform spawn,DisguiseScriptable disguise)
+    {
+        if (ListOfAssets == null) return;
+        if (ListOfAssets.enemies.Length == 0) return;
+        EntityController newEntity = Instantiate(ListOfAssets.enemies[0], transform.position, transform.rotation, GameController.Instance.EntitiesParent).GetComponent<EntityController>();
+        newEntity.target = CurrentPlayer;
+        //WearDisguise(DisguiseScriptable _disguise)
+        newEntity.GetComponent<ToolsController>().EquipWeapon(new ItemWeaponWrapper(disguise.item));
     }
     public void SelectEntity(EntityController entity)
     {

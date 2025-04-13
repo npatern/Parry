@@ -9,6 +9,7 @@ public class DisguiseScriptable : ScriptableObject
     public List<GameObject> defaultClothes;
     public List<GameObject> defaultHeadgear;
 
+    public ItemWeaponScriptableObject item = null;
     public List<DisguiseScriptable> enforcesDisguises;
 
     public bool OverrideRestrictions = false;
@@ -23,6 +24,7 @@ public class DisguiseWrapper
     public List<GameObject> defaultClothes;
     public List<GameObject> defaultHeadgear;
 
+    public ItemWeaponScriptableObject item = null;
     public List<DisguiseScriptable> enforcesDisguises;
 
     public bool OverrideRestrictions = false;
@@ -33,6 +35,7 @@ public class DisguiseWrapper
         LegalItems = _source.LegalItems;
         defaultClothes = new List<GameObject>(_source.defaultClothes);
         defaultHeadgear = new List<GameObject>(_source.defaultHeadgear);
+        item = _source.item;
         OverrideRestrictions = _source.OverrideRestrictions;
         OverridenRestriction = _source.OverridenRestriction;
         enforcesDisguises = new List<DisguiseScriptable>(_source.enforcesDisguises);

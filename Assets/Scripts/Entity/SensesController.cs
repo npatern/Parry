@@ -57,23 +57,25 @@ public class SensesController : MonoBehaviour, IHear
     public bool IsStunned = false;
     private void Awake()
     {
-        if (eyesSource == null) eyesSource = this.transform;
-        if (target == null) target = GameController.Instance.CurrentPlayer.transform;
+        
         layerMask = LayerMask.GetMask("Entity", "Blockout");
     }
     private void Start()
     {
+        if (eyesSource == null) eyesSource = this.transform;
+        //if (target == null) target = GameController.Instance.CurrentPlayer.transform;
         LoadStatsFromScriptable(GameController.Instance.ListOfAssets.DefaultEntityValues);
         if (UIController.Instance != null) UIarrow = UIController.Instance.SpawnAwarenessArrow(this);
     }
     private void Update()
     {
-        if (target == null) target = GameController.Instance.CurrentPlayer.transform;
-        if (drawRaycasts)
-            DrawRayToTarget(eyesSource, target);
+        
+        
     }
     private void FixedUpdate()
     {
+        if (GameController.Instance.CurrentPlayer == null) return;
+        if (target == null) target = GameController.Instance.CurrentPlayer.transform;
         if (Awareness<=0)
             softBurn = false;
         if (IsAlerted)
@@ -90,7 +92,9 @@ public class SensesController : MonoBehaviour, IHear
             if (target == null) return;
         if (!IsStunned)
             ApplyAwareness(GetAwarenessValueFromEyes(target), target.GetComponent<StatusController>());
-         
+
+        if (drawRaycasts)
+            DrawRayToTarget(eyesSource, target);
     }
     void ResetCurrentTarget()
     {
@@ -231,9 +235,10 @@ public class SensesController : MonoBehaviour, IHear
     bool IsTargetInYourFace()
     {
         LayerMask layerToCheck = LayerMask.GetMask("Entity");
-        Collider[] hits = Physics.OverlapSphere(eyesSource.position, .5f, layerToCheck);
-
-        foreach (Collider hit in hits)
+        //Collider[] hits = Physics.OverlapSphere(eyesSource.position, .5f, layerToCheck);
+        Ray ray = new Ray(eyesSource.position, eyesSource.forward);
+        RaycastHit[] hits = Physics.RaycastAll(ray, .5f, layerToCheck);
+        foreach (var hit in hits)
         {
             if (hit.transform == target)
             {

@@ -22,6 +22,7 @@ public class Bullet : MonoBehaviour
     public bool primed = false;
     public float primeTimer = 1;
     public LayerMask layerMask;
+    private float bounceTimer = 0;
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
@@ -40,6 +41,7 @@ public class Bullet : MonoBehaviour
             if (primeTimer <= 0)
                 DestroyBullet();
         }
+        if (bounceTimer > 0) bounceTimer -= Time.fixedDeltaTime;
         if (item == null || isDamaging==false) return;
          
         if (item.CastDamage(damage, multiplier))
@@ -58,6 +60,7 @@ public class Bullet : MonoBehaviour
     }
     void HandleBulletHit(Collider collision)
     {
+        
         bool bounced = false;
         if (collision.gameObject.GetComponent<StatusController>() != null)
         {
@@ -71,9 +74,11 @@ public class Bullet : MonoBehaviour
             Sound sound = new Sound(transform.position, SoundRange, soundType);
             Sounds.MakeSound(sound);
         }
-        if (bounced)
+        if (bounced && bounceTimer<=0)
         {
             rb.velocity *= -1;
+            rb.MovePosition(rb.position + rb.velocity.normalized * .5f) ;
+            bounceTimer = .5f;
             //transform.localScale *= 1.5f;
             multiplier *= 2;
         }

@@ -215,8 +215,6 @@ public class StatusController : MonoBehaviour, IHear, IPowerFlowController
     }
     public void StunnedStart()
     {
-        Debug.Log("STUNNED START");
-        //RefreshPowerFlow();
         if (IsPlayer)
         {
             movementSpeedMultiplierStun = .5f;

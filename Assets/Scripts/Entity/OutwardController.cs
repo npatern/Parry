@@ -6,6 +6,7 @@ using System.Linq;
 public class OutwardController : MonoBehaviour
 {
     public bool AffectedByLight = false;
+    public bool AffectedByCrowd = false;
     public float LightValue = 0;
     private GameController gameController;
     public float CrowdDetectionTickTime = .2f;
@@ -17,13 +18,17 @@ public class OutwardController : MonoBehaviour
     public LayerMask zoneMask;
     public List<Zone> Zones;
     public ZoneScriptable activeZone;
+    public DisguiseScriptable disguise;
+    public GameObject headGear;
+    public GameObject torsoGear;
     private bool IsPlayer;
     private void Awake()
     {
         zoneMask = LayerMask.GetMask("Zones");
         gameController = GameController.Instance;
         if (!AffectedByLight) LightValue = 1;
-        SpawnLineRenderers();
+        if (AffectedByCrowd)
+            SpawnLineRenderers();
     }
     private void FixedUpdate()
     {
@@ -31,11 +36,14 @@ public class OutwardController : MonoBehaviour
             LightValue = GetLightValue(transform);
         else
             LightValue = 1;
-        CrowdTick += Time.fixedDeltaTime;
-        if (CrowdTick >= CrowdDetectionTickTime)
+        if (AffectedByCrowd)
         {
-            IsHiddenInCrowd = CheckIfHiddenInCrowd();
-            CrowdTick = 0;
+            CrowdTick += Time.fixedDeltaTime;
+            if (CrowdTick >= CrowdDetectionTickTime)
+            {
+                IsHiddenInCrowd = CheckIfHiddenInCrowd();
+                CrowdTick = 0;
+            }
         }
     }
     private void OnDrawGizmos()
@@ -151,6 +159,19 @@ public class OutwardController : MonoBehaviour
     {
         return Mathf.Max(HowMuchBeingIllegal(), HowMuchActionIllegal());
     }
+    public void WearDisguise()
+    {
+        WearDisguise(disguise);
+    }
+    public void WearDisguise(DisguiseScriptable _disguise)
+    {
+        disguise = _disguise;
+        StatusController status = GetComponent<StatusController>();
+        if (torsoGear!= null) Destroy(torsoGear);
+        torsoGear = Instantiate(disguise.defaultClothes[0],transform);
+        if (headGear != null) Destroy(headGear);
+        headGear = Instantiate(disguise.defaultHeadgear[0],status.headTransform.position, status.headTransform.rotation,status.headTransform);
+    }
     private void OnTriggerEnter(Collider other)
     {
         if ((zoneMask.value & (1 << other.gameObject.layer)) != 0)
@@ -176,6 +197,8 @@ public class OutwardController : MonoBehaviour
     }
     public void RefreshZone()
     {
-        activeZone = Zones.OrderByDescending(z => z.zone.Depth).FirstOrDefault().zone;
+        if (Zones.Count > 0)
+            activeZone = Zones.OrderByDescending(z => z.zone.Depth).FirstOrDefault().zone;
+        else activeZone = null;
     }
 }

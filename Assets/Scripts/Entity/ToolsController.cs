@@ -319,8 +319,6 @@ public class ToolsController : MonoBehaviour
         bullet.destroyObject = bullet.damage.deathEffectObjectToSpawn;
         Rigidbody bulletRB = bullet.GetComponent<Rigidbody>();
         bulletRB.AddRelativeForce(Vector3.forward * 2000, ForceMode.Acceleration);
-        Debug.Log("bullet fired!");
-
     }   
     public void Throw()
     {
@@ -353,7 +351,7 @@ public class ToolsController : MonoBehaviour
         bullet.item = thrownWrapper;
         Vector3 throwDirection = new Vector3(thrownWrapper.CurrentWeaponObject.position.x - transform.position.x, 0, thrownWrapper.CurrentWeaponObject.position.z - transform.position.z);
         bullet.DestroyAfterDamage = false;
-        bulletRB.AddForce(throwDirection * 2000, ForceMode.Acceleration);
+        bulletRB.AddForce(throwDirection * 1200, ForceMode.Acceleration);
         BreakAttackCoroutines();
         //Debug.Log("weapon thrown");
     }

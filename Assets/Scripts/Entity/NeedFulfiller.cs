@@ -51,7 +51,12 @@ public class NeedFulfiller : MonoBehaviour
     }
     public bool CanStatusUseIt(StatusController status)
     {
-        return IsScaleOk(status.size);
+        return IsScaleOk(status.size) && IsZoneOk(status);
+    }
+    public bool IsZoneOk(StatusController status)
+    {
+        //checks if disguise of entity matches zone that object is in;
+        return true;
     }
     public bool IsScaleOk(Vector3 scale)
     {
@@ -79,5 +84,26 @@ public class NeedFulfiller : MonoBehaviour
             }
         }        
         User = null;
+    }
+    public ZoneScriptable GetZoneImIn()
+    {
+            Collider[] hits = Physics.OverlapSphere(transform.position, .1f);
+
+            ZoneScriptable bestZone = null;
+            int maxDepth = int.MinValue;
+
+            foreach (Collider col in hits)
+            {
+                Zone zone = col.GetComponent<Zone>();
+                if (zone != null && zone.zone != null)
+                {
+                    if (zone.zone.Depth > maxDepth)
+                    {
+                        bestZone = zone.zone;
+                        maxDepth = zone.zone.Depth;
+                    }
+                }
+            }
+            return bestZone;
     }
 }

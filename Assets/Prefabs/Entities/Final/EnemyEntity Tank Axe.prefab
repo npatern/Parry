@@ -7,30 +7,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 118772920, guid: b655d7d83c0abe148967a3c8fd0e18dc, type: 3}
-      propertyPath: Life
-      value: 300
-      objectReference: {fileID: 0}
-    - target: {fileID: 118772920, guid: b655d7d83c0abe148967a3c8fd0e18dc, type: 3}
-      propertyPath: Team
-      value: popo
-      objectReference: {fileID: 0}
-    - target: {fileID: 118772920, guid: b655d7d83c0abe148967a3c8fd0e18dc, type: 3}
-      propertyPath: size.x
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 118772920, guid: b655d7d83c0abe148967a3c8fd0e18dc, type: 3}
-      propertyPath: size.z
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 118772920, guid: b655d7d83c0abe148967a3c8fd0e18dc, type: 3}
-      propertyPath: MaxLife
-      value: 300
-      objectReference: {fileID: 0}
-    - target: {fileID: 118772920, guid: b655d7d83c0abe148967a3c8fd0e18dc, type: 3}
-      propertyPath: CriticalMultiplier
-      value: 2
-      objectReference: {fileID: 0}
     - target: {fileID: 1508925607, guid: b655d7d83c0abe148967a3c8fd0e18dc, type: 3}
       propertyPath: RandomNeeds
       value: 
