@@ -12,19 +12,29 @@ public class UIItem : MonoBehaviour
     TextMeshProUGUI ItemDesc;
     [SerializeField]
     TextMeshProUGUI ItemStack;
+    [SerializeField]
+    GameObject IllegalItem;
     public void Update()
     {
         RefreshImage();
     }
     public void RefreshImage()
     {
+        IllegalItem.SetActive(false);
         if (GameController.Instance.CurrentPlayer == null) return;
         if (GameController.Instance.CurrentPlayer.GetComponent<ToolsController>() == null) return;
-        if (GameController.Instance.CurrentPlayer.GetComponent<ToolsController>().CurrentWeaponWrapper == null) return;
-        if (GameController.Instance.CurrentPlayer.GetComponent<ToolsController>().CurrentWeaponWrapper.icon == null) return;
 
-        ItemWeaponWrapper wrapper = GameController.Instance.CurrentPlayer.GetComponent<ToolsController>().CurrentWeaponWrapper;
+        ToolsController tools = GameController.Instance.CurrentPlayer.GetComponent<ToolsController>();
+        if (tools.CurrentWeaponWrapper == null) return;
 
+        ItemWeaponWrapper wrapper = tools.CurrentWeaponWrapper;
+        if (wrapper.icon == null) return;
+
+        if (GameController.Instance.CurrentPlayer.TryGetComponent<OutwardController>(out OutwardController outward))
+        if (outward.HowMuchActionIllegal(tools) >0)
+        {
+                IllegalItem.SetActive(true);
+        }
         image.sprite = wrapper.icon;
         ItemName.text = wrapper.ItemName;
         ItemDesc.text = wrapper.Description;

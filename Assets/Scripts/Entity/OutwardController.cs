@@ -132,14 +132,19 @@ public class OutwardController : MonoBehaviour,IInteractable
         value = Mathf.Clamp01(value);
         return value;
     }
+
     public int HowMuchActionIllegal()
     {
-        int level = 0;
         if (TryGetComponent<ToolsController>(out ToolsController _toolsController))
-        {
+            return HowMuchActionIllegal(_toolsController);
+        return 0;
+    }
+    public int HowMuchActionIllegal(ToolsController _toolsController)
+    {
+        int level = 0;
             level = GetWeaponIllegality(_toolsController);
             if (_toolsController.IsIllegal) level = 2;
-        }
+        
         return level;
     }
     public int GetWeaponIllegality(ToolsController _toolsController)
@@ -159,7 +164,9 @@ public class OutwardController : MonoBehaviour,IInteractable
     }
     public bool IsActionIllegal()
     {
-        return HowMuchActionIllegal() > 0;
+        if (TryGetComponent<ToolsController>(out ToolsController _toolsController))
+            return HowMuchActionIllegal(_toolsController) > 0;
+        return false;
     }
     public int HowMuchBeingIllegal()
     {
@@ -173,6 +180,7 @@ public class OutwardController : MonoBehaviour,IInteractable
     }
     public int HowMuchIllegal()
     {
+        
         return Mathf.Max(HowMuchBeingIllegal(), HowMuchActionIllegal());
     }
     public void WearDisguise()
