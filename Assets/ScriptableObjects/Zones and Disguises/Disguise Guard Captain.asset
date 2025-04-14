@@ -22,3 +22,4 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 3d9f84c28ebb2164083bfa59056ab3c2, type: 2}
   OverrideRestrictions: 0
   OverridenRestriction: 0
+  randomNeeds: {fileID: 11400000, guid: 9ef28e321e6900349b9a745a5e40d61f, type: 2}

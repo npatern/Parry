@@ -63,8 +63,10 @@ public class OutwardController : MonoBehaviour,IInteractable
         DeactivateLineRenderers();
         foreach (Collider hit in hits)
         {
+            if (hit.isTrigger) continue;
             if (hit.TryGetComponent<SensesController>(out SensesController _senses))
             {
+                
                 if (_senses.Awareness <= 0)
                 {
                     //linerenderers[foundCrowd] = DrawLine(transform.position + transform.up, _senses.transform.position + transform.up, Color.white);
@@ -104,9 +106,10 @@ public class OutwardController : MonoBehaviour,IInteractable
         lr.positionCount = 2;
         lr.SetPosition(0, start);
         lr.SetPosition(1, end);
-        lr.startWidth = lr.endWidth = 0.03f;
+        lr.startWidth = lr.endWidth = 0.02f;
         lr.material = new Material(Shader.Find("Sprites/Default"));
-        lr.startColor = lr.endColor = new Color(0.5f, 0.5f, 0.5f, 0.5f); // szary z przezroczystoœci¹
+        lr.startColor = Color.grey/2;
+        lr.endColor = Color.black;
     }
     void MakeLinesWhite()
     {
@@ -164,12 +167,10 @@ public class OutwardController : MonoBehaviour,IInteractable
         if (disguise != null) illegality = disguise.GetLegality(activeZone);
         return illegality;
     }
-
     public bool IsBeingIllegal()
     {
         return HowMuchBeingIllegal() > 0;
     }
-    
     public int HowMuchIllegal()
     {
         return Mathf.Max(HowMuchBeingIllegal(), HowMuchActionIllegal());
@@ -190,6 +191,11 @@ public class OutwardController : MonoBehaviour,IInteractable
         Undress();
         disguise = _disguise;
         if (disguise == null) return;
+        if (TryGetComponent<EntityController>(out EntityController _entity))
+        {
+            if (disguise.randomNeeds!=null)
+            _entity.RandomNeeds = disguise.randomNeeds;
+        }
         if (TryGetComponent<SensesController>(out SensesController _senses))
         {
             foreach (DisguiseScriptable enforcedDisguise in disguise.enforcesDisguises)

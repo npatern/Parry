@@ -12,12 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2eed24c93aa89ab4dbdf2f035df4c3cf, type: 3}
   m_Name: Disguise Cook Captain
   m_EditorClassIdentifier: 
-  LegalItems: 3
+  LegalItems: 2
   defaultClothes:
   - {fileID: 2385302219124021046, guid: 27942dc989cb21542af569f6ad73d2f7, type: 3}
   defaultHeadgear:
   - {fileID: 9015572069021369510, guid: c06b68a7dcba79b4987aa57f59e7c1e8, type: 3}
+  item: {fileID: 11400000, guid: 3561990932bce6e4eae8e752c1a50af7, type: 2}
   enforcesDisguises:
   - {fileID: 11400000, guid: d6c88e4a71ecf38429366e89748b108c, type: 2}
   OverrideRestrictions: 0
   OverridenRestriction: 0
+  randomNeeds: {fileID: 11400000, guid: 653d5318c066fc943b2399c5cb9af884, type: 2}

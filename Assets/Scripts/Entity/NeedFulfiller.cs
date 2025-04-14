@@ -20,7 +20,7 @@ public class NeedFulfiller : MonoBehaviour
     {
         ChangeGraphics(false);
     }
-    private void OnDrawGizmosSelected()
+    private void OnDrawGizmos()
     {
         Gizmos.DrawWireSphere(transform.position, distanceToFulfill);
     }

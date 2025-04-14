@@ -10,7 +10,7 @@ public class EntityController : MonoBehaviour
     float fastSpeed = 8;
 
     [SerializeField]
-    ListOfNeedsScriptable RandomNeeds;
+    public ListOfNeedsScriptable RandomNeeds;
 
     public float Tick = .2f;
     private bool isLookingAtTarget = false;

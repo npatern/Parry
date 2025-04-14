@@ -12,11 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2eed24c93aa89ab4dbdf2f035df4c3cf, type: 3}
   m_Name: Disguise Cook
   m_EditorClassIdentifier: 
-  LegalItems: 3
+  LegalItems: 2
   defaultClothes:
   - {fileID: 2385302219124021046, guid: 27942dc989cb21542af569f6ad73d2f7, type: 3}
   defaultHeadgear:
   - {fileID: 1611454869774661869, guid: 8bf626cf0385e9f41b23a0871697b736, type: 3}
+  item: {fileID: 11400000, guid: 3561990932bce6e4eae8e752c1a50af7, type: 2}
   enforcesDisguises: []
   OverrideRestrictions: 0
   OverridenRestriction: 0
+  randomNeeds: {fileID: 11400000, guid: 653d5318c066fc943b2399c5cb9af884, type: 2}

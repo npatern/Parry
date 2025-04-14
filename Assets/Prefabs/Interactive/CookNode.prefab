@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 5617540003320169318}
   - component: {fileID: 5617540003320169317}
   m_Layer: 0
-  m_Name: PatrolNode
+  m_Name: CookNode
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -49,7 +49,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5617540003320169323}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -96,10 +96,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3e165afbb6b81ca4488d99a170e7e92b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  distanceToFulfill: 1
+  distanceToFulfill: 0.5
   Reserved: 1
   Unreservable: 0
-  NeedToFulfill: {fileID: 11400000, guid: e92bd0dc668ccd940a90753d04c55e39, type: 2}
+  NeedToFulfill: {fileID: 11400000, guid: 24b21f60f3bf33b45842042b03b7170c, type: 2}
   StepsToFulfill:
   - {fileID: 11400000, guid: 69164ca3b148a2b47aff5437a03c6a28, type: 2}
   User: {fileID: 0}

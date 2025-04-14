@@ -15,6 +15,8 @@ public class DisguiseScriptable : ScriptableObject
     public bool OverrideRestrictions = false;
     public RestrictionType OverridenRestriction = RestrictionType.FREE;
 
+    public ListOfNeedsScriptable randomNeeds;
+
     public int GetLegality(ZoneScriptable _zone)
     {
         if (OverrideRestrictions)
@@ -40,6 +42,8 @@ public class DisguiseWrapper
 
     public bool OverrideRestrictions = false;
     public RestrictionType OverridenRestriction = RestrictionType.FREE;
+
+    public ListOfNeedsScriptable randomNeeds;
     public DisguiseWrapper(DisguiseScriptable _source)
     {
         disguiseType = _source;
@@ -50,6 +54,7 @@ public class DisguiseWrapper
         OverrideRestrictions = _source.OverrideRestrictions;
         OverridenRestriction = _source.OverridenRestriction;
         enforcesDisguises = new List<DisguiseScriptable>(_source.enforcesDisguises);
+        randomNeeds = _source.randomNeeds;
     }
 }
 [System.Flags]

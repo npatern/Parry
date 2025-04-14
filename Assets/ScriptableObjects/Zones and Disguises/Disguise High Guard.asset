@@ -21,3 +21,4 @@ MonoBehaviour:
   enforcesDisguises: []
   OverrideRestrictions: 0
   OverridenRestriction: 0
+  randomNeeds: {fileID: 11400000, guid: 20822adcf616cde49938ced68bbb6cf1, type: 2}
