@@ -105,12 +105,16 @@ public class SensesController : MonoBehaviour, IHear
         //softBurn = false;
         currentTargetTimer = 0;
     }
+    public void AddBurnedDisguise(DisguiseScriptable _disguise)
+    {
+        BurnedDisguises.Add(_disguise);
+    }
     public void SetCurrentTarget(StatusController _target)
     {
         if (_target == null) return;
         if (IsAlerted)
         {
-            BurnedDisguises.Add(_target.GetComponent<OutwardController>().disguise);
+            AddBurnedDisguise(_target.GetComponent<OutwardController>().disguise);
             //hardBurn = true;
             currentTargetTimer = 2;
         }

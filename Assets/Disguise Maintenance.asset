@@ -10,11 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2eed24c93aa89ab4dbdf2f035df4c3cf, type: 3}
-  m_Name: Disguise Random Civilian
+  m_Name: Disguise Maintenance
   m_EditorClassIdentifier: 
-  LegalItems: 0
-  defaultClothes: []
-  defaultHeadgear: []
+  LegalItems: 1
+  defaultClothes:
+  - {fileID: 1422850011444181034, guid: 017140a0336d3924c9d22222875aa3db, type: 3}
+  defaultHeadgear:
+  - {fileID: 5186941651077393587, guid: 7507585ed2fa8aa4c8f2fa5855c2220e, type: 3}
   item: {fileID: 0}
   enforcesDisguises: []
   OverrideRestrictions: 0

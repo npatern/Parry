@@ -132,10 +132,25 @@ public class OutwardController : MonoBehaviour,IInteractable
     public int HowMuchActionIllegal()
     {
         int level = 0;
-        if (TryGetComponent<ToolsController>(out ToolsController toolsController))
+        if (TryGetComponent<ToolsController>(out ToolsController _toolsController))
         {
-            if (toolsController.CurrentWeaponWrapper != null && toolsController.CurrentWeaponWrapper.IsIllegal) level = 1;
-            if (toolsController.IsIllegal) level = 2;
+            level = GetWeaponIllegality(_toolsController);
+            if (_toolsController.IsIllegal) level = 2;
+        }
+        return level;
+    }
+    public int GetWeaponIllegality(ToolsController _toolsController)
+    {
+        int level = 0;
+        if (_toolsController.CurrentWeaponWrapper != null)
+        {
+            if (_toolsController.CurrentWeaponWrapper.IsIllegal)
+            level = 1;
+            if (disguise != null)
+            {
+                bool hasCommonFlags = (_toolsController.CurrentWeaponWrapper.tags & disguise.LegalItems) != ItemTypes.None;
+                if (hasCommonFlags) level = 0;
+            }
         }
         return level;
     }
@@ -175,6 +190,11 @@ public class OutwardController : MonoBehaviour,IInteractable
         Undress();
         disguise = _disguise;
         if (disguise == null) return;
+        if (TryGetComponent<SensesController>(out SensesController _senses))
+        {
+            foreach (DisguiseScriptable enforcedDisguise in disguise.enforcesDisguises)
+            _senses.AddBurnedDisguise(enforcedDisguise);
+        }
         if (disguise.defaultClothes.Count>0)
             torsoGear = Instantiate(disguise.defaultClothes[0], status.bodyTransform.position, status.bodyTransform.rotation, status.bodyTransform);
         if (disguise.defaultHeadgear.Count > 0)
@@ -226,7 +246,7 @@ public class OutwardController : MonoBehaviour,IInteractable
     public void RefreshZone()
     {
         if (Zones.Count > 0)
-            activeZone = Zones.OrderByDescending(z => z.zone.Depth).FirstOrDefault().zone;
+            activeZone = Zones.OrderByDescending(z => z.Depth).FirstOrDefault().zone;
         else activeZone = null;
     }
     

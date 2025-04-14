@@ -28,18 +28,19 @@ MonoBehaviour:
     effectList:
     - type: 2
       points: 60
-    deathEffect: {fileID: 0}
+    deathEffectObjectToSpawn: {fileID: 0}
   bulletEffects:
     Damage: 0
     caster: {fileID: 0}
     origin: {x: 0, y: 0, z: 0}
     effectList: []
-    deathEffect: {fileID: 0}
+    deathEffectObjectToSpawn: {fileID: 0}
   AttackDistance: 3
   isPrimeable: 0
   bullet: {fileID: 0}
   stack: 0
   IsIllegal: 1
+  tags: 16
   LightAttack: {fileID: 11400000, guid: eb12b72483cf9a14096667cb08e7d4a3, type: 2}
   HeavyAttack: {fileID: 11400000, guid: 0bbed5ff86454f9459e5b8c368317b6a, type: 2}
   Parry: {fileID: 11400000, guid: 5b2d68fd282092941ae729c5b1fd085a, type: 2}

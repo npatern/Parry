@@ -97,10 +97,10 @@ public class NeedFulfiller : MonoBehaviour
                 Zone zone = col.GetComponent<Zone>();
                 if (zone != null && zone.zone != null)
                 {
-                    if (zone.zone.Depth > maxDepth)
+                    if (zone.Depth > maxDepth)
                     {
                         bestZone = zone.zone;
-                        maxDepth = zone.zone.Depth;
+                        maxDepth = zone.Depth;
                     }
                 }
             }

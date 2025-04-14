@@ -22,6 +22,7 @@ public class ItemWeaponScriptableObject : ScriptableObject
     public Bullet bullet;
     public int stack;
     public bool IsIllegal = false;
+    public ItemTypes tags;
 
     public AttackScriptableObject LightAttack;
     public AttackScriptableObject HeavyAttack;
@@ -48,6 +49,7 @@ public class ItemWeaponWrapper
     public Transform CurrentWeaponObject = null;
     public Pickable pickable = null;
     public bool IsIllegal = false;
+    public ItemTypes tags;
     //weapon specific>>
     public DamageEffects Effects;
     public DamageEffects bulletEffects;
@@ -61,7 +63,7 @@ public class ItemWeaponWrapper
     {
         itemType = scriptableObject;
         
-        
+
         ItemName = scriptableObject.ItemName;
         Effects = scriptableObject.Effects;
         bulletEffects = scriptableObject.bulletEffects;
@@ -78,6 +80,7 @@ public class ItemWeaponWrapper
         Bullet = scriptableObject.bullet;
         emptyhanded = scriptableObject.emptyhanded;
         IsIllegal = scriptableObject.IsIllegal;
+        tags = scriptableObject.tags;
         RefreshIcon();
 
     }
@@ -101,6 +104,7 @@ public class ItemWeaponWrapper
         emptyhanded = copiedWrapper.emptyhanded;
         IsIllegal = copiedWrapper.IsIllegal;
         icon = copiedWrapper.icon;
+        tags = copiedWrapper.tags;
         //RefreshIcon();
 
     }
