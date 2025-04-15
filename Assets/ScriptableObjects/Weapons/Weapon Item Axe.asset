@@ -16,7 +16,7 @@ MonoBehaviour:
   ID: axe
   Description: You can hack'n slash with it.
   Stackable: 0
-  Big: 0
+  Big: 1
   weaponObject: {fileID: 1943478088437736670, guid: e37f64eb77221be4aa99f1cd0c3d3ff9, type: 3}
   icon: {fileID: 0}
   emptyhanded: 0

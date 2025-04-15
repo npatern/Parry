@@ -16,7 +16,7 @@ MonoBehaviour:
   ID: hammer
   Description: You can hack'n slash with it.
   Stackable: 0
-  Big: 0
+  Big: 1
   weaponObject: {fileID: 1943478088437736670, guid: 01f81d69e56f5854f858cf86a8fcca74, type: 3}
   icon: {fileID: 0}
   emptyhanded: 0

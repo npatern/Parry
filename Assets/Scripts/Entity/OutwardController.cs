@@ -142,25 +142,28 @@ public class OutwardController : MonoBehaviour,IInteractable
     public int HowMuchActionIllegal(ToolsController _toolsController)
     {
         int level = 0;
-            level = GetWeaponIllegality(_toolsController);
-            if (_toolsController.IsIllegal) level = 2;
-        
+        if 
+            (_toolsController.IsIllegal) level = 2;
+        else
+        level = Mathf.Max( GetWeaponIllegality(_toolsController, _toolsController.CurrentWeaponWrapper), GetWeaponIllegality(_toolsController, _toolsController.GetWeaponOnTheBack()));
+            
         return level;
     }
-    public int GetWeaponIllegality(ToolsController _toolsController)
+    public int GetWeaponIllegality(ToolsController _toolsController, ItemWeaponWrapper _item)
     {
         int level = 0;
-        if (_toolsController.CurrentWeaponWrapper != null)
+        if (_item != null)
         {
-            if (_toolsController.CurrentWeaponWrapper.IsIllegal)
-            level = 1;
+            if (_item.IsIllegal)
+                level = 1;
             if (disguise != null)
             {
-                bool hasCommonFlags = (_toolsController.CurrentWeaponWrapper.tags & disguise.LegalItems) != ItemTypes.None;
+                bool hasCommonFlags = (_item.tags & disguise.LegalItems) != ItemTypes.None;
                 if (hasCommonFlags) level = 0;
             }
         }
-        return level;
+        
+        return Mathf.Max(level);
     }
     public bool IsActionIllegal()
     {

@@ -215,9 +215,24 @@ public class InputController : MonoBehaviour
     }
     public void HideWeapon(InputAction.CallbackContext context)
     {
-
         if (context.performed)
-            GetComponent<ToolsController>().DequipWeaponFromHands();
+        {
+            if (GetComponent<InventoryController>() == null) return;
+            InventoryController inventoryController = GetComponent<InventoryController>();
+            if (toolsController.CurrentWeaponWrapper.emptyhanded)
+            {
+                if (inventoryController.allItems.Count == 0) return;
+                inventoryController.EquipFromInventory(inventoryController.allItems[inventoryController.currentSlot]);
+            }
+            else if (toolsController.CurrentWeaponWrapper.Big && inventoryController.GetWeaponOnTheBack()!=null)
+            {
+                inventoryController.EquipFromInventory(inventoryController.GetWeaponOnTheBack());
+            }
+            else
+            {
+                toolsController.DequipWeaponFromHands();
+            }
+        }     
     }
     public void DropWeapon(InputAction.CallbackContext context)
     {

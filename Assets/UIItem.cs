@@ -14,6 +14,10 @@ public class UIItem : MonoBehaviour
     TextMeshProUGUI ItemStack;
     [SerializeField]
     GameObject IllegalItem;
+
+    public Image imageBack;
+    [SerializeField]
+    GameObject IllegalItemBack;
     public void Update()
     {
         RefreshImage();
@@ -21,6 +25,7 @@ public class UIItem : MonoBehaviour
     public void RefreshImage()
     {
         IllegalItem.SetActive(false);
+        IllegalItemBack.SetActive(false);
         if (GameController.Instance.CurrentPlayer == null) return;
         if (GameController.Instance.CurrentPlayer.GetComponent<ToolsController>() == null) return;
 
@@ -31,10 +36,9 @@ public class UIItem : MonoBehaviour
         if (wrapper.icon == null) return;
 
         if (GameController.Instance.CurrentPlayer.TryGetComponent<OutwardController>(out OutwardController outward))
-        if (outward.HowMuchActionIllegal(tools) >0)
-        {
+        if (outward.GetWeaponIllegality(tools,wrapper) >0)
                 IllegalItem.SetActive(true);
-        }
+
         image.sprite = wrapper.icon;
         ItemName.text = wrapper.ItemName;
         ItemDesc.text = wrapper.Description;
@@ -42,5 +46,11 @@ public class UIItem : MonoBehaviour
             ItemStack.text = ""+wrapper.stack;
         else
             ItemStack.text = "";
+
+        //back weapon:
+        ItemWeaponWrapper wrapperBack = tools.GetWeaponOnTheBack();
+        imageBack.sprite = wrapperBack.icon;
+        if (outward.GetWeaponIllegality(tools, wrapperBack) > 0)
+            IllegalItemBack.SetActive(true);
     }
 }

@@ -23,13 +23,32 @@ public class InventoryController : MonoBehaviour
     {
         
     }
+    public bool ChangeLocation(ItemWeaponWrapper item, ItemLocation _location, bool priority = false)
+    {
+        if (_location == ItemLocation.Back)
+            if (item.Big && allItems.Count(i => i.Big && i.location == ItemLocation.Back) >= maxBigSlotsNr)
+            {
+                var bigItem = allItems.FirstOrDefault(z => z.Big && z.location == ItemLocation.Back);
+                if (priority)
+                {
+                    RemoveFromInventory(bigItem);
+                }
+                else
+                {
+                    RemoveFromInventory(item);
+                    return false;
+                }   
+            }
+
+        item.location = _location;
+        return true;
+    }
     public bool AddToInventory(ItemWeaponWrapper item)
     {
         if (item == null) return false;
         if (item.emptyhanded) return false;
         // Don't allow adding big item to inventory if limit is hit
-        if (item.Big && allItems.Count(i => i.Big && i.location == ItemLocation.Back) >= maxBigSlotsNr)
-            return false;
+        
 
         // Stack if possible
         var matching = allItems.FirstOrDefault(i => i.ID == item.ID && i.Stackable && i.location == ItemLocation.Inventory);
@@ -41,13 +60,18 @@ public class InventoryController : MonoBehaviour
         }
 
         // Otherwise, add normally
-        if (item.Big) 
-            item.location = ItemLocation.Inventory;
-        else
-            item.location = ItemLocation.Back;
+      //  if (item.Big) 
+     //       item.location = ItemLocation.Back;
+      //  else
+      //      item.location = ItemLocation.Inventory;
         allItems.Add(item);
-        item.DestroyPhysicalPresence();
+        currentSlot = allItems.Count - 1;
+       // item.DestroyPhysicalPresence();
         return true;
+    }
+    public ItemWeaponWrapper GetWeaponOnTheBack()
+    {
+        return allItems.FirstOrDefault(i => i.location == ItemLocation.Back);
     }
     public bool IsAlreadyInInventory(ItemWeaponWrapper item)
     {
@@ -60,9 +84,14 @@ public class InventoryController : MonoBehaviour
     {
         if (allItems.Count <= index) return null;
         ItemWeaponWrapper itemToReturn = allItems[index];
-        allItems.RemoveAt(index);
-        itemToReturn.MakePickable();
-        return itemToReturn;
+        RemoveFromInventory(itemToReturn);
+       return itemToReturn;
+    }
+    public ItemWeaponWrapper RemoveFromInventory(ItemWeaponWrapper _item)
+    {
+        allItems.Remove(_item);
+        _item.MakePickable();
+        return _item;
     }
     public List<ItemWeaponWrapper> GetProperList(ItemWeaponWrapper item)
     {

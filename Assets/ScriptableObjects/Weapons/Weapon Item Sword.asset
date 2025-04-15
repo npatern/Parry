@@ -16,7 +16,7 @@ MonoBehaviour:
   ID: sword
   Description: You can hack'n slash with it.
   Stackable: 0
-  Big: 0
+  Big: 1
   weaponObject: {fileID: 3823714102769063789, guid: 2ecd5cc5d5927a14e8211440773fd9e5, type: 3}
   icon: {fileID: 0}
   emptyhanded: 0

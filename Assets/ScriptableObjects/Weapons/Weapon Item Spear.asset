@@ -16,7 +16,7 @@ MonoBehaviour:
   ID: spear
   Description: You can pearce
   Stackable: 0
-  Big: 0
+  Big: 1
   weaponObject: {fileID: 1943478088437736670, guid: 0c61d4435720b4b4fb326f7b9c2dca7d, type: 3}
   icon: {fileID: 0}
   emptyhanded: 0

@@ -14,6 +14,8 @@ public class ToolsController : MonoBehaviour
     [SerializeReference]
     public ItemWeaponWrapper CurrentWeaponWrapper;
     [SerializeReference]
+    public ItemWeaponWrapper BackWeaponWrapper;
+    [SerializeReference]
     public ItemWeaponWrapper EmptyWeaponWrapper;
     public ItemWeaponScriptableObject TESTCurrentWeaponScriptable;
     public Transform DequippedWeapon;
@@ -76,7 +78,7 @@ public class ToolsController : MonoBehaviour
     public bool EquipItem(ItemWeaponWrapper weaponWrapper)
     {
         if (weaponWrapper == null) return false;
-        
+        weaponWrapper.location = ItemLocation.Hands;
         //deal with earlier wrapper
         if (CurrentWeaponWrapper != null)
         {
@@ -85,7 +87,6 @@ public class ToolsController : MonoBehaviour
             if (TryAddStackToObjectInHands(weaponWrapper)) return true;
             
             DequipOrReplaceWeaponInHands(weaponWrapper);
-
         }
         //if (CurrentWeaponWrapper.emptyhanded)
 
@@ -105,11 +106,11 @@ public class ToolsController : MonoBehaviour
                 }
 
                 Debug.Log("Item not found " + weaponWrapper.name);
-                inventoryController.allItems.Add(weaponWrapper);
+                inventoryController.AddToInventory(weaponWrapper);
             }
 
         //
-        weaponWrapper.location = ItemLocation.Hands;
+        
         CurrentWeaponWrapper = weaponWrapper;
         if (CurrentWeaponWrapper.CurrentWeaponObject == null)
             CurrentWeaponWrapper.CurrentWeaponObject = CurrentWeaponWrapper.SpawnWeaponObjectAsCurrentObject(transform);
@@ -150,11 +151,15 @@ public class ToolsController : MonoBehaviour
                 CurrentWeaponWrapper.MergeToMe(itemToReplaceWith);
                 return true;
             }
+          
             else
             {
-                CurrentWeaponWrapper.DestroyPhysicalPresence();
-                return true;
+                //something to add about picking up copy of the same gun, and taking only ammo
+
+               // itemToReplaceWith.DestroyPhysicalPresence();
+                //return true;
             }
+            
         }
         return false;
     }
@@ -180,8 +185,8 @@ public class ToolsController : MonoBehaviour
         }
         else
         {
-            pickableToReturn = CurrentWeaponWrapper.MakePickable();
-            CurrentWeaponWrapper = null;
+            pickableToReturn= DropWeaponFromHands();
+            
         }
         return pickableToReturn;
     }
@@ -190,22 +195,34 @@ public class ToolsController : MonoBehaviour
         if (CurrentWeaponWrapper == null) return null;
         if (CurrentWeaponWrapper.emptyhanded) return null;
         Pickable pickableToReturn;
-        pickableToReturn = CurrentWeaponWrapper.MakePickable();
+        pickableToReturn = inventoryController.RemoveFromInventory(CurrentWeaponWrapper).pickable;
         CurrentWeaponWrapper = null;
         return pickableToReturn;
     }
-    public bool TryHideItemFromHands()
+    public ItemWeaponWrapper GetWeaponOnTheBack()
+    {
+        return inventoryController.GetWeaponOnTheBack();
+    }
+    public bool TryHideItemFromHands(bool priority = false)
     {
         if (CurrentWeaponWrapper.emptyhanded) return false;
         if (inventoryController == null) return false;
         // bool isInInventory = inventoryController.AddToInventory(CurrentWeaponWrapper);
         // if (isInInventory)
-        CurrentWeaponWrapper.location = ItemLocation.Inventory;
+        if (CurrentWeaponWrapper.Big)
+        {
+            if (inventoryController.ChangeLocation(CurrentWeaponWrapper, ItemLocation.Back, priority))
+            {
+                CurrentWeaponWrapper.CurrentWeaponObject.localPosition = CurrentWeaponWrapper.attackPattern.Unequipped.localPosition;
+                CurrentWeaponWrapper.CurrentWeaponObject.localRotation = CurrentWeaponWrapper.attackPattern.Unequipped.localRotation;
+            }
+        }
+        else
+        {
+            CurrentWeaponWrapper.location = ItemLocation.Inventory;
             CurrentWeaponWrapper.DestroyPhysicalPresence();
+        }
             CurrentWeaponWrapper = null;
-
-            //  }
-            //return isInInventory;
             return true;
     }
     public bool CanPerform()

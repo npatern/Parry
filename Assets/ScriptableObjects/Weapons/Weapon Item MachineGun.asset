@@ -16,7 +16,7 @@ MonoBehaviour:
   ID: machinegun
   Description: Shoots.
   Stackable: 0
-  Big: 0
+  Big: 1
   weaponObject: {fileID: 3823714102769063789, guid: e716d27369abbc34da08a60adf47e6a5, type: 3}
   icon: {fileID: 0}
   emptyhanded: 0
