@@ -33,9 +33,20 @@ public class ItemWeaponScriptableObject : ScriptableObject
     public AttackScriptableObject Attacked;
     public AttackScriptableObject Throw;
 }
+public enum ItemLocation
+{
+    None,
+    Inventory,
+    Back,
+    Hands
+}
+
 [System.Serializable]
 public class ItemWeaponWrapper
 {
+    public ItemLocation location = ItemLocation.None;
+   
+    
     public string name;
     public Sprite icon;
     public ItemWeaponScriptableObject itemType;
@@ -61,8 +72,8 @@ public class ItemWeaponWrapper
     public bool emptyhanded = false;
     public ItemWeaponWrapper(ItemWeaponScriptableObject scriptableObject)
     {
+        location = ItemLocation.None;
         itemType = scriptableObject;
-        
 
         ItemName = scriptableObject.ItemName;
         Effects = scriptableObject.Effects;
@@ -86,7 +97,9 @@ public class ItemWeaponWrapper
     }
     public ItemWeaponWrapper(ItemWeaponWrapper copiedWrapper)
     {
+        location = ItemLocation.None;
         itemType = copiedWrapper.itemType;
+
         ItemName = copiedWrapper.ItemName;
         Effects = copiedWrapper.Effects;
         bulletEffects = copiedWrapper.bulletEffects;
@@ -106,8 +119,8 @@ public class ItemWeaponWrapper
         icon = copiedWrapper.icon;
         tags = copiedWrapper.tags;
         //RefreshIcon();
-
     }
+    
     public ItemWeaponWrapper TakeOneFromStack()
     {
         ItemWeaponWrapper _newWeaponWrapper = new ItemWeaponWrapper(this);
@@ -168,7 +181,7 @@ public class ItemWeaponWrapper
     {
         if (CurrentWeaponObject == null) SpawnWeaponObjectAsCurrentObject();
         if (CurrentWeaponObject.GetComponent<Pickable>() != null) return CurrentWeaponObject.GetComponent<Pickable>();
-
+        location = ItemLocation.None;
         CurrentWeaponObject.GetComponent<Collider>().enabled = true;
         CurrentWeaponObject.GetComponent<Collider>().isTrigger = false;
         pickable = CurrentWeaponObject.gameObject.AddComponent<Pickable>();

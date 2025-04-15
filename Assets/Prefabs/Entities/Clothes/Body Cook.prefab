@@ -45,7 +45,6 @@ GameObject:
   - component: {fileID: 2707732275505953861}
   - component: {fileID: 7061626101074525682}
   - component: {fileID: 1558240808817549492}
-  - component: {fileID: 1689343121842419643}
   m_Layer: 0
   m_Name: Apron
   m_TagString: Untagged
@@ -2104,18 +2103,4 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2817746546201837335}
-  m_Mesh: {fileID: 0}
---- !u!64 &1689343121842419643
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2817746546201837335}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 0
-  m_CookingOptions: 30
   m_Mesh: {fileID: 0}

@@ -168,7 +168,7 @@ public class GameController : MonoBehaviour
     {
         EntitiesInGame = new List<EntityController>();
         CurrentPlayer = Instantiate(PlayerEntity, Vector3.zero, Quaternion.identity, EntitiesParent).GetComponent<StatusController>() ;
-        CurrentPlayer.GetComponent<ToolsController>().EquipWeapon(new ItemWeaponWrapper(ListOfAssets.GetRandomWeapon()));
+        CurrentPlayer.GetComponent<ToolsController>().EquipItem(new ItemWeaponWrapper(ListOfAssets.GetRandomWeapon()));
         cameraController.ApplyTarget(CurrentPlayer.transform);
         SpawnNpcs();
     }
@@ -201,7 +201,7 @@ public class GameController : MonoBehaviour
         EntityController newEntity = Instantiate(ListOfAssets.enemies[0], transform.position, transform.rotation, GameController.Instance.EntitiesParent).GetComponent<EntityController>();
         newEntity.target = CurrentPlayer;
         //WearDisguise(DisguiseScriptable _disguise)
-        newEntity.GetComponent<ToolsController>().EquipWeapon(new ItemWeaponWrapper(disguise.item));
+        newEntity.GetComponent<ToolsController>().EquipItem(new ItemWeaponWrapper(disguise.item));
     }
     public void SelectEntity(EntityController entity)
     {

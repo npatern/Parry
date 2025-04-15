@@ -165,10 +165,11 @@ public class InputController : MonoBehaviour
         Vector2 weaponScroll = context.ReadValue<Vector2>();
 
         if (GetComponent<InventoryController>() == null) return;
+        
         InventoryController inventoryController = GetComponent<InventoryController>();
-       // if  (weaponScroll.y > 0) inventoryController.RemoveFromInventory();
-        if (weaponScroll.y < 0) inventoryController.EquipFromInventory(inventoryController.GetNextWeapon(), inventoryController.slots);
-        else if (weaponScroll.y > 0) inventoryController.EquipFromInventory(inventoryController.GetNextWeapon(), inventoryController.slots);
+        if (inventoryController.allItems.Count == 0) return;
+        if (weaponScroll.y < 0) inventoryController.EquipFromInventory(inventoryController.GetNextWeapon());
+        else if (weaponScroll.y > 0) inventoryController.EquipFromInventory(inventoryController.GetPreviousWeapon());
         switchWeapon = false;
     }
     public void Attack(InputAction.CallbackContext context)

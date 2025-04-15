@@ -500,7 +500,7 @@ public class StatusController : MonoBehaviour, IHear, IPowerFlowController
         if (toolsController != null)
             if (toolsController.CurrentWeaponWrapper != null)
             {
-                toolsController.DequipWeaponFromHands();
+                toolsController.DropWeaponFromHands();
                 toolsController.StopAllCoroutines();
                 if (toolsController.inputController != null) toolsController.inputController.enabled = false;
                 toolsController.enabled = false;

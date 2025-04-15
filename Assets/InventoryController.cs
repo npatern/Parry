@@ -10,11 +10,11 @@ public class InventoryController : MonoBehaviour
     [SerializeField]
     int maxBigSlotsNr = 1;
     [SerializeReference]
-    public List<ItemWeaponWrapper> slots = new List<ItemWeaponWrapper>();
+    public List<ItemWeaponWrapper> allItems = new List<ItemWeaponWrapper>();
     public List<ItemWeaponWrapper> bigSlots = new List<ItemWeaponWrapper>();
     public ToolsController toolsController;
 
-   
+    public int currentSlot = 0;
     private void Awake()
     {
         toolsController = GetComponent<ToolsController>();
@@ -23,102 +23,88 @@ public class InventoryController : MonoBehaviour
     {
         
     }
-    //public ItemWeaponWrapper handSlot;
     public bool AddToInventory(ItemWeaponWrapper item)
     {
-        
         if (item == null) return false;
-        List<ItemWeaponWrapper> list;
-        int maxNr = maxSlotsNr;
-        list = slots;
-        
-        if (item.Big)
+        if (item.emptyhanded) return false;
+        // Don't allow adding big item to inventory if limit is hit
+        if (item.Big && allItems.Count(i => i.Big && i.location == ItemLocation.Back) >= maxBigSlotsNr)
+            return false;
+
+        // Stack if possible
+        var matching = allItems.FirstOrDefault(i => i.ID == item.ID && i.Stackable && i.location == ItemLocation.Inventory);
+        if (matching != null)
         {
-            maxNr = maxBigSlotsNr;
-            list = bigSlots;
+            matching.stack += item.stack;
+            item.DestroyPhysicalPresence();
+            return true;
         }
+
+        // Otherwise, add normally
+        if (item.Big) 
+            item.location = ItemLocation.Inventory;
         else
-        {
-            list = slots;
-        }
-         
-        if (IsAlreadyInInventory(item,list))
-        {
-            if (item.Stackable)
-            {
-                int index = list.FindIndex(i => i.ID == item.ID);
-                list[index].stack += item.stack;
-                item.DestroyPhysicalPresence();
-                return true;
-            }
-            else
-            {
-                item.DestroyPhysicalPresence();
-                return true;
-            }       
-        }  
-       
-        if (list.Count >= maxSlotsNr) return false;
-      
-        list.Add(item);
+            item.location = ItemLocation.Back;
+        allItems.Add(item);
         item.DestroyPhysicalPresence();
         return true;
     }
     public bool IsAlreadyInInventory(ItemWeaponWrapper item)
     {
-        if (item.Big) return IsAlreadyInInventory(item, bigSlots);
-        else return IsAlreadyInInventory(item, slots);
-    }
-    public bool IsAlreadyInInventory(ItemWeaponWrapper item, List<ItemWeaponWrapper> list)
-    {
-        if (list.Any(n => n.ID == item.ID))
+        if (allItems.Any(n => n.ID == item.ID))
             return true;
-        else
-            return false;
+        
+        return false;
     }
     public ItemWeaponWrapper RemoveFromInventory(int index = 0)
     {
-        if (slots.Count <= index) return null;
-        ItemWeaponWrapper itemToReturn = slots[index];
-        slots.RemoveAt(index);
+        if (allItems.Count <= index) return null;
+        ItemWeaponWrapper itemToReturn = allItems[index];
+        allItems.RemoveAt(index);
         itemToReturn.MakePickable();
         return itemToReturn;
     }
     public List<ItemWeaponWrapper> GetProperList(ItemWeaponWrapper item)
     {
-        if (item.Big)
-            return bigSlots;
-        else
-            return slots;
+            return allItems;
     }
     public void EquipFromInventory(ItemWeaponWrapper item)
     {
-        EquipFromInventory(item, GetProperList(item));
-    }
-    public void EquipFromInventory(ItemWeaponWrapper item, List<ItemWeaponWrapper> list)
-    {
         if (item == null) return;
         if (toolsController == null) return;
-        if (slots.Contains(item)) slots.Remove(item);
-        if (bigSlots.Contains(item)) bigSlots.Remove(item);
-        toolsController.EquipWeapon(item);
+        if (allItems.Contains(item)) //allItems.Remove(item);
+
+        toolsController.EquipItem(item);
     }
-    void RemoveFromList(List<ItemWeaponWrapper> list, ItemWeaponWrapper item)
+    public void ChangeSlot(int slotIncrease)
     {
-        list.Remove(item);
+        if (currentSlot > allItems.Count) currentSlot = 0;
+        if (allItems.Count <= 0) return;
+        int _previousSlot = currentSlot;
+        currentSlot += slotIncrease;
+        while (currentSlot >= allItems.Count) currentSlot -= allItems.Count;
+        while (currentSlot < 0) currentSlot += allItems.Count;
+    }
+
+    public ItemWeaponWrapper GetItemWithMatchingTag(ItemWeaponWrapper item)
+    {
+        foreach (ItemWeaponWrapper _item in allItems)
+            if (_item.ID == item.ID) return _item;
+        return null;
     }
     public ItemWeaponWrapper GetNextWeapon()
     {
-        if (slots.Count <= 0) return null;
-        ItemWeaponWrapper itemToReturn = slots[0];
+        if (allItems.Count <= 0) return null;
+        ChangeSlot(1);
+        ItemWeaponWrapper itemToReturn = allItems[currentSlot];
         //Debug.Log("nextweapon: " + itemToReturn.name);
         return itemToReturn;
     }
     public ItemWeaponWrapper GetPreviousWeapon()
     {
-        if (slots.Count <= 0) return null;
-        int slotNr = slots.Count-1;
-        ItemWeaponWrapper itemToReturn = slots[slotNr];
+        if (allItems.Count <= 0) return null;
+        ChangeSlot(-1);
+        ItemWeaponWrapper itemToReturn = allItems[currentSlot];
         //Debug.Log("prev weapon: " + itemToReturn.name);
         return itemToReturn;
     }
@@ -126,7 +112,7 @@ public class InventoryController : MonoBehaviour
     {
         string currentInventory = "CURRENT INVENTORY: ";
         
-        foreach (var item in slots)
+        foreach (var item in allItems)
         {
             currentInventory+=item.name+", ";
         }

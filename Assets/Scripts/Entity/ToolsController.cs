@@ -30,9 +30,7 @@ public class ToolsController : MonoBehaviour
     public bool IsDisarming = false;
     public bool IsIllegal = false;
     public UnityEvent<bool> StopMovingEvent;
-    public float attackDistance = 3f;
-
-    
+    public float attackDistance = 3f; 
     public void Awake()
     {
         inputController = GetComponent<InputController>();
@@ -47,7 +45,6 @@ public class ToolsController : MonoBehaviour
         //if (DequippedWeaponWrapper == null) DequippedWeaponWrapper = new ItemWeaponWrapper(TESTDequippedWeaponScriptable);
         //if (DequippedWeapon == null) DequippedWeapon = Instantiate(DequippedWeaponWrapper.itemType.weaponObject, transform).transform;
     }
-
     private void Start()
     {
 
@@ -55,12 +52,12 @@ public class ToolsController : MonoBehaviour
         statusController.IsAttackedEvent.AddListener(PerformAttacked);
         //statusController.IsKilledEvent.AddListener(PerformAttacked);
         if (TESTCurrentWeaponScriptable == null) return;
-        EquipWeapon(new ItemWeaponWrapper(TESTCurrentWeaponScriptable));
-        if (CurrentWeaponWrapper == null) EquipWeapon(EmptyWeaponWrapper);
+        EquipItem(new ItemWeaponWrapper(TESTCurrentWeaponScriptable));
+        if (CurrentWeaponWrapper == null) EquipItem(EmptyWeaponWrapper);
     }
     private void FixedUpdate()
     {
-        if (CurrentWeaponWrapper == null) EquipWeapon(EmptyWeaponWrapper);
+        if (CurrentWeaponWrapper == null) EquipItem(EmptyWeaponWrapper);
     }
     public float GetCombatSpeedMultiplier()
     {
@@ -74,21 +71,45 @@ public class ToolsController : MonoBehaviour
     {
         ItemWeaponWrapper weaponWrapper = pickable.weaponWrapper;
         weaponWrapper.RemovePickable(transform, true);
-        EquipWeapon(weaponWrapper);
+        EquipItem(weaponWrapper);
     }
-    
-    public bool EquipWeapon(ItemWeaponWrapper weaponWrapper)
+    public bool EquipItem(ItemWeaponWrapper weaponWrapper)
     {
         if (weaponWrapper == null) return false;
-        //if (CurrentWeaponWrapper == weaponWrapper && CurrentWeaponWrapper.Stackable) 
-        //{
-        //    CurrentWeaponWrapper.stack += 1;
-         //   return true;
-        //}
-
+        
+        //deal with earlier wrapper
         if (CurrentWeaponWrapper != null)
+        {
+            if (CurrentWeaponWrapper == weaponWrapper) return true;
+
+            if (TryAddStackToObjectInHands(weaponWrapper)) return true;
+            
             DequipOrReplaceWeaponInHands(weaponWrapper);
 
+        }
+        //if (CurrentWeaponWrapper.emptyhanded)
+
+        //deal with existing inventory
+        if (!weaponWrapper.emptyhanded)
+            if (!inventoryController.allItems.Contains(weaponWrapper))
+            {
+                ItemWeaponWrapper matchingItem = inventoryController.GetItemWithMatchingTag(weaponWrapper);
+                if (matchingItem!=null)
+                {
+                    if (matchingItem.Stackable)
+                    {
+                        matchingItem.MergeToMe(weaponWrapper);
+                        EquipItem(matchingItem);
+                        return true;
+                    }
+                }
+
+                Debug.Log("Item not found " + weaponWrapper.name);
+                inventoryController.allItems.Add(weaponWrapper);
+            }
+
+        //
+        weaponWrapper.location = ItemLocation.Hands;
         CurrentWeaponWrapper = weaponWrapper;
         if (CurrentWeaponWrapper.CurrentWeaponObject == null)
             CurrentWeaponWrapper.CurrentWeaponObject = CurrentWeaponWrapper.SpawnWeaponObjectAsCurrentObject(transform);
@@ -108,24 +129,34 @@ public class ToolsController : MonoBehaviour
     }
     public void DequipOrReplaceWeaponInHands(ItemWeaponWrapper itemToReplaceWith)
     {
+        //jesli dlonie sa puste
         if (CurrentWeaponWrapper.emptyhanded)
         {
             CurrentWeaponWrapper.DestroyPhysicalPresence();
             CurrentWeaponWrapper = null;
             return;
         }
+        //jesli wkladamy do rak obiekt ktory juz tam jest
+        
+        //wyrzuc z rêki
+        DequipWeaponFromHands();
+    }
+    public bool TryAddStackToObjectInHands(ItemWeaponWrapper itemToReplaceWith)
+    {
         if (itemToReplaceWith.ID == CurrentWeaponWrapper.ID)
+        {
             if (CurrentWeaponWrapper.Stackable)
             {
-                itemToReplaceWith.MergeToMe(CurrentWeaponWrapper);
-                return;
+                CurrentWeaponWrapper.MergeToMe(itemToReplaceWith);
+                return true;
             }
             else
             {
                 CurrentWeaponWrapper.DestroyPhysicalPresence();
-                return;
+                return true;
             }
-        DequipWeaponFromHands();
+        }
+        return false;
     }
     public void DequipWeaponFromHands()
     {
@@ -167,9 +198,15 @@ public class ToolsController : MonoBehaviour
     {
         if (CurrentWeaponWrapper.emptyhanded) return false;
         if (inventoryController == null) return false;
-        bool isInInventory = inventoryController.AddToInventory(CurrentWeaponWrapper);
-        if (isInInventory) CurrentWeaponWrapper = null;
-        return isInInventory;
+        // bool isInInventory = inventoryController.AddToInventory(CurrentWeaponWrapper);
+        // if (isInInventory)
+        CurrentWeaponWrapper.location = ItemLocation.Inventory;
+            CurrentWeaponWrapper.DestroyPhysicalPresence();
+            CurrentWeaponWrapper = null;
+
+            //  }
+            //return isInInventory;
+            return true;
     }
     public bool CanPerform()
     {
@@ -201,8 +238,7 @@ public class ToolsController : MonoBehaviour
                 return CurrentWeaponWrapper.itemType.attackPattern.Throw;
         }
         return CurrentWeaponWrapper.CurrentWeaponObject;
-    }
-    
+    } 
     public void PerformAttack(InputAction.CallbackContext context = new InputAction.CallbackContext())
     {
         if (!CanPerform())
@@ -335,6 +371,7 @@ public class ToolsController : MonoBehaviour
         else
         {
             thrownWrapper = CurrentWeaponWrapper;
+            inventoryController.allItems.Remove(CurrentWeaponWrapper);
             CurrentWeaponWrapper = null;
         }
         thrownWrapper.MakePickable();
@@ -353,7 +390,8 @@ public class ToolsController : MonoBehaviour
         Vector3 throwDirection = new Vector3(thrownWrapper.CurrentWeaponObject.position.x - transform.position.x, 0, thrownWrapper.CurrentWeaponObject.position.z - transform.position.z);
         bullet.DestroyAfterDamage = false;
         bulletRB.AddForce(throwDirection * 1200, ForceMode.Acceleration);
-        BreakAttackCoroutines();
+        if (CurrentWeaponWrapper==null)
+            BreakAttackCoroutines();
         //Debug.Log("weapon thrown");
     }
 }

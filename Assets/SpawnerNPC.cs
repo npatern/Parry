@@ -15,7 +15,7 @@ public class SpawnerNPC : MonoBehaviour
             nakedGuy.WearDisguise(disguise);
             nakedGuy.GetComponent<EntityController>().target = GameController.Instance.CurrentPlayer;
             if (disguise.item != null)
-                nakedGuy.GetComponent<ToolsController>().EquipWeapon(new ItemWeaponWrapper(disguise.item));
+                nakedGuy.GetComponent<ToolsController>().EquipItem(new ItemWeaponWrapper(disguise.item));
         }
     }
 }
