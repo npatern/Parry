@@ -26,10 +26,11 @@ public class Pickable : MonoBehaviour
     {
         if (weaponWrapper == null) weaponWrapper = new ItemWeaponWrapper(scriptableObject);
         ApplyWeaponWrapper(weaponWrapper);
+        wrapperName = weaponWrapper.name;
     }
     private void Update()
     {
-        wrapperName = weaponWrapper.name;
+        
     }
     private void OnTriggerEnter(Collider other)
     {

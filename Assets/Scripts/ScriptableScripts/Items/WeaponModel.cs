@@ -15,6 +15,12 @@ public class WeaponModel : MonoBehaviour
         trails = GetComponentsInChildren<TrailRenderer>();
         particles = GetComponentsInChildren<ParticleSystem>();
     }
+    private void Start()
+    {
+        SetWeapon(false);
+
+
+    }
     public void SetWeapon(bool state)
     {
         SetTrail(state);

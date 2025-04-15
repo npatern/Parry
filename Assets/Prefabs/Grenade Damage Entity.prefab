@@ -4926,12 +4926,12 @@ MonoBehaviour:
     effectList:
     - type: 0
       points: 200
-    deathEffect: {fileID: 0}
+    deathEffectObjectToSpawn: {fileID: 0}
   TickTime: 0.5
   ApplyOnlyOnce: 1
   applyExplosionForce: 1
   rigidbodies: []
-  explosionForce: 1000
+  explosionForce: 500
 --- !u!114 &2637219054518160556
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4946,6 +4946,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   timer: 0
   whenToDetatchParticles: 0
+  spawnOnDestroy: {fileID: 0}
 --- !u!135 &2607693035184795152
 SphereCollider:
   m_ObjectHideFlags: 0

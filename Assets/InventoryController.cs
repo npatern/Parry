@@ -64,7 +64,12 @@ public class InventoryController : MonoBehaviour
         item.DestroyPhysicalPresence();
         return true;
     }
-    bool IsAlreadyInInventory(ItemWeaponWrapper item, List<ItemWeaponWrapper> list)
+    public bool IsAlreadyInInventory(ItemWeaponWrapper item)
+    {
+        if (item.Big) return IsAlreadyInInventory(item, bigSlots);
+        else return IsAlreadyInInventory(item, slots);
+    }
+    public bool IsAlreadyInInventory(ItemWeaponWrapper item, List<ItemWeaponWrapper> list)
     {
         if (list.Any(n => n.ID == item.ID))
             return true;
@@ -86,11 +91,16 @@ public class InventoryController : MonoBehaviour
         else
             return slots;
     }
+    public void EquipFromInventory(ItemWeaponWrapper item)
+    {
+        EquipFromInventory(item, GetProperList(item));
+    }
     public void EquipFromInventory(ItemWeaponWrapper item, List<ItemWeaponWrapper> list)
     {
         if (item == null) return;
         if (toolsController == null) return;
         if (slots.Contains(item)) slots.Remove(item);
+        if (bigSlots.Contains(item)) bigSlots.Remove(item);
         toolsController.EquipWeapon(item);
     }
     void RemoveFromList(List<ItemWeaponWrapper> list, ItemWeaponWrapper item)
