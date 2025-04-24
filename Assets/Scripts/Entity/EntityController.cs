@@ -111,7 +111,7 @@ public class EntityController : MonoBehaviour
     }
     public bool IsEnteringShock()
     {
-        ShockTimer = ShockTime;
+        ShockTimer = ShockTime*Random.Range(.9f,1.1f);
         UIController.Instance.SpawnTextBubble(Barks.GetBark(Barks.BarkTypes.inCombatNoticeDisbelief), transform);
         return true;
     }
@@ -329,10 +329,10 @@ public class EntityController : MonoBehaviour
     public void DisableNavmesh( bool isDisabled)
     {
         if (agent == null) return;
-        agent.isStopped = isDisabled;
-        if(isDisabled)
-        agent.SetDestination(transform.position);
-        //agent.enabled = !isDisabled;
+        agent.isStopped = isDisabled;   
+       // if(isDisabled)
+      // agent.SetDestination(transform.position);
+        agent.enabled = !isDisabled;
     }
     public void StopLookingAtTarget()
     {

@@ -49,8 +49,13 @@ public class UIItem : MonoBehaviour
 
         //back weapon:
         ItemWeaponWrapper wrapperBack = tools.GetWeaponOnTheBack();
-        imageBack.sprite = wrapperBack.icon;
-        if (outward.GetWeaponIllegality(tools, wrapperBack) > 0)
-            IllegalItemBack.SetActive(true);
+        imageBack.sprite = null;
+        if (wrapperBack!= null)
+        {
+            imageBack.sprite = wrapperBack.icon;
+            if (outward.GetWeaponIllegality(tools, wrapperBack) > 0)
+                IllegalItemBack.SetActive(true);
+        }
+        
     }
 }

@@ -10,8 +10,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b8315239b152ea0499842ff982084886, type: 3}
-  m_Name: ListOfNeeds Guard
+  m_Name: ListOfNeeds HighCivilian
   m_EditorClassIdentifier: 
   NeedProbabilities:
-  - need: {fileID: 11400000, guid: e92bd0dc668ccd940a90753d04c55e39, type: 2}
+  - need: {fileID: 11400000, guid: 7c34638b6fd2e6a46860a74ed4cc2dfb, type: 2}
     probability: 1

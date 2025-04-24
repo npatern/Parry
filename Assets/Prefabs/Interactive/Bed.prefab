@@ -300,6 +300,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3e165afbb6b81ca4488d99a170e7e92b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  distanceToFulfill: 0
   Reserved: 1
   Unreservable: 0
   NeedToFulfill: {fileID: 11400000, guid: a9af7afa7e19b5840b86feb889993526, type: 2}

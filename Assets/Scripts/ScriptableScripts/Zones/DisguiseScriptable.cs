@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections.Generic;
 using UnityEngine.UI;
-
+using Unity.AI.Navigation;
 [CreateAssetMenu(fileName = "Disguise ", menuName = "ScriptableObjects/Disguises/Disguise", order = 2)]
 public class DisguiseScriptable : ScriptableObject
 {

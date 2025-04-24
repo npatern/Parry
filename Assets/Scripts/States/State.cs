@@ -183,8 +183,10 @@ public class UseObject : State
     }
     public override void Enter()
     {
+        entity.StopLookingAtTarget();
         currentCoroutine = entity.StartCoroutine(fulfiller.ExecuteSteps(entity));
         entity.SetAgentSpeedWalk();
+        entity.DisableNavmesh(true);
         base.Enter();
     }
 
@@ -192,10 +194,11 @@ public class UseObject : State
     {
         base.Update();
         entity.SetAgentSpeedWalk();
-        if (fulfiller.UserSpot != null)
+        
+        if (fulfiller.UserSpot != null && fulfiller.distanceToFulfill == 0)
         {
-            //entity.transform.position = fulfiller.UserSpot.position;
-            //entity.transform.rotation = fulfiller.UserSpot.rotation;
+            entity.transform.position = fulfiller.UserSpot.position;
+            entity.transform.rotation = fulfiller.UserSpot.rotation;
         }
         
         if (entity.CurrentFulfiller == null)
@@ -206,9 +209,11 @@ public class UseObject : State
     }
     public override void Exit()
     {
-            entity.ResetFulfiller();
+        
+        entity.ResetFulfiller();
             entity.CurrentNeed = null;
-            //entity.transform.position = startPosition;
+            entity.transform.position = startPosition;
+        entity.DisableNavmesh(false);
         base.Exit();
     }
 }
@@ -405,7 +410,7 @@ public class Combat : State
         if (shocked)
         {
             entity.DisableNavmesh(false);
-            entity.StopLookingAtTarget();
+            //entity.StartLookingAtTarget(target);
             UIController.Instance.SpawnTextBubble(Barks.GetBark(Barks.BarkTypes.inCombatNotice), entity.transform);
             Sound sound = new Sound(statusController, screamDistance, Sound.TYPES.danger, combatTarget);
             Sounds.MakeSound(sound);

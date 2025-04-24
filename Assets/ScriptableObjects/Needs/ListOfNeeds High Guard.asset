@@ -16,4 +16,4 @@ MonoBehaviour:
   - need: {fileID: 11400000, guid: 342fb839bbe24ec41a8dd13f305de055, type: 2}
     probability: 1
   - need: {fileID: 11400000, guid: a9af7afa7e19b5840b86feb889993526, type: 2}
-    probability: 0.2
+    probability: 0.778
