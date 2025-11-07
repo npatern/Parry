@@ -1,0 +1,3 @@
+Just a sandbox where I test different mechanics for fun.
+Melee weapons and parry systems, range weapons, stealth, disguises and blending in crowds among others. 
+Needs some tidying up for a while now...
