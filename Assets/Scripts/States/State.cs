@@ -186,7 +186,7 @@ public class UseObject : State
         entity.StopLookingAtTarget();
         currentCoroutine = entity.StartCoroutine(fulfiller.ExecuteSteps(entity));
         entity.SetAgentSpeedWalk();
-        entity.DisableNavmesh(true);
+      //  entity.DisableNavmesh(true);
         base.Enter();
     }
 

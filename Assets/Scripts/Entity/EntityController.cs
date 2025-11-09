@@ -329,10 +329,10 @@ public class EntityController : MonoBehaviour
     public void DisableNavmesh( bool isDisabled)
     {
         if (agent == null) return;
-        agent.isStopped = isDisabled;   
-       // if(isDisabled)
-      // agent.SetDestination(transform.position);
-        agent.enabled = !isDisabled;
+        agent.isStopped = isDisabled;
+        if (isDisabled)
+            agent.SetDestination(transform.position);
+        //agent.enabled = !isDisabled;
     }
     public void StopLookingAtTarget()
     {
