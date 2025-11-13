@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Rendering.PostProcessing;
 using System.Linq;
-public class GameController : MonoBehaviour
+public class LevelController : MonoBehaviour
 {
     public bool spawnOnce = false;
     public Transform Level;
@@ -15,14 +15,14 @@ public class GameController : MonoBehaviour
     [SerializeField]
     float timer = 0;
     public Transform GarbageCollector;
-    public static GameController _instance;
-    public static GameController Instance
+    public static LevelController _instance;
+    public static LevelController Instance
     {
         get
         {
             if (_instance == null)
             {
-                _instance = GameObject.FindObjectOfType<GameController>();
+                _instance = GameObject.FindObjectOfType<LevelController>();
             }
 
             return _instance;
@@ -198,7 +198,7 @@ public class GameController : MonoBehaviour
     {
         if (ListOfAssets == null) return;
         if (ListOfAssets.enemies.Length == 0) return;
-        EntityController newEntity = Instantiate(ListOfAssets.enemies[0], transform.position, transform.rotation, GameController.Instance.EntitiesParent).GetComponent<EntityController>();
+        EntityController newEntity = Instantiate(ListOfAssets.enemies[0], transform.position, transform.rotation, LevelController.Instance.EntitiesParent).GetComponent<EntityController>();
         newEntity.target = CurrentPlayer;
         //WearDisguise(DisguiseScriptable _disguise)
         newEntity.GetComponent<ToolsController>().EquipItem(new ItemWeaponWrapper(disguise.item));

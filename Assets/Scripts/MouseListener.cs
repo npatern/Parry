@@ -35,11 +35,11 @@ public class MouseListener : MonoBehaviour
         if (Input.GetMouseButtonDown(0))
         {
             if (HighlightedEntity != null)
-            GameController.Instance.SelectEntity(HighlightedEntity);
+            LevelController.Instance.SelectEntity(HighlightedEntity);
         }
         if (Input.GetMouseButtonDown(1))
         {
-            GameController.Instance.DeselectEntity();
+            LevelController.Instance.DeselectEntity();
         }
     }
 }

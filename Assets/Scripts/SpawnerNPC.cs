@@ -11,9 +11,9 @@ public class SpawnerNPC : MonoBehaviour
     {
         for (int i = 0; i < nrToSpawn; i++)
         {
-            OutwardController nakedGuy = Instantiate(npc, transform.position, transform.rotation, GameController.Instance.EntitiesParent).GetComponent<OutwardController>();
+            OutwardController nakedGuy = Instantiate(npc, transform.position, transform.rotation, LevelController.Instance.EntitiesParent).GetComponent<OutwardController>();
             nakedGuy.WearDisguise(disguise);
-            nakedGuy.GetComponent<EntityController>().target = GameController.Instance.CurrentPlayer;
+            nakedGuy.GetComponent<EntityController>().target = LevelController.Instance.CurrentPlayer;
             if (disguise.item != null)
                 nakedGuy.GetComponent<ToolsController>().EquipItem(new ItemWeaponWrapper(disguise.item));
         }

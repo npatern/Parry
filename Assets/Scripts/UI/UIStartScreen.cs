@@ -6,6 +6,6 @@ public class UIStartScreen : MonoBehaviour
 {
     public void NewGame()
     {
-        GameController.Instance.RestartGame();
+        LevelController.Instance.RestartGame();
     }
 }

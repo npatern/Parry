@@ -57,7 +57,7 @@ public class InputController : MonoBehaviour
         toolsController = GetComponent<ToolsController>();
         targetParent.parent = null;
         statusController = GetComponent<StatusController>();
-        GetStatsFromScriptable(GameController.Instance.ListOfAssets.DefaultEntityValues);
+        GetStatsFromScriptable(LevelController.Instance.ListOfAssets.DefaultEntityValues);
         playerInput = GetComponent<PlayerInput>();
         camera = Camera.main;
     }
@@ -196,7 +196,7 @@ public class InputController : MonoBehaviour
     public void Noctovision(InputAction.CallbackContext context)
     {
         if (context.started)
-            GameController.Instance.SwitchNoctovision();
+            LevelController.Instance.SwitchNoctovision();
     }
     public void Interaction(InputAction.CallbackContext context)
     {

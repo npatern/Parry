@@ -66,7 +66,7 @@ public class SensesController : MonoBehaviour, IHear
     {
         if (eyesSource == null) eyesSource = this.transform;
         //if (target == null) target = GameController.Instance.CurrentPlayer.transform;
-        LoadStatsFromScriptable(GameController.Instance.ListOfAssets.DefaultEntityValues);
+        LoadStatsFromScriptable(LevelController.Instance.ListOfAssets.DefaultEntityValues);
         if (UIController.Instance != null) UIarrow = UIController.Instance.SpawnAwarenessArrow(this);
     }
     private void Update()
@@ -76,8 +76,8 @@ public class SensesController : MonoBehaviour, IHear
     }
     private void FixedUpdate()
     {
-        if (GameController.Instance.CurrentPlayer == null) return;
-        if (target == null) target = GameController.Instance.CurrentPlayer.transform;
+        if (LevelController.Instance.CurrentPlayer == null) return;
+        if (target == null) target = LevelController.Instance.CurrentPlayer.transform;
         if (Awareness <= 0)
             SoftBurnedDisguises.Clear();
             //softBurn = false;

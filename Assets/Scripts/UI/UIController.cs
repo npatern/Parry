@@ -28,7 +28,7 @@ public class UIController : MonoBehaviour
     }
     public void Update()
     {
-        CharacterPanel.gameObject.SetActive(GameController.Instance.CurrentEntity != null);
+        CharacterPanel.gameObject.SetActive(LevelController.Instance.CurrentEntity != null);
 
         
     }

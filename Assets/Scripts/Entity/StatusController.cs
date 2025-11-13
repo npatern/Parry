@@ -93,9 +93,9 @@ public class StatusController : MonoBehaviour, IHear, IPowerFlowController
             sensesController = GetComponent<SensesController>();
         //
         if (statsArchetype == null)
-            stats = new Stats(GameController.Instance.ListOfAssets.DefaultEffectStats, this);
+            stats = new Stats(LevelController.Instance.ListOfAssets.DefaultEffectStats, this);
         else
-            stats = new Stats(GameController.Instance.ListOfAssets.DefaultEffectStats, statsArchetype, this);
+            stats = new Stats(LevelController.Instance.ListOfAssets.DefaultEffectStats, statsArchetype, this);
         //
         if (headTransform == null) headTransform = transform;
         if (bodyTransform == null) bodyTransform = transform;
@@ -115,7 +115,7 @@ public class StatusController : MonoBehaviour, IHear, IPowerFlowController
         IsAttackedEvent.AddListener(Attacked);
         StartFreezeEvent.AddListener(FrozenStart);
         EndFreezeEvent.AddListener(FrozenEnd);
-        LoadStatsFromScriptable(GameController.Instance.ListOfAssets.DefaultEntityValues);
+        LoadStatsFromScriptable(LevelController.Instance.ListOfAssets.DefaultEntityValues);
         TickTimer = TickTime;
         //onPowerStart();
     }
@@ -124,7 +124,7 @@ public class StatusController : MonoBehaviour, IHear, IPowerFlowController
     {
         stats.ApplyTick();
 
-        if (loadValuesInRealTime) LoadStatsFromScriptable(GameController.Instance.ListOfAssets.DefaultEntityValues);
+        if (loadValuesInRealTime) LoadStatsFromScriptable(LevelController.Instance.ListOfAssets.DefaultEntityValues);
 
         ApplyTick();
     }
@@ -305,7 +305,7 @@ public class StatusController : MonoBehaviour, IHear, IPowerFlowController
                 if (toEquip != null)
                 {
                     UIController.Instance.SpawnTextBubble(Barks.GetBark(Barks.BarkTypes.onParry), transform);
-                    if (IsPlayer) GameController.Instance.IncreaseSlowmoTimer();
+                    if (IsPlayer) LevelController.Instance.IncreaseSlowmoTimer();
                     toolsController.EquipWeaponFromPickable(toEquip);
                     //attacker.TakePosture(damage.Damage * CriticalMultiplier, attacker);
                     attacker.IsAttackedEvent.Invoke();
@@ -332,7 +332,7 @@ public class StatusController : MonoBehaviour, IHear, IPowerFlowController
             }
             UIController.Instance.SpawnTextBubble(Barks.GetBark(Barks.BarkTypes.onParry), transform);
 
-            if (IsPlayer) GameController.Instance.IncreaseSlowmoTimer();
+            if (IsPlayer) LevelController.Instance.IncreaseSlowmoTimer();
             return false;
         }
 
@@ -508,7 +508,7 @@ public class StatusController : MonoBehaviour, IHear, IPowerFlowController
 
         if (TryGetComponent<EntityController>(out EntityController entityController))
         {
-            GameController.Instance.RemoveFromListOfEntities(entityController);
+            LevelController.Instance.RemoveFromListOfEntities(entityController);
             entityController.ResetFulfiller();
             entityController.StopAllCoroutines();
             entityController.enabled = false;
@@ -531,7 +531,7 @@ public class StatusController : MonoBehaviour, IHear, IPowerFlowController
         }
 
 
-        if (IsPlayer) GameController.Instance.EndGame();
+        if (IsPlayer) LevelController.Instance.EndGame();
         OnKillEvent.Invoke();
         if (DestroyOnKill)
             Destroy(gameObject, .1f);

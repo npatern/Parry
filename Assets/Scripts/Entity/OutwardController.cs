@@ -8,7 +8,7 @@ public class OutwardController : MonoBehaviour,IInteractable
     public bool AffectedByLight = false;
     public bool AffectedByCrowd = false;
     public float LightValue = 0;
-    private GameController gameController;
+    private LevelController gameController;
     public float CrowdDetectionTickTime = .2f;
     float CrowdTick = 0;
     public bool IsHiddenInCrowd = false;
@@ -25,7 +25,7 @@ public class OutwardController : MonoBehaviour,IInteractable
     private void Awake()
     {
         zoneMask = LayerMask.GetMask("Zones");
-        gameController = GameController.Instance;
+        gameController = LevelController.Instance;
         if (!AffectedByLight) LightValue = 1;
         if (AffectedByCrowd)
             SpawnLineRenderers();

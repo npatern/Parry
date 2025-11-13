@@ -49,7 +49,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2157291579974494908, guid: 6a10380512d2f2448afc178fcb1eccf3, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -21.3
+      value: -34.6
       objectReference: {fileID: 0}
     - target: {fileID: 2157291579974494908, guid: 6a10380512d2f2448afc178fcb1eccf3, type: 3}
       propertyPath: m_LocalPosition.y
@@ -57,7 +57,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2157291579974494908, guid: 6a10380512d2f2448afc178fcb1eccf3, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -51.7
+      value: -40.7
       objectReference: {fileID: 0}
     - target: {fileID: 2157291579974494908, guid: 6a10380512d2f2448afc178fcb1eccf3, type: 3}
       propertyPath: m_LocalRotation.w
@@ -65,15 +65,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2157291579974494908, guid: 6a10380512d2f2448afc178fcb1eccf3, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 2157291579974494908, guid: 6a10380512d2f2448afc178fcb1eccf3, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 2157291579974494908, guid: 6a10380512d2f2448afc178fcb1eccf3, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 2157291579974494908, guid: 6a10380512d2f2448afc178fcb1eccf3, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -89,7 +89,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2157291579974494909, guid: 6a10380512d2f2448afc178fcb1eccf3, type: 3}
       propertyPath: m_Name
-      value: Smoke Poison Variant (1)
+      value: Smoke Poison Variant
       objectReference: {fileID: 0}
     - target: {fileID: 2157291579974494909, guid: 6a10380512d2f2448afc178fcb1eccf3, type: 3}
       propertyPath: m_Layer
@@ -116,7 +116,37 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   effects:
     Damage: 0
-    effects:
-    - type: 6
-      points: 36
+    caster: {fileID: 0}
+    origin: {x: 0, y: 0, z: 0}
+    effectList: []
+    deathEffectObjectToSpawn: {fileID: 0}
   TickTime: 0.5
+  ApplyOnlyOnce: 0
+  applyExplosionForce: 0
+  rigidbodies: []
+  explosionForce: 10
+--- !u!114 &1209459425
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8111133476417676972}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b4c43377766d4dc428a572f3796c3f76, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  effects:
+    Damage: 0
+    caster: {fileID: 0}
+    origin: {x: 0, y: 0, z: 0}
+    effectList:
+    - type: 6
+      points: 65
+    deathEffectObjectToSpawn: {fileID: 0}
+  TickTime: 0.5
+  ApplyOnlyOnce: 0
+  applyExplosionForce: 0
+  rigidbodies: []
+  explosionForce: 10
