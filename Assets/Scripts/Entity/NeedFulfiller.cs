@@ -37,7 +37,7 @@ public class NeedFulfiller : MonoBehaviour
             //Debug.Log("Fulfilled step " + i + "of fulfilling the need of " + NeedToFulfill.Name);
         }
         ChangeGraphics(false);
-        //Debug.Log("All steps done. Fulfilling the need");
+        Debug.Log("All steps done. Fulfilling the need");
         entity.NeedFulfilled(true);
         
         yield break;

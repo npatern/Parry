@@ -72,6 +72,10 @@ public class EntityController : MonoBehaviour
         currentState = new Idle(this);
 
     }
+    public void ClearNeeds()
+    {
+        ListOfNeeds.Clear();
+    }
     public void AddRandomNeeds()
     {
         if (GameplayController.Instance.Needs.Length > 0)
@@ -142,7 +146,6 @@ public class EntityController : MonoBehaviour
     void FixedUpdate()
     {
         //NavmeshVelocity();
-
 
         TickTimer += Time.fixedDeltaTime;
         currentState = currentState.Process(Tick);
@@ -332,7 +335,7 @@ public class EntityController : MonoBehaviour
         agent.isStopped = isDisabled;
         if (isDisabled)
             agent.SetDestination(transform.position);
-        //agent.enabled = !isDisabled;
+        agent.enabled = !isDisabled;
     }
     public void StopLookingAtTarget()
     {

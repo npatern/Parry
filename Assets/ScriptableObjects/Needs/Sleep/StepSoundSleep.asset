@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f1d0a50ea70255147aef23312b0c648e, type: 3}
-  m_Name: StepSound
+  m_Name: StepSoundSleep
   m_EditorClassIdentifier: 
-  WaitTime: 9
+  WaitTime: 30
   DestroyEntityAfter: 0
   Sound: {fileID: 8300000, guid: 2b8790e2fa7b34a4d8f9e5ab3ef2cf7b, type: 3}
   AudioSource: {fileID: 0}

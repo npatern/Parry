@@ -136,7 +136,6 @@ public class Idle : State
         {
             entity.FindNextNeed();
             return;
-            
         }
         if (entity.CurrentFulfiller == null)
         {
@@ -145,7 +144,6 @@ public class Idle : State
         }
         else
         {
-
             entity.SetAvoidancePriority((int)Vector3.Distance(entity.transform.position, entity.CurrentFulfiller.transform.position));
         }
         if (entity.IsTargetReached() && !entity.IsAtTarget)
@@ -174,19 +172,26 @@ public class UseObject : State
     NeedFulfiller fulfiller;
     Coroutine currentCoroutine;
     Vector3 startPosition;
-    
+    Quaternion startRotation;
     public UseObject(EntityController _entity, NeedFulfiller _fulfiller) : base(_entity)
     {
         name = STATE.USE;
         fulfiller = _fulfiller;
         startPosition = _entity.transform.position;
+        startRotation = _entity.transform.rotation;
     }
     public override void Enter()
     {
+        entity.DisableNavmesh(true);
         entity.StopLookingAtTarget();
         currentCoroutine = entity.StartCoroutine(fulfiller.ExecuteSteps(entity));
         entity.SetAgentSpeedWalk();
-      //  entity.DisableNavmesh(true);
+        entity.DisableNavmesh(true);
+        if (fulfiller.UserSpot != null && fulfiller.distanceToFulfill == 0)
+        {
+            entity.transform.position = fulfiller.UserSpot.position;
+            entity.transform.rotation = fulfiller.UserSpot.rotation;
+        }
         base.Enter();
     }
 
@@ -194,7 +199,8 @@ public class UseObject : State
     {
         base.Update();
         entity.SetAgentSpeedWalk();
-        
+        entity.StopLookingAtTarget();
+        entity.DisableNavmesh(true);
         if (fulfiller.UserSpot != null && fulfiller.distanceToFulfill == 0)
         {
             entity.transform.position = fulfiller.UserSpot.position;
@@ -203,6 +209,8 @@ public class UseObject : State
         
         if (entity.CurrentFulfiller == null)
         {
+            entity.transform.position = startPosition;
+            entity.transform.rotation = startRotation;
             nextState = new Idle(entity);
             stage = EVENT.EXIT;
         }
@@ -211,8 +219,9 @@ public class UseObject : State
     {
         
         entity.ResetFulfiller();
-            entity.CurrentNeed = null;
-            entity.transform.position = startPosition;
+        entity.CurrentNeed = null;
+        entity.transform.position = startPosition;
+        entity.transform.rotation = startRotation;
         entity.DisableNavmesh(false);
         base.Exit();
     }
@@ -445,22 +454,25 @@ public class Combat : State
 [System.Serializable]
 public class Flee : State
 {
-    Vector3 investigatedPosition;
+    NeedFulfiller foundFulfiller;
+    bool resetOnExit = true;
+    //Vector3 investigatedPosition;
     bool isAtTarget = false;
 
     bool shocked = false;
     public Flee(EntityController _entity) : base(_entity)
     {
-        investigatedPosition = _entity.HomePosition;
+        //investigatedPosition = _entity.HomePosition;
         name = STATE.FLEE;
     }
     public override void Enter()
     {
+
+        entity.ClearNeeds();
+        entity.IsAtTarget = false;
         shocked = entity.IsEnteringShock();
         entity.SetAgentSpeedChase();
         entity.SetAvoidancePriority(Random.Range(50, 60));
-        
-
 
         base.Enter();
     }
@@ -469,6 +481,7 @@ public class Flee : State
     {
         base.Update();
 
+        
         if (entity.IsProcessingShock()) return;
         if (shocked)
         {
@@ -477,7 +490,7 @@ public class Flee : State
             Sounds.MakeSound(sound);
             shocked = false;
         }
-
+         
         entity.SetAgentSpeedChase();
         statusController.MakeDeaf(1);
         /*
@@ -489,24 +502,122 @@ public class Flee : State
             ResetTimer();
         }
         */
-        entity.GoToTarget(investigatedPosition);
-
-        if (entity.IsTargetReached() && !isAtTarget)
-        {
-            //Vector3 randomPositionOffset = 2 * new Vector3(Random.Range(-1, 2), 0, Random.Range(-1, 2));
-            isAtTarget = true;
-            //investigatedPosition += randomPositionOffset;
-            //isAtTarget = false;
-        }
+        /*
         if (sensesController.Awareness <= 0)
         {
             UIController.Instance.SpawnTextBubble(Barks.GetBark(Barks.BarkTypes.onFleeEnded), entity.transform);
             nextState = new Idle(entity);
             stage = EVENT.EXIT;
         }
+        */
+        if (entity.CurrentNeed == null)
+        {
+            entity.FindNextNeed();
+            return;
+
+        }
+        if (entity.CurrentFulfiller == null)
+        {
+            entity.FindFulfiller();
+            entity.SetAgentSpeedChase();
+            return;
+        }
+        else
+        {
+
+            entity.SetAvoidancePriority((int)Vector3.Distance(entity.transform.position, entity.CurrentFulfiller.transform.position));
+        }
+        if (entity.IsTargetReached() && !entity.IsAtTarget)
+        {
+            entity.IsAtTarget = true;
+            entity.AddToLog("Arrived to " + entity.CurrentFulfiller.name + ". Starting fulfilling the need of " + entity.CurrentNeed.Name);
+            foundFulfiller = entity.CurrentFulfiller;
+            nextState = new UseObject(entity, foundFulfiller);
+            resetOnExit = false;
+            entity.StartCoroutine(foundFulfiller.ExecuteSteps(entity));
+            stage = EVENT.EXIT;
+        }
     }
     public override void Exit()
     {
+        if (resetOnExit)
+        {
+            entity.ResetFulfiller();
+            entity.CurrentNeed = null;
+        }
+        else
+        {
+           
+        }
+        
         base.Exit();
     }
 }
+
+    public class FleeBackup : State
+    {
+        Vector3 investigatedPosition;
+        bool isAtTarget = false;
+
+        bool shocked = false;
+        public FleeBackup(EntityController _entity) : base(_entity)
+        {
+            investigatedPosition = _entity.HomePosition;
+            name = STATE.FLEE;
+        }
+        public override void Enter()
+        {
+            shocked = entity.IsEnteringShock();
+            entity.SetAgentSpeedChase();
+            entity.SetAvoidancePriority(Random.Range(50, 60));
+
+
+
+            base.Enter();
+        }
+
+        public override void Update()
+        {
+            base.Update();
+
+            if (entity.IsProcessingShock()) return;
+            if (shocked)
+            {
+                UIController.Instance.SpawnTextBubble(Barks.GetBark(Barks.BarkTypes.inFleeEnterNotice), entity.transform);
+                Sound sound = new Sound(statusController, screamDistance, Sound.TYPES.danger);
+                Sounds.MakeSound(sound);
+                shocked = false;
+            }
+
+            entity.SetAgentSpeedChase();
+            statusController.MakeDeaf(1);
+            /*
+            if (timer > time)
+            {
+                UIController.Instance.SpawnTextBubble(Barks.GetBark(Barks.BarkTypes.inFleeEnterNotice), entity.transform);
+                Sound sound = new Sound(statusController, 10, Sound.TYPES.danger);
+                Sounds.MakeSound(sound);
+                ResetTimer();
+            }
+            */
+            entity.GoToTarget(investigatedPosition);
+
+            if (entity.IsTargetReached() && !isAtTarget)
+            {
+                //Vector3 randomPositionOffset = 2 * new Vector3(Random.Range(-1, 2), 0, Random.Range(-1, 2));
+                isAtTarget = true;
+                //investigatedPosition += randomPositionOffset;
+                //isAtTarget = false;
+            }
+            if (sensesController.Awareness <= 0)
+            {
+                UIController.Instance.SpawnTextBubble(Barks.GetBark(Barks.BarkTypes.onFleeEnded), entity.transform);
+                nextState = new Idle(entity);
+                stage = EVENT.EXIT;
+            }
+        }
+        public override void Exit()
+        {
+            base.Exit();
+        }
+    }
