@@ -36,7 +36,6 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 4b72f790b56247446b1ee66b07f2922a, type: 2}
   - {fileID: 11400000, guid: 9a1e12c216e21614491af7de6da103f3, type: 2}
   Disguises:
-  - {fileID: 11400000, guid: 61fc21d3b9fcef8439209d70842c1bb9, type: 2}
   - {fileID: 11400000, guid: 7e8a75735424fa44e94cd3b236d001e0, type: 2}
   - {fileID: 11400000, guid: d6c88e4a71ecf38429366e89748b108c, type: 2}
   - {fileID: 11400000, guid: 6e47e59d0cc79854dba4696f65727615, type: 2}
@@ -45,6 +44,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 6088e1fa2b8ce534bb361f5f1dbd7a58, type: 2}
   - {fileID: 11400000, guid: 4a7631e88162c494e9259fc25f9ae818, type: 2}
   - {fileID: 11400000, guid: c3f6e04ff65090b459063da0d5d056c1, type: 2}
+  - {fileID: 11400000, guid: 61fc21d3b9fcef8439209d70842c1bb9, type: 2}
   DefaultEntityValues: {fileID: 11400000, guid: 664b86df3a2e0d74b862701ca2fdce47, type: 2}
   DefaultEffectStats: {fileID: 11400000, guid: 16439299c17ce0540b8a6c59e2797a4e, type: 2}
   EffectVisuals:

@@ -173,22 +173,26 @@ public class UseObject : State
     Coroutine currentCoroutine;
     Vector3 startPosition;
     Quaternion startRotation;
+    bool overrideTransform;
     public UseObject(EntityController _entity, NeedFulfiller _fulfiller) : base(_entity)
     {
         name = STATE.USE;
         fulfiller = _fulfiller;
         startPosition = _entity.transform.position;
         startRotation = _entity.transform.rotation;
+        overrideTransform = false;
     }
     public override void Enter()
     {
-        entity.DisableNavmesh(true);
+        //entity.DisableNavmesh(true);
         entity.StopLookingAtTarget();
         currentCoroutine = entity.StartCoroutine(fulfiller.ExecuteSteps(entity));
         entity.SetAgentSpeedWalk();
-        entity.DisableNavmesh(true);
+        //entity.DisableNavmesh(true);
         if (fulfiller.UserSpot != null && fulfiller.distanceToFulfill == 0)
         {
+            overrideTransform = true;
+            entity.DisableNavmesh(true);
             entity.transform.position = fulfiller.UserSpot.position;
             entity.transform.rotation = fulfiller.UserSpot.rotation;
         }
@@ -200,9 +204,10 @@ public class UseObject : State
         base.Update();
         entity.SetAgentSpeedWalk();
         entity.StopLookingAtTarget();
-        entity.DisableNavmesh(true);
-        if (fulfiller.UserSpot != null && fulfiller.distanceToFulfill == 0)
+        //
+        if (overrideTransform)
         {
+            entity.DisableNavmesh(true);
             entity.transform.position = fulfiller.UserSpot.position;
             entity.transform.rotation = fulfiller.UserSpot.rotation;
         }
@@ -211,18 +216,22 @@ public class UseObject : State
         {
             entity.transform.position = startPosition;
             entity.transform.rotation = startRotation;
+            
             nextState = new Idle(entity);
             stage = EVENT.EXIT;
         }
     }
     public override void Exit()
     {
-        
-        entity.ResetFulfiller();
         entity.CurrentNeed = null;
-        entity.transform.position = startPosition;
-        entity.transform.rotation = startRotation;
-        entity.DisableNavmesh(false);
+        entity.ResetFulfiller();
+        if (overrideTransform)
+        {
+            entity.transform.position = startPosition;
+            entity.transform.rotation = startRotation;
+            entity.DisableNavmesh(false);
+        }   
+        
         base.Exit();
     }
 }

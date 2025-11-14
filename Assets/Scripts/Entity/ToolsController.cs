@@ -105,7 +105,7 @@ public class ToolsController : MonoBehaviour
                     }
                 }
 
-                Debug.Log("Item not found " + weaponWrapper.name);
+               // Debug.Log("Item not found " + weaponWrapper.name);
                 inventoryController.AddToInventory(weaponWrapper);
             }
 
