@@ -173,7 +173,7 @@ public class UseObject : State
     Coroutine currentCoroutine;
     Vector3 startPosition;
     Quaternion startRotation;
-    bool overrideTransform;
+    bool overrideTransform = false;
     public UseObject(EntityController _entity, NeedFulfiller _fulfiller) : base(_entity)
     {
         name = STATE.USE;
@@ -188,7 +188,6 @@ public class UseObject : State
         entity.StopLookingAtTarget();
         currentCoroutine = entity.StartCoroutine(fulfiller.ExecuteSteps(entity));
         entity.SetAgentSpeedWalk();
-        //entity.DisableNavmesh(true);
         if (fulfiller.UserSpot != null && fulfiller.distanceToFulfill == 0)
         {
             overrideTransform = true;
@@ -214,8 +213,8 @@ public class UseObject : State
         
         if (entity.CurrentFulfiller == null)
         {
-            entity.transform.position = startPosition;
-            entity.transform.rotation = startRotation;
+            //entity.transform.position = startPosition;
+            //entity.transform.rotation = startRotation;
             
             nextState = new Idle(entity);
             stage = EVENT.EXIT;
