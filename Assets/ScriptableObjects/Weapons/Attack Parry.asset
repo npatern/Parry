@@ -113,7 +113,7 @@ MonoBehaviour:
     OnlyIfGrounded: 0
     SkipIfCanceled: 0
     StayTillContextCanceled: 0
-    Interruptable: 1
+    Interruptable: 0
     IsParrying: 1
     IsProtected: 0
     IsDamaging: 0
@@ -201,7 +201,7 @@ MonoBehaviour:
     OnlyIfGrounded: 0
     SkipIfCanceled: 0
     StayTillContextCanceled: 0
-    Interruptable: 1
+    Interruptable: 0
     IsParrying: 0
     IsProtected: 0
     IsDamaging: 0

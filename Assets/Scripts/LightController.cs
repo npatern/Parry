@@ -61,14 +61,14 @@ public class LightController : PowerReciver
         base.Start();
         if (statusController!=null)
             statusController.OnKillEvent.AddListener(KillLight);
-        LevelController.Instance.lightControllers.Add(this);
+        GameplayController.Instance.lightControllers.Add(this);
         RefreshLight();
     }
     private void FixedUpdate()
     {
-        if (LevelController.Instance.CurrentPlayer !=null)
-        if(IsInLight(LevelController.Instance.CurrentPlayer.transform)&& textComponent!=null)
-            textComponent.SetText("" + GetLightValueOnObject(LevelController.Instance.CurrentPlayer.transform));
+        if (GameplayController.Instance.CurrentPlayer !=null)
+        if(IsInLight(GameplayController.Instance.CurrentPlayer.transform)&& textComponent!=null)
+            textComponent.SetText("" + GetLightValueOnObject(GameplayController.Instance.CurrentPlayer.transform));
 
         if (realtime) UpdateLight();
     }

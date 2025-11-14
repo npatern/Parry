@@ -24,7 +24,7 @@ public class UIAwarenessArrow : MonoBehaviour
     private bool wasAlerted = false;
     private void Awake()
     {
-        player = LevelController.Instance.CurrentPlayer;
+        player = GameplayController.Instance.CurrentPlayer;
         basicScale = bar.transform.localScale;
     }
     void Update()

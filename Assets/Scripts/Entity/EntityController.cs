@@ -67,17 +67,17 @@ public class EntityController : MonoBehaviour
     void Start()
     {
         AddRandomNeeds();
-        LoadStatsFromScriptable(LevelController.Instance.ListOfAssets.DefaultEntityValues);
+        LoadStatsFromScriptable(GameplayController.Instance.ListOfAssets.DefaultEntityValues);
         HomePosition = transform.position;
         currentState = new Idle(this);
 
     }
     public void AddRandomNeeds()
     {
-        if (LevelController.Instance.Needs.Length > 0)
+        if (GameplayController.Instance.Needs.Length > 0)
             while (ListOfNeeds.Count < 4)
                 if (RandomNeeds == null || RandomNeeds.NeedProbabilities.Length == 0)
-                    ListOfNeeds.Add(LevelController.Instance.Needs[Random.Range(0, LevelController.Instance.Needs.Length)]);
+                    ListOfNeeds.Add(GameplayController.Instance.Needs[Random.Range(0, GameplayController.Instance.Needs.Length)]);
                 else
                     ListOfNeeds.Add(RandomNeeds.GetNeed());
     }
@@ -295,7 +295,7 @@ public class EntityController : MonoBehaviour
     }
     public void FindFulfiller()
     {
-        List<NeedFulfiller> fulfillersList = new List<NeedFulfiller>(LevelController.Instance.NeedFulfillers);
+        List<NeedFulfiller> fulfillersList = new List<NeedFulfiller>(GameplayController.Instance.NeedFulfillers);
         fulfillersList = fulfillersList.OrderBy(x => Random.value).ToList();
         foreach (NeedFulfiller fulfiller in fulfillersList)
             if (fulfiller.NeedToFulfill == CurrentNeed && fulfiller.User == null && fulfiller.CanStatusUseIt(statusController))
@@ -373,7 +373,7 @@ public class EntityController : MonoBehaviour
         
         if (MarkedForDestruction)
         {
-            LevelController.Instance.RemoveFromListOfEntities(this);
+            GameplayController.Instance.RemoveFromListOfEntities(this);
             Destroy(gameObject);
             return;
         }
@@ -388,7 +388,7 @@ public class EntityController : MonoBehaviour
     }
     public void Select()
     {
-        if (selector == null) selector = Instantiate(LevelController.Instance.EntitySelector, transform);
+        if (selector == null) selector = Instantiate(GameplayController.Instance.EntitySelector, transform);
     }
     public void Deselect()
     {

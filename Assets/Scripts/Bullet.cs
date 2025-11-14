@@ -145,7 +145,7 @@ public class Bullet : MonoBehaviour
         RemoveParticles();
         if (ParticlesToSpawn != null)
         {
-            Instantiate(ParticlesToSpawn, transform.position, transform.rotation, LevelController.Instance.transform);
+            Instantiate(ParticlesToSpawn, transform.position, transform.rotation, GameplayController.Instance.transform);
         }
         if (GetComponent<StatusController>() != null) if (GetComponent<StatusController>().IsDeaf()) return;
 

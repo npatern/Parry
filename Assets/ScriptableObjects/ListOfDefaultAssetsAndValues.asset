@@ -17,18 +17,34 @@ MonoBehaviour:
   BulletThrowTemplate: {fileID: 7333040839881901861, guid: e73eefcbadd56d14a887363914feb1ac, type: 3}
   EmptyWeapon: {fileID: 11400000, guid: 0941283d942ba9048bd43b010b0ee0eb, type: 2}
   Weapons:
-  - {fileID: 11400000, guid: 9a1e12c216e21614491af7de6da103f3, type: 2}
   - {fileID: 11400000, guid: c0e191147ed6a0a458e627a6b2f9cfb3, type: 2}
-  - {fileID: 11400000, guid: a91c42f4b2c8052409f3bf2e3e92a4aa, type: 2}
+  - {fileID: 11400000, guid: 9193f5e477997154faa48a2c2c6726f0, type: 2}
+  - {fileID: 11400000, guid: 76aefadd4028c3f4eb1e52bf9b95d2f1, type: 2}
+  - {fileID: 11400000, guid: cffcf8f1262e3d04bb2190bb164f7f08, type: 2}
   - {fileID: 11400000, guid: 0c9792609d327fe48a15eb39b6aee771, type: 2}
+  - {fileID: 11400000, guid: 6b0e527bacc7507459797bfb3ea65155, type: 2}
+  - {fileID: 11400000, guid: 719e877f164f21749a9828b7f627c401, type: 2}
+  - {fileID: 11400000, guid: fb497c81018093e4280869807e1daf0d, type: 2}
+  - {fileID: 11400000, guid: 25c2569e3d4805d4c834210e3eec3986, type: 2}
   - {fileID: 11400000, guid: fd69bf0d8e8ff534d8879fe1060b7556, type: 2}
+  - {fileID: 11400000, guid: d302d7e6c4a12bb4381799b6e3fdc892, type: 2}
   - {fileID: 11400000, guid: 38b021a3c0d2d8b4a88e9cc76ec6e461, type: 2}
+  - {fileID: 11400000, guid: 0941283d942ba9048bd43b010b0ee0eb, type: 2}
+  - {fileID: 11400000, guid: 3561990932bce6e4eae8e752c1a50af7, type: 2}
+  - {fileID: 11400000, guid: 462f1803630496143926c7564fb6b502, type: 2}
+  - {fileID: 11400000, guid: a91c42f4b2c8052409f3bf2e3e92a4aa, type: 2}
   - {fileID: 11400000, guid: 4b72f790b56247446b1ee66b07f2922a, type: 2}
-  - {fileID: 11400000, guid: 4b72f790b56247446b1ee66b07f2922a, type: 2}
-  - {fileID: 11400000, guid: 25c2569e3d4805d4c834210e3eec3986, type: 2}
-  - {fileID: 11400000, guid: 25c2569e3d4805d4c834210e3eec3986, type: 2}
-  - {fileID: 11400000, guid: d302d7e6c4a12bb4381799b6e3fdc892, type: 2}
-  - {fileID: 11400000, guid: d302d7e6c4a12bb4381799b6e3fdc892, type: 2}
+  - {fileID: 11400000, guid: 9a1e12c216e21614491af7de6da103f3, type: 2}
+  Disguises:
+  - {fileID: 11400000, guid: 61fc21d3b9fcef8439209d70842c1bb9, type: 2}
+  - {fileID: 11400000, guid: 7e8a75735424fa44e94cd3b236d001e0, type: 2}
+  - {fileID: 11400000, guid: d6c88e4a71ecf38429366e89748b108c, type: 2}
+  - {fileID: 11400000, guid: 6e47e59d0cc79854dba4696f65727615, type: 2}
+  - {fileID: 11400000, guid: 3c2b2685651e47d42b9da33cc49c7c70, type: 2}
+  - {fileID: 11400000, guid: 3d9f84c28ebb2164083bfa59056ab3c2, type: 2}
+  - {fileID: 11400000, guid: 6088e1fa2b8ce534bb361f5f1dbd7a58, type: 2}
+  - {fileID: 11400000, guid: 4a7631e88162c494e9259fc25f9ae818, type: 2}
+  - {fileID: 11400000, guid: c3f6e04ff65090b459063da0d5d056c1, type: 2}
   DefaultEntityValues: {fileID: 11400000, guid: 664b86df3a2e0d74b862701ca2fdce47, type: 2}
   DefaultEffectStats: {fileID: 11400000, guid: 16439299c17ce0540b8a6c59e2797a4e, type: 2}
   EffectVisuals:

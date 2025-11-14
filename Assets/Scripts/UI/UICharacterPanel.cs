@@ -13,8 +13,8 @@ public class UICharacterPanel : MonoBehaviour
 
     private void Update()
     {
-        if (LevelController.Instance.CurrentEntity != null)
-            Entity = LevelController.Instance.CurrentEntity;
+        if (GameplayController.Instance.CurrentEntity != null)
+            Entity = GameplayController.Instance.CurrentEntity;
 
         Redraw();
     }

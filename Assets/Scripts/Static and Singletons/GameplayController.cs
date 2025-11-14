@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Rendering.PostProcessing;
 using System.Linq;
-public class LevelController : MonoBehaviour
+public class GameplayController : MonoBehaviour
 {
     public bool spawnOnce = false;
     public Transform Level;
@@ -15,14 +15,14 @@ public class LevelController : MonoBehaviour
     [SerializeField]
     float timer = 0;
     public Transform GarbageCollector;
-    public static LevelController _instance;
-    public static LevelController Instance
+    public static GameplayController _instance;
+    public static GameplayController Instance
     {
         get
         {
             if (_instance == null)
             {
-                _instance = GameObject.FindObjectOfType<LevelController>();
+                _instance = GameObject.FindObjectOfType<GameplayController>();
             }
 
             return _instance;
@@ -89,7 +89,7 @@ public class LevelController : MonoBehaviour
         if (timer < 0)
         {
             if (EntitiesInGame.Count < MaxEntitiesNr)
-                SpawnEntity();
+                SpawnEntityFromRandomSpawner();
             timer = TimeBetweenSpawns;
         }
     }
@@ -181,10 +181,29 @@ public class LevelController : MonoBehaviour
     {
         NeedFulfillers = FindObjectsOfType(typeof(NeedFulfiller)) as NeedFulfiller[];
     }
-    void SpawnEntity()
+    public void SpawnNPC(Transform spawnerTransform)
+    {
+        if (ListOfAssets == null) return;
+        DisguiseScriptable disguise = ListOfAssets.GetRandomDisguise();
+        SpawnNPC(spawnerTransform, disguise);
+    }
+    public void SpawnNPC(Transform spawnerTransform, DisguiseScriptable disguise)
+    {
+        GameObject npc = ListOfAssets.enemies[0];
+        OutwardController nakedGuy = Instantiate(npc, spawnerTransform.position, spawnerTransform.rotation, GameplayController.Instance.EntitiesParent).GetComponent<OutwardController>();
+        nakedGuy.WearDisguise(disguise);
+        EntityController newEntity = nakedGuy.GetComponent<EntityController>();
+        newEntity.target = GameplayController.Instance.CurrentPlayer;
+        if (disguise.item != null)
+            nakedGuy.GetComponent<ToolsController>().EquipItem(new ItemWeaponWrapper(disguise.item));
+        EntitiesInGame.Add(newEntity);
+    }
+    void SpawnEntityFromRandomSpawner()
     {
         if (LegacySpawners.Length == 0) return;
         int spawnerNumber = Random.Range(0, LegacySpawners.Length);
+        SpawnNPC(LegacySpawners[spawnerNumber].transform);
+        /*
         if (ListOfAssets == null) return;
         if (ListOfAssets.enemies.Length == 0) return;
         int entityNumber = Random.Range(0, ListOfAssets.enemies.Length);
@@ -193,16 +212,9 @@ public class LevelController : MonoBehaviour
         EntityController newEntity = Instantiate(_objToSpawn, _spawnPosition, Quaternion.identity, EntitiesParent).GetComponent<EntityController>();
         newEntity.target = CurrentPlayer;
         EntitiesInGame.Add(newEntity);
+        */
     }
-    public void SpawnEntity(Transform spawn,DisguiseScriptable disguise)
-    {
-        if (ListOfAssets == null) return;
-        if (ListOfAssets.enemies.Length == 0) return;
-        EntityController newEntity = Instantiate(ListOfAssets.enemies[0], transform.position, transform.rotation, LevelController.Instance.EntitiesParent).GetComponent<EntityController>();
-        newEntity.target = CurrentPlayer;
-        //WearDisguise(DisguiseScriptable _disguise)
-        newEntity.GetComponent<ToolsController>().EquipItem(new ItemWeaponWrapper(disguise.item));
-    }
+    
     public void SelectEntity(EntityController entity)
     {
         if (CurrentEntity != null && CurrentEntity != entity) DeselectEntity();
