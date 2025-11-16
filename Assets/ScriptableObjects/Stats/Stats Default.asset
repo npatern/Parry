@@ -35,7 +35,7 @@ MonoBehaviour:
     - typeThatIsActive: 4
       multiplier: 2
     - typeThatIsActive: 6
-      multiplier: 2
+      multiplier: 10
     status: {fileID: 0}
     visuals:
       name: 
@@ -63,7 +63,7 @@ MonoBehaviour:
     activeTime: 10
     waitTimer: 0
     waitTime: 5
-    contagousSpeed: 55
+    contagousSpeed: 10
     StartModifiers:
     - type: 3
       startEffectType: 1
@@ -161,6 +161,8 @@ MonoBehaviour:
     DamageModifiers:
     - typeThatIsActive: 3
       multiplier: 2
+    - typeThatIsActive: 6
+      multiplier: 10
     status: {fileID: 0}
     visuals:
       name: 
@@ -262,9 +264,7 @@ MonoBehaviour:
     StartModifiers: []
     DamageModifiers:
     - typeThatIsActive: 0
-      multiplier: 2
-    - typeThatIsActive: 4
-      multiplier: 2
+      multiplier: 10
     status: {fileID: 0}
     visuals:
       name: 

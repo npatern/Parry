@@ -184,7 +184,9 @@ public class LightController : PowerReciver
     public void KillLight()
     {
         SetLight(false);
-        GetComponent<MeshRenderer>().enabled = false;
+
+        if (meshRenderer!=null)
+            meshRenderer.enabled = false;
         if (textComponent!=null)
             textComponent.gameObject.SetActive(false);
     }

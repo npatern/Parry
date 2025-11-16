@@ -5,16 +5,47 @@ using UnityEngine.Rendering.PostProcessing;
 using System.Linq;
 public class GameplayController : MonoBehaviour
 {
-    public bool spawnOnce = false;
+    //References
     public Transform Level;
-    public int MaxEntitiesNr = 10;
     public ListOfAssetsAndValuesScriptableObject ListOfAssets;
     public FollowTarget cameraController;
+    public Transform GarbageCollector;
+    public EntityController CurrentEntity = null;
+    public GameObject[] LegacySpawners;
+    public SpawnerNPC[] Spawners;
+
+
+    //Settings
+    public bool spawnOnce = false;
+    public int MaxEntitiesNr = 10;
     public bool StopTimeOnStart = false;
     public float TimeBetweenSpawns = 5;
+    
+    //Others-visualisation and feedback, private stuff
     [SerializeField]
     float timer = 0;
-    public Transform GarbageCollector;
+    [SerializeField]
+    float slowmoTimer = 0;
+    bool slowmo = false;
+
+    
+    
+    public NeedScriptableObject[] Needs; //moved
+    public NeedScriptableObject ExitNeed; //moved
+    public NeedFulfiller[] NeedFulfillers;
+    public GameObject PostProcess;
+    public PostProcessVolume SlowmoPostProcess;
+    public PostProcessVolume StunnedPostProcess;
+    public PostProcessVolume NoctovisionPostProcess;
+    public bool NoctovisionOn = false;
+    public GameObject PlayerEntity;
+    public Transform EntitiesParent;
+    public GameObject EntitySelector;
+    public StatusController CurrentPlayer;
+    public List<EntityController> EntitiesInGame = new List<EntityController>();
+    public List<LightController> lightControllers = new List<LightController>();
+    
+
     public static GameplayController _instance;
     public static GameplayController Instance
     {
@@ -28,26 +59,6 @@ public class GameplayController : MonoBehaviour
             return _instance;
         }
     }
-    public EntityController CurrentEntity = null;
-    public GameObject[] LegacySpawners;
-    public SpawnerNPC[] Spawners;
-    public NeedScriptableObject[] Needs;
-    public NeedScriptableObject ExitNeed;
-    public NeedFulfiller[] NeedFulfillers;
-    public GameObject PostProcess;
-    public PostProcessVolume SlowmoPostProcess;
-    public PostProcessVolume StunnedPostProcess;
-    public PostProcessVolume NoctovisionPostProcess;
-    public bool NoctovisionOn = false;
-    public GameObject PlayerEntity;
-    public Transform EntitiesParent;
-    public GameObject EntitySelector;
-    public StatusController CurrentPlayer;
-    public List<EntityController> EntitiesInGame = new List<EntityController>();
-    public List<LightController> lightControllers = new List<LightController>();
-    [SerializeField]
-    float slowmoTimer = 0;
-    bool slowmo = false;
     private void Awake()
     {
         //Instance = this;

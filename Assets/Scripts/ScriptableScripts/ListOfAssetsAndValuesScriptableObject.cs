@@ -11,18 +11,20 @@ public class ListOfAssetsAndValuesScriptableObject : ScriptableObject
     public Bullet BulletThrowTemplate;
     public ItemWeaponScriptableObject EmptyWeapon;
     public ItemWeaponScriptableObject[] Weapons;
-
-
     public ItemWeaponScriptableObject GetRandomWeapon()
     {
         return Weapons[Random.Range(0,Weapons.Length)];
     }
+
     [Space(10), Header("Disguises")]
     public DisguiseScriptable[] Disguises;
     public DisguiseScriptable GetRandomDisguise()
     {
         return Disguises[Random.Range(0, Disguises.Length)];
     }
+    [Space(10), Header("Needs")]
+    public NeedScriptableObject[] Needs;
+    public NeedScriptableObject ExitNeed;
 
     [Space(10), Header("Entities")]
     public EntityValuesScriptableObject DefaultEntityValues;
@@ -43,7 +45,6 @@ public class ListOfAssetsAndValuesScriptableObject : ScriptableObject
     public Bark[] onSearchFail;
     public Bark[] inFleeEnterNotice;
     public Bark[] onFleeEnded;
-    
 }
 [System.Serializable]
 public class Bark

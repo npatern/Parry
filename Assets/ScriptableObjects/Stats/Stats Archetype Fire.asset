@@ -12,8 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b9ac36251447b234ba983205d9bdf4ff, type: 3}
   m_Name: Stats Archetype Fire
   m_EditorClassIdentifier: 
-  statsPermitted: 010000000700000003000000
-  statsMortalOnEmpty: 01000000
+  statsPermitted: 070000000300000001000000
+  statsMortalOnEmpty: 
   statsMortalOnFull: 0300000007000000
   statsAlwaysFull: 01000000
   makeCountagous: 
+  startFull: 

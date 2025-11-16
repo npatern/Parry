@@ -1,31 +1,32 @@
 using UnityEngine.SceneManagement;
 using UnityEngine;
+using System.Collections.Generic;
+using System.Linq;
 
 public class Bootstrapper : MonoBehaviour
 {
 
-    private static bool initialized = false;
+    private List<BaseManager> managers;
 
+    private static bool initialized = false;
     [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
     private static void OnBeforeSceneLoad()
     {
         if (!initialized)
         {
-            SceneManager.LoadScene("Bootstrap");
+            SceneManager.LoadScene("Bootstrapper");
             initialized = true;
         }
     }
-
     private void Awake()
     {
-        if (FindObjectOfType<GameManager>() == null)
-            new GameObject("GameManager").AddComponent<GameManager>();
-
-        if (FindObjectOfType<UIManager>() == null)
-            new GameObject("UIManager").AddComponent<UIManager>();
-
-        DontDestroyOnLoad(gameObject);
-
+        managers = FindObjectsOfType<BaseManager>().ToList();
+    }
+    private void Start()
+    {
+        foreach (var manager in managers)
+            manager.Initialize();
+        Debug.Log("All managers initialized.");
         SceneManager.LoadSceneAsync("MainMenu");
     }
 }

@@ -8,7 +8,7 @@ public class EntityController : MonoBehaviour
 {
     float slowSpeed = 5;
     float fastSpeed = 8;
-
+   
     [SerializeField]
     public ListOfNeedsScriptable RandomNeeds;
 
@@ -78,12 +78,11 @@ public class EntityController : MonoBehaviour
     }
     public void AddRandomNeeds()
     {
-        if (GameplayController.Instance.Needs.Length > 0)
-            while (ListOfNeeds.Count < 4)
-                if (RandomNeeds == null || RandomNeeds.NeedProbabilities.Length == 0)
-                    ListOfNeeds.Add(GameplayController.Instance.Needs[Random.Range(0, GameplayController.Instance.Needs.Length)]);
-                else
-                    ListOfNeeds.Add(RandomNeeds.GetNeed());
+        if (RandomNeeds == null || RandomNeeds.NeedProbabilities.Length == 0)
+            return;
+
+        while (ListOfNeeds.Count < 4)
+            ListOfNeeds.Add(RandomNeeds.GetNeed());
     }
     bool IsAwareOfPlayer()
     {
@@ -142,6 +141,10 @@ public class EntityController : MonoBehaviour
         if (AddedVelocity.magnitude < 0.1) AddedVelocity = Vector3.zero;
 
         //AddedVelocity = Vector3.zero;
+    }
+    private void Update()
+    {
+        UpdateRadius();
     }
     void FixedUpdate()
     {
@@ -211,6 +214,7 @@ public class EntityController : MonoBehaviour
     {
         agent.speed = slowSpeed* multiplySpeed();
     }
+    
     public void StateFulfillingNeeds()
     {
         
@@ -287,14 +291,29 @@ public class EntityController : MonoBehaviour
     {
         agent.avoidancePriority = priority;
     }
+    
+    public float radiusForAgent = 0.5f;
     public void SetAvoidanceRadius(float radius)
     {
-        return;
-        agent.radius = radius;
+       // return;
+        //agent.radius = radius;
+        radiusForAgent = radius;
         if (radius==0)
             agent.obstacleAvoidanceType = ObstacleAvoidanceType.NoObstacleAvoidance;
         else
             agent.obstacleAvoidanceType = ObstacleAvoidanceType.HighQualityObstacleAvoidance;
+    }
+    
+    void UpdateRadius()
+    {
+        //agent.radius = radiusForAgent;
+        //return;
+        float radiusSpeed = 1f;
+        if (agent.radius == radiusForAgent) return;
+        if (Mathf.Abs(agent.radius - radiusForAgent) < radiusSpeed * Time.deltaTime) agent.radius = radiusForAgent;
+        if (agent.radius < radiusForAgent) agent.radius += radiusSpeed * Time.deltaTime;
+        if (agent.radius > radiusForAgent) agent.radius -= radiusSpeed * Time.deltaTime;
+        
     }
     public void FindFulfiller()
     {
@@ -335,6 +354,11 @@ public class EntityController : MonoBehaviour
         agent.isStopped = isDisabled;
         if (isDisabled)
             agent.SetDestination(transform.position);
+        if (!isDisabled) agent.enabled = true;
+    }
+    public void DisableNavmeshHard(bool isDisabled)
+    {
+        DisableNavmesh(isDisabled);
         agent.enabled = !isDisabled;
     }
     public void StopLookingAtTarget()

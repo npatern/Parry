@@ -67,7 +67,7 @@ public class State
         Tick = _tick;
         timer += Time.fixedDeltaTime;
         
-        entity.SetAvoidanceRadius(0);
+        //entity.SetAvoidanceRadius(.5f);
         entity.ProcessShockMemory();
         //FLEE
         if (name != STATE.FLEE && sensesController.IsAlerted && sensesController.Awareness > 0 && !entity.IsCombatReady())
@@ -191,7 +191,7 @@ public class UseObject : State
         if (fulfiller.UserSpot != null && fulfiller.distanceToFulfill == 0)
         {
             overrideTransform = true;
-            entity.DisableNavmesh(true);
+            entity.DisableNavmeshHard(true);
             entity.transform.position = fulfiller.UserSpot.position;
             entity.transform.rotation = fulfiller.UserSpot.rotation;
         }
@@ -206,7 +206,7 @@ public class UseObject : State
         //
         if (overrideTransform)
         {
-            entity.DisableNavmesh(true);
+            entity.DisableNavmeshHard(true);
             entity.transform.position = fulfiller.UserSpot.position;
             entity.transform.rotation = fulfiller.UserSpot.rotation;
         }
@@ -228,7 +228,7 @@ public class UseObject : State
         {
             entity.transform.position = startPosition;
             entity.transform.rotation = startRotation;
-            entity.DisableNavmesh(false);
+            entity.DisableNavmeshHard(false);
         }   
         
         base.Exit();
@@ -405,7 +405,7 @@ public class Combat : State
     }
     public override void Enter()
     {
-        
+        entity.SetAvoidanceRadius(1.5f);
         entity.SetAgentSpeedChase();
         if (entity.CanBeShocked())
             shocked = entity.IsEnteringShock();
@@ -456,6 +456,7 @@ public class Combat : State
     }
     public override void Exit()
     {
+        entity.SetAvoidanceRadius(.5f);
         base.Exit();
     }
 }
@@ -481,7 +482,8 @@ public class Flee : State
         shocked = entity.IsEnteringShock();
         entity.SetAgentSpeedChase();
         entity.SetAvoidancePriority(Random.Range(50, 60));
-
+        entity.StopLookingAtTarget();
+        entity.DisableNavmesh(false);
         base.Enter();
     }
 
@@ -562,7 +564,7 @@ public class Flee : State
     }
 }
 
-    public class FleeBackup : State
+public class FleeBackup : State
     {
         Vector3 investigatedPosition;
         bool isAtTarget = false;

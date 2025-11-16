@@ -45,6 +45,19 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 4a7631e88162c494e9259fc25f9ae818, type: 2}
   - {fileID: 11400000, guid: c3f6e04ff65090b459063da0d5d056c1, type: 2}
   - {fileID: 11400000, guid: 61fc21d3b9fcef8439209d70842c1bb9, type: 2}
+  Needs:
+  - {fileID: 11400000, guid: d02289e47e1d1a6439f92f97a760d16a, type: 2}
+  - {fileID: 11400000, guid: 35d615155cf57b047a51af91a498f301, type: 2}
+  - {fileID: 11400000, guid: 76ac99bf47e5c4b42811814c409c6795, type: 2}
+  - {fileID: 11400000, guid: 7c34638b6fd2e6a46860a74ed4cc2dfb, type: 2}
+  - {fileID: 11400000, guid: 342fb839bbe24ec41a8dd13f305de055, type: 2}
+  - {fileID: 11400000, guid: 6225ed8d40bce2c45889755978fd7e68, type: 2}
+  - {fileID: 11400000, guid: 24b21f60f3bf33b45842042b03b7170c, type: 2}
+  - {fileID: 11400000, guid: 4b64b35938d71744f88500f3641dcfd1, type: 2}
+  - {fileID: 11400000, guid: e92bd0dc668ccd940a90753d04c55e39, type: 2}
+  - {fileID: 11400000, guid: a9af7afa7e19b5840b86feb889993526, type: 2}
+  - {fileID: 11400000, guid: 7b41432da7e1d7d4898e64cfec637929, type: 2}
+  ExitNeed: {fileID: 11400000, guid: 76ac99bf47e5c4b42811814c409c6795, type: 2}
   DefaultEntityValues: {fileID: 11400000, guid: 664b86df3a2e0d74b862701ca2fdce47, type: 2}
   DefaultEffectStats: {fileID: 11400000, guid: 16439299c17ce0540b8a6c59e2797a4e, type: 2}
   EffectVisuals:

@@ -99,6 +99,8 @@ MonoBehaviour:
   inventoryController: {fileID: 0}
   CurrentWeaponWrapper:
     rid: -2
+  BackWeaponWrapper:
+    rid: -2
   EmptyWeaponWrapper:
     rid: -2
   TESTCurrentWeaponScriptable: {fileID: 0}
@@ -445,6 +447,7 @@ MonoBehaviour:
   allItems: []
   bigSlots: []
   toolsController: {fileID: 0}
+  currentSlot: 0
   references:
     version: 2
     RefIds: []

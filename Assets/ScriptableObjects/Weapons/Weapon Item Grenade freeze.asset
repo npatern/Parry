@@ -10,42 +10,40 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1ea5dd123d6c3344986f4d254d27bda1, type: 3}
-  m_Name: Weapon Item GunWater
+  m_Name: Weapon Item Grenade freeze
   m_EditorClassIdentifier: 
-  ItemName: Water gun
-  ID: gunWater
-  Description: Shoots water
-  Stackable: 0
+  ItemName: Freeze grenade
+  ID: freezeGrenade
+  Description: 
+  Stackable: 1
   Big: 0
-  weaponObject: {fileID: 3823714102769063789, guid: 424e191eed7e5f8459b137444dc821f0, type: 3}
+  weaponObject: {fileID: 3823714102769063789, guid: 2732956030bfa034f8152de5acb9cb10, type: 3}
   icon: {fileID: 0}
   emptyhanded: 0
-  attackPattern: {fileID: 8930655107102755286, guid: 9fff009433f6c5043906c1e3ce808b93, type: 3}
+  attackPattern: {fileID: 8930655107102755286, guid: 28a532b9c26265c4db76cff5e5345331, type: 3}
   Effects:
     Damage: 0
     caster: {fileID: 0}
     origin: {x: 0, y: 0, z: 0}
     effectList:
     - type: 4
-      points: 55
-    deathEffectObjectToSpawn: {fileID: 0}
+      points: 40
+    deathEffectObjectToSpawn: {fileID: 2637219053616707300, guid: 7d791b417aa88b44aa531722c33b672d, type: 3}
   bulletEffects:
     Damage: 0
     caster: {fileID: 0}
     origin: {x: 0, y: 0, z: 0}
-    effectList:
-    - type: 7
-      points: 500
+    effectList: []
     deathEffectObjectToSpawn: {fileID: 0}
-  AttackDistance: 15
-  isPrimeable: 0
-  bullet: {fileID: 1011653268010487846, guid: 3d920f9ffce280a48a059487e15a0b21, type: 3}
-  stack: 0
-  IsIllegal: 0
-  tags: 4
-  LightAttack: {fileID: 11400000, guid: f4bf4512d4d56154f84d22f0af0428b5, type: 2}
+  AttackDistance: 10
+  isPrimeable: 1
+  bullet: {fileID: 0}
+  stack: 15
+  IsIllegal: 1
+  tags: 32
+  LightAttack: {fileID: 11400000, guid: f2f5effdcbefe0e46889b8229d07164a, type: 2}
   HeavyAttack: {fileID: 11400000, guid: 442da46444774f7488ccb73a573b2d98, type: 2}
-  Parry: {fileID: 11400000, guid: 5b2d68fd282092941ae729c5b1fd085a, type: 2}
+  Parry: {fileID: 11400000, guid: 7eca0611d41755841b197c6a5b200241, type: 2}
   Equip: {fileID: 11400000, guid: 65fe576159b855647a81ba2e79d21c37, type: 2}
   Dequip: {fileID: 11400000, guid: 46bb0d0e09ae2f441b3301bf798d2e1f, type: 2}
   Stunned: {fileID: 11400000, guid: e78a3d5511337714b8b637bd5d48f480, type: 2}

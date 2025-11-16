@@ -172,7 +172,7 @@ MonoBehaviour:
     LockMovement: 0
     LockRotation: 0
     TargetEnum: 0
-    WaitTime: 0.2
+    WaitTime: 0.15
     MovementCurve:
       serializedVersion: 2
       m_Curve:

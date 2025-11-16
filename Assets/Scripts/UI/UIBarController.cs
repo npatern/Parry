@@ -40,20 +40,9 @@ public class UIBarController : MonoBehaviour
     Vector3 scale;
     private void Awake()
     {
-        if (bar == null) { Debug.LogWarning("BAR is null! Returning."); return; }
-        if (bar.GetComponent<Image>() == null) { Debug.LogWarning("BAR Image component missing! Returning."); return; }
+        if (bar == null)  return; 
+        if (bar.GetComponent<Image>() == null) return; 
         color = bar.GetComponent<Image>().color;
-        if (stat == null)
-        {
-            
-            Debug.LogWarning("Stat == null. " + gameObject.name);
-
-        }
-        else
-        {
-            Debug.Log("Stat != null. "+gameObject.name);
-        }
-        
         scale = transform.localScale;
     }
     public void ApplyStatVisuals()

@@ -2,12 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GameManager : BaseManager
+public class ResourcesManager : BaseManager
 {
-    public static GameManager Instance { get; private set; }
-   
+    public static ResourcesManager Instance { get; private set; }
+    public ListOfAssetsAndValuesScriptableObject ListOfAssets { get; private set; }
 
-    private void Awake()
+private void Awake()
     {
         if (Instance == null)
         {
@@ -19,9 +19,9 @@ public class GameManager : BaseManager
             Destroy(gameObject);
         }
     }
-
     public override void Initialize()
     {
         base.Initialize();
     }
+
 }

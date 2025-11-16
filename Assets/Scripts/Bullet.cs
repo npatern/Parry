@@ -26,7 +26,7 @@ public class Bullet : MonoBehaviour
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
-        layerMask = LayerMask.GetMask("Blockout", "Default", "Entity", "Damage");
+        layerMask = LayerMask.GetMask("Blockout", "Default", "Entity", "Damage", "SeeTrough");
         //ParticlesToKill = GetComponentInChildren<ParticleSystem>();
     }
     private void Start()
@@ -43,8 +43,8 @@ public class Bullet : MonoBehaviour
         }
         if (bounceTimer > 0) bounceTimer -= Time.fixedDeltaTime;
         if (item == null || isDamaging==false) return;
-         
-        if (item.CastDamage(damage, multiplier))
+        //basically if is an object thrown by player... needs tidying up badly. 
+        if (item.CastDamage(damage, multiplier,GameplayController.Instance.CurrentPlayer))
         {
             isDamaging = false;
             RemoveParticles();

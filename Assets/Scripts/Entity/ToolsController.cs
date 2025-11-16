@@ -396,7 +396,7 @@ public class ToolsController : MonoBehaviour
         //WeaponModel weaponModel = thrownWrapper.CurrentWeaponObject.GetComponent<WeaponModel>();
         Bullet bullet = thrownWrapper.CurrentWeaponObject.gameObject.AddComponent<Bullet>();
         bullet.isDamaging = true;
-        bullet.multiplier *= 100;
+        bullet.multiplier *= 1;
         bullet.damage = thrownWrapper.Effects;
         bullet.destroyObject = thrownWrapper.Effects.deathEffectObjectToSpawn;
         bullet.soundType = Sound.TYPES.neutral;

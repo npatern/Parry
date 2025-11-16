@@ -7,6 +7,7 @@ using UnityEngine.Events;
 public class StatusController : MonoBehaviour, IHear, IPowerFlowController
 {   
     public bool Immortal = false;
+    public bool Impervious = false;
     public string Team = "";
     public Vector3 size = Vector3.one;
     [SerializeField]
@@ -325,9 +326,8 @@ public class StatusController : MonoBehaviour, IHear, IPowerFlowController
             }
             else
             {
-                attacker.TakePostureAndEffects(damage,  CriticalMultiplier * multiplier, attacker);
-
-
+                //attacker.TakePostureAndEffects(damage,  CriticalMultiplier * multiplier, attacker);
+                attacker.TakePostureOnly(damage.Damage, CriticalMultiplier * multiplier, attacker);
                 attacker.IsAttackedEvent.Invoke();
             }
             UIController.Instance.SpawnTextBubble(Barks.GetBark(Barks.BarkTypes.onParry), transform);
@@ -348,11 +348,16 @@ public class StatusController : MonoBehaviour, IHear, IPowerFlowController
     }
     public void TakeDamageWithEffects(DamageEffects damageEffect, float multiplier = 1, StatusController attacker = null, bool isFromBullet = false)
     {
-        if (attacker != null)
-            if (MultiplyDamage(attacker))
-                multiplier *= attacker.CriticalMultiplier;
-        float _damage = damageEffect.Damage;
         bool isCritical = false;
+        if (attacker != null)
+            if (CheckIfIsCritical())
+            {
+                multiplier *= attacker.CriticalMultiplier;
+                isCritical = true;
+            }
+                
+        float _damage = damageEffect.Damage;
+        
 
         ApplyOnlyEffects(damageEffect, multiplier);
 
@@ -373,6 +378,7 @@ public class StatusController : MonoBehaviour, IHear, IPowerFlowController
     }
     public void TakeDamage(float _damage, Color color, float multiplier = 1, StatusController attacker = null, bool isFromBullet = false, bool isCritical = false)
     {
+        if (Impervious) return;
         if (Immortal) return;
         Life -= _damage * multiplier;
         SpawnParticles(DamageEffect, transform);
@@ -406,9 +412,12 @@ public class StatusController : MonoBehaviour, IHear, IPowerFlowController
             }
         }
     }
-    bool MultiplyDamage(StatusController attacker)
+    bool CheckIfIsCritical(StatusController attacker)
     {
-
+        return CheckIfIsCritical();
+    }
+    bool CheckIfIsCritical()
+    {
         if (IsPlayer) return false;
         if (IsStunned()) return true;
         if (GetComponent<EntityController>() != null)
@@ -534,6 +543,10 @@ public class StatusController : MonoBehaviour, IHear, IPowerFlowController
         if (IsPlayer) GameplayController.Instance.EndGame();
         OnKillEvent.Invoke();
         if (DestroyOnKill)
+        {
+            Debug.Log("Destroying!!!!!!");
             Destroy(gameObject, .1f);
+        }
+           
     }
 }

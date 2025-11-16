@@ -49,7 +49,7 @@ public class UIController : MonoBehaviour
         newTextBubble.transform.SetParent(UITrashParent, false);
         if (color == null) color = Color.red;
         newTextBubble.color = color;
-        if (critical) speech = "<b>" + speech + " CRITICAL!</b>";
+        if (critical) speech = "<b>" + speech + " CRIT!</b>";
         //speech = "<color=red>" + speech + "</color>";
         newTextBubble.Speech = speech;
         newTextBubble.target = transform.position;
