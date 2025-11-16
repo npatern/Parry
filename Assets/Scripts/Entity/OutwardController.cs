@@ -21,6 +21,7 @@ public class OutwardController : MonoBehaviour,IInteractable
     public DisguiseScriptable disguise;
     public GameObject headGear;
     public GameObject torsoGear;
+    public AnimationCurve lightModifierCurve;
     private bool IsPlayer;
     private void Awake()
     {
@@ -130,6 +131,7 @@ public class OutwardController : MonoBehaviour,IInteractable
                 value += light.GetLightValueOnObject(target);
 
         value = Mathf.Clamp01(value);
+        value = lightModifierCurve.Evaluate(value);
         return value;
     }
 

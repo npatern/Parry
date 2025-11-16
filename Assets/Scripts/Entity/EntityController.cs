@@ -37,7 +37,7 @@ public class EntityController : MonoBehaviour
     public bool MarkedForDestruction = false;
     public bool IsAtTarget = false;
 
-    public float ShockMemoryTime = 30;
+    public float ShockMemoryTime = 20;
     public float ShockMemoryTimer = 0;
     public float ShockTime = 1;
     public float ShockTimer = 1;
@@ -114,7 +114,7 @@ public class EntityController : MonoBehaviour
     }
     public bool IsEnteringShock()
     {
-        ShockTimer = ShockTime*Random.Range(.9f,1.1f);
+        ShockTimer = ShockTime*Random.Range(.5f,1.5f);
         UIController.Instance.SpawnTextBubble(Barks.GetBark(Barks.BarkTypes.inCombatNoticeDisbelief), transform);
         return true;
     }
@@ -437,4 +437,5 @@ public class EntityController : MonoBehaviour
         if (toolsController.CurrentWeaponWrapper.emptyhanded) return false;
         return true;
     }
+    
 }

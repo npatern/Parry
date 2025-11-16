@@ -421,6 +421,8 @@ MonoBehaviour:
   inventoryController: {fileID: 0}
   CurrentWeaponWrapper:
     rid: -2
+  BackWeaponWrapper:
+    rid: -2
   EmptyWeaponWrapper:
     rid: -2
   TESTCurrentWeaponScriptable: {fileID: 0}
@@ -456,6 +458,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Immortal: 0
+  Impervious: 0
   Team: player
   size: {x: 1, y: 1, z: 1}
   loadValuesInRealTime: 0
@@ -547,6 +550,30 @@ MonoBehaviour:
   disguise: {fileID: 11400000, guid: 61fc21d3b9fcef8439209d70842c1bb9, type: 2}
   headGear: {fileID: 0}
   torsoGear: {fileID: 0}
+  lightModifierCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 1
+      outSlope: 1
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 1
+      outSlope: 1
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!114 &7386340357107363141
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -574,9 +601,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxSlotsNr: 9999
   maxBigSlotsNr: 1
-  slots: []
+  allItems: []
   bigSlots: []
   toolsController: {fileID: 0}
+  currentSlot: 0
   references:
     version: 2
     RefIds: []

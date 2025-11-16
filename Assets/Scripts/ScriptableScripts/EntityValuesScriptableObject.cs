@@ -36,7 +36,8 @@ public class EntityValuesScriptableObject : ScriptableObject
     public float AlertedAwarenessDownTime = 5;
     [Tooltip("How long it takes for awareness to fill up while player run in range (in seconds)")]
     public float WalkSoundAwarenessTime = 1;
-
+    [Tooltip("How the amount of light affects being percieved")]
+    public AnimationCurve VisibilityInLightCurve;
 
 
     [Space(10), Header("NPCspeed")]

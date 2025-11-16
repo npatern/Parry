@@ -136,6 +136,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Immortal: 0
+  Impervious: 0
   Team: enemy
   size: {x: 1, y: 1, z: 1}
   loadValuesInRealTime: 0
@@ -231,6 +232,7 @@ MonoBehaviour:
     name: 0
   HomePosition: {x: 0, y: 0, z: 0}
   AddedVelocity: {x: 0, y: 0, z: 0}
+  radiusForAgent: 0.5
 --- !u!114 &1508925608
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -315,7 +317,7 @@ MonoBehaviour:
   Awareness: 0
   justHeardSmthng: 0
   maxAwareness: 100
-  awarenessUpTime: 1
+  awarenessUpTime: 0.1
   awarenessDownTime: 1
   viewDistanceBase: 20
   viewDistanceMultiplier: 1.8

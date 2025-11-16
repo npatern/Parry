@@ -56,6 +56,7 @@ public class SensesController : MonoBehaviour, IHear
     Transform target;
     GameObject UIarrow;
 
+    AnimationCurve visibilityInLightCurve;
     public bool IsStunned = false;
     private void Awake()
     {
@@ -140,11 +141,15 @@ public class SensesController : MonoBehaviour, IHear
     }
     public void AddAwarenessOnce(float awarenessValue, StatusController _target = null)
     {
-        if (awarenessValue > 0)
-            if (_target != null)
-                SetCurrentTarget(_target);
+        
+                
 
         AddAwarenessOnce(awarenessValue);
+        if (awarenessValue > 0)
+            if (_target != null)
+            {
+                SetCurrentTarget(_target);
+            }
     }
     public void AddAwarenessOnce(float awarenessValue, Vector3 targetPosition)
     {
@@ -239,6 +244,9 @@ public class SensesController : MonoBehaviour, IHear
         awarenessUpTime = scriptable.AwarenessUpTime;
         awarenessDownTime = scriptable.AwarenessDownTime;
         alertedAwarenessDownTime = scriptable.AlertedAwarenessDownTime;
+        visibilityInLightCurve = scriptable.VisibilityInLightCurve;
+
+
     }
     bool IsVisionBlocked()
     {
@@ -276,7 +284,7 @@ public class SensesController : MonoBehaviour, IHear
         }
         if (destination.TryGetComponent<OutwardController>(out OutwardController outwardController))
         {
-            awarenessValue *= outwardController.LightValue;
+            awarenessValue *= visibilityInLightCurve.Evaluate(outwardController.LightValue);
             if (outwardController.IsHiddenInCrowd && Vector3.Distance(transform.position, outwardController.transform.position) > outwardController.CrowdRadius) 
                 awarenessValue *= 0;
 

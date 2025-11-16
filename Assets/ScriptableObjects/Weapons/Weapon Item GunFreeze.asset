@@ -35,7 +35,7 @@ MonoBehaviour:
     origin: {x: 0, y: 0, z: 0}
     effectList:
     - type: 3
-      points: 35
+      points: 100
     deathEffectObjectToSpawn: {fileID: 0}
   AttackDistance: 15
   isPrimeable: 0

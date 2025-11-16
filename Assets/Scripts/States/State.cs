@@ -35,7 +35,10 @@ public class State
         timer = 0;
         time = Random.Range(min, max);
     }
-
+    public bool IsCurrentlyShocked()
+    {
+        return shocked;
+    }
     public State(EntityController _entityController)
     {
         entity = _entityController;
@@ -95,8 +98,8 @@ public class State
             nextState = new Investigate(entity, sensesController.currentTargetLastPosition);
             stage = EVENT.EXIT;
         }
-        
-        if (stage == EVENT.ENTER) Enter();
+
+        if (stage == EVENT.ENTER) { Enter(); Update(); }
         while (entity.TickTimer > Tick)
         {
             if (stage == EVENT.UPDATE) Update();
@@ -405,10 +408,21 @@ public class Combat : State
     }
     public override void Enter()
     {
-        entity.SetAvoidanceRadius(1.5f);
+        entity.SetAvoidanceRadius(1.2f);
         entity.SetAgentSpeedChase();
         if (entity.CanBeShocked())
             shocked = entity.IsEnteringShock();
+        if (!shocked)
+        {
+            entity.DisableNavmesh(false);
+            //entity.StartLookingAtTarget(target);
+            UIController.Instance.SpawnTextBubble(Barks.GetBark(Barks.BarkTypes.inCombatNotice), entity.transform);
+            Sound sound = new Sound(statusController, screamDistance, Sound.TYPES.danger, combatTarget);
+            Sounds.MakeSound(sound);
+            shocked = false;
+        }
+
+
         base.Enter();
     }
 
@@ -436,19 +450,20 @@ public class Combat : State
 
         
         entity.SetAgentSpeedChase();
-        entity.SetAvoidanceRadius(1.5f);
+        entity.SetAvoidanceRadius(1.2f);
         combatTarget = sensesController.currentTarget;
         if (combatTarget == null) return;
+       
         if (timer > time)
         {
-            /*
+            
             UIController.Instance.SpawnTextBubble(Barks.GetBark(Barks.BarkTypes.inCombatNotice), entity.transform);
-            Sound sound = new Sound(statusController, 10, Sound.TYPES.danger, combatTarget);
+            Sound sound = new Sound(statusController, 5, Sound.TYPES.danger, combatTarget);
             Sounds.MakeSound(sound);
             ResetTimer();
-            */
+            
         }
-
+        
         entity.agent.avoidancePriority = (int)Vector3.Distance(entity.transform.position, combatTarget.transform.position)/5;
         if (!entity.CanMove()) entity.DisableNavmesh(true);
         else entity.DisableNavmesh(false);

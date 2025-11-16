@@ -62,7 +62,7 @@ public class GameplayController : MonoBehaviour
     private void Awake()
     {
         //Instance = this;
-        DontDestroyOnLoad(gameObject);
+        //DontDestroyOnLoad(gameObject);
         if (StopTimeOnStart) StopTime();
         CollectLevelElements();
         lightControllers = new List<LightController>();

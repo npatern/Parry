@@ -421,9 +421,13 @@ public class StatusController : MonoBehaviour, IHear, IPowerFlowController
         if (IsPlayer) return false;
         if (IsStunned()) return true;
         if (GetComponent<EntityController>() != null)
+        {
             if (!GetComponent<EntityController>().IsCombatReady())
                 return true;
-
+            if (GetComponent<EntityController>().currentState.IsCurrentlyShocked())
+                return true;
+        }
+            
         if (sensesController != null) if (!sensesController.IsAlerted) return true;
         return false;
     }
@@ -544,8 +548,9 @@ public class StatusController : MonoBehaviour, IHear, IPowerFlowController
         OnKillEvent.Invoke();
         if (DestroyOnKill)
         {
-            Debug.Log("Destroying!!!!!!");
-            Destroy(gameObject, .1f);
+            Debug.Log("Destroying!!!!!! "+name);
+            Destroy(gameObject);
+            Debug.Log("Destroyed!!!!!! " + name);
         }
            
     }
