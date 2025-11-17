@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b9ac36251447b234ba983205d9bdf4ff, type: 3}
   m_Name: Stats Archetype Fire
   m_EditorClassIdentifier: 
-  statsPermitted: 070000000300000001000000
+  statsPermitted: 07000000030000000100000006000000
   statsMortalOnEmpty: 
   statsMortalOnFull: 0300000007000000
   statsAlwaysFull: 01000000
