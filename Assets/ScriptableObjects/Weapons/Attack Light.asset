@@ -16,6 +16,7 @@ MonoBehaviour:
   Name: lightAttack
   Description: 
   DamageMultiplayer: 1
+  IsIllegal: 1
   AttackStepss:
   - StepName: 
     LockMovement: 0
@@ -54,7 +55,14 @@ MonoBehaviour:
     IsParrying: 0
     IsProtected: 0
     IsDamaging: 0
+    IsFiring: 0
+    IsThrowing: 0
+    IsDisarming: 0
+    SkipIfPlayer: 0
+    SkipIfNPC: 0
     MovementOffset: {x: 0, y: 0, z: 0}
+    SoundRange: 0
+    soundType: 0
   - StepName: 
     LockMovement: 1
     LockRotation: 1
@@ -92,7 +100,14 @@ MonoBehaviour:
     IsParrying: 0
     IsProtected: 0
     IsDamaging: 1
+    IsFiring: 0
+    IsThrowing: 0
+    IsDisarming: 0
+    SkipIfPlayer: 0
+    SkipIfNPC: 0
     MovementOffset: {x: 0, y: 0, z: 0}
+    SoundRange: 0
+    soundType: 0
   - StepName: 
     LockMovement: 0
     LockRotation: 0
@@ -130,4 +145,11 @@ MonoBehaviour:
     IsParrying: 0
     IsProtected: 0
     IsDamaging: 0
+    IsFiring: 0
+    IsThrowing: 0
+    IsDisarming: 0
+    SkipIfPlayer: 0
+    SkipIfNPC: 0
     MovementOffset: {x: 0, y: 0, z: 0}
+    SoundRange: 0
+    soundType: 0

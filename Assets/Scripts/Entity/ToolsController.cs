@@ -5,7 +5,7 @@ using UnityEngine.InputSystem;
 using UnityEngine.Events;
 public class ToolsController : MonoBehaviour
 {
-    
+    public float WindUpSpeed = 1;
     public LayerMask layerMask;
     public float ColliderSize = 1f;
     public InputController inputController;
@@ -337,12 +337,14 @@ public class ToolsController : MonoBehaviour
                 if (context.canceled) continue;
             if (attack.AttackStepss[i].SkipIfPlayer)
                 if (statusController.IsPlayer) continue;
+            if (attack.AttackStepss[i].SkipIfNPC)
+                if (!statusController.IsPlayer) continue;
             if (attack.AttackStepss[i].Interruptable)
                 IsUsingTool = false;
             else
                 IsUsingTool = true;
 
-            yield return attack.AttackStepss[i].PerformStep(this, attack, context);
+            yield return attack.AttackStepss[i].PerformStep(this, attack, i, context);
         }
         IsUsingTool = false;
         ClearStateEffects();

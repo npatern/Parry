@@ -28,7 +28,7 @@ MonoBehaviour:
     waitTime: 1
     contagousSpeed: 0
     StartModifiers:
-    - type: 3
+    - typeToCheck: 3
       startEffectType: 2
       targetType: 0
     DamageModifiers:
@@ -65,16 +65,16 @@ MonoBehaviour:
     waitTime: 5
     contagousSpeed: 10
     StartModifiers:
-    - type: 3
+    - typeToCheck: 3
       startEffectType: 1
       targetType: 7
-    - type: 3
+    - typeToCheck: 1
       startEffectType: 2
       targetType: 3
-    - type: 7
+    - typeToCheck: 1
       startEffectType: 2
       targetType: 7
-    - type: 4
+    - typeToCheck: 1
       startEffectType: 2
       targetType: 4
     DamageModifiers:
@@ -82,6 +82,8 @@ MonoBehaviour:
       multiplier: 0.5
     - typeThatIsActive: 3
       multiplier: 0.5
+    - typeThatIsActive: 6
+      multiplier: 10
     status: {fileID: 0}
     visuals:
       name: 
@@ -109,16 +111,19 @@ MonoBehaviour:
     activeTime: 1
     waitTimer: 0
     waitTime: 5
-    contagousSpeed: 0
+    contagousSpeed: 4
     StartModifiers:
-    - type: 2
+    - typeToCheck: 3
+      startEffectType: 2
+      targetType: 2
+    - typeToCheck: 2
       startEffectType: 1
       targetType: 4
-    - type: 7
+    - typeToCheck: 6
+      startEffectType: 1
+      targetType: 1
+    - typeToCheck: 7
       startEffectType: 0
-      targetType: 0
-    - type: 3
-      startEffectType: 2
       targetType: 2
     DamageModifiers:
     - typeThatIsActive: 7
@@ -152,12 +157,9 @@ MonoBehaviour:
     waitTime: 5
     contagousSpeed: 0
     StartModifiers:
-    - type: 4
+    - typeToCheck: 4
       startEffectType: 1
       targetType: 5
-    - type: 3
-      startEffectType: 0
-      targetType: 0
     DamageModifiers:
     - typeThatIsActive: 3
       multiplier: 2
@@ -191,7 +193,13 @@ MonoBehaviour:
     waitTimer: 0
     waitTime: 0.5
     contagousSpeed: 0
-    StartModifiers: []
+    StartModifiers:
+    - typeToCheck: 3
+      startEffectType: 0
+      targetType: 0
+    - typeToCheck: 6
+      startEffectType: 1
+      targetType: 4
     DamageModifiers: []
     status: {fileID: 0}
     visuals:
@@ -222,11 +230,14 @@ MonoBehaviour:
     waitTime: 10
     contagousSpeed: 0
     StartModifiers:
-    - type: 1
+    - typeToCheck: 3
       startEffectType: 2
       targetType: 1
-    - type: 7
+    - typeToCheck: 3
       startEffectType: 2
+      targetType: 7
+    - typeToCheck: 5
+      startEffectType: 0
       targetType: 7
     DamageModifiers:
     - typeThatIsActive: 1
@@ -260,8 +271,14 @@ MonoBehaviour:
     activeTime: 120
     waitTimer: 0
     waitTime: 20
-    contagousSpeed: 10
-    StartModifiers: []
+    contagousSpeed: 1
+    StartModifiers:
+    - typeToCheck: 1
+      startEffectType: 1
+      targetType: 1
+    - typeToCheck: 5
+      startEffectType: 1
+      targetType: 4
     DamageModifiers:
     - typeThatIsActive: 0
       multiplier: 10
@@ -294,12 +311,15 @@ MonoBehaviour:
     waitTime: 20
     contagousSpeed: 0
     StartModifiers:
-    - type: 7
+    - typeToCheck: 7
       startEffectType: 2
       targetType: 1
-    - type: 2
+    - typeToCheck: 2
       startEffectType: 0
       targetType: 0
+    - typeToCheck: 6
+      startEffectType: 2
+      targetType: 6
     DamageModifiers:
     - typeThatIsActive: 1
       multiplier: 0.5

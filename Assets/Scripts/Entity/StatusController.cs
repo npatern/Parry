@@ -4,14 +4,19 @@ using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.InputSystem;
 using UnityEngine.Events;
+
+//Main script of almost every dynamic object in the game - from NPCs to breakable rocks. Handles damage and other effects, like fire, electricity etc.
 public class StatusController : MonoBehaviour, IHear, IPowerFlowController
-{   
+{
+    [Tooltip("Immortal can't die by any means")]
     public bool Immortal = false;
+    [Tooltip("Impervious can't recieve damage, but can be killed by script.")]
     public bool Impervious = false;
+    [Tooltip("ID used to avoid friendly fire in some cases")]//change to other kind of value for faster comparing
     public string Team = "";
+    [Tooltip("Approximate size - used to scale some animations and define with witch object the entity can interact with.")]//consider moving to other controller
     public Vector3 size = Vector3.one;
-    [SerializeField]
-    private bool loadValuesInRealTime = false;
+    
     public DamageEffects defaultDamageEffects;
     public Stats stats;
     [SerializeField]
@@ -55,6 +60,10 @@ public class StatusController : MonoBehaviour, IHear, IPowerFlowController
     private ParticleSystem PostureEffect;
     [SerializeField]
     private ParticleSystem PostureLongEffect;
+
+    [SerializeField]
+    [Tooltip("Debug - set to true if you want to mess with default values in real time")]
+    private bool loadValuesInRealTime = false;
 
     private Rigidbody rb;
     private ToolsController toolsController;
@@ -380,6 +389,8 @@ public class StatusController : MonoBehaviour, IHear, IPowerFlowController
     {
         if (Impervious) return;
         if (Immortal) return;
+
+        //Push(attacker,_damage);
         Life -= _damage * multiplier;
         SpawnParticles(DamageEffect, transform);
 
@@ -392,7 +403,6 @@ public class StatusController : MonoBehaviour, IHear, IPowerFlowController
         }
         else
         {
-            
             if (TryGetComponent<EntityController>(out EntityController _entity))
             {
                 _entity.AddVelocity(-transform.forward * 10);
@@ -410,6 +420,13 @@ public class StatusController : MonoBehaviour, IHear, IPowerFlowController
                     Sounds.MakeSound(sound);
                 }
             }
+        }
+    }
+    void Push(StatusController attacker, float pushForce = 10)
+    {
+        if (GetComponent<EntityController>() != false)
+        {
+            GetComponent<EntityController>().agent.velocity += pushForce * 10 * (transform.position - attacker.transform.position);
         }
     }
     bool CheckIfIsCritical(StatusController attacker)

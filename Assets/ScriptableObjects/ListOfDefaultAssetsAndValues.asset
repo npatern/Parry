@@ -131,33 +131,98 @@ MonoBehaviour:
   - name: Aaaay!
   - name: Arrrr!
   - name: '''Tis but a scratch!'
+  - name: Oh!
+  - name: Uh!
+  - name: Ow!
+  - name: Ay!
+  - name: Oof!
   onDeath:
   - name: Aargh...
   - name: Ugh...
   - name: Oh...
   - name: ...
   - name: Uh...
+  - name: Remember me...
+  - name: Why..?
+  - name: No...
+  - name: I am content.
+  - name: I wish I had let myself be happier.
+  - name: Father, into Your hands I commit My spirit.
+  - name: Light! More light!
+  - name: Oh wow. Oh wow. Oh wow...
+  - name: I must go in, the fog is rising.
+  - name: I die before my time...
+  - name: That's all folks.
+  - name: 
+  - name: 
+  - name: 
+  - name: 
+  - name: 
+  - name: 
+  - name: 
+  - name: 
+  - name: 
+  - name: 
+  - name: 
+  - name: 
+  - name: 
+  - name: 
+  - name: 
+  - name: 
   onParry:
   - name: Haha!
   - name: Look at that!
   - name: Ha!
   - name: Back at you!
   - name: I'm too fast!
+  - name: Im better!
+  - name: Ha!
+  - name: Can't touch this!
+  - name: You can't see me!
+  - name: Suck it!
+  - name: Up yours!
+  - name: Ha!
+  - name: Ha!
+  - name: Ha!
+  - name: Ha!
+  - name: Ha!
+  - name: Ha!
+  - name: Ha!
+  - name: Ha!
+  - name: Ha!
+  - name: Ha!
+  - name: Ha!
   onInvestigationStarted:
   - name: What was that?
   - name: Huh..?
   - name: Hello..?
   - name: Is that you?
   - name: Who's there?
+  - name: That you..?
+  - name: Who goes there?
+  - name: Show yourselves!
+  - name: Anyone?
+  - name: ..?
   onInvestigationEnded:
   - name: Must've been the wind...
   - name: Nothing here...
   - name: That was a waste of time...
+  - name: Whatever...
+  - name: Screw that...
+  - name: Guess that was nothing...
+  - name: Oh well...
   inCombatNoticeDisbelief:
   - name: Ah!?
   - name: Im shocked!?
   - name: What the..!?
   - name: Hey!?
+  - name: WTF?!
+  - name: WHAT?!
+  - name: WHAT?!
+  - name: Gasp!
+  - name: How?!
+  - name: Here!?
+  - name: You?!
   inCombatNotice:
   - name: They're here!
   - name: Get them!
@@ -172,20 +237,34 @@ MonoBehaviour:
   - name: You won't run far!
   - name: Follow them!
   - name: Catch them!
+  - name: We'll catch you!
+  - name: Hurry! Hurry!
+  - name: Hurry up, get them!
   onSearchFail:
   - name: They're probably gone by now...
   - name: Lost them...
   - name: They're gone...
   - name: They ain't here...
   - name: They got away...
+  - name: Aaaand they're gone...
+  - name: We'll get them next time...
   inFleeEnterNotice:
   - name: Aaaaaaaaaa!
   - name: Help me!
   - name: Heeeeeeelp!
   - name: AAAA!
+  - name: NOO!
+  - name: PLEEASE, GOD, NO!
+  - name: AAAAH!!
+  - name: Help us!
+  - name: Get away!
+  - name: Run!
   onFleeEnded:
   - name: Pheeew...
   - name: Whew...
   - name: Made it!
   - name: I'm safe now!
   - name: Phew!
+  - name: I tought that was it...
+  - name: I'm all right...
+  - name: I'm all good...

@@ -408,7 +408,7 @@ public class Combat : State
     }
     public override void Enter()
     {
-        entity.SetAvoidanceRadius(1.2f);
+        entity.SetAvoidanceRadius(1.5f);
         entity.SetAgentSpeedChase();
         if (entity.CanBeShocked())
             shocked = entity.IsEnteringShock();
@@ -450,7 +450,7 @@ public class Combat : State
 
         
         entity.SetAgentSpeedChase();
-        entity.SetAvoidanceRadius(1.2f);
+        entity.SetAvoidanceRadius(1.5f);
         combatTarget = sensesController.currentTarget;
         if (combatTarget == null) return;
        

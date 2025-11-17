@@ -1,0 +1,87 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &5458245565708614703
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 1380079938295177261, guid: fa31e77562560b84c96323fcf8dd2f42, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 1380079938295177261, guid: fa31e77562560b84c96323fcf8dd2f42, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 4421575647173348780, guid: fa31e77562560b84c96323fcf8dd2f42, type: 3}
+      propertyPath: m_Name
+      value: Water Puddle Bigger Variant
+      objectReference: {fileID: 0}
+    - target: {fileID: 4421575647173348783, guid: fa31e77562560b84c96323fcf8dd2f42, type: 3}
+      propertyPath: m_Size.x
+      value: 3.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4421575647173348783, guid: fa31e77562560b84c96323fcf8dd2f42, type: 3}
+      propertyPath: m_Size.z
+      value: 3.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4421575647173348819, guid: fa31e77562560b84c96323fcf8dd2f42, type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4421575647173348819, guid: fa31e77562560b84c96323fcf8dd2f42, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 7.82
+      objectReference: {fileID: 0}
+    - target: {fileID: 4421575647173348819, guid: fa31e77562560b84c96323fcf8dd2f42, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4421575647173348819, guid: fa31e77562560b84c96323fcf8dd2f42, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 6.09
+      objectReference: {fileID: 0}
+    - target: {fileID: 4421575647173348819, guid: fa31e77562560b84c96323fcf8dd2f42, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4421575647173348819, guid: fa31e77562560b84c96323fcf8dd2f42, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4421575647173348819, guid: fa31e77562560b84c96323fcf8dd2f42, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4421575647173348819, guid: fa31e77562560b84c96323fcf8dd2f42, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4421575647173348819, guid: fa31e77562560b84c96323fcf8dd2f42, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4421575647173348819, guid: fa31e77562560b84c96323fcf8dd2f42, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4421575647173348819, guid: fa31e77562560b84c96323fcf8dd2f42, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4733943973038240677, guid: fa31e77562560b84c96323fcf8dd2f42, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 0a1d40f2442a71245badf5277966d276, type: 2}
+    - target: {fileID: 6585537615217074093, guid: fa31e77562560b84c96323fcf8dd2f42, type: 3}
+      propertyPath: m_Size.x
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 6585537615217074093, guid: fa31e77562560b84c96323fcf8dd2f42, type: 3}
+      propertyPath: m_Size.z
+      value: 3
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: fa31e77562560b84c96323fcf8dd2f42, type: 3}

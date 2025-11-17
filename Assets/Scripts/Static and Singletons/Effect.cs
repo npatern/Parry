@@ -118,13 +118,16 @@ public class Stats
 [System.Serializable]
 public class StartEffectModifier
 {
-    public Stat.Types type;
+    [Tooltip("If this effect is also full when I start")]
+    public Stat.Types typeToCheck;
+    
     public enum StartEffectTypes { KILL, FULLTARGET, EMPTYTARGET, EMPTYME}
+    [Tooltip("Do this to target entity or effect")]
     public StartEffectTypes startEffectType;
     public Stat.Types targetType;
     public void ApplyStartEffect(StatusController _status)
     {
-        Stat _typeToCheck = _status.stats.GetStat(type);
+        Stat _typeToCheck = _status.stats.GetStat(typeToCheck);
         if (_typeToCheck == null) return;
         if (!_typeToCheck.IsActive()) return;
         Stat _target = _status.stats.GetStat(targetType);
@@ -148,7 +151,9 @@ public class StartEffectModifier
 [System.Serializable]
 public class DamageEffectMultiplier
 {
+    [Tooltip("If this effect is also full")]
     public Stat.Types typeThatIsActive;
+    [Tooltip("Multiply my damage by")]
     public float multiplier = 1;
     public float GetMultiplayer(Stats _stats)
     {
