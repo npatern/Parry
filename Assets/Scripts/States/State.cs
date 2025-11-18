@@ -28,7 +28,7 @@ public class State
 
     protected float Tick = 0;
 
-    protected float screamDistance = 12;
+    protected float screamDistance = 15;
     protected bool shocked = false;
     protected void ResetTimer(float min = 3, float max = 10)
     {
@@ -308,6 +308,7 @@ public class Search : State
         investigatedPosition = lastSeenPosition;
         if (entity.CanBeShocked())
             shocked = entity.IsEnteringShock();
+        //commented; they do the same thing below after processing shock
         /*
         if (investigatedPosition != Vector3.zero)
         {
@@ -337,6 +338,7 @@ public class Search : State
         if (timer > time)
         {
             UIController.Instance.SpawnTextBubble(Barks.GetBark(Barks.BarkTypes.onSearchStart), entity.transform);
+            //commented cos they create circle jerk allerting eachother in a loop:
             //Sound sound = new Sound(statusController, 10, Sound.TYPES.danger);
             //Sounds.MakeSound(sound);
             ResetTimer();
@@ -458,7 +460,7 @@ public class Combat : State
         {
             
             UIController.Instance.SpawnTextBubble(Barks.GetBark(Barks.BarkTypes.inCombatNotice), entity.transform);
-            Sound sound = new Sound(statusController, 5, Sound.TYPES.danger, combatTarget);
+            Sound sound = new Sound(statusController, screamDistance, Sound.TYPES.danger, combatTarget);
             Sounds.MakeSound(sound);
             ResetTimer();
             
@@ -483,7 +485,6 @@ public class Flee : State
     //Vector3 investigatedPosition;
     bool isAtTarget = false;
 
-    bool shocked = false;
     public Flee(EntityController _entity) : base(_entity)
     {
         //investigatedPosition = _entity.HomePosition;
@@ -517,8 +518,8 @@ public class Flee : State
         }
          
         entity.SetAgentSpeedChase();
-        statusController.MakeDeaf(1);
-        /*
+        //statusController.MakeDeaf(1);
+        
         if (timer > time)
         {
             UIController.Instance.SpawnTextBubble(Barks.GetBark(Barks.BarkTypes.inFleeEnterNotice), entity.transform);
@@ -526,15 +527,15 @@ public class Flee : State
             Sounds.MakeSound(sound);
             ResetTimer();
         }
-        */
-        /*
+        
+        
         if (sensesController.Awareness <= 0)
         {
             UIController.Instance.SpawnTextBubble(Barks.GetBark(Barks.BarkTypes.onFleeEnded), entity.transform);
             nextState = new Idle(entity);
             stage = EVENT.EXIT;
         }
-        */
+        
         if (entity.CurrentNeed == null)
         {
             entity.FindNextNeed();
