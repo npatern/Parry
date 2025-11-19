@@ -21,7 +21,7 @@ MonoBehaviour:
   SlowmoValue: 0.5
   AwarenessUpTime: 1
   AwarenessDownTime: 2
-  AlertedAwarenessDownTime: 10
+  AlertedAwarenessDownTime: 30
   WalkSoundAwarenessTime: 1
   VisibilityInLightCurve:
     serializedVersion: 2

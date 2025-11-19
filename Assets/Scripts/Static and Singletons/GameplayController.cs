@@ -3,48 +3,48 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Rendering.PostProcessing;
 using System.Linq;
-public class GameplayController : MonoBehaviour
+public class GameplayController : BaseController
 {
-    //References
+    [Header("References")]
     public Transform Level;
     public ListOfAssetsAndValuesScriptableObject ListOfAssets;
     public FollowTarget cameraController;
     public Transform GarbageCollector;
     public EntityController CurrentEntity = null;
-    public GameObject[] LegacySpawners;
-    public SpawnerNPC[] Spawners;
+    
 
-
-    //Settings
+    [Header("Settings")]
     public bool spawnOnce = false;
     public int MaxEntitiesNr = 10;
     public bool StopTimeOnStart = false;
     public float TimeBetweenSpawns = 5;
     
-    //Others-visualisation and feedback, private stuff
-    [SerializeField]
-    float timer = 0;
-    [SerializeField]
-    float slowmoTimer = 0;
-    bool slowmo = false;
-
-    
-    
-    public NeedScriptableObject[] Needs; //moved
-    public NeedScriptableObject ExitNeed; //moved
+    [Header("Needs")]
     public NeedFulfiller[] NeedFulfillers;
+
+    [Header("Post Processing")]
     public GameObject PostProcess;
     public PostProcessVolume SlowmoPostProcess;
     public PostProcessVolume StunnedPostProcess;
     public PostProcessVolume NoctovisionPostProcess;
     public bool NoctovisionOn = false;
+
+    [Header("Runtime")]
     public GameObject PlayerEntity;
     public Transform EntitiesParent;
     public GameObject EntitySelector;
     public StatusController CurrentPlayer;
     public List<EntityController> EntitiesInGame = new List<EntityController>();
     public List<LightController> lightControllers = new List<LightController>();
-    
+    public GameObject[] LegacySpawners;
+    public SpawnerNPC[] Spawners;
+
+    [Header("Timers")]
+    [SerializeField]
+    float spawnTimer = 0;
+    [SerializeField]
+    float slowmoTimer = 0;
+    bool slowmo = false;
 
     public static GameplayController _instance;
     public static GameplayController Instance
@@ -58,6 +58,10 @@ public class GameplayController : MonoBehaviour
 
             return _instance;
         }
+    }
+    protected override void OnInitialize()
+    {
+        base.OnInitialize();
     }
     private void Awake()
     {
@@ -96,12 +100,12 @@ public class GameplayController : MonoBehaviour
     }
     public void SpawnNpcsRuntime()
     {
-        timer -= Time.deltaTime;
-        if (timer < 0)
+        spawnTimer -= Time.deltaTime;
+        if (spawnTimer < 0)
         {
             if (EntitiesInGame.Count < MaxEntitiesNr)
                 SpawnEntityFromRandomSpawner();
-            timer = TimeBetweenSpawns;
+            spawnTimer = TimeBetweenSpawns;
         }
     }
     private void FixedUpdate()
@@ -214,16 +218,6 @@ public class GameplayController : MonoBehaviour
         if (LegacySpawners.Length == 0) return;
         int spawnerNumber = Random.Range(0, LegacySpawners.Length);
         SpawnNPC(LegacySpawners[spawnerNumber].transform);
-        /*
-        if (ListOfAssets == null) return;
-        if (ListOfAssets.enemies.Length == 0) return;
-        int entityNumber = Random.Range(0, ListOfAssets.enemies.Length);
-        GameObject _objToSpawn = ListOfAssets.enemies[entityNumber];
-        Vector3 _spawnPosition = LegacySpawners[spawnerNumber].transform.position;
-        EntityController newEntity = Instantiate(_objToSpawn, _spawnPosition, Quaternion.identity, EntitiesParent).GetComponent<EntityController>();
-        newEntity.target = CurrentPlayer;
-        EntitiesInGame.Add(newEntity);
-        */
     }
     
     public void SelectEntity(EntityController entity)

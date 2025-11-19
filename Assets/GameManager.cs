@@ -24,4 +24,17 @@ public class GameManager : BaseManager
     {
         base.Initialize();
     }
+    public void StartGameplay()
+    {
+        StartCoroutine(StartGameplayRoutine());
+    }
+    private IEnumerator StartGameplayRoutine()
+    {
+        //yield return SceneManager.LoadSceneAsync("GameplayScene");
+        yield return null;
+        GameplayController.Instance.Initialize();
+        CameraController.Instance.Initialize();
+        LevelController.Instance.Initialize();
+        //PostProcessController.Instance.Initialize();
+    }
 }
