@@ -5,7 +5,7 @@ using UnityEngine.InputSystem;
 using UnityEngine.Events;
 public class ToolsController : MonoBehaviour
 {
-    
+    public float WindUpSpeed = 1;
     public LayerMask layerMask;
     public float ColliderSize = 1f;
     public InputController inputController;
@@ -42,7 +42,7 @@ public class ToolsController : MonoBehaviour
         {
             StopMovingEvent = new UnityEvent<bool>();
         }
-        EmptyWeaponWrapper = new ItemWeaponWrapper(GameController.Instance.ListOfAssets.EmptyWeapon);
+        EmptyWeaponWrapper = new ItemWeaponWrapper(ResourcesManager.Instance.ListOfAssets.EmptyWeapon);
 
         //if (DequippedWeaponWrapper == null) DequippedWeaponWrapper = new ItemWeaponWrapper(TESTDequippedWeaponScriptable);
         //if (DequippedWeapon == null) DequippedWeapon = Instantiate(DequippedWeaponWrapper.itemType.weaponObject, transform).transform;
@@ -105,7 +105,7 @@ public class ToolsController : MonoBehaviour
                     }
                 }
 
-                Debug.Log("Item not found " + weaponWrapper.name);
+               // Debug.Log("Item not found " + weaponWrapper.name);
                 inventoryController.AddToInventory(weaponWrapper);
             }
 
@@ -337,12 +337,14 @@ public class ToolsController : MonoBehaviour
                 if (context.canceled) continue;
             if (attack.AttackStepss[i].SkipIfPlayer)
                 if (statusController.IsPlayer) continue;
+            if (attack.AttackStepss[i].SkipIfNPC)
+                if (!statusController.IsPlayer) continue;
             if (attack.AttackStepss[i].Interruptable)
                 IsUsingTool = false;
             else
                 IsUsingTool = true;
 
-            yield return attack.AttackStepss[i].PerformStep(this, attack, context);
+            yield return attack.AttackStepss[i].PerformStep(this, attack, i, context);
         }
         IsUsingTool = false;
         ClearStateEffects();
@@ -368,7 +370,7 @@ public class ToolsController : MonoBehaviour
     public void FireBullet()
     {
         WeaponModel weaponModel = CurrentWeaponWrapper.CurrentWeaponObject.GetComponent<WeaponModel>();
-        Bullet bullet = Instantiate(CurrentWeaponWrapper.itemType.bullet, weaponModel.StartPoint.position, CurrentWeaponWrapper.CurrentWeaponObject.transform.rotation, GameController.Instance.GarbageCollector.transform).GetComponent<Bullet>();
+        Bullet bullet = Instantiate(CurrentWeaponWrapper.itemType.bullet, weaponModel.StartPoint.position, CurrentWeaponWrapper.CurrentWeaponObject.transform.rotation, LevelController.Instance.GarbageCollector.transform).GetComponent<Bullet>();
         bullet.damage = CurrentWeaponWrapper.bulletEffects;
         bullet.destroyObject = bullet.damage.deathEffectObjectToSpawn;
         Rigidbody bulletRB = bullet.GetComponent<Rigidbody>();
@@ -396,7 +398,7 @@ public class ToolsController : MonoBehaviour
         //WeaponModel weaponModel = thrownWrapper.CurrentWeaponObject.GetComponent<WeaponModel>();
         Bullet bullet = thrownWrapper.CurrentWeaponObject.gameObject.AddComponent<Bullet>();
         bullet.isDamaging = true;
-        bullet.multiplier *= 100;
+        bullet.multiplier *= 1;
         bullet.damage = thrownWrapper.Effects;
         bullet.destroyObject = thrownWrapper.Effects.deathEffectObjectToSpawn;
         bullet.soundType = Sound.TYPES.neutral;

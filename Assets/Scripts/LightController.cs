@@ -61,14 +61,14 @@ public class LightController : PowerReciver
         base.Start();
         if (statusController!=null)
             statusController.OnKillEvent.AddListener(KillLight);
-        GameController.Instance.lightControllers.Add(this);
+        LevelController.Instance.lightControllers.Add(this);
         RefreshLight();
     }
     private void FixedUpdate()
     {
-        if (GameController.Instance.CurrentPlayer !=null)
-        if(IsInLight(GameController.Instance.CurrentPlayer.transform)&& textComponent!=null)
-            textComponent.SetText("" + GetLightValueOnObject(GameController.Instance.CurrentPlayer.transform));
+        if (LevelController.Instance.CurrentPlayer !=null)
+        if(IsInLight(LevelController.Instance.CurrentPlayer.transform)&& textComponent!=null)
+            textComponent.SetText("" + GetLightValueOnObject(LevelController.Instance.CurrentPlayer.transform));
 
         if (realtime) UpdateLight();
     }
@@ -184,7 +184,9 @@ public class LightController : PowerReciver
     public void KillLight()
     {
         SetLight(false);
-        GetComponent<MeshRenderer>().enabled = false;
+
+        if (meshRenderer!=null)
+            meshRenderer.enabled = false;
         if (textComponent!=null)
             textComponent.gameObject.SetActive(false);
     }

@@ -16,6 +16,7 @@ public class UIBarController : MonoBehaviour
     float minScale = 0;
     [SerializeField]
     bool vertical = false;
+    [SerializeField]
     Color color;
     [SerializeField]
     Color specialColor;
@@ -37,11 +38,10 @@ public class UIBarController : MonoBehaviour
     private GameObject circleBackground;
 
     Vector3 scale;
-    private void Start()
+    private void Awake()
     {
-        if (bar == null) return;
-        if (bar.GetComponent<Image>() == null) return;
-        if (stat == null)
+        if (bar == null)  return; 
+        if (bar.GetComponent<Image>() == null) return; 
         color = bar.GetComponent<Image>().color;
         scale = transform.localScale;
     }
@@ -52,7 +52,7 @@ public class UIBarController : MonoBehaviour
             Debug.LogError("Stat not found!");
             return; 
         }
-        foreach (EffectVisuals _visuals in GameController.Instance.ListOfAssets.EffectVisuals)
+        foreach (EffectVisuals _visuals in ResourcesManager.Instance.ListOfAssets.EffectVisuals)
         {
             if (stat.type == _visuals.type) 
             {

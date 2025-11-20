@@ -74,7 +74,7 @@ public class InteractionController : MonoBehaviour
             if (_interactable.CanBeInteracted())
             {
                 chosenInteractable = _interactable;
-                Debug.Log("Found interaction! "+ ((MonoBehaviour)chosenInteractable).gameObject.name);
+                //Debug.Log("Found interaction! "+ ((MonoBehaviour)chosenInteractable).gameObject.name);
                 break;
             }
         }

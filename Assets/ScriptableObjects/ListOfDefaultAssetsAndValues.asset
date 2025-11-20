@@ -17,28 +17,47 @@ MonoBehaviour:
   BulletThrowTemplate: {fileID: 7333040839881901861, guid: e73eefcbadd56d14a887363914feb1ac, type: 3}
   EmptyWeapon: {fileID: 11400000, guid: 0941283d942ba9048bd43b010b0ee0eb, type: 2}
   Weapons:
-  - {fileID: 11400000, guid: 9a1e12c216e21614491af7de6da103f3, type: 2}
   - {fileID: 11400000, guid: c0e191147ed6a0a458e627a6b2f9cfb3, type: 2}
-  - {fileID: 11400000, guid: a91c42f4b2c8052409f3bf2e3e92a4aa, type: 2}
+  - {fileID: 11400000, guid: 9193f5e477997154faa48a2c2c6726f0, type: 2}
+  - {fileID: 11400000, guid: 76aefadd4028c3f4eb1e52bf9b95d2f1, type: 2}
+  - {fileID: 11400000, guid: cffcf8f1262e3d04bb2190bb164f7f08, type: 2}
   - {fileID: 11400000, guid: 0c9792609d327fe48a15eb39b6aee771, type: 2}
+  - {fileID: 11400000, guid: 6b0e527bacc7507459797bfb3ea65155, type: 2}
+  - {fileID: 11400000, guid: 719e877f164f21749a9828b7f627c401, type: 2}
+  - {fileID: 11400000, guid: fb497c81018093e4280869807e1daf0d, type: 2}
+  - {fileID: 11400000, guid: 25c2569e3d4805d4c834210e3eec3986, type: 2}
   - {fileID: 11400000, guid: fd69bf0d8e8ff534d8879fe1060b7556, type: 2}
+  - {fileID: 11400000, guid: d302d7e6c4a12bb4381799b6e3fdc892, type: 2}
   - {fileID: 11400000, guid: 38b021a3c0d2d8b4a88e9cc76ec6e461, type: 2}
+  - {fileID: 11400000, guid: 0941283d942ba9048bd43b010b0ee0eb, type: 2}
+  - {fileID: 11400000, guid: 3561990932bce6e4eae8e752c1a50af7, type: 2}
+  - {fileID: 11400000, guid: 462f1803630496143926c7564fb6b502, type: 2}
+  - {fileID: 11400000, guid: a91c42f4b2c8052409f3bf2e3e92a4aa, type: 2}
   - {fileID: 11400000, guid: 4b72f790b56247446b1ee66b07f2922a, type: 2}
-  - {fileID: 11400000, guid: 4b72f790b56247446b1ee66b07f2922a, type: 2}
-  - {fileID: 11400000, guid: 25c2569e3d4805d4c834210e3eec3986, type: 2}
-  - {fileID: 11400000, guid: 25c2569e3d4805d4c834210e3eec3986, type: 2}
-  - {fileID: 11400000, guid: d302d7e6c4a12bb4381799b6e3fdc892, type: 2}
-  - {fileID: 11400000, guid: d302d7e6c4a12bb4381799b6e3fdc892, type: 2}
-  - {fileID: 11400000, guid: d302d7e6c4a12bb4381799b6e3fdc892, type: 2}
-  - {fileID: 11400000, guid: d302d7e6c4a12bb4381799b6e3fdc892, type: 2}
-  - {fileID: 11400000, guid: d302d7e6c4a12bb4381799b6e3fdc892, type: 2}
-  - {fileID: 11400000, guid: d302d7e6c4a12bb4381799b6e3fdc892, type: 2}
-  - {fileID: 11400000, guid: d302d7e6c4a12bb4381799b6e3fdc892, type: 2}
-  - {fileID: 11400000, guid: d302d7e6c4a12bb4381799b6e3fdc892, type: 2}
-  - {fileID: 11400000, guid: d302d7e6c4a12bb4381799b6e3fdc892, type: 2}
-  - {fileID: 11400000, guid: d302d7e6c4a12bb4381799b6e3fdc892, type: 2}
-  - {fileID: 11400000, guid: d302d7e6c4a12bb4381799b6e3fdc892, type: 2}
-  - {fileID: 11400000, guid: d302d7e6c4a12bb4381799b6e3fdc892, type: 2}
+  - {fileID: 11400000, guid: 9a1e12c216e21614491af7de6da103f3, type: 2}
+  Disguises:
+  - {fileID: 11400000, guid: 7e8a75735424fa44e94cd3b236d001e0, type: 2}
+  - {fileID: 11400000, guid: d6c88e4a71ecf38429366e89748b108c, type: 2}
+  - {fileID: 11400000, guid: 6e47e59d0cc79854dba4696f65727615, type: 2}
+  - {fileID: 11400000, guid: 3c2b2685651e47d42b9da33cc49c7c70, type: 2}
+  - {fileID: 11400000, guid: 3d9f84c28ebb2164083bfa59056ab3c2, type: 2}
+  - {fileID: 11400000, guid: 6088e1fa2b8ce534bb361f5f1dbd7a58, type: 2}
+  - {fileID: 11400000, guid: 4a7631e88162c494e9259fc25f9ae818, type: 2}
+  - {fileID: 11400000, guid: c3f6e04ff65090b459063da0d5d056c1, type: 2}
+  - {fileID: 11400000, guid: 61fc21d3b9fcef8439209d70842c1bb9, type: 2}
+  Needs:
+  - {fileID: 11400000, guid: d02289e47e1d1a6439f92f97a760d16a, type: 2}
+  - {fileID: 11400000, guid: 35d615155cf57b047a51af91a498f301, type: 2}
+  - {fileID: 11400000, guid: 76ac99bf47e5c4b42811814c409c6795, type: 2}
+  - {fileID: 11400000, guid: 7c34638b6fd2e6a46860a74ed4cc2dfb, type: 2}
+  - {fileID: 11400000, guid: 342fb839bbe24ec41a8dd13f305de055, type: 2}
+  - {fileID: 11400000, guid: 6225ed8d40bce2c45889755978fd7e68, type: 2}
+  - {fileID: 11400000, guid: 24b21f60f3bf33b45842042b03b7170c, type: 2}
+  - {fileID: 11400000, guid: 4b64b35938d71744f88500f3641dcfd1, type: 2}
+  - {fileID: 11400000, guid: e92bd0dc668ccd940a90753d04c55e39, type: 2}
+  - {fileID: 11400000, guid: a9af7afa7e19b5840b86feb889993526, type: 2}
+  - {fileID: 11400000, guid: 7b41432da7e1d7d4898e64cfec637929, type: 2}
+  ExitNeed: {fileID: 11400000, guid: 76ac99bf47e5c4b42811814c409c6795, type: 2}
   DefaultEntityValues: {fileID: 11400000, guid: 664b86df3a2e0d74b862701ca2fdce47, type: 2}
   DefaultEffectStats: {fileID: 11400000, guid: 16439299c17ce0540b8a6c59e2797a4e, type: 2}
   EffectVisuals:
@@ -99,46 +118,7 @@ MonoBehaviour:
     activeColor: {r: 0, g: 0.8871794, b: 1, a: 1}
     particles: {fileID: 195143390741181882, guid: 3f782619aaee8f34fbd752a65080276e, type: 3}
   enemies:
-  - {fileID: 8799387768682952896, guid: a0ae99d5a5341c441873358d634c2e1a, type: 3}
-  - {fileID: 8799387768682952896, guid: 4f635c42499732c49b07fea74a04f6ad, type: 3}
-  - {fileID: 8799387768682952896, guid: bf8e8d43c61b59b4c9b1d69205eb7285, type: 3}
-  - {fileID: 8799387768682952896, guid: 5d610cff41e9034478301694f7391ec5, type: 3}
-  - {fileID: 8799387768682952896, guid: fb2c57e5ed04760448d30688b89562d8, type: 3}
-  - {fileID: 8799387768682952896, guid: e3190c55fdb9f514db6cf8472f36b72d, type: 3}
-  - {fileID: 8799387768682952896, guid: f966859864f464e48b5952090fe06518, type: 3}
-  - {fileID: 8799387768682952896, guid: a0ae99d5a5341c441873358d634c2e1a, type: 3}
-  - {fileID: 8799387768682952896, guid: a0ae99d5a5341c441873358d634c2e1a, type: 3}
-  - {fileID: 8799387768682952896, guid: a0ae99d5a5341c441873358d634c2e1a, type: 3}
-  - {fileID: 8799387768682952896, guid: a0ae99d5a5341c441873358d634c2e1a, type: 3}
-  - {fileID: 8799387768682952896, guid: a0ae99d5a5341c441873358d634c2e1a, type: 3}
-  - {fileID: 8799387768682952896, guid: a0ae99d5a5341c441873358d634c2e1a, type: 3}
-  - {fileID: 8799387768682952896, guid: a0ae99d5a5341c441873358d634c2e1a, type: 3}
-  - {fileID: 8799387768682952896, guid: a0ae99d5a5341c441873358d634c2e1a, type: 3}
-  - {fileID: 8799387768682952896, guid: a0ae99d5a5341c441873358d634c2e1a, type: 3}
-  - {fileID: 8799387768682952896, guid: a0ae99d5a5341c441873358d634c2e1a, type: 3}
-  - {fileID: 8799387768682952896, guid: a0ae99d5a5341c441873358d634c2e1a, type: 3}
-  - {fileID: 8799387768682952896, guid: a0ae99d5a5341c441873358d634c2e1a, type: 3}
-  - {fileID: 8799387768682952896, guid: a0ae99d5a5341c441873358d634c2e1a, type: 3}
-  - {fileID: 8799387768682952896, guid: a0ae99d5a5341c441873358d634c2e1a, type: 3}
-  - {fileID: 8799387768682952896, guid: a0ae99d5a5341c441873358d634c2e1a, type: 3}
-  - {fileID: 8799387768682952896, guid: a0ae99d5a5341c441873358d634c2e1a, type: 3}
-  - {fileID: 8799387768682952896, guid: a0ae99d5a5341c441873358d634c2e1a, type: 3}
-  - {fileID: 8799387768682952896, guid: a0ae99d5a5341c441873358d634c2e1a, type: 3}
-  - {fileID: 8799387768682952896, guid: a0ae99d5a5341c441873358d634c2e1a, type: 3}
-  - {fileID: 8799387768682952896, guid: a0ae99d5a5341c441873358d634c2e1a, type: 3}
-  - {fileID: 8799387768682952896, guid: a0ae99d5a5341c441873358d634c2e1a, type: 3}
-  - {fileID: 8799387768682952896, guid: a0ae99d5a5341c441873358d634c2e1a, type: 3}
-  - {fileID: 8799387768682952896, guid: a0ae99d5a5341c441873358d634c2e1a, type: 3}
-  - {fileID: 8799387768682952896, guid: a0ae99d5a5341c441873358d634c2e1a, type: 3}
-  - {fileID: 8799387768682952896, guid: a0ae99d5a5341c441873358d634c2e1a, type: 3}
-  - {fileID: 8799387768682952896, guid: a0ae99d5a5341c441873358d634c2e1a, type: 3}
-  - {fileID: 8799387768682952896, guid: a0ae99d5a5341c441873358d634c2e1a, type: 3}
-  - {fileID: 8799387768682952896, guid: a0ae99d5a5341c441873358d634c2e1a, type: 3}
-  - {fileID: 8799387768682952896, guid: a0ae99d5a5341c441873358d634c2e1a, type: 3}
-  - {fileID: 8799387768682952896, guid: a0ae99d5a5341c441873358d634c2e1a, type: 3}
-  - {fileID: 8799387768682952896, guid: a0ae99d5a5341c441873358d634c2e1a, type: 3}
-  - {fileID: 8799387768682952896, guid: a0ae99d5a5341c441873358d634c2e1a, type: 3}
-  - {fileID: 8799387768682952896, guid: a0ae99d5a5341c441873358d634c2e1a, type: 3}
+  - {fileID: 193002233852398132, guid: b655d7d83c0abe148967a3c8fd0e18dc, type: 3}
   random:
   - name: Achoo!
   - name: Burp.
@@ -151,33 +131,98 @@ MonoBehaviour:
   - name: Aaaay!
   - name: Arrrr!
   - name: '''Tis but a scratch!'
+  - name: Oh!
+  - name: Uh!
+  - name: Ow!
+  - name: Ay!
+  - name: Oof!
   onDeath:
   - name: Aargh...
   - name: Ugh...
   - name: Oh...
   - name: ...
   - name: Uh...
+  - name: Remember me...
+  - name: Why..?
+  - name: No...
+  - name: I am content.
+  - name: I wish I had let myself be happier.
+  - name: Father, into Your hands I commit My spirit.
+  - name: Light! More light!
+  - name: Oh wow. Oh wow. Oh wow...
+  - name: I must go in, the fog is rising.
+  - name: I die before my time...
+  - name: That's all folks.
+  - name: 
+  - name: 
+  - name: 
+  - name: 
+  - name: 
+  - name: 
+  - name: 
+  - name: 
+  - name: 
+  - name: 
+  - name: 
+  - name: 
+  - name: 
+  - name: 
+  - name: 
+  - name: 
   onParry:
   - name: Haha!
   - name: Look at that!
   - name: Ha!
   - name: Back at you!
   - name: I'm too fast!
+  - name: Im better!
+  - name: Ha!
+  - name: Can't touch this!
+  - name: You can't see me!
+  - name: Suck it!
+  - name: Up yours!
+  - name: Ha!
+  - name: Ha!
+  - name: Ha!
+  - name: Ha!
+  - name: Ha!
+  - name: Ha!
+  - name: Ha!
+  - name: Ha!
+  - name: Ha!
+  - name: Ha!
+  - name: Ha!
   onInvestigationStarted:
   - name: What was that?
   - name: Huh..?
   - name: Hello..?
   - name: Is that you?
   - name: Who's there?
+  - name: That you..?
+  - name: Who goes there?
+  - name: Show yourselves!
+  - name: Anyone?
+  - name: ..?
   onInvestigationEnded:
   - name: Must've been the wind...
   - name: Nothing here...
   - name: That was a waste of time...
+  - name: Whatever...
+  - name: Screw that...
+  - name: Guess that was nothing...
+  - name: Oh well...
   inCombatNoticeDisbelief:
   - name: Ah!?
   - name: Im shocked!?
   - name: What the..!?
   - name: Hey!?
+  - name: WTF?!
+  - name: WHAT?!
+  - name: WHAT?!
+  - name: Gasp!
+  - name: How?!
+  - name: Here!?
+  - name: You?!
   inCombatNotice:
   - name: They're here!
   - name: Get them!
@@ -192,20 +237,34 @@ MonoBehaviour:
   - name: You won't run far!
   - name: Follow them!
   - name: Catch them!
+  - name: We'll catch you!
+  - name: Hurry! Hurry!
+  - name: Hurry up, get them!
   onSearchFail:
   - name: They're probably gone by now...
   - name: Lost them...
   - name: They're gone...
   - name: They ain't here...
   - name: They got away...
+  - name: Aaaand they're gone...
+  - name: We'll get them next time...
   inFleeEnterNotice:
   - name: Aaaaaaaaaa!
   - name: Help me!
   - name: Heeeeeeelp!
   - name: AAAA!
+  - name: NOO!
+  - name: PLEEASE, GOD, NO!
+  - name: AAAAH!!
+  - name: Help us!
+  - name: Get away!
+  - name: Run!
   onFleeEnded:
   - name: Pheeew...
   - name: Whew...
   - name: Made it!
   - name: I'm safe now!
   - name: Phew!
+  - name: I tought that was it...
+  - name: I'm all right...
+  - name: I'm all good...

@@ -16,9 +16,10 @@ MonoBehaviour:
   Name: hardAttack
   Description: 
   DamageMultiplayer: 3
+  IsIllegal: 1
   AttackStepss:
   - StepName: 
-    LockMovement: 0
+    LockMovement: 1
     LockRotation: 0
     TargetEnum: 2
     WaitTime: 0.7

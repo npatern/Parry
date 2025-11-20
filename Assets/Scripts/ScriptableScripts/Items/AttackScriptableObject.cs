@@ -33,11 +33,12 @@ public class AttackScriptableObject : ScriptableObject
         public bool IsThrowing = false;
         public bool IsDisarming = false;
         public bool SkipIfPlayer = false;
-        
+        public bool SkipIfNPC = false;
+
         public Vector3 MovementOffset = Vector3.zero;
         public float SoundRange = 0;
         public Sound.TYPES soundType = Sound.TYPES.neutral;
-        public IEnumerator PerformStep(ToolsController toolsController, AttackScriptableObject attackScriptableObject, InputAction.CallbackContext context = new InputAction.CallbackContext())
+        public IEnumerator PerformStep(ToolsController toolsController, AttackScriptableObject attackScriptableObject, int currentStepNr, InputAction.CallbackContext context = new InputAction.CallbackContext())
         {
             toolsController.CurrentWeaponWrapper.CurrentWeaponObject.GetComponent<WeaponModel>().SetWeapon(IsDamaging);
             toolsController.MovementLocked = LockMovement;
@@ -61,6 +62,8 @@ public class AttackScriptableObject : ScriptableObject
 
             if (IsFiring==true) toolsController.FireBullet();
             float waitTime = WaitTime / toolsController.GetCombatSpeedMultiplier();
+            if (currentStepNr==0)
+                waitTime /= toolsController.WindUpSpeed;
             if (SoundRange > 0) if (!toolsController.statusController.IsDeaf() || soundType ==Sound.TYPES.cover)
                 Sounds.MakeSound(new Sound(toolsController.statusController, SoundRange, soundType));
 

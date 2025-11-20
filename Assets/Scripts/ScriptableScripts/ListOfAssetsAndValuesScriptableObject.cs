@@ -11,18 +11,27 @@ public class ListOfAssetsAndValuesScriptableObject : ScriptableObject
     public Bullet BulletThrowTemplate;
     public ItemWeaponScriptableObject EmptyWeapon;
     public ItemWeaponScriptableObject[] Weapons;
-
-
     public ItemWeaponScriptableObject GetRandomWeapon()
     {
         return Weapons[Random.Range(0,Weapons.Length)];
     }
+
+    [Space(10), Header("Disguises")]
+    public DisguiseScriptable[] Disguises;
+    public DisguiseScriptable GetRandomDisguise()
+    {
+        return Disguises[Random.Range(0, Disguises.Length)];
+    }
+    [Space(10), Header("Needs")]
+    public NeedScriptableObject[] Needs;
+    public NeedScriptableObject ExitNeed;
 
     [Space(10), Header("Entities")]
     public EntityValuesScriptableObject DefaultEntityValues;
     public StatsScriptable DefaultEffectStats;
     public EffectVisuals[] EffectVisuals;
     public GameObject[] enemies;
+    public GameObject PlayerEntity;
 
     [Space(10), Header("Barks")]
     public Bark[] random;
@@ -37,7 +46,6 @@ public class ListOfAssetsAndValuesScriptableObject : ScriptableObject
     public Bark[] onSearchFail;
     public Bark[] inFleeEnterNotice;
     public Bark[] onFleeEnded;
-    
 }
 [System.Serializable]
 public class Bark
@@ -69,41 +77,41 @@ public static class Barks
     public enum BarkTypes { onPain, onDeath, onParry , onInvestigationStarted , onInvestigationEnded , inCombatNoticeDisbelief, inCombatNotice, onSearchStart , onSearchFail , inFleeEnterNotice , onFleeEnded };
     public static string GetBark(BarkTypes barkType)
     {
-        Bark[] barkList = GameController.Instance.ListOfAssets.random;
+        Bark[] barkList = ResourcesManager.Instance.ListOfAssets.random;
         switch (barkType)
         {
             case BarkTypes.onPain:
-                barkList = GameController.Instance.ListOfAssets.onPain;
+                barkList = ResourcesManager.Instance.ListOfAssets.onPain;
                 break;
             case BarkTypes.onDeath:
-                barkList = GameController.Instance.ListOfAssets.onDeath;
+                barkList = ResourcesManager.Instance.ListOfAssets.onDeath;
                 break;
             case BarkTypes.onParry:
-                barkList = GameController.Instance.ListOfAssets.onParry;
+                barkList = ResourcesManager.Instance.ListOfAssets.onParry;
                 break;
             case BarkTypes.onInvestigationStarted:
-                barkList = GameController.Instance.ListOfAssets.onInvestigationStarted;
+                barkList = ResourcesManager.Instance.ListOfAssets.onInvestigationStarted;
                 break;
             case BarkTypes.onInvestigationEnded:
-                barkList = GameController.Instance.ListOfAssets.onInvestigationEnded;
+                barkList = ResourcesManager.Instance.ListOfAssets.onInvestigationEnded;
                 break;
             case BarkTypes.inCombatNotice:
-                barkList = GameController.Instance.ListOfAssets.inCombatNotice;
+                barkList = ResourcesManager.Instance.ListOfAssets.inCombatNotice;
                 break; 
             case BarkTypes.inCombatNoticeDisbelief:
-                barkList = GameController.Instance.ListOfAssets.inCombatNoticeDisbelief;
+                barkList = ResourcesManager.Instance.ListOfAssets.inCombatNoticeDisbelief;
                 break;
             case BarkTypes.onSearchStart:
-                barkList = GameController.Instance.ListOfAssets.onSearchStart;
+                barkList = ResourcesManager.Instance.ListOfAssets.onSearchStart;
                 break;
             case BarkTypes.onSearchFail:
-                barkList = GameController.Instance.ListOfAssets.onSearchFail;
+                barkList = ResourcesManager.Instance.ListOfAssets.onSearchFail;
                 break;
             case BarkTypes.inFleeEnterNotice:
-                barkList = GameController.Instance.ListOfAssets.inFleeEnterNotice;
+                barkList = ResourcesManager.Instance.ListOfAssets.inFleeEnterNotice;
                 break;
             case BarkTypes.onFleeEnded:
-                barkList = GameController.Instance.ListOfAssets.onFleeEnded;
+                barkList = ResourcesManager.Instance.ListOfAssets.onFleeEnded;
                 break;
         }
         if (barkList.Length <= 0) return "Whatever...";

@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   statsPermitted: 0600000001000000
   statsMortalOnEmpty: 01000000
-  statsMortalOnFull: 
+  statsMortalOnFull: 01000000
   statsAlwaysFull: 06000000
   makeCountagous: 06000000
+  startFull: 

@@ -4,13 +4,19 @@ using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.InputSystem;
 using UnityEngine.Events;
+
+//Main script of almost every dynamic object in the game - from NPCs to breakable rocks. Handles damage and other effects, like fire, electricity etc.
 public class StatusController : MonoBehaviour, IHear, IPowerFlowController
-{   
+{
+    [Tooltip("Immortal can't die by any means")]
     public bool Immortal = false;
+    [Tooltip("Impervious can't recieve damage, but can be killed by script.")]
+    public bool Impervious = false;
+    [Tooltip("ID used to avoid friendly fire in some cases")]//change to other kind of value for faster comparing
     public string Team = "";
+    [Tooltip("Approximate size - used to scale some animations and define with witch object the entity can interact with.")]//consider moving to other controller
     public Vector3 size = Vector3.one;
-    [SerializeField]
-    private bool loadValuesInRealTime = false;
+    
     public DamageEffects defaultDamageEffects;
     public Stats stats;
     [SerializeField]
@@ -55,6 +61,10 @@ public class StatusController : MonoBehaviour, IHear, IPowerFlowController
     [SerializeField]
     private ParticleSystem PostureLongEffect;
 
+    [SerializeField]
+    [Tooltip("Debug - set to true if you want to mess with default values in real time")]
+    private bool loadValuesInRealTime = false;
+
     private Rigidbody rb;
     private ToolsController toolsController;
     private SensesController sensesController;
@@ -92,10 +102,7 @@ public class StatusController : MonoBehaviour, IHear, IPowerFlowController
         if (GetComponent<SensesController>() != null)
             sensesController = GetComponent<SensesController>();
         //
-        if (statsArchetype == null)
-            stats = new Stats(GameController.Instance.ListOfAssets.DefaultEffectStats, this);
-        else
-            stats = new Stats(GameController.Instance.ListOfAssets.DefaultEffectStats, statsArchetype, this);
+        
         //
         if (headTransform == null) headTransform = transform;
         if (bodyTransform == null) bodyTransform = transform;
@@ -104,6 +111,10 @@ public class StatusController : MonoBehaviour, IHear, IPowerFlowController
 
     void Start()
     {
+        if (statsArchetype == null)
+            stats = new Stats(ResourcesManager.Instance.ListOfAssets.DefaultEffectStats, this);
+        else
+            stats = new Stats(ResourcesManager.Instance.ListOfAssets.DefaultEffectStats, statsArchetype, this);
         if (UIController.Instance == null)
         {
             Debug.LogError("Didnt find UICONTROLLER while starting " + gameObject.name);
@@ -115,7 +126,7 @@ public class StatusController : MonoBehaviour, IHear, IPowerFlowController
         IsAttackedEvent.AddListener(Attacked);
         StartFreezeEvent.AddListener(FrozenStart);
         EndFreezeEvent.AddListener(FrozenEnd);
-        LoadStatsFromScriptable(GameController.Instance.ListOfAssets.DefaultEntityValues);
+        LoadStatsFromScriptable(ResourcesManager.Instance.ListOfAssets.DefaultEntityValues);
         TickTimer = TickTime;
         //onPowerStart();
     }
@@ -124,7 +135,7 @@ public class StatusController : MonoBehaviour, IHear, IPowerFlowController
     {
         stats.ApplyTick();
 
-        if (loadValuesInRealTime) LoadStatsFromScriptable(GameController.Instance.ListOfAssets.DefaultEntityValues);
+        if (loadValuesInRealTime) LoadStatsFromScriptable(ResourcesManager.Instance.ListOfAssets.DefaultEntityValues);
 
         ApplyTick();
     }
@@ -305,7 +316,7 @@ public class StatusController : MonoBehaviour, IHear, IPowerFlowController
                 if (toEquip != null)
                 {
                     UIController.Instance.SpawnTextBubble(Barks.GetBark(Barks.BarkTypes.onParry), transform);
-                    if (IsPlayer) GameController.Instance.IncreaseSlowmoTimer();
+                    if (IsPlayer) LevelController.Instance.IncreaseSlowmoTimer();
                     toolsController.EquipWeaponFromPickable(toEquip);
                     //attacker.TakePosture(damage.Damage * CriticalMultiplier, attacker);
                     attacker.IsAttackedEvent.Invoke();
@@ -325,14 +336,13 @@ public class StatusController : MonoBehaviour, IHear, IPowerFlowController
             }
             else
             {
-                attacker.TakePostureAndEffects(damage,  CriticalMultiplier * multiplier, attacker);
-
-
+                //attacker.TakePostureAndEffects(damage,  CriticalMultiplier * multiplier, attacker);
+                attacker.TakePostureOnly(damage.Damage, CriticalMultiplier * multiplier, attacker);
                 attacker.IsAttackedEvent.Invoke();
             }
             UIController.Instance.SpawnTextBubble(Barks.GetBark(Barks.BarkTypes.onParry), transform);
 
-            if (IsPlayer) GameController.Instance.IncreaseSlowmoTimer();
+            if (IsPlayer) LevelController.Instance.IncreaseSlowmoTimer();
             return false;
         }
 
@@ -348,11 +358,16 @@ public class StatusController : MonoBehaviour, IHear, IPowerFlowController
     }
     public void TakeDamageWithEffects(DamageEffects damageEffect, float multiplier = 1, StatusController attacker = null, bool isFromBullet = false)
     {
-        if (attacker != null)
-            if (MultiplyDamage(attacker))
-                multiplier *= attacker.CriticalMultiplier;
-        float _damage = damageEffect.Damage;
         bool isCritical = false;
+        if (attacker != null)
+            if (CheckIfIsCritical())
+            {
+                multiplier *= attacker.CriticalMultiplier;
+                isCritical = true;
+            }
+                
+        float _damage = damageEffect.Damage;
+        
 
         ApplyOnlyEffects(damageEffect, multiplier);
 
@@ -373,7 +388,10 @@ public class StatusController : MonoBehaviour, IHear, IPowerFlowController
     }
     public void TakeDamage(float _damage, Color color, float multiplier = 1, StatusController attacker = null, bool isFromBullet = false, bool isCritical = false)
     {
+        if (Impervious) return;
         if (Immortal) return;
+
+        //Push(attacker,_damage);
         Life -= _damage * multiplier;
         SpawnParticles(DamageEffect, transform);
 
@@ -386,7 +404,6 @@ public class StatusController : MonoBehaviour, IHear, IPowerFlowController
         }
         else
         {
-            
             if (TryGetComponent<EntityController>(out EntityController _entity))
             {
                 _entity.AddVelocity(-transform.forward * 10);
@@ -406,15 +423,29 @@ public class StatusController : MonoBehaviour, IHear, IPowerFlowController
             }
         }
     }
-    bool MultiplyDamage(StatusController attacker)
+    void Push(StatusController attacker, float pushForce = 10)
     {
-
+        if (GetComponent<EntityController>() != false)
+        {
+            GetComponent<EntityController>().agent.velocity += pushForce * 10 * (transform.position - attacker.transform.position);
+        }
+    }
+    bool CheckIfIsCritical(StatusController attacker)
+    {
+        return CheckIfIsCritical();
+    }
+    bool CheckIfIsCritical()
+    {
         if (IsPlayer) return false;
         if (IsStunned()) return true;
         if (GetComponent<EntityController>() != null)
+        {
             if (!GetComponent<EntityController>().IsCombatReady())
                 return true;
-
+            if (GetComponent<EntityController>().currentState.IsCurrentlyShocked())
+                return true;
+        }
+            
         if (sensesController != null) if (!sensesController.IsAlerted) return true;
         return false;
     }
@@ -508,7 +539,7 @@ public class StatusController : MonoBehaviour, IHear, IPowerFlowController
 
         if (TryGetComponent<EntityController>(out EntityController entityController))
         {
-            GameController.Instance.RemoveFromListOfEntities(entityController);
+            LevelController.Instance.RemoveFromListOfEntities(entityController);
             entityController.ResetFulfiller();
             entityController.StopAllCoroutines();
             entityController.enabled = false;
@@ -531,9 +562,14 @@ public class StatusController : MonoBehaviour, IHear, IPowerFlowController
         }
 
 
-        if (IsPlayer) GameController.Instance.EndGame();
+        if (IsPlayer) LevelController.Instance.EndGame();
         OnKillEvent.Invoke();
         if (DestroyOnKill)
-            Destroy(gameObject, .1f);
+        {
+            Debug.Log("Destroying!!!!!! "+name);
+            Destroy(gameObject);
+            Debug.Log("Destroyed!!!!!! " + name);
+        }
+           
     }
 }

@@ -7,6 +7,6 @@ public class UIMainMenu : MonoBehaviour
 {
     public void LoadScene()
     {
-        SceneManager.LoadScene(1);
+        GameManager.Instance.StartGameplay();
     }
 }

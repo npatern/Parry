@@ -68,6 +68,7 @@ MonoBehaviour:
     IsThrowing: 0
     IsDisarming: 0
     SkipIfPlayer: 1
+    SkipIfNPC: 0
     MovementOffset: {x: 0, y: 0, z: 0}
     SoundRange: 0
     soundType: 0
@@ -113,7 +114,7 @@ MonoBehaviour:
     OnlyIfGrounded: 0
     SkipIfCanceled: 0
     StayTillContextCanceled: 0
-    Interruptable: 1
+    Interruptable: 0
     IsParrying: 1
     IsProtected: 0
     IsDamaging: 0
@@ -121,10 +122,11 @@ MonoBehaviour:
     IsThrowing: 0
     IsDisarming: 0
     SkipIfPlayer: 0
+    SkipIfNPC: 1
     MovementOffset: {x: 0, y: 0, z: 0}
     SoundRange: 0
     soundType: 0
-  - StepName: 
+  - StepName: Parry hold
     LockMovement: 1
     LockRotation: 0
     TargetEnum: 1
@@ -165,14 +167,60 @@ MonoBehaviour:
     IsThrowing: 0
     IsDisarming: 0
     SkipIfPlayer: 0
+    SkipIfNPC: 0
     MovementOffset: {x: 0, y: 0, z: 0}
     SoundRange: 0
     soundType: 0
-  - StepName: 
+  - StepName: Parry back player
     LockMovement: 0
     LockRotation: 0
     TargetEnum: 0
-    WaitTime: 0.2
+    WaitTime: 0.15
+    MovementCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 1
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    StayTillGrounded: 0
+    OnlyIfGrounded: 0
+    SkipIfCanceled: 0
+    StayTillContextCanceled: 0
+    Interruptable: 0
+    IsParrying: 0
+    IsProtected: 0
+    IsDamaging: 0
+    IsFiring: 0
+    IsThrowing: 0
+    IsDisarming: 0
+    SkipIfPlayer: 0
+    SkipIfNPC: 1
+    MovementOffset: {x: 0, y: 0, z: 0}
+    SoundRange: 0
+    soundType: 0
+  - StepName: Parry back npc
+    LockMovement: 0
+    LockRotation: 0
+    TargetEnum: 0
+    WaitTime: 0.15
     MovementCurve:
       serializedVersion: 2
       m_Curve:
@@ -208,7 +256,8 @@ MonoBehaviour:
     IsFiring: 0
     IsThrowing: 0
     IsDisarming: 0
-    SkipIfPlayer: 0
+    SkipIfPlayer: 1
+    SkipIfNPC: 0
     MovementOffset: {x: 0, y: 0, z: 0}
     SoundRange: 0
     soundType: 0

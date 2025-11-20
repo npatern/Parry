@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 8691737749243949429}
   - component: {fileID: 7333040839881901861}
   - component: {fileID: -685507454934128269}
-  m_Layer: 8
+  m_Layer: 10
   m_Name: Bullet
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -84,6 +84,7 @@ MonoBehaviour:
     caster: {fileID: 0}
     origin: {x: 0, y: 0, z: 0}
     effectList: []
+    deathEffectObjectToSpawn: {fileID: 0}
   multiplier: 1
   DestroyAfterDamage: 1
   isDamaging: 1
@@ -94,6 +95,12 @@ MonoBehaviour:
     rid: -2
   SoundRange: 2
   soundType: 2
+  destroyObject: {fileID: 0}
+  primed: 0
+  primeTimer: 1
+  layerMask:
+    serializedVersion: 2
+    m_Bits: 0
   references:
     version: 2
     RefIds:
@@ -112,6 +119,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Immortal: 0
+  Impervious: 0
   Team: 
   size: {x: 1, y: 1, z: 1}
   loadValuesInRealTime: 0
@@ -120,6 +128,7 @@ MonoBehaviour:
     caster: {fileID: 0}
     origin: {x: 0, y: 0, z: 0}
     effectList: []
+    deathEffectObjectToSpawn: {fileID: 0}
   stats:
     stats: []
     status: {fileID: 0}
@@ -161,12 +170,12 @@ MonoBehaviour:
   ParryEffect: {fileID: 0}
   PostureEffect: {fileID: 0}
   PostureLongEffect: {fileID: 0}
-  deafTime: 0.2
   effects:
     Damage: 0
     caster: {fileID: 0}
     origin: {x: 0, y: 0, z: 0}
     effectList: []
+    deathEffectObjectToSpawn: {fileID: 0}
   TickTime: 0.5
   OverheadController: {fileID: 0}
 --- !u!1 &2525602013554579875
