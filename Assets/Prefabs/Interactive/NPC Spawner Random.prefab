@@ -840,7 +840,7 @@ GameObject:
   - component: {fileID: 8753136791730950193}
   - component: {fileID: 8753136791730950194}
   m_Layer: 0
-  m_Name: AI Spawner
+  m_Name: NPC Spawner Random
   m_TagString: Spawn
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

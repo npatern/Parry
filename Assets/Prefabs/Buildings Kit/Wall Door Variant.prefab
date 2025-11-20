@@ -111,6 +111,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   minDistance: 10
+  target: {fileID: 0}
+  offset: {x: 0, y: 0.5, z: 0}
 --- !u!1 &2320376493362698174
 GameObject:
   m_ObjectHideFlags: 0
@@ -222,6 +224,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   minDistance: 10
+  target: {fileID: 0}
+  offset: {x: 0, y: 0.5, z: 0}
 --- !u!1 &4300670670963462504
 GameObject:
   m_ObjectHideFlags: 0
@@ -340,7 +344,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5357870274403476230, guid: f5af19dbaf8b52b4da2a2dd1f26afb0a, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -2.4999998
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5357870274403476230, guid: f5af19dbaf8b52b4da2a2dd1f26afb0a, type: 3}
       propertyPath: m_LocalRotation.w
@@ -372,7 +376,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5357870274403476233, guid: f5af19dbaf8b52b4da2a2dd1f26afb0a, type: 3}
       propertyPath: m_Name
-      value: Wall
+      value: Wall Variant
       objectReference: {fileID: 0}
     - target: {fileID: 5357870274443407470, guid: f5af19dbaf8b52b4da2a2dd1f26afb0a, type: 3}
       propertyPath: m_LocalScale.x

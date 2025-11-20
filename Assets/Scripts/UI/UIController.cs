@@ -4,9 +4,26 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.InputSystem;
 
-public class UIController : MonoBehaviour
+public class UIController : BaseController
 {
-    public static UIController Instance { get; private set; }
+    public static UIController _instance;
+    public static UIController Instance
+    {
+        get
+        {
+            if (_instance == null)
+            {
+                _instance = GameObject.FindObjectOfType<UIController>();
+            }
+
+            return _instance;
+        }
+    }
+    protected override void OnInitialize()
+    {
+        base.OnInitialize();
+    }
+
     public Canvas MainCanvas;
     public RectTransform CharacterPanel;
     public GameObject TextBubble;
@@ -17,20 +34,11 @@ public class UIController : MonoBehaviour
     public RectTransform UITrashParent;
     private void Awake()
     {
-        if (Instance != null && Instance != this)
-        {
-            Destroy(this);
-        }
-        else
-        {
-            Instance = this;
-        }
+
     }
     public void Update()
     {
-        CharacterPanel.gameObject.SetActive(GameplayController.Instance.CurrentEntity != null);
-
-        
+        CharacterPanel.gameObject.SetActive(LevelController.Instance.CurrentEntity != null);
     }
     public void SpawnTextBubble(string speech, Transform transform)
     {

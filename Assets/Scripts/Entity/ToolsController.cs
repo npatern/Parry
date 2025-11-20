@@ -42,7 +42,7 @@ public class ToolsController : MonoBehaviour
         {
             StopMovingEvent = new UnityEvent<bool>();
         }
-        EmptyWeaponWrapper = new ItemWeaponWrapper(GameplayController.Instance.ListOfAssets.EmptyWeapon);
+        EmptyWeaponWrapper = new ItemWeaponWrapper(ResourcesManager.Instance.ListOfAssets.EmptyWeapon);
 
         //if (DequippedWeaponWrapper == null) DequippedWeaponWrapper = new ItemWeaponWrapper(TESTDequippedWeaponScriptable);
         //if (DequippedWeapon == null) DequippedWeapon = Instantiate(DequippedWeaponWrapper.itemType.weaponObject, transform).transform;
@@ -370,7 +370,7 @@ public class ToolsController : MonoBehaviour
     public void FireBullet()
     {
         WeaponModel weaponModel = CurrentWeaponWrapper.CurrentWeaponObject.GetComponent<WeaponModel>();
-        Bullet bullet = Instantiate(CurrentWeaponWrapper.itemType.bullet, weaponModel.StartPoint.position, CurrentWeaponWrapper.CurrentWeaponObject.transform.rotation, GameplayController.Instance.GarbageCollector.transform).GetComponent<Bullet>();
+        Bullet bullet = Instantiate(CurrentWeaponWrapper.itemType.bullet, weaponModel.StartPoint.position, CurrentWeaponWrapper.CurrentWeaponObject.transform.rotation, LevelController.Instance.GarbageCollector.transform).GetComponent<Bullet>();
         bullet.damage = CurrentWeaponWrapper.bulletEffects;
         bullet.destroyObject = bullet.damage.deathEffectObjectToSpawn;
         Rigidbody bulletRB = bullet.GetComponent<Rigidbody>();

@@ -52,7 +52,7 @@ public class UIBarController : MonoBehaviour
             Debug.LogError("Stat not found!");
             return; 
         }
-        foreach (EffectVisuals _visuals in GameplayController.Instance.ListOfAssets.EffectVisuals)
+        foreach (EffectVisuals _visuals in ResourcesManager.Instance.ListOfAssets.EffectVisuals)
         {
             if (stat.type == _visuals.type) 
             {

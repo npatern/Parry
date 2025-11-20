@@ -270,7 +270,7 @@ public class Stat
     }
     void GetVisuals()
     {
-        foreach (EffectVisuals _visuals in GameplayController.Instance.ListOfAssets.EffectVisuals)
+        foreach (EffectVisuals _visuals in ResourcesManager.Instance.ListOfAssets.EffectVisuals)
         {
             if (type == _visuals.type)
             {

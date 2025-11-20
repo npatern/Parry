@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : BaseManager
 {
@@ -30,9 +31,9 @@ public class GameManager : BaseManager
     }
     private IEnumerator StartGameplayRoutine()
     {
-        //yield return SceneManager.LoadSceneAsync("GameplayScene");
+        yield return SceneManager.LoadSceneAsync(2);
         yield return null;
-        GameplayController.Instance.Initialize();
+        ObjectiveController.Instance.Initialize();
         CameraController.Instance.Initialize();
         LevelController.Instance.Initialize();
         //PostProcessController.Instance.Initialize();

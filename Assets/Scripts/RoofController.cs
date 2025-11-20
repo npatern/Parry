@@ -5,14 +5,14 @@ using UnityEngine;
 public class RoofController : MonoBehaviour
 {
     Transform playerPosition;
-    GameplayController gameController;
+    LevelController gameController;
     MeshRenderer mesh;
     public float minDistance = 10;
     public Transform target;
     public Vector3 offset = Vector3.up / 2;
     void Start()
     {
-        gameController = GameplayController.Instance;
+        gameController = LevelController.Instance;
         
  
         mesh = this.GetComponent<MeshRenderer>();

@@ -6,22 +6,22 @@ public class UITime : MonoBehaviour
 {
     public void ResetTime()
     {
-        GameplayController.Instance.ResetTimeSpeed();
+        LevelController.Instance.ResetTimeSpeed();
     }
     public void StopTime()
     {
-        GameplayController.Instance.StopTime();
+        LevelController.Instance.StopTime();
     }
     public void SpeedUpTime()
     {
-        GameplayController.Instance.SetTimeSpeed(2);
+        LevelController.Instance.SetTimeSpeed(2);
     }
     public void SpeedUpTime(float time)
     {
-        GameplayController.Instance.SetTimeSpeed(time);
+        LevelController.Instance.SetTimeSpeed(time);
     }
     public void SlowDownTime ()
     {
-        GameplayController.Instance.SetTimeSpeed(.5f);
+        LevelController.Instance.SetTimeSpeed(.5f);
     }
 }

@@ -17,11 +17,11 @@ public class UIzone : MonoBehaviour
     }
     public void RefreshImage()
     {
-        if (GameplayController.Instance.CurrentPlayer == null) return;
-        if (GameplayController.Instance.CurrentPlayer.GetComponent<OutwardController>() == null) return;
-        if (GameplayController.Instance.CurrentPlayer.GetComponent<OutwardController>().activeZone == null) return;
-        OutwardController outward = GameplayController.Instance.CurrentPlayer.GetComponent<OutwardController>();
-        ZoneScriptable zone = GameplayController.Instance.CurrentPlayer.GetComponent<OutwardController>().activeZone;
+        if (LevelController.Instance.CurrentPlayer == null) return;
+        if (LevelController.Instance.CurrentPlayer.GetComponent<OutwardController>() == null) return;
+        if (LevelController.Instance.CurrentPlayer.GetComponent<OutwardController>().activeZone == null) return;
+        OutwardController outward = LevelController.Instance.CurrentPlayer.GetComponent<OutwardController>();
+        ZoneScriptable zone = LevelController.Instance.CurrentPlayer.GetComponent<OutwardController>().activeZone;
         
         if (zone == null) return;
         zoneName.text = zone.name;

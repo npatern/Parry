@@ -5,7 +5,7 @@ using UnityEngine;
 public class ResourcesManager : BaseManager
 {
     public static ResourcesManager Instance { get; private set; }
-    public ListOfAssetsAndValuesScriptableObject ListOfAssets { get; private set; }
+    public ListOfAssetsAndValuesScriptableObject ListOfAssets;
 
 private void Awake()
     {

@@ -44,7 +44,7 @@ public class Bullet : MonoBehaviour
         if (bounceTimer > 0) bounceTimer -= Time.fixedDeltaTime;
         if (item == null || isDamaging==false) return;
         //basically if is an object thrown by player... needs tidying up badly. 
-        if (item.CastDamage(damage, multiplier,GameplayController.Instance.CurrentPlayer))
+        if (item.CastDamage(damage, multiplier,LevelController.Instance.CurrentPlayer))
         {
             isDamaging = false;
             RemoveParticles();
@@ -145,7 +145,7 @@ public class Bullet : MonoBehaviour
         RemoveParticles();
         if (ParticlesToSpawn != null)
         {
-            Instantiate(ParticlesToSpawn, transform.position, transform.rotation, GameplayController.Instance.transform);
+            Instantiate(ParticlesToSpawn, transform.position, transform.rotation, LevelController.Instance.transform);
         }
         if (GetComponent<StatusController>() != null) if (GetComponent<StatusController>().IsDeaf()) return;
 

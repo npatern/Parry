@@ -26,16 +26,16 @@ public class UIItem : MonoBehaviour
     {
         IllegalItem.SetActive(false);
         IllegalItemBack.SetActive(false);
-        if (GameplayController.Instance.CurrentPlayer == null) return;
-        if (GameplayController.Instance.CurrentPlayer.GetComponent<ToolsController>() == null) return;
+        if (LevelController.Instance.CurrentPlayer == null) return;
+        if (LevelController.Instance.CurrentPlayer.GetComponent<ToolsController>() == null) return;
 
-        ToolsController tools = GameplayController.Instance.CurrentPlayer.GetComponent<ToolsController>();
+        ToolsController tools = LevelController.Instance.CurrentPlayer.GetComponent<ToolsController>();
         if (tools.CurrentWeaponWrapper == null) return;
 
         ItemWeaponWrapper wrapper = tools.CurrentWeaponWrapper;
         if (wrapper.icon == null) return;
 
-        if (GameplayController.Instance.CurrentPlayer.TryGetComponent<OutwardController>(out OutwardController outward))
+        if (LevelController.Instance.CurrentPlayer.TryGetComponent<OutwardController>(out OutwardController outward))
         if (outward.GetWeaponIllegality(tools,wrapper) >0)
                 IllegalItem.SetActive(true);
 

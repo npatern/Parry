@@ -10,7 +10,7 @@ public class FulfillmentStepPostProcessScriptableObject : FulfillmentStepScripta
     public bool RemovePostProcessAfter = true;
     public override void StartStep(EntityController entity)
     {
-        Volume = GameplayController.Instance.PostProcess.AddComponent<PostProcessVolume>();
+        Volume = LevelController.Instance.PostProcess.AddComponent<PostProcessVolume>();
         Volume.sharedProfile = Profile;
         Volume.isGlobal = true;
         //Debug.Log("Addedd custom profile" + Profile.name);

@@ -3,12 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Rendering.PostProcessing;
 using System.Linq;
-public class GameplayController : BaseController
+public class LevelController : BaseController
 {
     [Header("References")]
     public Transform Level;
-    public ListOfAssetsAndValuesScriptableObject ListOfAssets;
-    public FollowTarget cameraController;
+    public CameraController cameraController;
     public Transform GarbageCollector;
     public EntityController CurrentEntity = null;
     
@@ -38,6 +37,7 @@ public class GameplayController : BaseController
     public List<LightController> lightControllers = new List<LightController>();
     public GameObject[] LegacySpawners;
     public SpawnerNPC[] Spawners;
+    public bool ExitReached = false;
 
     [Header("Timers")]
     [SerializeField]
@@ -46,14 +46,14 @@ public class GameplayController : BaseController
     float slowmoTimer = 0;
     bool slowmo = false;
 
-    public static GameplayController _instance;
-    public static GameplayController Instance
+    public static LevelController _instance;
+    public static LevelController Instance
     {
         get
         {
             if (_instance == null)
             {
-                _instance = GameObject.FindObjectOfType<GameplayController>();
+                _instance = GameObject.FindObjectOfType<LevelController>();
             }
 
             return _instance;
@@ -68,15 +68,22 @@ public class GameplayController : BaseController
         //Instance = this;
         //DontDestroyOnLoad(gameObject);
         if (StopTimeOnStart) StopTime();
-        CollectLevelElements();
-        lightControllers = new List<LightController>();
+        
         
     }
     private void Start()
     {
-      //  if (spawnOnce)
-          //  SpawnNpcs();
+
+        CollectLevelElements();
+        lightControllers = new List<LightController>();
+        //Generate Level
+        //CollectLevelElements
+
+
+        //  if (spawnOnce)
+        //  SpawnNpcs();
     }
+ 
     void CollectLevelElements()
     {
         LegacySpawners = GameObject.FindGameObjectsWithTag("Spawn");
@@ -98,6 +105,11 @@ public class GameplayController : BaseController
             SpawnEntity();
         */
     }
+    public void SetExitReached(bool isReached)
+    {
+        ExitReached = isReached;
+    }
+
     public void SpawnNpcsRuntime()
     {
         spawnTimer -= Time.deltaTime;
@@ -183,8 +195,8 @@ public class GameplayController : BaseController
     {
         EntitiesInGame = new List<EntityController>();
         CurrentPlayer = Instantiate(PlayerEntity, Vector3.zero, Quaternion.identity, EntitiesParent).GetComponent<StatusController>() ;
-        CurrentPlayer.GetComponent<ToolsController>().EquipItem(new ItemWeaponWrapper(ListOfAssets.GetRandomWeapon()));
-        cameraController.ApplyTarget(CurrentPlayer.transform);
+        CurrentPlayer.GetComponent<ToolsController>().EquipItem(new ItemWeaponWrapper(ResourcesManager.Instance.ListOfAssets.GetRandomWeapon()));
+        CameraController.Instance.ApplyTarget(CurrentPlayer.transform);
         SpawnNpcs();
     }
     public void RestartGame()
@@ -198,17 +210,17 @@ public class GameplayController : BaseController
     }
     public void SpawnNPC(Transform spawnerTransform)
     {
-        if (ListOfAssets == null) return;
-        DisguiseScriptable disguise = ListOfAssets.GetRandomDisguise();
+        //if (ListOfAssets == null) return;
+        DisguiseScriptable disguise = ResourcesManager.Instance.ListOfAssets.GetRandomDisguise();
         SpawnNPC(spawnerTransform, disguise);
     }
     public void SpawnNPC(Transform spawnerTransform, DisguiseScriptable disguise)
     {
-        GameObject npc = ListOfAssets.enemies[0];
-        OutwardController nakedGuy = Instantiate(npc, spawnerTransform.position, spawnerTransform.rotation, GameplayController.Instance.EntitiesParent).GetComponent<OutwardController>();
+        GameObject npc = ResourcesManager.Instance.ListOfAssets.enemies[0];
+        OutwardController nakedGuy = Instantiate(npc, spawnerTransform.position, spawnerTransform.rotation, LevelController.Instance.EntitiesParent).GetComponent<OutwardController>();
         nakedGuy.WearDisguise(disguise);
         EntityController newEntity = nakedGuy.GetComponent<EntityController>();
-        newEntity.target = GameplayController.Instance.CurrentPlayer;
+        newEntity.target = LevelController.Instance.CurrentPlayer;
         if (disguise.item != null)
             nakedGuy.GetComponent<ToolsController>().EquipItem(new ItemWeaponWrapper(disguise.item));
         EntitiesInGame.Add(newEntity);
