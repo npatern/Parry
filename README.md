@@ -1,4 +1,6 @@
-Sandbox where I test and prototype different mechanics:
+Sandbox where I test and prototype different mechanics.
+
+Gameplay can be seen here: https://youtu.be/06HgEmSv-TU
 
 Combat: Attack, dodge, parry, block and throw weapons.
 
