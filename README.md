@@ -14,6 +14,7 @@ Elemental damage: weapons and tools can apply different effects to targets,like 
 
 Improvise: Water makes electricity deadly, so watch out for puddles.
 
+
 Controls (mouse and keyboard / pad):
 
 Movement:...................WSAD/Left Thumbstick
