@@ -20,6 +20,7 @@ public class GameplayController : MonoBehaviour
     public int MaxEntitiesNr = 10;
     public bool StopTimeOnStart = false;
     public float TimeBetweenSpawns = 5;
+    public float difficultyDecreaser = 0.2f;
     
     //Others-visualisation and feedback, private stuff
     [SerializeField]

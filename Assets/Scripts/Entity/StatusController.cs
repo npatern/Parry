@@ -391,6 +391,7 @@ public class StatusController : MonoBehaviour, IHear, IPowerFlowController
         if (Immortal) return;
 
         //Push(attacker,_damage);
+        if (IsPlayer) _damage *= GameplayController.Instance.difficultyDecreaser;
         Life -= _damage * multiplier;
         SpawnParticles(DamageEffect, transform);
 

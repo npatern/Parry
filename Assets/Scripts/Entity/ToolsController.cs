@@ -229,6 +229,7 @@ public class ToolsController : MonoBehaviour
     {
         if (IsUsingTool) return false;
         if (statusController.IsStunned()) return false;
+        
         return true;
     }
     public Transform GetTargetFromEnum(targets target)
@@ -262,9 +263,12 @@ public class ToolsController : MonoBehaviour
         { 
             return;
         }
-
+        
+        if (!statusController.IsPlayer && !CombatController.Instance.CanIAttack()) return;
+        
         BreakAttackCoroutines();
         attack = StartCoroutine(PlayAttackSteps(CurrentWeaponWrapper.itemType.LightAttack, context));
+        if (!statusController.IsPlayer) CombatController.Instance.RegisterAttack();
     }
     public void PerformHeavyAttack(InputAction.CallbackContext context = new InputAction.CallbackContext())
     {
@@ -273,8 +277,11 @@ public class ToolsController : MonoBehaviour
         {
             return;
         }
+
+        if (!CombatController.Instance.CanIAttack()) return;
         BreakAttackCoroutines();
         attack = StartCoroutine(PlayAttackSteps(CurrentWeaponWrapper.itemType.HeavyAttack, context));
+        if (!statusController.IsPlayer) CombatController.Instance.RegisterAttack();
     }
     public void PerformThrow(InputAction.CallbackContext context = new InputAction.CallbackContext())
     {

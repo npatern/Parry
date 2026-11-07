@@ -166,13 +166,15 @@ public class EntityController : MonoBehaviour
     {
         float sizeDifferential = (1 + statusController.size.z) / 2;
         StopLookingAtTarget();
+        //go further away
         if (Vector3.Distance(target.transform.position, transform.position) < toolsController.attackDistance*2/3* sizeDifferential)
         {
             DisableNavmesh(false);
             Vector3 direction = Vector3.Normalize(transform.position - statusObject.transform.position);
             GoToTarget(transform.position+ direction);
-        }else
-        if (Vector3.Distance(target.transform.position, transform.position) > toolsController.attackDistance * sizeDifferential)
+        }
+        //move closer
+        else if (Vector3.Distance(target.transform.position, transform.position) > toolsController.attackDistance * sizeDifferential)
         {
             DisableNavmesh(false);
             GoToTarget(statusObject.transform.position);
@@ -186,11 +188,17 @@ public class EntityController : MonoBehaviour
     }
     void PlayRandomAttack()
     {
+
         if (toolsController == null) return;
+
         int randomizer = Random.Range(0, 11);
-        if (randomizer < 6 && toolsController.CurrentWeaponWrapper.itemType.bullet ==null)
-            toolsController.PerformParry();
-        else if (randomizer < 10)
+        if (randomizer < 2 && toolsController.CurrentWeaponWrapper.itemType.bullet == null) 
+        { 
+           // toolsController.PerformParry();
+            return;
+        }
+        
+        if (randomizer < 10)
             toolsController.PerformAttack();
         else
             toolsController.PerformHeavyAttack();
