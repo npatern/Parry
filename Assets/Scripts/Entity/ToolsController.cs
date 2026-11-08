@@ -257,31 +257,37 @@ public class ToolsController : MonoBehaviour
         }
         return CurrentWeaponWrapper.CurrentWeaponObject;
     } 
+    public bool WillCombatControllerAllow()
+    {
+        if (statusController.IsPlayer) return true;
+        if (CurrentWeaponWrapper.AttackDistance > 5) return true;
+        if (!CombatController.Instance.CanIAttack()) return false;
+        CombatController.Instance.RegisterAttack();
+        return true;
+    }
     public void PerformAttack(InputAction.CallbackContext context = new InputAction.CallbackContext())
     {
         if (!CanPerform())
         { 
             return;
         }
-        
-        if (!statusController.IsPlayer && !CombatController.Instance.CanIAttack()) return;
+
+        if (!WillCombatControllerAllow()) return;
         
         BreakAttackCoroutines();
         attack = StartCoroutine(PlayAttackSteps(CurrentWeaponWrapper.itemType.LightAttack, context));
-        if (!statusController.IsPlayer) CombatController.Instance.RegisterAttack();
+        
     }
     public void PerformHeavyAttack(InputAction.CallbackContext context = new InputAction.CallbackContext())
     {
-        
         if (!CanPerform())
         {
             return;
         }
 
-        if (!CombatController.Instance.CanIAttack()) return;
+        if (!WillCombatControllerAllow()) return;
         BreakAttackCoroutines();
         attack = StartCoroutine(PlayAttackSteps(CurrentWeaponWrapper.itemType.HeavyAttack, context));
-        if (!statusController.IsPlayer) CombatController.Instance.RegisterAttack();
     }
     public void PerformThrow(InputAction.CallbackContext context = new InputAction.CallbackContext())
     {

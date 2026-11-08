@@ -21,7 +21,7 @@ public class CombatController : MonoBehaviour
         }
     }
     private float nextAttackTime = 0;
-    public float attackCooldown = 2f;
+    public float attackCooldown = 1f;
     public bool CanIAttack()
     {
         return Time.time >= nextAttackTime;

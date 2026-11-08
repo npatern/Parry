@@ -5,8 +5,10 @@ using UnityEngine.SceneManagement;
 
 public class UIMainMenu : MonoBehaviour
 {
-    public void LoadScene()
+
+    public void LoadScene(string sceneName)
     {
-        SceneManager.LoadScene(2);
+        SceneManager.LoadScene(sceneName);
     }
+
 }

@@ -22,7 +22,7 @@ MonoBehaviour:
     LockMovement: 0
     LockRotation: 0
     TargetEnum: 4
-    WaitTime: 0.06
+    WaitTime: 0.02
     MovementCurve:
       serializedVersion: 2
       m_Curve:
@@ -59,6 +59,7 @@ MonoBehaviour:
     IsThrowing: 0
     IsDisarming: 0
     SkipIfPlayer: 0
+    SkipIfNPC: 0
     MovementOffset: {x: 0, y: 0, z: 0}
     SoundRange: 0
     soundType: 0
@@ -112,6 +113,7 @@ MonoBehaviour:
     IsThrowing: 0
     IsDisarming: 0
     SkipIfPlayer: 0
+    SkipIfNPC: 0
     MovementOffset: {x: 0, y: 0, z: -0.2}
     SoundRange: 25
     soundType: 2
@@ -156,6 +158,7 @@ MonoBehaviour:
     IsThrowing: 0
     IsDisarming: 0
     SkipIfPlayer: 0
+    SkipIfNPC: 0
     MovementOffset: {x: 0, y: 0, z: -0.1}
     SoundRange: 0
     soundType: 0
@@ -209,6 +212,7 @@ MonoBehaviour:
     IsThrowing: 0
     IsDisarming: 0
     SkipIfPlayer: 0
+    SkipIfNPC: 0
     MovementOffset: {x: 0, y: 0, z: -0.3}
     SoundRange: 25
     soundType: 2
@@ -253,6 +257,7 @@ MonoBehaviour:
     IsThrowing: 0
     IsDisarming: 0
     SkipIfPlayer: 0
+    SkipIfNPC: 0
     MovementOffset: {x: 0, y: 0, z: -0.2}
     SoundRange: 0
     soundType: 0
@@ -306,6 +311,7 @@ MonoBehaviour:
     IsThrowing: 0
     IsDisarming: 0
     SkipIfPlayer: 0
+    SkipIfNPC: 0
     MovementOffset: {x: 0, y: 0, z: -0.4}
     SoundRange: 25
     soundType: 2
@@ -359,6 +365,7 @@ MonoBehaviour:
     IsThrowing: 0
     IsDisarming: 0
     SkipIfPlayer: 1
+    SkipIfNPC: 0
     MovementOffset: {x: 0, y: 0, z: 0}
     SoundRange: 0
     soundType: 0
@@ -403,6 +410,7 @@ MonoBehaviour:
     IsThrowing: 0
     IsDisarming: 0
     SkipIfPlayer: 0
+    SkipIfNPC: 0
     MovementOffset: {x: 0, y: 0, z: 0}
     SoundRange: 0
     soundType: 0
@@ -456,6 +464,7 @@ MonoBehaviour:
     IsThrowing: 0
     IsDisarming: 0
     SkipIfPlayer: 0
+    SkipIfNPC: 0
     MovementOffset: {x: 0, y: 0, z: 0}
     SoundRange: 0
     soundType: 0
