@@ -315,7 +315,7 @@ public class StatusController : MonoBehaviour, IHear, IPowerFlowController
                 if (toEquip != null)
                 {
                     UIController.Instance.SpawnTextBubble(Barks.GetBark(Barks.BarkTypes.onParry), transform);
-                    if (IsPlayer) GameplayController.Instance.IncreaseSlowmoTimer();
+                    //if (IsPlayer) GameplayController.Instance.IncreaseSlowmoTimer();
                     toolsController.EquipWeaponFromPickable(toEquip);
                     //attacker.TakePosture(damage.Damage * CriticalMultiplier, attacker);
                     attacker.IsAttackedEvent.Invoke();
@@ -341,7 +341,7 @@ public class StatusController : MonoBehaviour, IHear, IPowerFlowController
             }
             UIController.Instance.SpawnTextBubble(Barks.GetBark(Barks.BarkTypes.onParry), transform);
 
-            if (IsPlayer) GameplayController.Instance.IncreaseSlowmoTimer();
+           // if (IsPlayer) GameplayController.Instance.IncreaseSlowmoTimer();
             return false;
         }
 
@@ -417,7 +417,7 @@ public class StatusController : MonoBehaviour, IHear, IPowerFlowController
                         sensesController.SetCurrentTarget(attacker);
 
                     UIController.Instance.SpawnTextBubble(Barks.GetBark(Barks.BarkTypes.onPain), transform);
-                    Sound sound = new Sound(this, 5, Sound.TYPES.neutral);
+                    Sound sound = new Sound(this, Sounds.mediumRange, Sound.TYPES.neutral);
                     Sounds.MakeSound(sound);
                 }
             }

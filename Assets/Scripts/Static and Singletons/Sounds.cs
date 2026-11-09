@@ -4,6 +4,9 @@ using UnityEngine;
 
 public static class Sounds 
 {
+    public static float smallRange = 1f;
+    public static float mediumRange = 3f;
+    public static float bigRange = 6f;
     public static void MakeSound(Sound sound)
     {
         if (sound.range <= 0) return;

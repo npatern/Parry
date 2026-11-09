@@ -357,7 +357,7 @@ public class Search : State
             if (investigatedPosition != Vector3.zero)
             {
                 UIController.Instance.SpawnTextBubble(Barks.GetBark(Barks.BarkTypes.onSearchStart), entity.transform);
-                Sound sound = new Sound(statusController, screamDistance, Sound.TYPES.danger);
+                Sound sound = new Sound(statusController, Sounds.bigRange, Sound.TYPES.danger);
                 Sounds.MakeSound(sound);
             }
             shocked = false;
@@ -419,7 +419,7 @@ public class Combat : State
             entity.DisableNavmesh(false);
             //entity.StartLookingAtTarget(target);
             UIController.Instance.SpawnTextBubble(Barks.GetBark(Barks.BarkTypes.inCombatNotice), entity.transform);
-            Sound sound = new Sound(statusController, screamDistance, Sound.TYPES.danger, combatTarget);
+            Sound sound = new Sound(statusController, Sounds.mediumRange, Sound.TYPES.danger, combatTarget);
             Sounds.MakeSound(sound);
             shocked = false;
         }
@@ -445,7 +445,7 @@ public class Combat : State
             entity.DisableNavmesh(false);
             //entity.StartLookingAtTarget(target);
             UIController.Instance.SpawnTextBubble(Barks.GetBark(Barks.BarkTypes.inCombatNotice), entity.transform);
-            Sound sound = new Sound(statusController, screamDistance, Sound.TYPES.danger, combatTarget);
+            Sound sound = new Sound(statusController, Sounds.bigRange, Sound.TYPES.danger, combatTarget);
             Sounds.MakeSound(sound);
             shocked = false;
         }
@@ -512,7 +512,7 @@ public class Flee : State
         if (shocked)
         {
             UIController.Instance.SpawnTextBubble(Barks.GetBark(Barks.BarkTypes.inFleeEnterNotice), entity.transform);
-            Sound sound = new Sound(statusController, screamDistance, Sound.TYPES.danger);
+            Sound sound = new Sound(statusController, Sounds.mediumRange, Sound.TYPES.danger);
             Sounds.MakeSound(sound);
             shocked = false;
         }
@@ -523,8 +523,8 @@ public class Flee : State
         if (timer > time)
         {
             UIController.Instance.SpawnTextBubble(Barks.GetBark(Barks.BarkTypes.inFleeEnterNotice), entity.transform);
-            Sound sound = new Sound(statusController, 10, Sound.TYPES.danger);
-            Sounds.MakeSound(sound);
+            //Sound sound = new Sound(statusController, 10, Sound.TYPES.danger);
+            //Sounds.MakeSound(sound);
             ResetTimer();
         }
         
@@ -610,7 +610,7 @@ public class FleeBackup : State
             if (shocked)
             {
                 UIController.Instance.SpawnTextBubble(Barks.GetBark(Barks.BarkTypes.inFleeEnterNotice), entity.transform);
-                Sound sound = new Sound(statusController, screamDistance, Sound.TYPES.danger);
+                Sound sound = new Sound(statusController, Sounds.mediumRange, Sound.TYPES.danger);
                 Sounds.MakeSound(sound);
                 shocked = false;
             }

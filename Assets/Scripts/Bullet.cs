@@ -16,7 +16,7 @@ public class Bullet : MonoBehaviour
     private Vector3 ShooterPosition;
     [SerializeReference]
     public ItemWeaponWrapper item;
-    public float SoundRange = 2;
+    public float SoundRange = Sounds.smallRange;
     public Sound.TYPES soundType = Sound.TYPES.danger;
     public GameObject destroyObject = null;
     public bool primed = false;
