@@ -268,7 +268,7 @@ MonoBehaviour:
     defaultSpeed: 10
     defalutPoints: 0
     activeTimer: 0
-    activeTime: 120
+    activeTime: 20
     waitTimer: 0
     waitTime: 20
     contagousSpeed: 1
