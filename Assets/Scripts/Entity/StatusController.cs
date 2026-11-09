@@ -227,7 +227,7 @@ public class StatusController : MonoBehaviour, IHear, IPowerFlowController
     {
         if (IsPlayer)
         {
-            movementSpeedMultiplierStun = .5f;
+            movementSpeedMultiplierStun = .1f;
         }
         else
         {

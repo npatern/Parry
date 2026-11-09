@@ -399,7 +399,7 @@ MonoBehaviour:
   dodgeTime: 0.2
   dodgeTimer: 0
   dodgeForce: 30
-  dodgePostureCost: 20
+  dodgePostureCost: 5
 --- !u!114 &193002233852398124
 MonoBehaviour:
   m_ObjectHideFlags: 0
