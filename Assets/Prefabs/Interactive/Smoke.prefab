@@ -4871,6 +4871,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 65fc7b17c2571a146bfd0b2749d34115, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  timer: 10
+  timer: 30
   whenToDetatchParticles: 3
   spawnOnDestroy: {fileID: 0}
