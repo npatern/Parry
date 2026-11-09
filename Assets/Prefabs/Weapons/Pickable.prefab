@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 4043814488188780067}
   - component: {fileID: 4943661881762631765}
   - component: {fileID: 4347554597089348752}
-  m_Layer: 0
+  m_Layer: 17
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -173,8 +173,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 987700be3c6527a47b5c1598a0e084ac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  weaponWrapper:
+    rid: -2
+  wrapperName: 
   scriptableObject: {fileID: 0}
+  trigger: {fileID: 0}
   weaponObject: {fileID: 0}
   PickEvent:
     m_PersistentCalls:
       m_Calls: []
+  references:
+    version: 2
+    RefIds:
+    - rid: -2
+      type: {class: , ns: , asm: }
