@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4423354393072792212}
   - component: {fileID: 5268524154084902513}
   - component: {fileID: 5532683359031497196}
-  m_Layer: 0
+  m_Layer: 17
   m_Name: Cylinder (7)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -92,7 +92,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6389846705603920431}
-  m_Layer: 10
+  m_Layer: 17
   m_Name: StartPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -125,7 +125,7 @@ GameObject:
   - component: {fileID: 2375051901115777942}
   - component: {fileID: 534536411413633137}
   - component: {fileID: 3900296792255776229}
-  m_Layer: 0
+  m_Layer: 17
   m_Name: Cylinder (9)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -208,7 +208,7 @@ GameObject:
   - component: {fileID: 6411344441041869775}
   - component: {fileID: 642577374196189251}
   - component: {fileID: 3789973086323159694}
-  m_Layer: 0
+  m_Layer: 17
   m_Name: Sphere
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -290,7 +290,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3069421887743927120}
   - component: {fileID: 4293966563180521007}
-  m_Layer: 0
+  m_Layer: 17
   m_Name: Trail (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -431,7 +431,7 @@ GameObject:
   - component: {fileID: 734144062334620488}
   - component: {fileID: 6040275262902396546}
   - component: {fileID: 5006554009453834540}
-  m_Layer: 0
+  m_Layer: 17
   m_Name: Cylinder (4)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -513,7 +513,7 @@ GameObject:
   m_Component:
   - component: {fileID: 176196535951195444}
   - component: {fileID: 2290327852583976028}
-  m_Layer: 0
+  m_Layer: 17
   m_Name: Trail
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -654,7 +654,7 @@ GameObject:
   - component: {fileID: 3823714101988342876}
   - component: {fileID: 3823714101988342874}
   - component: {fileID: 3823714101988342875}
-  m_Layer: 0
+  m_Layer: 17
   m_Name: Hand
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -737,7 +737,7 @@ GameObject:
   - component: {fileID: 3823714102590762231}
   - component: {fileID: 3823714102590762229}
   - component: {fileID: 3823714102590762230}
-  m_Layer: 0
+  m_Layer: 17
   m_Name: Cylinder (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -821,7 +821,7 @@ GameObject:
   - component: {fileID: 251317040423813644}
   - component: {fileID: -8977894861679477025}
   - component: {fileID: -1131207935277110543}
-  m_Layer: 10
+  m_Layer: 17
   m_Name: HandWithMachinegun
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -918,7 +918,7 @@ GameObject:
   - component: {fileID: 923983290980172655}
   - component: {fileID: 6717412718245151638}
   - component: {fileID: 8743043293626940851}
-  m_Layer: 0
+  m_Layer: 17
   m_Name: Cylinder (8)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1001,7 +1001,7 @@ GameObject:
   - component: {fileID: 1422425086172947863}
   - component: {fileID: 4757741958508873789}
   - component: {fileID: 8169878052984795819}
-  m_Layer: 0
+  m_Layer: 17
   m_Name: Cylinder (11)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1084,7 +1084,7 @@ GameObject:
   - component: {fileID: 5978386680234588116}
   - component: {fileID: 3454649472239224826}
   - component: {fileID: 5884270252956867816}
-  m_Layer: 0
+  m_Layer: 17
   m_Name: Cylinder (10)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1167,7 +1167,7 @@ GameObject:
   - component: {fileID: 370958074465837380}
   - component: {fileID: 7163500184101918850}
   - component: {fileID: 512209209584839017}
-  m_Layer: 0
+  m_Layer: 17
   m_Name: Cylinder (6)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1250,7 +1250,7 @@ GameObject:
   - component: {fileID: 488427447483017781}
   - component: {fileID: 3120460389886482008}
   - component: {fileID: 3302612361559321852}
-  m_Layer: 0
+  m_Layer: 17
   m_Name: Cylinder (12)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1332,7 +1332,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6346121552905490462}
   - component: {fileID: 3105188145689342673}
-  m_Layer: 0
+  m_Layer: 17
   m_Name: Trail (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1473,7 +1473,7 @@ GameObject:
   - component: {fileID: 1281280053344928154}
   - component: {fileID: 4881464710966939008}
   - component: {fileID: 8212498293461229531}
-  m_Layer: 0
+  m_Layer: 17
   m_Name: Cylinder (5)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1554,7 +1554,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3632829108608922379}
-  m_Layer: 10
+  m_Layer: 17
   m_Name: EndPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1587,7 +1587,7 @@ GameObject:
   - component: {fileID: 3085018383072099673}
   - component: {fileID: 340572816430470063}
   - component: {fileID: 2628812764678795179}
-  m_Layer: 0
+  m_Layer: 17
   m_Name: Cylinder (13)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1670,7 +1670,7 @@ GameObject:
   - component: {fileID: 5889098297308370995}
   - component: {fileID: 3336814011481868900}
   - component: {fileID: 641784344162955163}
-  m_Layer: 0
+  m_Layer: 17
   m_Name: Cylinder (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}

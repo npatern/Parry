@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8033170738907098700}
   - component: {fileID: 1963606676831322987}
-  m_Layer: 0
+  m_Layer: 17
   m_Name: Trail (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -151,7 +151,7 @@ GameObject:
   - component: {fileID: 1943478087424799120}
   - component: {fileID: 1943478087424799134}
   - component: {fileID: 1943478087424799121}
-  m_Layer: 0
+  m_Layer: 17
   m_Name: er (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -234,7 +234,7 @@ GameObject:
   - component: {fileID: 1943478087945119073}
   - component: {fileID: 1943478087945119084}
   - component: {fileID: 1943478087945119087}
-  m_Layer: 0
+  m_Layer: 17
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -318,7 +318,7 @@ GameObject:
   - component: {fileID: 7117353078071218595}
   - component: {fileID: 7777394562805791550}
   - component: {fileID: 5972819751271706045}
-  m_Layer: 10
+  m_Layer: 17
   m_Name: HandWithAxe
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -407,7 +407,7 @@ GameObject:
   - component: {fileID: 1943478088884699119}
   - component: {fileID: 1943478088884699117}
   - component: {fileID: 1943478088884699116}
-  m_Layer: 0
+  m_Layer: 17
   m_Name: Cylinder (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -490,7 +490,7 @@ GameObject:
   - component: {fileID: 1943478089206527877}
   - component: {fileID: 1943478089206527875}
   - component: {fileID: 1943478089206527874}
-  m_Layer: 0
+  m_Layer: 17
   m_Name: er (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -572,7 +572,7 @@ GameObject:
   m_Component:
   - component: {fileID: 712489638796491214}
   - component: {fileID: 5673593408045328149}
-  m_Layer: 0
+  m_Layer: 17
   m_Name: Trail (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -711,7 +711,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6046668643115526374}
-  m_Layer: 10
+  m_Layer: 17
   m_Name: EndPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -743,7 +743,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2479892400095826407}
   - component: {fileID: 5988071762063193592}
-  m_Layer: 0
+  m_Layer: 17
   m_Name: Trail
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -882,7 +882,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4761293365368215946}
-  m_Layer: 10
+  m_Layer: 17
   m_Name: StartPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -914,7 +914,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8922239591682145813}
   - component: {fileID: 7162468054793472262}
-  m_Layer: 0
+  m_Layer: 17
   m_Name: Trail (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1110,6 +1110,10 @@ PrefabInstance:
     - target: {fileID: 2045749208558079910, guid: 9be527214d8c71a42843b361c05d6429, type: 3}
       propertyPath: m_Name
       value: Particle System Fire
+      objectReference: {fileID: 0}
+    - target: {fileID: 2045749208558079910, guid: 9be527214d8c71a42843b361c05d6429, type: 3}
+      propertyPath: m_Layer
+      value: 17
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9be527214d8c71a42843b361c05d6429, type: 3}

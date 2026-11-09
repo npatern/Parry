@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6389846705603920431}
-  m_Layer: 10
+  m_Layer: 17
   m_Name: StartPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -41,7 +41,7 @@ GameObject:
   m_Component:
   - component: {fileID: 176196535951195444}
   - component: {fileID: 2290327852583976028}
-  m_Layer: 0
+  m_Layer: 17
   m_Name: Trail
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -182,7 +182,7 @@ GameObject:
   - component: {fileID: 3823714101988342876}
   - component: {fileID: 3823714101988342874}
   - component: {fileID: 3823714101988342875}
-  m_Layer: 0
+  m_Layer: 17
   m_Name: er
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -266,7 +266,7 @@ GameObject:
   - component: {fileID: 251317040423813644}
   - component: {fileID: -8977894861679477025}
   - component: {fileID: -4826044969244063561}
-  m_Layer: 10
+  m_Layer: 17
   m_Name: HandWithGrenade
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -348,7 +348,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3632829108608922379}
-  m_Layer: 10
+  m_Layer: 17
   m_Name: EndPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -381,7 +381,7 @@ GameObject:
   - component: {fileID: 5366373305474521260}
   - component: {fileID: 4296242757917458317}
   - component: {fileID: 2159992565323405600}
-  m_Layer: 10
+  m_Layer: 17
   m_Name: Sphere
   m_TagString: Untagged
   m_Icon: {fileID: 0}

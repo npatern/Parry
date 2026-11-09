@@ -53,6 +53,8 @@ public class Bullet : MonoBehaviour
     }
     void StopBeingBullet()
     {
+        rb.velocity = rb.velocity *.1f + Vector3.up * .1f;
+        rb.angularVelocity = Random.insideUnitSphere * Random.Range(1f, 5f);
         if (!primed)
         {
             Destroy(GetComponent<Bullet>());

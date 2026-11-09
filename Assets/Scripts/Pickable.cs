@@ -17,7 +17,12 @@ public class Pickable : MonoBehaviour
     {
         if (PickEvent == null)
             PickEvent = new UnityEvent<StatusController>();
-        trigger = gameObject.AddComponent<SphereCollider>();
+        GameObject triggerObject = new GameObject("PickTrigger");
+        triggerObject.transform.SetParent(transform);
+        triggerObject.transform.localPosition = Vector3.zero;
+        triggerObject.transform.localRotation = Quaternion.identity;
+        triggerObject.layer = 10;
+        trigger = triggerObject.AddComponent<SphereCollider>();
         trigger.isTrigger = true;
         trigger.radius = 1f;
     }
