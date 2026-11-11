@@ -400,7 +400,11 @@ public class Stat
         if (isAlwaysFull) return;
         if (activeTimer > 0)
         {
-            activeTimer -= Time.fixedDeltaTime;
+            if (status.IsPlayer) 
+                activeTimer -= Time.fixedDeltaTime/GameplayController.Instance.difficultyDecreaser;
+            else
+                activeTimer -= Time.fixedDeltaTime;
+
             if (activeTimer <= 0) ResetEffect();
         }
     }
