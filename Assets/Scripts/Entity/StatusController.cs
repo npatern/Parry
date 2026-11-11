@@ -276,7 +276,7 @@ public class StatusController : MonoBehaviour, IHear, IPowerFlowController
         if (toolsController != null) toolsController.PerformIdle();
     }
 
-    public bool TryTakeDamage(DamageEffects damage, float multiplier = 1, StatusController attacker = null)
+    public bool TryTakeDamage(DamageEffects damage, float multiplier = 1, StatusController attacker = null, bool isUnblockable = false)
     {
         Vector3 pos = Vector3.zero;
         if (damage == null)
@@ -286,15 +286,19 @@ public class StatusController : MonoBehaviour, IHear, IPowerFlowController
         if (attacker != null)
         {
             pos = attacker.transform.position;
-            return TryTakeDamage(damage, pos, multiplier, attacker);
+            return TryTakeDamage(damage, pos, multiplier, attacker, isUnblockable);
         }
         return TryTakeDamage(damage, pos, multiplier);
     }
-    public bool TryTakeDamage(DamageEffects damage, Vector3 damageSource, float multiplier = 1, StatusController attacker = null)
+    public bool TryTakeDamage(DamageEffects damage, Vector3 damageSource, float multiplier = 1, StatusController attacker = null, bool isUnblockable = false)
     {
         if (IsKilled) return true;
         bool isFromBullet = true;
-        if (attacker != null) isFromBullet = attacker.GetComponent<Bullet>();
+        if (attacker != null)
+        {
+            isFromBullet = attacker.GetComponent<Bullet>();
+        }
+
         if (toolsController == null)
         {
             TakeDamageWithEffects(damage, multiplier, attacker, isFromBullet);
@@ -307,49 +311,50 @@ public class StatusController : MonoBehaviour, IHear, IPowerFlowController
         if (sensesController != null)
             if (isFromBullet) sensesController.currentTargetLastPosition = damageSource;//&& sensesController.IsAlerted
 
-        if (toolsController.IsDisarming)
-        {
-            if (attacker != null)
+        if (!isUnblockable) { 
+            if (toolsController.IsDisarming)
             {
-                Pickable toEquip = attacker.toolsController.DropWeaponFromHands();
-                if (toEquip != null)
+                if (attacker != null)
                 {
-                    UIController.Instance.SpawnTextBubble(Barks.GetBark(Barks.BarkTypes.onParry), transform);
-                    //if (IsPlayer) GameplayController.Instance.IncreaseSlowmoTimer();
-                    toolsController.EquipWeaponFromPickable(toEquip);
-                    //attacker.TakePosture(damage.Damage * CriticalMultiplier, attacker);
-                    attacker.IsAttackedEvent.Invoke();
+                    Pickable toEquip = attacker.toolsController.DropWeaponFromHands();
+                    if (toEquip != null)
+                    {
+                        UIController.Instance.SpawnTextBubble(Barks.GetBark(Barks.BarkTypes.onParry), transform);
+                        //if (IsPlayer) GameplayController.Instance.IncreaseSlowmoTimer();
+                        toolsController.EquipWeaponFromPickable(toEquip);
+                        //attacker.TakePosture(damage.Damage * CriticalMultiplier, attacker);
+                        attacker.IsAttackedEvent.Invoke();
 
-                    return false;
+                        return false;
+                    }
                 }
             }
 
-        }
-
-        if (toolsController.IsParrying)
-        {
-            SpawnParticles(ParryEffect, toolsController.CurrentWeaponWrapper.CurrentWeaponObject);
-            if (isFromBullet)
+            if (toolsController.IsParrying)
             {
+                SpawnParticles(ParryEffect, toolsController.CurrentWeaponWrapper.CurrentWeaponObject);
+                if (isFromBullet)
+                {
 
+                }
+                else
+                {
+                    //attacker.TakePostureAndEffects(damage,  CriticalMultiplier * multiplier, attacker);
+                    attacker.TakePostureOnly(damage.Damage, CriticalMultiplier * multiplier, attacker);
+                    attacker.IsAttackedEvent.Invoke();
+                }
+                UIController.Instance.SpawnTextBubble(Barks.GetBark(Barks.BarkTypes.onParry), transform);
+
+                // if (IsPlayer) GameplayController.Instance.IncreaseSlowmoTimer();
+                return false;
             }
-            else
+
+            if (toolsController.IsProtected)
             {
-                //attacker.TakePostureAndEffects(damage,  CriticalMultiplier * multiplier, attacker);
-                attacker.TakePostureOnly(damage.Damage, CriticalMultiplier * multiplier, attacker);
-                attacker.IsAttackedEvent.Invoke();
+                TakePostureOnly(damage.Damage, multiplier, attacker);
+                attacker.TakePostureOnly(damage.Damage, 1, this);
+                return true;
             }
-            UIController.Instance.SpawnTextBubble(Barks.GetBark(Barks.BarkTypes.onParry), transform);
-
-           // if (IsPlayer) GameplayController.Instance.IncreaseSlowmoTimer();
-            return false;
-        }
-
-        if (toolsController.IsProtected)
-        {
-            TakePostureOnly(damage.Damage,  multiplier, attacker);
-            attacker.TakePostureOnly(damage.Damage,1,  this);
-            return true;
         }
 
         TakeDamageWithEffects(damage, multiplier, attacker, isFromBullet);

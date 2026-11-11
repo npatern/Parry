@@ -36,8 +36,8 @@ MonoBehaviour:
         inWeight: 0
         outWeight: 0.09358803
       - serializedVersion: 3
-        time: 0.124744505
-        value: 1.5964875
+        time: 0.02474603
+        value: 1.5626016
         inSlope: 2.3486493
         outSlope: -0.10987019
         tangentMode: 1
@@ -103,7 +103,9 @@ MonoBehaviour:
     IsFiring: 0
     IsThrowing: 0
     IsDisarming: 0
+    IsUnblockable: 0
     SkipIfPlayer: 0
+    SkipIfNPC: 0
     MovementOffset: {x: 0, y: 0, z: 0}
     SoundRange: 0
     soundType: 0
@@ -147,7 +149,9 @@ MonoBehaviour:
     IsFiring: 0
     IsThrowing: 0
     IsDisarming: 0
+    IsUnblockable: 0
     SkipIfPlayer: 0
+    SkipIfNPC: 0
     MovementOffset: {x: 0, y: 0, z: 0}
     SoundRange: 0
     soundType: 0

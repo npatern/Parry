@@ -7,9 +7,11 @@ public class WeaponModel : MonoBehaviour
     
     public Transform StartPoint;
     public Transform EndPoint;
-    //public Collider collider;
     public TrailRenderer[] trails;
     public ParticleSystem[] particles;
+
+    public GameObject heavyAttackEffect;
+    private ParticleSystem heavyAttackParticles;
     private void Awake()
     {
         trails = GetComponentsInChildren<TrailRenderer>();
@@ -18,13 +20,12 @@ public class WeaponModel : MonoBehaviour
     private void Start()
     {
         SetWeapon(false);
-
-
     }
-    public void SetWeapon(bool state)
+    public void SetWeapon(bool state, bool heavy = false)
     {
         SetTrail(state);
         SetParticles(state);
+        SetHeavyAttack(state, heavy);
     }
     public void SetTrail(bool state)
     {
@@ -42,5 +43,13 @@ public class WeaponModel : MonoBehaviour
             else
                 particle.Stop();
         }
+    }
+    
+    private void SetHeavyAttack(bool state, bool heavy)
+    {
+        if (heavyAttackEffect == null) heavyAttackEffect = Instantiate( GameplayController.Instance.ListOfAssets.HeavyAttackEffect,StartPoint);
+        if (heavyAttackParticles == null) heavyAttackParticles = heavyAttackEffect.GetComponent<ParticleSystem>();
+        if (!heavy) heavyAttackParticles.Stop();
+        else heavyAttackParticles.Play();
     }
 }

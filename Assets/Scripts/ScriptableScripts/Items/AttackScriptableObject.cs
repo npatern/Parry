@@ -32,6 +32,7 @@ public class AttackScriptableObject : ScriptableObject
         public bool IsFiring = false;
         public bool IsThrowing = false;
         public bool IsDisarming = false;
+        public bool IsUnblockable = false;
         public bool SkipIfPlayer = false;
         public bool SkipIfNPC = false;
 
@@ -40,7 +41,7 @@ public class AttackScriptableObject : ScriptableObject
         public Sound.TYPES soundType = Sound.TYPES.neutral;
         public IEnumerator PerformStep(ToolsController toolsController, AttackScriptableObject attackScriptableObject, int currentStepNr, InputAction.CallbackContext context = new InputAction.CallbackContext())
         {
-            toolsController.CurrentWeaponWrapper.CurrentWeaponObject.GetComponent<WeaponModel>().SetWeapon(IsDamaging);
+            toolsController.CurrentWeaponWrapper.CurrentWeaponObject.GetComponent<WeaponModel>().SetWeapon(IsDamaging,IsUnblockable);
             toolsController.MovementLocked = LockMovement;
             toolsController.RotationLocked = LockRotation;
             Transform GoToTarget = toolsController.GetTargetFromEnum(TargetEnum);
@@ -57,6 +58,7 @@ public class AttackScriptableObject : ScriptableObject
             if (IsParrying) toolsController.IsParrying = true;
             if (IsDamaging) toolsController.IsDamaging = true;
             if (IsDisarming) toolsController.IsDisarming = true;
+            if (IsUnblockable) toolsController.IsUnblockable = true;
             if (attackScriptableObject.IsIllegal) toolsController.IsIllegal = true;
             
 
@@ -79,8 +81,7 @@ public class AttackScriptableObject : ScriptableObject
                 {
                     
                     //toolsController.CastDamage(toolsController.CurrentWeaponWrapper.Damage* attackScriptableObject.DamageMultiplayer);
-                    toolsController.IsDamaging = !toolsController.CurrentWeaponWrapper.CastDamage(toolsController.CurrentWeaponWrapper.Effects, attackScriptableObject.DamageMultiplayer, toolsController.statusController);
-
+                    toolsController.IsDamaging = !toolsController.CurrentWeaponWrapper.CastDamage(toolsController.CurrentWeaponWrapper.Effects, attackScriptableObject.DamageMultiplayer, toolsController.statusController, IsUnblockable);
                 }
                 //combat.WeaponVelocity = goToPosition-combat.CurrentWeapon.localPosition/Time.deltaTime;
                 yield return null;

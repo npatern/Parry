@@ -191,14 +191,14 @@ public class EntityController : MonoBehaviour
 
         if (toolsController == null) return;
 
-        int randomizer = Random.Range(0, 11);
+        int randomizer = Random.Range(0, 10);
         if (randomizer < 2 && toolsController.CurrentWeaponWrapper.itemType.bullet == null) 
         { 
            // toolsController.PerformParry();
             return;
         }
         
-        if (randomizer < 10)
+        if (randomizer < 8)
             toolsController.PerformAttack();
         else
             toolsController.PerformHeavyAttack();

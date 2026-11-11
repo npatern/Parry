@@ -215,7 +215,7 @@ public class ItemWeaponWrapper
         model.gameObject.SetActive(false);
         GameObject.Destroy(model.gameObject);
     }
-    public bool CastDamage(DamageEffects damage,float multiplier = 1, StatusController statusController = null)
+    public bool CastDamage(DamageEffects damage,float multiplier = 1, StatusController statusController = null, bool isUnblockable = false)
     {
 
         //Debug.Log("Trying to cast damage!");
@@ -244,7 +244,7 @@ public class ItemWeaponWrapper
                 //Debug.Log("checking if i have same team as enemy");
                 if (statusController.Team == enemyStatus.Team) continue;
                 if (!enemyStatus.IsKilled) hitAnything = true;
-                enemyStatus.TryTakeDamage(damage,multiplier, statusController);
+                enemyStatus.TryTakeDamage(damage,multiplier, statusController, isUnblockable);
             }
             else
             {
